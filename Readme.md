@@ -1,2 +1,6 @@
 # Subgrup Prop 1.4
-Iván
+
+- Daniel Gallardo
+- David Pérez
+- Iván Risueño
+- Joaquim Torra
