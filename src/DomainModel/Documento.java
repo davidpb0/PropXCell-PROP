@@ -1,11 +1,11 @@
+package DomainModel;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.SortedSet;
-import java.util.TreeSet;
+
 
 /*
- * ClassName Documento
+ * ClassName DomainModel.Documento
  *
  * Version info 1.0
  *
@@ -31,23 +31,23 @@ public class Documento {
         }
 
 
-        //Inicializa el documento con una Hoja con los valores fila y columnas dados por el usuario
+        //Inicializa el documento con una DomainModel.Hoja con los valores fila y columnas dados por el usuario
 
-        public void inicializaDocumento(String nombre, int fila, int columna){
-            this.nombre = nombre;
+        public void inicializaDocumento(String _nombre, int _fila, int _columna){
+            this.nombre = _nombre;
 
             this.fechaUltMod = LocalDateTime.now();
 
-            Hoja hIni = new Hoja(fila, columna);
+            Hoja hIni = new Hoja(_fila, _columna);
             hIni.inicializaHojaDefault(hojasContenidas.size()+1);
             this.hojasContenidas.put(hojasContenidas.size()+1, hIni);
             this.numHojas = hojasContenidas.size();
         }
 
-        //Inicializa el documento con una Hoja con los valores fila y columnas por defecto
+        //Inicializa el documento con una DomainModel.Hoja con los valores fila y columnas por defecto
 
-        public void inicializaDocumentoDefault(String nombre){
-            this.nombre = nombre;
+        public void inicializaDocumentoDefault(String _nombre){
+            this.nombre = _nombre;
 
             this.fechaUltMod = LocalDateTime.now();
 
@@ -66,8 +66,8 @@ public class Documento {
         Pre: Existe una hoja con el identificador id
         Post: Obtiene la hoja con el identificador id
         */
-        public Hoja getHoja(int id){
-            return this.hojasContenidas.get(id);
+        public Hoja getHoja(int _id){
+            return this.hojasContenidas.get(_id);
 
         }
 

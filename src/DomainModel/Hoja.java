@@ -1,5 +1,5 @@
-/*
- * ClassName Hoja
+package DomainModel;/*
+ * ClassName DomainModel.Hoja
  *
  * Version info 1.0
  *
@@ -22,27 +22,27 @@ public class Hoja {
     }
 
     //Creadora dados un numero de filas y un nuemero de columnas, el que crea la hoja se hace responsable de inicializarla
-    Hoja(int filas, int columnas){
-        this.filas = filas;
-        this.columnas = columnas;
+    Hoja(int _filas, int _columnas){
+        this.filas = _filas;
+        this.columnas = _columnas;
         //Estructura de datos
 
     }
 
-    //inicializa la Hoja con identificador y nombre por defecto
-    void inicializaHojaDefault(int aId){
-        this.id = aId;
-        this.nombre = "Hoja" + this.id;
+    //inicializa la DomainModel.Hoja con identificador y nombre por defecto
+    void inicializaHojaDefault(int _aId){
+        this.id = _aId;
+        this.nombre = "DomainModel.Hoja" + this.id;
     }
 
     //Le asigna un nombre a la hoja
-    public void assignaNombre(String nombre){
-        this.nombre = nombre;
+    public void assignaNombre(String _nombre){
+        this.nombre = _nombre;
     }
 
     //Comprueba que la hoja es la hoja con identificador id
-    public boolean esHoja(int id){
-        return this.id == id;
+    public boolean esHoja(int _id){
+        return this.id == _id;
     }
 
     //Devuelve el identificador de la hoja

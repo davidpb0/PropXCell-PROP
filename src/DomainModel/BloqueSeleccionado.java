@@ -1,3 +1,5 @@
+package DomainModel;
+
 public class BloqueSeleccionado {
     private static BloqueSeleccionado unico_bloque; // Única instancia
 
