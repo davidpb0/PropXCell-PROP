@@ -32,7 +32,7 @@ public class Hoja {
     //inicializa la DomainModel.Hoja con identificador y nombre por defecto
     void inicializaHojaDefault(int _aId){
         this.id = _aId;
-        this.nombre = "DomainModel.Hoja" + this.id;
+        this.nombre = "Hoja" + this.id;
     }
 
     //Le asigna un nombre a la hoja
@@ -48,5 +48,15 @@ public class Hoja {
     //Devuelve el identificador de la hoja
     public int getId(){
         return this.id;
+    }
+
+    public int getColumnas() {
+        return this.columnas;
+    }
+    public int getFilas(){
+        return this.filas;
+    }
+    public String getNombre(){
+        return this.nombre;
     }
 }

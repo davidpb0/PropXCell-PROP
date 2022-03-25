@@ -17,11 +17,11 @@ public class ControladorCelda {
 
     /**
      * @param _value = String
-     * @param _op = integer, numero de decimales a truncar, maximo 3
+     * @param _op = integer, numero de decimales a truncar
      * @return Un string con _value truncado a tantos decimales como se ha seleccionado en _op
      */
 
-    public String truncarValor(String _value, int _op){
+   /* public String truncarValor(String _value, int _op){
        Traductor t = Traductor.getTraductor();
        float v = t.StringFloat(_value);
 
@@ -31,7 +31,7 @@ public class ControladorCelda {
        return Float.toString(v);
 
 
-    }
+    }*/
 
 
 }

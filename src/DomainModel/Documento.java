@@ -23,7 +23,7 @@ public class Documento {
 
         private Documento(){}
 
-        public static Documento getInstance(){
+        public static Documento getDocumento(){
             if(instanceOfThisClass == null){
                 instanceOfThisClass = new Documento();
             }
@@ -31,7 +31,7 @@ public class Documento {
         }
 
 
-        //Inicializa el documento con una DomainModel.Hoja con los valores fila y columnas dados por el usuario
+        //Inicializa el documento con una Hoja con los valores fila y columnas dados por el usuario
 
         public void inicializaDocumento(String _nombre, int _fila, int _columna){
             this.nombre = _nombre;
@@ -44,7 +44,7 @@ public class Documento {
             this.numHojas = hojasContenidas.size();
         }
 
-        //Inicializa el documento con una DomainModel.Hoja con los valores fila y columnas por defecto
+        //Inicializa el documento con una Hoja con los valores fila y columnas por defecto
 
         public void inicializaDocumentoDefault(String _nombre){
             this.nombre = _nombre;
