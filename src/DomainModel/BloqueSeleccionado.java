@@ -1,4 +1,11 @@
 package DomainModel;
+/*
+ * ClassName DomainModel.BloqueSeleccionado
+ *
+ * Version info 1.0
+ *
+ * Author Iván Risueño Martín
+ */
 
 public class BloqueSeleccionado {
     private static BloqueSeleccionado unico_bloque; // Única instancia
@@ -7,18 +14,32 @@ public class BloqueSeleccionado {
     private Celda celdaFinal;
 
     private BloqueSeleccionado() {}
+
     public static BloqueSeleccionado getBloque() {
         if (unico_bloque == null) unico_bloque = new BloqueSeleccionado();
         return unico_bloque;
     }
+
+    /**
+     * Asigna las celdas pertinentes a los extremos que definen el bloque.
+     * @param _inicial la celda a utilizar como la superior izquierda.
+     *        _final la celda a utilizar como la inferior derecha.
+     */
     private void setCelda(Celda _inicial, Celda _final) {
         this.celdaInicial = _inicial;
         this.celdaFinal = _final;
     }
 
+    /**
+     * @return la celda superior izquierda del bloque seleccionado.
+     */
     private Celda getCeldaInicial() {
         return this.celdaInicial;
     }
+
+    /**
+     * @return la celda inferior derecha del bloque seleccionado.
+     */
     private Celda getCeldaFinal() {
         return this.celdaFinal;
     }
