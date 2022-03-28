@@ -12,15 +12,18 @@ import java.io.*;
 
 public class CargaCSV {
     private ArrayList<String[]> datos;
+    private String ubicacion;
     private String separador;
-    private static final String comillas = "\"";
+    private static final String COMILLAS = "\"";
 
     /**
      * Constructora de la clase CargaCSV
+     * @param _ubicacion utilizada para cargar el CSV
      * @param _separador utilizado por el CSV a cargar
      */
-    public CargaCSV (String _separador) {
+    public CargaCSV (String _ubicacion, String _separador) {
         this.separador = _separador;
+        this.ubicacion = _ubicacion;
     }
 
     /**
@@ -33,17 +36,17 @@ public class CargaCSV {
         String[] s = new String[_datos.length];
 
         for (int i = 0; i < s.length; i++){
-            s[i] = _datos[i].replaceAll("^"+comillas, "").replaceAll(comillas+"$", "");
+            s[i] = _datos[i].replaceAll("^"+COMILLAS, "").replaceAll(COMILLAS+"$", "");
         }
         return s;
     }
 
     /**
      * Lee un archivo en formato csv
-     * @param _ubicacionArchivo ubicación del archivo a abrir
      */
-    public void lee(String _ubicacionArchivo) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(_ubicacionArchivo));
+    public void lee() throws IOException {
+        //comprobar si existe el archivo con la funcion de abajo, sino excepción
+        BufferedReader br = new BufferedReader(new FileReader(ubicacion));
         String fila = br.readLine();
         while (fila != null) {
             String[] datos = fila.split(separador);
