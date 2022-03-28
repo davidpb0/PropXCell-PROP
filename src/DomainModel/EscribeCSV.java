@@ -1,4 +1,11 @@
 package DomainModel;
+/*
+ * ClassName DomainModel.EscribeCSV
+ *
+ * Version info 1.0
+ *
+ * Author Iván Risueño Martín
+ */
 
 public class EscribeCSV {
     private String ubicacion;
