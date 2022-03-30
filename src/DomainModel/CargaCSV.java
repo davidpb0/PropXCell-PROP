@@ -7,11 +7,11 @@ package DomainModel;
  * Author Iván Risueño Martín
  */
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.io.*;
 
 public class CargaCSV {
-    private ArrayList<String[]> datos;
+    private HashMap<Posicion, Celda> datos;
     private String ubicacion;
     private String separador;
     private static final String COMILLAS = "\"";
@@ -31,7 +31,6 @@ public class CargaCSV {
      * @param _datos vector de String que tratar
      * @return el parámetro ahora sin comillas
      */
-
     private String[] eliminaComillas(String[] _datos) {
         String[] s = new String[_datos.length];
 
@@ -48,12 +47,17 @@ public class CargaCSV {
         //comprobar si existe el archivo con la funcion de abajo, sino excepción
         BufferedReader br = new BufferedReader(new FileReader(ubicacion));
         String fila = br.readLine();
+        int i = 1;
         while (fila != null) {
             String[] datos = fila.split(separador);
             datos = eliminaComillas(datos);
-            this.datos.add(datos);
+            for (int j = 0; j < datos.length; ++j) {
+                this.datos.put(new Posicion(i, j + 1), new Celda(datos[j]));
+            }
             fila = br.readLine();
+            ++i;
         }
+        br.close();
     }
 
     /**

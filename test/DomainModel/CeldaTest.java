@@ -1,50 +1,66 @@
 package DomainModel;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 
-class CeldaTest {
+import static org.junit.Assert.assertEquals;
+
+public class CeldaTest {
 
     @Test
-    void contenidoVacio() {
+    public void contenidoVacio() {
         Celda cell = new Celda();
         String cont = cell.getContenido();
         assertEquals("", cont);
+
+        Celda cell2 = new Celda("");
+        assertEquals("", cell2.getContenido());
     }
 
     @Test
-    void valorVacio() {
+    public void valorVacio() {
         Celda cell = new Celda();
         String val = cell.getValor();
         assertEquals("", val);
+
+        Celda cell2 = new Celda("");
+        assertEquals("", cell2.getValor());
     }
 
     @Test
-    void contenidoString() {
+    public void contenidoString() {
         Celda cell = new Celda();
         cell.setContenido("Hola Mundo");
         String cont = cell.getContenido();
         assertEquals("Hola Mundo", cont);
+
+        Celda cell2 = new Celda("hola");
+        assertEquals("hola", cell2.getContenido());
     }
 
     @Test
-    void valorString() {
+    public void valorString() {
         Celda cell = new Celda();
         cell.setContenido("Hola Mundo");
         String val = cell.getValor();
         assertEquals("Hola Mundo", val);
+
+        Celda cell2 = new Celda("hola");
+        assertEquals("hola", cell2.getValor());
     }
 
     @Test
-    void contenidoFunc() {
+    public void contenidoFunc() {
         Celda cell = new Celda();
         cell.setContenido("=SUM(1, 2)");
         String cont = cell.getContenido();
         assertEquals("=SUM(1, 2)", cont);
+
+        Celda cell2 = new Celda("=SUM(1, 2)");
+        assertEquals("=SUM(1, 2)", cell2.getContenido());
     }
 
     @Test
-    void valorFunc() {
+    public void valorFunc() {
         Celda cell = new Celda();
         cell.setContenido("=SUM(1, 2)");
         String val = cell.getValor();
@@ -54,6 +70,9 @@ class CeldaTest {
          * la clase detecte que es una función y no un string normal.
          */
         assertEquals("#FUNC", val);
+
+        Celda cell2 = new Celda("=SUM(1, 2)");
+        assertEquals("#FUNC", cell2.getValor());
     }
 
 }

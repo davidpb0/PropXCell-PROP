@@ -1,16 +1,32 @@
+package DomainModel;
+
 /*
  * Celda
  *
- * v0.0.1
+ * v0.0.2
  *
  * Joaquim Torra Garcia
  */
 
-package DomainModel;
-
 public class Celda {
     private String valor = "";
     private String contenido = "";
+
+    /**
+     * Constructora de una celda vacía
+     */
+    public Celda() {
+        this.valor = "";
+        this.contenido = "";
+    }
+
+    /**
+     * Constructora de una celda con contenido
+     * @param contenido el contenido que se asigna a la celda en su creación
+     */
+    public Celda(String contenido) {
+        this.setContenido(contenido);
+    }
 
     /**
      * @return el valor que muestra la celda, ya sea el contenido o el resultado de la función establecida en el contenido
@@ -41,9 +57,14 @@ public class Celda {
      */
     public void setContenido(String _contenido) {
         this.contenido = _contenido;
-        if (_contenido.startsWith("="))
+        if (_contenido.startsWith("=")) {
             setValor("#FUNC");
+            if (_contenido.length() == 3) {
+                setValor("#REF");
+            }
+        }
         else
             setValor(_contenido);
     }
+
 }
