@@ -6,31 +6,46 @@ package DomainModel;/*
  * Author David Pérez Barroso
  */
 
+import java.util.HashMap;
+
 public class Hoja {
 
     private int id;
     private String nombre;
     private int filas;
     private int columnas;
-    //Estructura de datos Hashmap....
+    private HashMap<Posicion, Celda> celdas;
 
     //Creadora con los valores por defecto, el que crea la hoja se hace responsable de inicializarla
     Hoja(){
         this.filas = 50;
         this.columnas = 50;
-        //Estructura de datos
+        this.celdas = new HashMap<Posicion, Celda>();
+        inicializaHoja(this);
     }
 
     //Creadora dados un numero de filas y un nuemero de columnas, el que crea la hoja se hace responsable de inicializarla
     Hoja(int _filas, int _columnas){
         this.filas = _filas;
         this.columnas = _columnas;
-        //Estructura de datos
+        inicializaHoja(this);
 
     }
 
+    public void inicializaHoja(Hoja h){
+        int f = h.filas;
+        int c = h.columnas;
+        HashMap<Posicion, Celda> tabla = new HashMap<Posicion, Celda>();
+
+        for (int i = 1; i < f; ++i){
+            for (int j = 1; j < c; ++j){
+                tabla.put(new Posicion(i, j), new Celda());
+            }
+        }
+    }
+
     //inicializa la DomainModel.Hoja con identificador y nombre por defecto
-    void inicializaHojaDefault(int _aId){
+    void añadeNombreIdHojaDefault(int _aId){
         this.id = _aId;
         this.nombre = "Hoja" + this.id;
     }

@@ -6,9 +6,9 @@ import org.junit.Test;
 public class HojaTest {
 
     @Test
-    public void inicializaHojaDefault(){
+    public void añadeNombreIdHojaDefault(){
         Hoja hoja = new Hoja();
-        hoja.inicializaHojaDefault(1);
+        hoja.añadeNombreIdHojaDefault(1);
         int id = hoja.getId();
         String name = hoja.getNombre();
         assertEquals(1, id);
@@ -18,7 +18,7 @@ public class HojaTest {
     @Test
     public void assignaNombre(){
         Hoja hoja = new Hoja();
-        hoja.inicializaHojaDefault(1);
+        hoja.añadeNombreIdHojaDefault(1);
         hoja.assignaNombre("HojaPrueba");
         String name = hoja.getNombre();
         assertEquals("HojaPrueba", name);
@@ -27,7 +27,7 @@ public class HojaTest {
     @Test
     public void esHoja(){
         Hoja hoja = new Hoja();
-        hoja.inicializaHojaDefault(1);
+        hoja.añadeNombreIdHojaDefault(1);
         boolean b = hoja.esHoja(1);
         assertEquals(true, b);
 

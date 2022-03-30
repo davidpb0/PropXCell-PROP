@@ -39,7 +39,7 @@ public class Documento {
             this.fechaUltMod = LocalDateTime.now();
 
             Hoja hIni = new Hoja(_fila, _columna);
-            hIni.inicializaHojaDefault(hojasContenidas.size()+1);
+            hIni.añadeNombreIdHojaDefault(hojasContenidas.size()+1);
             this.hojasContenidas.put(hojasContenidas.size()+1, hIni);
             this.numHojas = hojasContenidas.size();
         }
@@ -52,7 +52,7 @@ public class Documento {
             this.fechaUltMod = LocalDateTime.now();
 
             Hoja hIni = new Hoja();
-            hIni.inicializaHojaDefault(hojasContenidas.size()+1);
+            hIni.añadeNombreIdHojaDefault(hojasContenidas.size()+1);
             this.hojasContenidas.put(hojasContenidas.size()+1, hIni);
             this.numHojas = hojasContenidas.size();
         }
