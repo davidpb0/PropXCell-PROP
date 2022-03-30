@@ -52,7 +52,7 @@ public class CargaCSV {
             String[] datos = fila.split(separador);
             datos = eliminaComillas(datos);
             for (int j = 0; j < datos.length; ++j) {
-                this.datos.put(new Posicion(i, j + 1), new Celda(datos[j], datos[j]));
+                this.datos.put(new Posicion(i, j + 1), new Celda(datos[j]));
             }
             fila = br.readLine();
             ++i;
