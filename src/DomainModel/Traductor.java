@@ -11,7 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Traductor<T> {
+public class Traductor {
     private static Traductor unico_traductor;                               // Única instancia
 
     private Traductor() {}
@@ -60,9 +60,9 @@ public class Traductor<T> {
     }
 
     /**
-     * @return el objeto convertido a String.
-     * Convierte cualquier objeto de tipo básico a String.
-     * @param _objeto el objeto a convertir a String.
+     * @return el entero convertido a String.
+     * Convierte un entero a String.
+     * @param _objeto el entero a convertir a String.
      */
-    private String ObjectString(T _objeto) { return _objeto.toString(); }
+    private static String IntString(Integer _objeto) { return _objeto.valueOf(); }
 }
