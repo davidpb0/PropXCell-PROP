@@ -7,7 +7,7 @@ import java.util.HashMap;
 /*
  * ClassName DomainModel.Documento
  *
- * Version info 1.0
+ * Version info 0.0.1
  *
  * Author David Pérez Barroso
  */

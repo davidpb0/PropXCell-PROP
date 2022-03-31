@@ -1,7 +1,7 @@
 package DomainModel;/*
  * ClassName DomainModel.Hoja
  *
- * Version info 1.0
+ * Version info 0.0.2
  *
  * Author David Pérez Barroso
  */
@@ -28,24 +28,24 @@ public class Hoja {
     Hoja(int _filas, int _columnas){
         this.filas = _filas;
         this.columnas = _columnas;
+        this.celdas = new HashMap<Posicion, Celda>();
         inicializaHoja(this);
 
     }
 
-    public void inicializaHoja(Hoja h){
-        int f = h.filas;
-        int c = h.columnas;
-        HashMap<Posicion, Celda> tabla = new HashMap<Posicion, Celda>();
+    private void inicializaHoja(Hoja h){
+        int f = h.getFilas();
+        int c = h.getColumnas();
 
-        for (int i = 1; i < f; ++i){
-            for (int j = 1; j < c; ++j){
-                tabla.put(new Posicion(i, j), new Celda());
+        for (int i = 1; i <= f; ++i){
+            for (int j = 1; j <= c; ++j){
+               h.celdas.put(new Posicion(i, j), new Celda());
             }
         }
     }
 
     //inicializa la DomainModel.Hoja con identificador y nombre por defecto
-    void añadeNombreIdHojaDefault(int _aId){
+    public void añadeNombreIdHojaDefault(int _aId){
         this.id = _aId;
         this.nombre = "Hoja" + this.id;
     }
@@ -68,10 +68,16 @@ public class Hoja {
     public int getColumnas() {
         return this.columnas;
     }
+
     public int getFilas(){
         return this.filas;
     }
+
     public String getNombre(){
         return this.nombre;
+    }
+
+    public HashMap<Posicion, Celda> getCeldas(){
+        return this.celdas;
     }
 }
