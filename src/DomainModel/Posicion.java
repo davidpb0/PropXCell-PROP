@@ -28,7 +28,7 @@ public class Posicion {
      * @param columna un entero que representa la columna
      * @param fila un entero que representa la fila
      */
-    public Posicion(int columna, int fila) {
+    public Posicion(int fila, int columna) {
         this.columna = columna;
         this.fila = fila;
     }
