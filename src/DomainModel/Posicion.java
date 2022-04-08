@@ -61,4 +61,21 @@ public class Posicion {
         return column;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Posicion that = (Posicion) o;
+        return fila == that.fila && columna == that.columna;
+    }
+
+    @Override
+    public int hashCode(){
+        int result = fila;
+        result = 31 * result + columna;
+        return result;
+    }
+
 }
