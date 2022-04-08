@@ -2,7 +2,6 @@ package DomainModel;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import java.util.HashMap;
 
 
 public class HojaTest {
@@ -123,20 +122,16 @@ public class HojaTest {
         assertEquals(4, clds);
     }
 
-  /*  @Test
+  @Test
     public void getCelda(){
         Hoja h = new Hoja(2, 2);
-        Celda cell = new Celda();
-        cell.setContenido("ABCD");
-        HashMap<Posicion, Celda> m = h.getCeldas();
-        m.replace(new Posicion(1, 1), cell);
-        h.actualizaHoja(m);
+        h.getCeldas().get(new Posicion(1, 1)).setContenido("ABCD");
         Celda cel = h.getCelda(1, 1);
-        String s = cel.getContenido();
-        System.out.println(s);
-        //String s = h.getCelda(1, 1).getValor();
-        //assertEquals(4, i);
-        //assertEquals("ABCD", s);
+        String s = cel.getContenido();;
+        Celda cel2 = h.getCelda(1, 2);
+        String s2 = cel2.getContenido();;
+        assertEquals("ABCD", s);
+        assertEquals("", s2);
 
-    }*/
+    }
 }

@@ -7,9 +7,10 @@ package DomainModel;
  * Author David Pérez Barroso
  */
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Hoja {
+public class Hoja implements Serializable {
 
     private int id;
     private String nombre;
@@ -133,8 +134,5 @@ public class Hoja {
         return cl;
     }
 
-    public void actualizaHoja(HashMap<Posicion, Celda> _map){
-        this.celdas = _map;
-    }
 
 }
