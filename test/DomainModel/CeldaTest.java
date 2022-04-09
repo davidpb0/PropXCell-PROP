@@ -2,6 +2,8 @@ package DomainModel;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 
 public class CeldaTest {
@@ -73,6 +75,48 @@ public class CeldaTest {
 
         Celda cell2 = new Celda("=SUM(1, 2)");
         assertEquals("#FUNC", cell2.getValor());
+    }
+
+    @Test
+    public void referenciantesVacia () {
+        Celda cell = new Celda();
+        assertEquals(new ArrayList<Celda>(), cell.getReferenciantes());
+    }
+
+    @Test
+    public void addReferencianteF () {
+        Celda c1 = new Celda("A");
+        Celda c2 = new Celda("B");
+
+        c1.addReferenciante(c2);
+
+        assertEquals("A", c2.getValor());
+    }
+
+    @Test
+    public void borrarReferencianteF () {
+        Celda c1 = new Celda("A");
+        Celda c2 = new Celda("B");
+
+        //C2 esta referenciando a C1 --> C2 tiene el valor de C1
+        c1.addReferenciante(c2);
+        assertEquals("A", c2.getValor());
+
+        c1.borrarReferenciante(c2);
+        assertEquals(new ArrayList<Celda>(), c1.getReferenciantes());
+    }
+
+    @Test
+    public void cambioValorReferenciaF() {
+        Celda c1 = new Celda("A");
+        Celda c2 = new Celda("B");
+
+        //C2 esta referenciando a C1 --> C2 tiene el valor de C1
+        c1.addReferenciante(c2);
+        assertEquals("A", c2.getValor());
+
+        c1.setContenido("NEW CONTENT");
+        assertEquals("NEW CONTENT", c2.getValor());
     }
 
 }
