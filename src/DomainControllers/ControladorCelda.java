@@ -2,8 +2,11 @@
 package DomainControllers;
 import DomainModel.*;
 
-import java.lang.reflect.Array;
-import java.util.Date;
+
+
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.HashMap;
 
 import static DomainModel.Documento.getDocumento;
 
@@ -11,7 +14,7 @@ import static DomainModel.Documento.getDocumento;
 /*
 * ClassName ControladorCelda
 *
-* Version info 0.0.3
+* Version info 0.0.4
 *
 * Author David Pérez Barroso
 */
@@ -23,7 +26,7 @@ public class ControladorCelda {
    ControladorCelda(){}
 
    /**
-    * Coge una celda de la hoja que le pasa presentación y se guarda la hoja, la posicion y la celda
+    * Se guarda una celda de la hoja, fila y columna que le pasa presentación
     * @param _idh identificador de la hoja
     * @param _f fila de la celda
     * @param _c columna de la celda
@@ -37,10 +40,9 @@ public class ControladorCelda {
 
 
     /**
-     * Trunca el contenido decimal de la celda
+     * Trunca el numero decimal introducido y lo pone en el valor de la celda
      * @param _v valor decimal a truncar
      * @param _op numero de decimales a truncar
-     * @return Un string con _value truncado a tantos decimales como se ha seleccionado en _op
      */
 
    public void truncarValor(double _v, int _op) {
@@ -68,7 +70,7 @@ public class ControladorCelda {
 
 
     /**
-     * Pone el valor absoluto del valor de la celda
+     * Pone el valor absoluto del numero introducido en el valor de la celda
      * @param _a numero a poner en valor absoluto
      */
     public void valorAbsoluto(double _a){
@@ -84,7 +86,7 @@ public class ControladorCelda {
     }
 
     /**
-     * Aproxima el valor de la celda
+     * Aproxima el numero decimal introducido y lo pone en el valor de la celda
      * @param _v valor a aproximar
      */
     public void aproximarValor(double _v){
@@ -94,7 +96,7 @@ public class ControladorCelda {
     }
 
     /**
-     * Covierte el valor decimal de la celda a binario
+     * Covierte el valor en base decimal introducido y lo deja en el valor de la celda en base binaria
      * @param _dec valor decimal a convertir en binario
      */
     public void convertirValorDB(int _dec){
@@ -102,7 +104,7 @@ public class ControladorCelda {
     }
 
     /**
-     * Convierte el valor binario de la celda a decimal
+     * Covierte el valor en base binaria introducido y lo deja en el valor de la celda en base decimal
      * @param _b valor binario a convertir en decimal
      */
     public void convertirValorBD(int _b){
@@ -111,7 +113,7 @@ public class ControladorCelda {
     }
 
     /**
-     * Convierte el valor decimal de la celda a hexadecimal
+     * Covierte el valor en base decimal introducido y lo deja en el valor de la celda en base hexadecimal
      * @param _dec valor en decimal a convertir en hexadecimal
      */
     public void convertirValorDH(int _dec){
@@ -120,7 +122,7 @@ public class ControladorCelda {
 
 
     /**
-     * Convierte el valor hexadecimal de la celda a decimal
+     * Covierte el valor en base hexadecimal introducido y lo deja en el valor de la celda en base decimal
      * @param _h valor hexadecimal a convertir en decimal
      */
     public void convertirValorHD(String _h){
@@ -129,7 +131,7 @@ public class ControladorCelda {
     }
 
     /**
-     * Convierte el valor binario de la celda en hexadecimal
+     * Covierte el valor en base binairia introducido y lo deja en el valor de la celda en base hexadecimal
      * @param _b valor binario a convertir en hexadecimal
      */
     public void convertirValorBH(int _b){
@@ -139,7 +141,7 @@ public class ControladorCelda {
 
 
     /**
-     * Convierte el valor hexadeciaml de la celda en binario
+     * Covierte el valor en base hexadecimal introducido y lo deja en el valor de la celda en base binaria
      * @param _h valor hexadecimal a convertir en binario
      */
     public void convertirValorHB(String _h){
@@ -148,7 +150,7 @@ public class ControladorCelda {
     }
 
     /**
-     * Obtiene el mes de la fecha que hay en la celda
+     * Obtiene el mes de la fecha introducida y lo pone en el valor de la celda
      * @param _fecha de donde se obtiene el mes
      */
     public void obtenerMes(String _fecha){
@@ -164,6 +166,75 @@ public class ControladorCelda {
         }
         else this.celdaRef.setValor("#ERROR");
 
+    }
+
+
+    /**
+     * Obtiene el año de la fecha introducida y lo pone en el valor de la celda
+     * @param _fecha introducida de donde se obtiene el año
+     */
+    public void obtenerAño(String _fecha){
+        String dp[] = _fecha.split("/");
+        String y = dp[2];
+
+        int yr = Integer.parseInt(y);
+        if(yr >= 0) this.celdaRef.setValor(y);
+        else this.celdaRef.setValor("#ERROR");
+
+    }
+
+    /**
+     * Obtiene el dia en forma numerica de la fecha introducida y lo pone en el valor de la celda
+     * @param _fecha introducida de donde se obtiene el dia
+     */
+    public void obtenerDia(String _fecha){
+        String dp[] = _fecha.split("/");
+        String d = dp[0];
+
+        int dy = Integer.parseInt(d);
+        if(dy >= 0) this.celdaRef.setValor(d);
+        else this.celdaRef.setValor("#ERROR");
+
+    }
+
+    /**
+     * Obtiene el nombre del dia en castellano de la fecha introducida y lo pone en el valor de la celda
+     * @param _fecha introducida de donde se obtiene el nombre del dia
+     */
+    public void obtenerNombreDia(String _fecha){
+        /*Dado que DayOfWeek nos devuelve el dia en ingles, utilizaremos estas dos estructuras de datos para
+        traducirlos al castellano*/
+
+        String dyn[] = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
+        HashMap<Integer, String> dias = new HashMap<>();
+
+        for(int i = 0; i < 7; ++i){
+            dias.put(i+1, dyn[i]);
+        }
+
+        Month months[] = {Month.JANUARY, Month.FEBRUARY, Month.MARCH, Month.APRIL, Month.MAY, Month.JUNE, Month.JULY,
+                Month.AUGUST, Month.SEPTEMBER, Month.OCTOBER, Month.NOVEMBER, Month.DECEMBER};
+
+        String dp[] = _fecha.split("/");
+
+        int y = Integer.parseInt(dp[2]);
+        int mt = Integer.parseInt(dp[1]);
+        Month m = months[mt-1];
+        int dy = Integer.parseInt(dp[0]);
+
+        if(dy >= 0 && y >= 0 && (mt > 0 && mt < 12)) {
+            this.celdaRef.setValor(dias.get(LocalDate.of(y, m, dy).getDayOfWeek().getValue()));
+        } else this.celdaRef.setValor("#ERROR");
+
+    }
+
+
+    /**
+     * Mide la longitud de la palabra introducia y lo pone en el valor de la celda
+     * @param _palabra introducida a medir
+     */
+    public void longitudPalabra(String _palabra){
+        this.celdaRef.setValor(String.valueOf(_palabra.length()));
     }
 
 

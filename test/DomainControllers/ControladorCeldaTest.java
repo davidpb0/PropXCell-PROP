@@ -105,6 +105,30 @@ public class ControladorCeldaTest {
     }
 
     @Test
+    public void convertirValorDH(){
+        Documento d = Documento.getDocumento();
+        d.inicializaDocumento("Doc1", 2, 2);
+
+        ControladorCelda cc = new ControladorCelda();
+        cc.asignaCeldaPosicion(1, 1, 1);
+        cc.convertirValorDH(2);
+
+        cc.asignaCeldaPosicion(1, 1, 2);
+        cc.convertirValorDH(10);
+
+        cc.asignaCeldaPosicion(1, 2, 1);
+        cc.convertirValorDH(-10);
+
+        String s = d.getHoja(1).getCelda(1,1).getValor();
+        String s2 = d.getHoja(1).getCelda(1,2).getValor();
+        String s3 = d.getHoja(1).getCelda(2,1).getValor();
+
+        assertEquals("2", s);
+        assertEquals("a", s2);
+        assertEquals("fffffff6", s3);
+    }
+
+    @Test
     public void obtenerMes(){
         Documento d = Documento.getDocumento();
         d.inicializaDocumento("Doc1", 2, 2);
@@ -121,6 +145,66 @@ public class ControladorCeldaTest {
 
         assertEquals("Mayo", s);
         assertEquals("#ERROR", s2);
+    }
+
+    @Test
+    public void obtenerAño(){
+        Documento d = Documento.getDocumento();
+        d.inicializaDocumento("Doc1", 2, 2);
+
+        ControladorCelda cc = new ControladorCelda();
+        cc.asignaCeldaPosicion(1, 1, 1);
+        cc.obtenerAño("24/05/2031");
+
+        cc.asignaCeldaPosicion(1, 1, 2);
+        cc.obtenerAño("24/03/-2031");
+
+        String s = d.getHoja(1).getCelda(1,1).getValor();
+        String s2 = d.getHoja(1).getCelda(1,2).getValor();
+
+        assertEquals("2031", s);
+        assertEquals("#ERROR", s2);
+
+    }
+
+    @Test
+    public void obtenerNombreDia(){
+        Documento d = Documento.getDocumento();
+        d.inicializaDocumento("Doc1", 2, 2);
+
+        ControladorCelda cc = new ControladorCelda();
+        cc.asignaCeldaPosicion(1, 1, 1);
+        cc.obtenerNombreDia("17/04/2022");
+
+        cc.asignaCeldaPosicion(1, 1, 2);
+        cc.obtenerNombreDia("24/03/-2031");
+
+        String s = d.getHoja(1).getCelda(1,1).getValor();
+        String s2 = d.getHoja(1).getCelda(1,2).getValor();
+
+        assertEquals("Domingo", s);
+        assertEquals("#ERROR", s2);
+
+    }
+
+    @Test
+    public void longitudPalabra(){
+        Documento d = Documento.getDocumento();
+        d.inicializaDocumento("Doc1", 2, 2);
+
+        ControladorCelda cc = new ControladorCelda();
+        cc.asignaCeldaPosicion(1, 1, 1);
+        cc.longitudPalabra("Hola");
+
+        cc.asignaCeldaPosicion(1, 1, 2);
+        cc.longitudPalabra("");
+
+        String s = d.getHoja(1).getCelda(1,1).getValor();
+        String s2 = d.getHoja(1).getCelda(1,2).getValor();
+
+        assertEquals("4", s);
+        assertEquals("0", s2);
+
     }
 
 
