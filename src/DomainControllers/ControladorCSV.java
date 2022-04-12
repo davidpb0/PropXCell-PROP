@@ -12,6 +12,7 @@ import java.io.IOException;
 public class ControladorCSV {
     private EscribeCSV escribecsvRef;
     private CargaCSV cargacsvRef;
+    private int IDHojaActual;
 
     /**
      * Constructora básica para el ControladorCSV
@@ -46,9 +47,11 @@ public class ControladorCSV {
 
     /**
      * invoca la operación guarda() de EscribeCSV
+     * @param _nombreCSV nombre del archivo CSV a guardar
+     * @param IDHoja ID de la hoja que se va a exportar a CSV
      */
-    public void escribeCSV(String _nombreDoc) {
-        escribecsvRef.guarda(Documento.getDocumento(), _nombreDoc);
+    public void escribeCSV(String _nombreCSV, int IDHoja) throws IOException {
+        escribecsvRef.guarda(_nombreCSV, IDHoja);
     }
 }
 

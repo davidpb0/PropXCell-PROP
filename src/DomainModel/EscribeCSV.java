@@ -7,6 +7,9 @@ package DomainModel;
  * Author Iván Risueño Martín
  */
 
+import java.io.*;
+import java.util.HashMap;
+
 public class EscribeCSV {
     private String ubicacion;
     private String separador;
@@ -23,10 +26,34 @@ public class EscribeCSV {
 
     /**
      * Guarda el documento como CSV en un archivo en disco
-     * @param _d es el documento a formatear y guardar como CSV
-     * @param _nombreDoc es el nombre del archivo CSV
+     * @param _nombreCSV nombre del archivo CSV
+     * @param IDHoja hoja para exportar a CSV
      */
-    public void guarda(Documento _d, String _nombreDoc) {
-        //...
+    public void guarda(String _nombreCSV, int IDHoja) throws IOException {
+        // Preparamos el archivo y el buffer para escribir en él
+        File CSV = new File(ubicacion + "/" + _nombreCSV);
+        FileOutputStream fos = new FileOutputStream(CSV);
+        OutputStreamWriter osw = new OutputStreamWriter(fos);
+        Writer w = new BufferedWriter(osw);
+
+        // Conseguimos la información necesaria para empezar a escribir y escribimos
+        Hoja hoja = Documento.getDocumento().getHoja(IDHoja);
+        HashMap<Posicion, Celda> celdas = hoja.getCeldas();
+        int ncolumnas = hoja.getColumnas();
+        int col = 1;
+
+        for (Posicion pos: celdas.keySet()) {
+            if (col == ncolumnas) {
+                w.write("\n");
+                col = 1;
+            } else if (col != 1) w.write(separador);
+            Celda c = celdas.get(pos);
+            String s = c.getValor();
+            w.write(s);
+
+            ++col;
+        }
+
+        w.close();
     }
 }
