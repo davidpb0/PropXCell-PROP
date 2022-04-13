@@ -13,23 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Traductor {
-    private static Traductor unico_traductor;                               // Única instancia
 
     private Traductor() {}
-
-    public static Traductor getTraductor() {
-        if (unico_traductor == null) unico_traductor = new Traductor();
-        return unico_traductor;
-    }
-
-    /**
-     * @return true si _s puede formatearse como un entero, false en caso contrario.
-     * Comprueba que la sintaxis de un string corresponda a la de un número entero.
-     * @param _s el parámetro a comprobar.
-     */
-    private static boolean esInt(String _s) {
-        return _s != null && _s.matches("[0-9.]+");
-    }
 
     /**
      * @return el string convertido a número entero.
@@ -37,8 +22,7 @@ public class Traductor {
      * @param _s el parámetro a convertir a entero.
      */
     private static int StringInt(String _s) {
-        if (esInt(_s)) return Integer.parseInt(_s);
-        return -1;                                                          // Cambiar por throw exception
+        return Integer.parseInt(_s);
     }
 
     /**
