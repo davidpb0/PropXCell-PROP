@@ -15,22 +15,37 @@ import java.util.Vector;
 public class Celda {
     private String valor = "";
     private String contenido = "";
+    private Posicion posicion;
     private final ArrayList<Celda> referenciantes = new ArrayList<>();
 
     /**
      * Constructora de una celda vacía
+     * @param _pos objeto posición asignado a la celda
      */
-    public Celda() {
+    public Celda(Posicion _pos) {
         this.valor = "";
         this.contenido = "";
+        this.posicion = _pos;
     }
 
     /**
      * Constructora de una celda con contenido
+     * @param _pos objeto posición asignado a la celda
      * @param contenido el contenido que se asigna a la celda en su creación
      */
-    public Celda(String contenido) {
+    public Celda(Posicion _pos, String contenido) {
+        this.posicion = _pos;
         this.setContenido(contenido);
+    }
+
+    public Celda(Celda c) {
+        this.contenido = c.getContenido();
+        this.valor = c.getValor();
+        this.posicion = c.getPosicion();
+        ArrayList<Celda> refs = c.getReferenciantes();
+        for (Celda cel : refs) {
+            this.addReferenciante(cel);
+        }
     }
 
     /**
@@ -96,6 +111,20 @@ public class Celda {
             setValor(_contenido);
 
         this.contenido = _contenido;
+    }
+
+    /**
+     * @return el objeto posición de la celda
+     */
+    public Posicion getPosicion() {
+        return posicion;
+    }
+
+    /**
+     * @param posicion el objeto posición de la celda
+     */
+    public void setPosicion(Posicion posicion) {
+        this.posicion = posicion;
     }
 
     /**

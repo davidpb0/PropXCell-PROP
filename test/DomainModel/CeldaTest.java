@@ -10,60 +10,72 @@ public class CeldaTest {
 
     @Test
     public void contenidoVacio() {
-        Celda cell = new Celda();
+        Posicion p = new Posicion(1,1);
+        Posicion p2 = new Posicion(1, 2);
+        Celda cell = new Celda(p);
         String cont = cell.getContenido();
         assertEquals("", cont);
 
-        Celda cell2 = new Celda("");
+        Celda cell2 = new Celda(p2,"");
         assertEquals("", cell2.getContenido());
     }
 
     @Test
     public void valorVacio() {
-        Celda cell = new Celda();
+        Posicion p = new Posicion(1,1);
+        Posicion p2 = new Posicion(1, 2);
+        Celda cell = new Celda(p);
         String val = cell.getValor();
         assertEquals("", val);
 
-        Celda cell2 = new Celda("");
+        Celda cell2 = new Celda(p2, "");
         assertEquals("", cell2.getValor());
     }
 
     @Test
     public void contenidoString() {
-        Celda cell = new Celda();
+        Posicion p = new Posicion(1,1);
+        Posicion p2 = new Posicion(1, 2);
+        Celda cell = new Celda(p);
         cell.setContenido("Hola Mundo");
         String cont = cell.getContenido();
         assertEquals("Hola Mundo", cont);
 
-        Celda cell2 = new Celda("hola");
+        Celda cell2 = new Celda(p2,"hola");
         assertEquals("hola", cell2.getContenido());
     }
 
     @Test
     public void valorString() {
-        Celda cell = new Celda();
+        Posicion p = new Posicion(1,1);
+        Posicion p2 = new Posicion(1, 2);
+        Celda cell = new Celda(p);
         cell.setContenido("Hola Mundo");
         String val = cell.getValor();
         assertEquals("Hola Mundo", val);
 
-        Celda cell2 = new Celda("hola");
+        Celda cell2 = new Celda(p2,"hola");
         assertEquals("hola", cell2.getValor());
     }
 
     @Test
     public void contenidoFunc() {
-        Celda cell = new Celda();
+        Posicion p = new Posicion(1,1);
+        Posicion p2 = new Posicion(1, 2);
+        Celda cell = new Celda(p);
         cell.setContenido("=SUM(1, 2)");
         String cont = cell.getContenido();
         assertEquals("=SUM(1, 2)", cont);
 
-        Celda cell2 = new Celda("=SUM(1, 2)");
+        Celda cell2 = new Celda(p2,"=SUM(1, 2)");
         assertEquals("=SUM(1, 2)", cell2.getContenido());
     }
 
     @Test
     public void valorFunc() {
-        Celda cell = new Celda();
+        Posicion p = new Posicion(1,1);
+        Posicion p2 = new Posicion(1, 2);
+        Celda cell = new Celda(p);
         cell.setContenido("=SUM(1, 2)");
         String val = cell.getValor();
         /* !!!
@@ -73,20 +85,40 @@ public class CeldaTest {
          */
         assertEquals("#FUNC", val);
 
-        Celda cell2 = new Celda("=SUM(1, 2)");
+        Celda cell2 = new Celda(p2,"=SUM(1, 2)");
         assertEquals("#FUNC", cell2.getValor());
     }
 
     @Test
+    public void posicionTest() {
+        Posicion p1 = new Posicion(1, 1);
+        Posicion p2 = new Posicion(1, 2);
+        Posicion p3 = new Posicion(2, 1);
+
+        Celda c1 = new Celda(p1);
+        Celda c2 = new Celda(p2);
+
+        assertEquals(p1, c1.getPosicion());
+        assertEquals(p2, c2.getPosicion());
+
+        c1.setPosicion(p3);
+
+        assertEquals(p3, c1.getPosicion());
+    }
+
+    @Test
     public void referenciantesVacia () {
-        Celda cell = new Celda();
+        Posicion p = new Posicion(1,1);
+        Celda cell = new Celda(p);
         assertEquals(new ArrayList<Celda>(), cell.getReferenciantes());
     }
 
     @Test
     public void addReferencianteF () {
-        Celda c1 = new Celda("A");
-        Celda c2 = new Celda("B");
+        Posicion p = new Posicion(1,1);
+        Posicion p2 = new Posicion(1, 2);
+        Celda c1 = new Celda(p, "A");
+        Celda c2 = new Celda(p2, "B");
 
         c1.addReferenciante(c2);
 
@@ -95,8 +127,10 @@ public class CeldaTest {
 
     @Test
     public void borrarReferencianteF () {
-        Celda c1 = new Celda("A");
-        Celda c2 = new Celda("B");
+        Posicion p = new Posicion(1,1);
+        Posicion p2 = new Posicion(1, 2);
+        Celda c1 = new Celda(p, "A");
+        Celda c2 = new Celda(p2, "B");
 
         //C2 esta referenciando a C1 --> C2 tiene el valor de C1
         c1.addReferenciante(c2);
@@ -108,8 +142,10 @@ public class CeldaTest {
 
     @Test
     public void cambioValorReferenciaF() {
-        Celda c1 = new Celda("A");
-        Celda c2 = new Celda("B");
+        Posicion p = new Posicion(1,1);
+        Posicion p2 = new Posicion(1, 2);
+        Celda c1 = new Celda(p, "A");
+        Celda c2 = new Celda(p2, "B");
 
         //C2 esta referenciando a C1 --> C2 tiene el valor de C1
         c1.addReferenciante(c2);
@@ -117,6 +153,23 @@ public class CeldaTest {
 
         c1.setContenido("NEW CONTENT");
         assertEquals("NEW CONTENT", c2.getValor());
+    }
+
+    @Test
+    public void constructoraCopia(){
+        Posicion p = new Posicion(1, 1);
+        Posicion p2 = new Posicion(1, 2);
+        Celda c1 = new Celda(p, "ABC");
+        Celda cRef = new Celda(p2, "#REF");
+        c1.addReferenciante(cRef);
+
+        Celda c2 = new Celda(c1);
+
+        assertEquals(p, c2.getPosicion());
+        assertEquals("ABC", c2.getContenido());
+        assertEquals("ABC", c2.getValor());
+        assertEquals(c1.getReferenciantes(), c2.getReferenciantes());
+
     }
 
 }
