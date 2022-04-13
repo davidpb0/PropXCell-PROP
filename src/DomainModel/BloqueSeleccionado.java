@@ -25,7 +25,7 @@ public class BloqueSeleccionado {
      * @param _inicial la celda a utilizar como la superior izquierda.
      *        _final la celda a utilizar como la inferior derecha.
      */
-    private void setCelda(Celda _inicial, Celda _final) {
+    public void setCelda(Celda _inicial, Celda _final) {
         this.celdaInicial = _inicial;
         this.celdaFinal = _final;
     }
@@ -33,14 +33,14 @@ public class BloqueSeleccionado {
     /**
      * @return la celda superior izquierda del bloque seleccionado.
      */
-    private Celda getCeldaInicial() {
+    public Celda getCeldaInicial() {
         return this.celdaInicial;
     }
 
     /**
      * @return la celda inferior derecha del bloque seleccionado.
      */
-    private Celda getCeldaFinal() {
+    public Celda getCeldaFinal() {
         return this.celdaFinal;
     }
 }
