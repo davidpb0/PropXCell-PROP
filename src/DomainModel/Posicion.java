@@ -9,56 +9,33 @@ package DomainModel;
  */
 
 public class Posicion {
-    public int columna;
-    public int fila;
+    private int fila;
+    private int columna;
 
     /**
-     * Constructora de posición.
-     * @param _pos una letra representando la columna y un número representando la fila
-     */
-    public Posicion(String _pos) {
-        char col = _pos.toUpperCase().charAt(0);
-        this.fila = Integer.parseInt(_pos.substring(1));
-
-        this.columna = columnParse(col);
-    }
-
-    /**
-     * Constructora de posicion (2 enteros);
+     * Constructora de posicion
      * @param columna un entero que representa la columna
      * @param fila un entero que representa la fila
      */
     public Posicion(int fila, int columna) {
-        this.columna = columna;
         this.fila = fila;
+        this.columna = columna;
     }
 
     /**
-     * @return la posicion en formato String
+     * Devuelve la fila en la que está situada
+     * @return un entero que representa el número de fila
      */
-    public String getPosicion() {
-        String pos = columnStringify(columna) + String.valueOf(fila);
-        return pos;
+    public int getFila() {
+        return fila;
     }
 
     /**
-     * @param col el char de la columna que hay que convertir a un int
-     * @return el int que pertenece a la columna dada
+     * Devuelve la columna en la que está situada
+     * @return un entero que representa el número de columna
      */
-    private int columnParse(char col) {
-        // 'A' en int es 65
-        int column = col - 64;
-        return column;
-    }
-
-    /**
-     * @param col el int de la columna que hay que convertir a un char
-     * @return el char que pertenece a la columna dada
-     */
-    private char columnStringify(int col) {
-        int c = col + 64;
-        char column = (char)c;
-        return column;
+    public int getColumna() {
+        return columna;
     }
 
     @Override
