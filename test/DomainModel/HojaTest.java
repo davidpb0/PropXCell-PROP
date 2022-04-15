@@ -134,4 +134,43 @@ public class HojaTest {
         assertEquals("", s2);
 
     }
+
+    @Test
+    public void añadirCeldaVacia(){
+        Hoja h = new Hoja(2, 2);
+        h.addCeldaVacia(2, 3);
+        h.addCeldaVacia(2, 1);
+
+        boolean b = h.getCeldas().containsKey(new Posicion(2, 3));
+
+        assertEquals(true, b);
+
+    }
+
+    @Test
+    public void quitarCelda(){
+        Hoja h = new Hoja(2, 2);
+        h.quitarCelda(2, 1);
+        h.quitarCelda(2, 3);
+
+        boolean b = h.getCeldas().containsKey(new Posicion(2, 1));
+
+        assertEquals(false, b);
+
+    }
+
+    @Test
+    public void cambiarPosicionCelda(){
+        Hoja h = new Hoja(2, 2);
+        Celda c = h.getCelda(2, 1);
+        Posicion p = c.getPosicion();
+        h.cambiarPosiconCelda(2, 1, 1, 2);
+
+        Posicion p2 = c.getPosicion();
+
+        boolean b = p != p2;
+        assertEquals(false, b);
+        assertEquals(1, p2.getFila());
+        assertEquals(2, p2.getColumna());
+    }
 }

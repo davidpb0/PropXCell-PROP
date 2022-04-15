@@ -2,7 +2,7 @@ package DomainModel;
 /*
  * ClassName DomainModel.Hoja
  *
- * Version info 0.0.2
+ * Version info 0.0.3
  *
  * Author David Pérez Barroso
  */
@@ -29,7 +29,8 @@ public class Hoja implements Serializable {
 
         for (int i = 1; i <= f; ++i){
             for (int j = 1; j <= c; ++j){
-                _h.celdas.put(new Posicion(i, j), new Celda());
+                Posicion p = new Posicion(i, j);
+                _h.celdas.put(p, new Celda(p));
             }
         }
     }
@@ -132,6 +133,62 @@ public class Hoja implements Serializable {
     public Celda getCelda(int _f, int _c){
         Celda cl = this.celdas.get(new Posicion(_f, _c));
         return cl;
+    }
+
+    /**
+     * Añada una celda vacia en la posicion indicada
+     * @param _f fila de la posicion en la que se encontrara la celda
+     * @param _c columna de la posicion en la que se encontrara la celda
+     */
+    public void addCeldaVacia(int _f, int _c){
+        if (this.celdas.containsKey(new Posicion(_f, _c))){
+            System.out.println("La posicion introducida ya existe");
+        }
+        else{
+            Posicion p = new Posicion(_f, _c);
+            this.celdas.put(p, new Celda(p));
+        }
+
+    }
+
+    /**
+     * Borra una celda con la posicion dada
+     * @param _f fila de la posicion de la celda a borrar
+     * @param _c columna de la posicion de la celda a borrar
+     */
+    public void quitarCelda(int _f, int _c){
+        if (this.celdas.containsKey(new Posicion(_f, _c))) {
+            this.celdas.remove(new Posicion(_f, _c));
+        }
+        else{
+            System.out.println("No existe la posicion introducida");
+        }
+
+    }
+
+    /**
+     * Cambia la posicion de una celda a otra posicion dada
+     * @param _fant fila de la posicion de la celda a la cual pertenece
+     * @param _cant columna de la posicion de la celda a la cual pertenece
+     * @param _fdp fila de la nueva posicion a la que se mueve la celda
+     * @param _cdp columna de la nueva posicion a la que se mueve la celda
+     */
+    public void cambiarPosiconCelda(int _fant, int _cant, int _fdp, int _cdp){
+        Posicion pant = new Posicion(_fant, _cant);
+        Posicion pdp = new Posicion(_fdp, _cdp);
+
+        if(!this.celdas.get(pdp).getContenido().isEmpty()){
+            System.out.println("Vas a remplazar una celda con contenido");
+        }
+        if (this.celdas.containsKey(pdp) && this.celdas.containsKey(pant)) {
+            Celda c = this.celdas.get(pant);
+            this.celdas.replace(pdp, c);
+            c.setPosicion(pdp);
+        }
+        else{
+            System.out.println("No existe una de las posiciones introducidas");
+        }
+
     }
 
 
