@@ -10,6 +10,7 @@ package DomainModel;
 public class BloqueTemporalCopiado {
 
     private Celda[][] bloqueCopiado;
+    private Boolean cortar;
 
 
     /**
@@ -60,4 +61,15 @@ public class BloqueTemporalCopiado {
     public Celda getCelda(int _f, int _c) {
         return bloqueCopiado[_f - 1][_c - 1];
     }
+
+    /**
+     * Setea el atributo cortar
+     * @param _cortar nuevo valor del atributo
+     */
+    public void setCortar(Boolean _cortar) { this.cortar = _cortar;}
+
+    /**
+     * @return el atributo cortar del bloque
+     */
+    public Boolean getCortar() { return this.cortar;}
 }

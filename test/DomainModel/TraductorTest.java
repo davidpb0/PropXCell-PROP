@@ -15,11 +15,11 @@ public class TraductorTest {
 
     @Test
     public void contenidoVacio() {
-        Celda cell = new Celda();
-        String cont = cell.getContenido();
-        assertEquals("", cont);
+        Posicion p = new Posicion(0, 0);
+        Celda cell = new Celda(p);
+        assertEquals("", cell.getContenido());
 
-        Celda cell2 = new Celda("");
+        Celda cell2 = new Celda(cell);
         assertEquals("", cell2.getContenido());
     }
 
