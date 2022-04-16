@@ -2,9 +2,9 @@ package DomainModel;
 /*
  * ClassName DomainModel.Hoja
  *
- * Version info 0.0.4
+ * Version info 0.0.5
  *
- * Author David Pérez Barroso
+ * Author David Perez Barroso
  */
 
 import java.io.Serializable;
@@ -89,7 +89,7 @@ public class Hoja implements Serializable {
      * Le asigna un nombre a la hoja
      * @param _nombre nombre asignado
      */
-    public void assignaNombre(String _nombre){
+    public void asignaNombre(String _nombre){
         this.nombre = _nombre;
     }
 
@@ -134,6 +134,7 @@ public class Hoja implements Serializable {
         return this.nombre;
     }
 
+
     /**
      * Devuelve todas las celdas de la hoja
      * @return un HashMap de las celdas con sus posiciones
@@ -154,33 +155,43 @@ public class Hoja implements Serializable {
     }
 
     /**
-     * Añada una celda vacia en la posicion indicada
+     * Comprueba si existe en la hoja la posicion dada
+     * @param p posicion a comprobar si es existente
+     * @return true si existe, false de lo contrario
+     */
+    public boolean existePosicion(Posicion p){
+        return this.celdas.containsKey(p);
+    }
+
+    /**
+     * Añada una celda vacia en la posicion indicada, el que llama a la funcion se encarga de actualizar el valor de
+     *      * filas y columnas
      * @param _f fila de la posicion en la que se encontrara la celda
      * @param _c columna de la posicion en la que se encontrara la celda
      */
-    public void addCeldaVacia(int _f, int _c){
-        if (this.celdas.containsKey(new Posicion(_f, _c))){
-            System.out.println("La posicion introducida ya existe");
-        }
-        else{
+    public boolean addCeldaVacia(int _f, int _c){
+        if (!this.celdas.containsKey(new Posicion(_f, _c))){
             Posicion p = new Posicion(_f, _c);
             this.celdas.put(p, new Celda(p));
+            return true;
         }
+        return false;
 
     }
 
     /**
-     * Borra una celda con la posicion dada
+     * Borra una celda con la posicion dada, el que llama a la funcion se encarga de actualizar el valor de
+     * filas y columnas
      * @param _f fila de la posicion de la celda a borrar
      * @param _c columna de la posicion de la celda a borrar
      */
-    public void quitarCelda(int _f, int _c){
+    public boolean quitarCelda(int _f, int _c){
         if (this.celdas.containsKey(new Posicion(_f, _c))) {
             this.celdas.remove(new Posicion(_f, _c));
+
+            return true;
         }
-        else{
-            System.out.println("No existe la posicion introducida");
-        }
+        return false;
 
     }
 
@@ -195,17 +206,11 @@ public class Hoja implements Serializable {
         Posicion pant = new Posicion(_fant, _cant);
         Posicion pdp = new Posicion(_fdp, _cdp);
 
-        if(!this.celdas.get(pdp).getContenido().isEmpty()){
-            System.out.println("Vas a remplazar una celda con contenido");
-        }
         if (this.celdas.containsKey(pdp) && this.celdas.containsKey(pant)) {
             Celda c = this.celdas.get(pant);
             //c.addReferenciante(this.celdas.get(pdp).getReferenciantes());
             this.celdas.replace(pdp, c);
             c.setPosicion(pdp);
-        }
-        else{
-            System.out.println("No existe una de las posiciones introducidas");
         }
 
     }
@@ -216,9 +221,7 @@ public class Hoja implements Serializable {
      * @param c celda que va a cambiar de posicion
      */
     public void cambiarPosicionCelda(Posicion p, Celda c){
-        if(!this.celdas.get(p).getContenido().isEmpty()){
-            System.out.println("Vas a remplazar una celda con contenido");
-        }
+
         if (this.celdas.containsKey(p)) {
             //c.addReferenciante(this.celdas.get(p).getReferenciantes());
             this.celdas.replace(p, c);
