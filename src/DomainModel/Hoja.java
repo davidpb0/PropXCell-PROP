@@ -2,7 +2,7 @@ package DomainModel;
 /*
  * ClassName DomainModel.Hoja
  *
- * Version info 0.0.3
+ * Version info 0.0.4
  *
  * Author David Pérez Barroso
  */
@@ -55,6 +55,24 @@ public class Hoja implements Serializable {
         this.columnas = _columnas;
         this.celdas = new HashMap<Posicion, Celda>();
         inicializaHoja(this);
+
+    }
+
+    /**
+     * Asigna un numero de filas a la hoja
+     * @param _f numero de filas que se asignaran a al hoja
+     */
+    public void setFilas(int _f){
+        this.filas = _f;
+
+    }
+
+    /**
+     * Asigna un numero de columnas a la hoja
+     * @param _c numero de columnas que se asignaran a la hoja
+     */
+    public void setColumnas(int _c){
+        this.columnas = _c;
 
     }
 
@@ -173,7 +191,7 @@ public class Hoja implements Serializable {
      * @param _fdp fila de la nueva posicion a la que se mueve la celda
      * @param _cdp columna de la nueva posicion a la que se mueve la celda
      */
-    public void cambiarPosiconCelda(int _fant, int _cant, int _fdp, int _cdp){
+    public void cambiarPosicionCelda(int _fant, int _cant, int _fdp, int _cdp){
         Posicion pant = new Posicion(_fant, _cant);
         Posicion pdp = new Posicion(_fdp, _cdp);
 
@@ -182,6 +200,7 @@ public class Hoja implements Serializable {
         }
         if (this.celdas.containsKey(pdp) && this.celdas.containsKey(pant)) {
             Celda c = this.celdas.get(pant);
+            //c.addReferenciante(this.celdas.get(pdp).getReferenciantes());
             this.celdas.replace(pdp, c);
             c.setPosicion(pdp);
         }
@@ -190,6 +209,29 @@ public class Hoja implements Serializable {
         }
 
     }
+
+    /**
+     * Cambia la posicion de una celda dada a otra posicion dada
+     * @param p posicion a la que se va mover la celda
+     * @param c celda que va a cambiar de posicion
+     */
+    public void cambiarPosicionCelda(Posicion p, Celda c){
+        if(!this.celdas.get(p).getContenido().isEmpty()){
+            System.out.println("Vas a remplazar una celda con contenido");
+        }
+        if (this.celdas.containsKey(p)) {
+            //c.addReferenciante(this.celdas.get(p).getReferenciantes());
+            this.celdas.replace(p, c);
+            c.setPosicion(p);
+        }
+        else{
+            System.out.println("No existe la posicion introducida");
+        }
+
+    }
+
+
+
 
 
 }

@@ -49,6 +49,14 @@ public class HojaTest {
     }
 
     @Test
+    public void setFilas(){
+        Hoja h =  new Hoja(20, 30);
+        h.setFilas(23);
+        int f = h.getFilas();
+        assertEquals(23, f);
+    }
+
+    @Test
     public void añadeNombreIdHojaDefault(){
         Hoja hoja = new Hoja();
         hoja.añadeNombreIdHojaDefault(1);
@@ -164,11 +172,26 @@ public class HojaTest {
         Hoja h = new Hoja(2, 2);
         Celda c = h.getCelda(2, 1);
         Posicion p = c.getPosicion();
-        h.cambiarPosiconCelda(2, 1, 1, 2);
+        h.cambiarPosicionCelda(2, 1, 1, 2);
 
         Posicion p2 = c.getPosicion();
 
-        boolean b = p != p2;
+        boolean b = p == p2;
+        assertEquals(false, b);
+        assertEquals(1, p2.getFila());
+        assertEquals(2, p2.getColumna());
+    }
+
+    @Test
+    public void cambiarPosicionCelda2(){
+        Hoja h = new Hoja(2, 2);
+        Celda c = h.getCelda(2, 1);
+        Posicion p = c.getPosicion();
+        h.cambiarPosicionCelda(new Posicion(1, 2), c);
+
+        Posicion p2 = c.getPosicion();
+
+        boolean b = p == p2;
         assertEquals(false, b);
         assertEquals(1, p2.getFila());
         assertEquals(2, p2.getColumna());
