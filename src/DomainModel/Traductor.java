@@ -2,7 +2,7 @@ package DomainModel;
 /*
  * ClassName DomainModel.Traductor
  *
- * Version info 1.0
+ * Version info 0.0.3
  *
  * Author Iván Risueño Martín
  */
@@ -74,7 +74,15 @@ public class Traductor {
      */
     private static String detecta(String _formula) {
         if (_formula.charAt(0) == '=') {
-
+            if (_formula.contains("abs")) return "#ABS";
+            else if (_formula.contains("trunc")) return "#TRUNC";
+            else if (_formula.contains("aprox")) return "#APROX";
+            else if (_formula.contains("convertirDB")) return "#VDB";
+            else if (_formula.contains("convertirBD")) return "#VBD";
+            else if (_formula.contains("convertirHD")) return "#VHD";
+            else if (_formula.contains("convertirDH")) return "#VDH";
+            else if (_formula.contains("convertirHB")) return "#VHB";
+            else if (_formula.contains("convertirBH")) return "#VBH";
         } else if (_formula.charAt(0) == '$') {
             return "#REFERENCE";
         }
