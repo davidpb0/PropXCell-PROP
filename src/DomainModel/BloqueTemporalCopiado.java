@@ -31,7 +31,7 @@ public class BloqueTemporalCopiado {
 
         for (int iterFila = filaIni; iterFila <= filaFin; ++iterFila) {
             for (int iterColum = columIni; iterColum <= columFin; ++iterColum) {
-                bloqueCopiado[iterFila][iterColum] = new Celda(hoja.getCelda(iterFila, iterColum));
+                bloqueCopiado[iterFila - filaIni][iterColum - columIni] = new Celda(hoja.getCelda(iterFila, iterColum));
             }     
         }
     }
@@ -54,12 +54,12 @@ public class BloqueTemporalCopiado {
     
     /**
      * Devuelve la celda de la posición indicada
-     * @param _f indica la fila relativa dentro del bloque temporal copiado
-     * @param _c indica la columna relativa dentro del bloque temporal copiado
+     * @param _f indica la fila relativa dentro del bloque temporal copiado (1 <= _f <= numFilas)
+     * @param _c indica la columna relativa dentro del bloque temporal copiado (1 <= _c <= numCols)
      * @return la celda con Posicion(f, c)
      */
     public Celda getCelda(int _f, int _c) {
-        return bloqueCopiado[_f][_c];
+        return bloqueCopiado[_f - 1][_c - 1];
     }
 
     /**
