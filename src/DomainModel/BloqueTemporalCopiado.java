@@ -30,7 +30,7 @@ public class BloqueTemporalCopiado {
 
         for (int iterFila = filaIni; iterFila <= filaFin; ++iterFila) {
             for (int iterColum = columIni; iterColum <= columFin; ++iterColum) {
-                bloqueCopiado[iterFila][iterColum] = new Celda(hoja.getCelda(iterFila, iterColum));
+                bloqueCopiado[iterFila - filaIni][iterColum - columIni] = new Celda(hoja.getCelda(iterFila, iterColum));
             }     
         }
     }
