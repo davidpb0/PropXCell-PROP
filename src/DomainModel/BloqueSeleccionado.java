@@ -46,6 +46,9 @@ public class BloqueSeleccionado {
         return this.celdaFinal;
     }
 
+    /**
+     * @return la hoja a la que pertenecen las celdas del bloque.
+     */
     public Hoja getHoja() {
         return this.hoja;
     }

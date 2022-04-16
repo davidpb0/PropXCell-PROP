@@ -68,5 +68,16 @@ public class Traductor {
         return formatoFecha.format(_fecha);
     }
 
+    /**
+     * @param _formula contenido introducido por el usuario
+     * @return tipo de contenido especificado por la fórmula
+     */
+    private static String detecta(String _formula) {
+        if (_formula.charAt(0) == '=') {
 
+        } else if (_formula.charAt(0) == '$') {
+            return "#REFERENCE";
+        }
+        return "#VALUE";
+    }
 }
