@@ -2,13 +2,14 @@ package DomainModel;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 
 /*
  * ClassName DomainModel.Documento
  *
- * Version info 0.0.2
+ * Version info 0.0.3
  *
  * Author David Pérez Barroso
  */
@@ -19,7 +20,7 @@ public class Documento implements Serializable {
     private static Documento instanceOfThisClass;
     private String nombre;
     private int numHojas;
-    private LocalDateTime fechaUltMod;
+    private String fechaUltMod;
     private HashMap<Integer, Hoja> hojasContenidas = new HashMap<Integer, Hoja>();
 
 
@@ -49,12 +50,10 @@ public class Documento implements Serializable {
     public void inicializaDocumento(String _nombre, int _fila, int _columna){
         this.nombre = _nombre;
 
-        this.fechaUltMod = LocalDateTime.now();
+        DateTimeFormatter fm = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        this.fechaUltMod = LocalDateTime.now().format(fm);
 
-        Hoja hIni = new Hoja(_fila, _columna);
-        hIni.añadeNombreIdHojaDefault(hojasContenidas.size()+1);
-        this.hojasContenidas.put(hojasContenidas.size()+1, hIni);
-        this.numHojas = hojasContenidas.size();
+        añadeHoja(_fila, _columna);
     }
 
 
@@ -66,12 +65,10 @@ public class Documento implements Serializable {
     public void inicializaDocumentoDefault(String _nombre){
         this.nombre = _nombre;
 
-        this.fechaUltMod = LocalDateTime.now();
+        DateTimeFormatter fm = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        this.fechaUltMod = LocalDateTime.now().format(fm);
 
-        Hoja hIni = new Hoja();
-        hIni.añadeNombreIdHojaDefault(hojasContenidas.size()+1);
-        this.hojasContenidas.put(hojasContenidas.size()+1, hIni);
-        this.numHojas = hojasContenidas.size();
+        añadeHojaDf();
     }
 
 
@@ -107,7 +104,7 @@ public class Documento implements Serializable {
      * Devuelve la fecha de creación del documento
      * @return fecha de creacion del documento
      */
-    public LocalDateTime getFecha(){
+    public String getFecha(){
         return this.fechaUltMod;
     }
 
@@ -124,5 +121,54 @@ public class Documento implements Serializable {
      */
     public void recalculaNumHojas(){
         this.numHojas = this.hojasContenidas.size();
+    }
+
+    /**
+     * Añade una Hoja con los valores por defecto al documento
+     */
+    public void añadeHojaDf(){
+        Hoja h = new Hoja();
+        h.añadeNombreIdHojaDefault(hojasContenidas.size()+1);
+        this.hojasContenidas.put(hojasContenidas.size()+1, h);
+        recalculaNumHojas();
+    }
+
+    /**
+     * Añada una Hoja al documento con los valores dados, se le asigna un identificador autmaticamente
+     * @param _f numero de filas que tendra la hoja
+     * @param _c numero de columnas que tendra la hoja
+     */
+    public void añadeHoja(int _f, int _c){
+        Hoja h = new Hoja(_f, _c);
+        h.añadeNombreIdHojaDefault(hojasContenidas.size()+1);
+        this.hojasContenidas.put(hojasContenidas.size()+1, h);
+        recalculaNumHojas();
+    }
+
+    /**
+     * Elimina una hoja si el identificador de la hoaj existe, devuelve falso si no existe
+     * @param _id identificador de la hoja a borrar
+     * @return true si se ha borrado, false si la hoja no existe
+     */
+    public boolean eliminaHoja(int _id){
+        if (this.hojasContenidas.containsKey(_id) && !this.hojasContenidas.isEmpty()){
+            this.hojasContenidas.remove(_id);
+            recalculaNumHojas();
+            return true;
+        }
+        return false;
+
+
+    }
+
+    /**
+     * Elimina la instancia de Documento
+     */
+    public void eliminaDocumento(){
+        this.instanceOfThisClass = null;
+        this.nombre = null;
+        this.numHojas = 0;
+        this.fechaUltMod = null;
+        this.hojasContenidas = null;
     }
 }

@@ -165,7 +165,7 @@ public class Hoja implements Serializable {
 
     /**
      * Añada una celda vacia en la posicion indicada, el que llama a la funcion se encarga de actualizar el valor de
-     *      * filas y columnas
+     * filas y columnas, devuelve false si en la posicion introducida ya hay una celda
      * @param _f fila de la posicion en la que se encontrara la celda
      * @param _c columna de la posicion en la que se encontrara la celda
      */
@@ -181,7 +181,7 @@ public class Hoja implements Serializable {
 
     /**
      * Borra una celda con la posicion dada, el que llama a la funcion se encarga de actualizar el valor de
-     * filas y columnas
+     * filas y columnas, devuelve false si la posicion no existe
      * @param _f fila de la posicion de la celda a borrar
      * @param _c columna de la posicion de la celda a borrar
      */
@@ -196,13 +196,13 @@ public class Hoja implements Serializable {
     }
 
     /**
-     * Cambia la posicion de una celda a otra posicion dada
+     * Cambia la posicion de una celda a otra posicion dada, devuelve false si una de las posiciones no existe
      * @param _fant fila de la posicion de la celda a la cual pertenece
      * @param _cant columna de la posicion de la celda a la cual pertenece
      * @param _fdp fila de la nueva posicion a la que se mueve la celda
      * @param _cdp columna de la nueva posicion a la que se mueve la celda
      */
-    public void cambiarPosicionCelda(int _fant, int _cant, int _fdp, int _cdp){
+    public boolean cambiarPosicionCelda(int _fant, int _cant, int _fdp, int _cdp){
         Posicion pant = new Posicion(_fant, _cant);
         Posicion pdp = new Posicion(_fdp, _cdp);
 
@@ -211,25 +211,27 @@ public class Hoja implements Serializable {
             //c.addReferenciante(this.celdas.get(pdp).getReferenciantes());
             this.celdas.replace(pdp, c);
             c.setPosicion(pdp);
+            return true;
         }
+        return false;
 
     }
 
     /**
-     * Cambia la posicion de una celda dada a otra posicion dada
+     * Cambia la posicion de una celda dada a otra posicion dada, devuelve false si la posicion dada no existe
      * @param p posicion a la que se va mover la celda
      * @param c celda que va a cambiar de posicion
      */
-    public void cambiarPosicionCelda(Posicion p, Celda c){
+    public boolean cambiarPosicionCelda(Posicion p, Celda c){
 
         if (this.celdas.containsKey(p)) {
             //c.addReferenciante(this.celdas.get(p).getReferenciantes());
             this.celdas.replace(p, c);
             c.setPosicion(p);
+            return true;
         }
-        else{
-            System.out.println("No existe la posicion introducida");
-        }
+        return false;
+
 
     }
 

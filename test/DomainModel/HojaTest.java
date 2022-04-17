@@ -3,7 +3,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 
-
 public class HojaTest {
 
     /**
@@ -17,7 +16,7 @@ public class HojaTest {
      * un tamaños igual a tantas celdas como define el numero de columnas y filas que tienen.
      */
     @Test
-    public void inicializaHoja(){
+    public void testInicializaHoja(){
         Hoja h = new Hoja(2, 2);
         int s = h.getCeldas().size();
 
@@ -48,7 +47,7 @@ public class HojaTest {
      * su numero de filas y columnas.
      */
     @Test
-    public void TestConstructoraDefault(){
+    public void testConstructoraDefault(){
         Hoja h =  new Hoja();
 
         int f = h.getFilas();
@@ -69,7 +68,7 @@ public class HojaTest {
      * y columnas sean equivalentes a los introducidos en la creadora
      */
     @Test
-    public void TestConstructoraValores(){
+    public void testConstructoraValores(){
         Hoja h =  new Hoja(20, 30);
 
         int f = h.getFilas();
@@ -91,7 +90,7 @@ public class HojaTest {
      * cualquiera de las dos constructoras
      */
     @Test
-    public void setFilas(){
+    public void testSetFilas(){
         Hoja h =  new Hoja(20, 30);
         h.setFilas(23);
         int f = h.getFilas();
@@ -109,7 +108,7 @@ public class HojaTest {
      * cualquiera de las dos constructoras
      */
     @Test
-    public void setColumnas(){
+    public void testSetColumnas(){
         Hoja h =  new Hoja(20, 30);
         h.setColumnas(23);
         int c = h.getColumnas();
@@ -127,7 +126,7 @@ public class HojaTest {
      * al numero dado.
      */
     @Test
-    public void añadeNombreIdHojaDefault(){
+    public void testAñadeNombreIdHojaDefault(){
         Hoja hoja = new Hoja();
         Hoja h2 = new Hoja();
 
@@ -157,7 +156,7 @@ public class HojaTest {
      * Para ello comprobaremos que el nombre de la hoja sea el mismo que se ha introducido
      */
     @Test
-    public void asignaNombre(){
+    public void testAsignaNombre(){
         Hoja hoja = new Hoja();
         hoja.añadeNombreIdHojaDefault(1);
         hoja.asignaNombre("HojaPrueba");
@@ -175,7 +174,7 @@ public class HojaTest {
      * Para ello comprobaremos que devuelve cierto si el identificador es el mismo y falso si no lo es
      */
     @Test
-    public void esHoja(){
+    public void testEsHoja(){
         Hoja hoja = new Hoja();
         hoja.añadeNombreIdHojaDefault(1);
 
@@ -197,7 +196,7 @@ public class HojaTest {
      * Para ello comprobaremos que devuelve el identificador que previamente le habremos asignado
      */
     @Test
-    public void getId(){
+    public void testGetId(){
         Hoja h = new Hoja();
         h.añadeNombreIdHojaDefault(1);
 
@@ -222,7 +221,7 @@ public class HojaTest {
      * o manualmente
      */
     @Test
-    public void getColumnas(){
+    public void testGetColumnas(){
         Hoja h = new Hoja();
         int c = h.getColumnas();
 
@@ -248,7 +247,7 @@ public class HojaTest {
      * o manualmente
      */
     @Test
-    public void getFilas(){
+    public void testGetFilas(){
         Hoja h = new Hoja();
         int f = h.getFilas();
 
@@ -274,7 +273,7 @@ public class HojaTest {
      * o manualmente
      */
     @Test
-    public void getNombre(){
+    public void testGetNombre(){
         Hoja h = new Hoja();
         h.asignaNombre("HojaPrueba");
         String name = h.getNombre();
@@ -297,7 +296,7 @@ public class HojaTest {
      * Para ello comprobaremos que el tamaño de la estructura que devuelve sea el mismo que el que tiene la Hoja
      */
     @Test
-    public void getCeldas(){
+    public void testGetCeldas(){
         Hoja h = new Hoja(2, 2);
         int clds = h.getCeldas().size();
         assertEquals(4, clds);
@@ -314,7 +313,7 @@ public class HojaTest {
      * hay en la posicion introducida
      */
   @Test
-    public void getCelda(){
+    public void testGetCelda(){
       Hoja h = new Hoja(2, 2);
       h.getCeldas().get(new Posicion(1, 1)).setContenido("ABCD");
       h.getCeldas().get(new Posicion(2, 1)).setContenido("AAAA");
@@ -346,7 +345,7 @@ public class HojaTest {
      * son los correctos
      */
     @Test
-    public void existePosicion(){
+    public void testExistePosicion(){
         Hoja h = new Hoja(2, 2);
         Posicion p = new Posicion(1, 2);
         Posicion p2 = new Posicion(3, 2);
@@ -369,7 +368,7 @@ public class HojaTest {
      * Para ello comprobaremos que una vez introducida esta celda, existe en la hoja
      */
     @Test
-    public void addCeldaVacia(){
+    public void testAddCeldaVacia(){
         Hoja h = new Hoja(2, 2);
         boolean b2 = h.addCeldaVacia(2, 3);
         boolean b3 = h.addCeldaVacia(2, 1);
@@ -394,7 +393,7 @@ public class HojaTest {
      * que la existente ha sido eliminada del mapa
      */
     @Test
-    public void quitarCelda(){
+    public void testQuitarCelda(){
         Hoja h = new Hoja(2, 2);
         boolean b2 =  h.quitarCelda(2, 1);
         boolean b3 = h.quitarCelda(2, 3);
@@ -407,8 +406,19 @@ public class HojaTest {
 
     }
 
+    /**
+     * Objeto de la prueba: Testear la funcion cambiarPosicionCelda
+     *
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     *
+     * - Operativa: En este test de cambiarPosicionCelda se definen una Hoja con la constructora con parametros.
+     * El objetivo es comprobar que se cambia la celda de la primera posicion dada a la segunda posicion dada.
+     * Para ello cogeremos una celda y nos quedaremos con su posicion, seguidamente cambiaremos la celda de posicion
+     * por otra dada, una vez hecho volveremos a coger la posicion de la celda. Finalmente comprobamos que las
+     * dos posiciones son distintas y ademas la nueva posicion corresponde con la introducida
+     */
     @Test
-    public void cambiarPosicionCelda(){
+    public void testCambiarPosicionCelda(){
         Hoja h = new Hoja(2, 2);
         Celda c = h.getCelda(2, 1);
         Posicion p = c.getPosicion();
@@ -422,18 +432,35 @@ public class HojaTest {
         assertEquals(2, p2.getColumna());
     }
 
+
+    /**
+     * Objeto de la prueba: Testear la variante de la funcion cambiarPosicionCelda
+     *
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     *
+     * - Operativa: En este test de cambiarPosicionCelda se definen una Hoja con la constructora con parametros.
+     * El objetivo es comprobar que la variante de la funcion cambiarPosicionCelda funciona correctamente.
+     * El funcionamiento es igual a la otra variante, lo diferente en esta, es que en lugar de introducir 4 enteros que
+     * definen dos posiciones (la actual y la futura), se pasa una posicion(la futura) y una celda.
+     */
     @Test
-    public void cambiarPosicionCelda2(){
+    public void testCambiarPosicionCelda2(){
         Hoja h = new Hoja(2, 2);
         Celda c = h.getCelda(2, 1);
         Posicion p = c.getPosicion();
-        h.cambiarPosicionCelda(new Posicion(1, 2), c);
-
+        boolean b1 = h.cambiarPosicionCelda(new Posicion(1, 2), c);
         Posicion p2 = c.getPosicion();
+        boolean b2 = h.cambiarPosicionCelda(new Posicion(3, 2), c);
 
         boolean b = p == p2;
         assertEquals(false, b);
+        assertEquals(true, b1);
+        assertEquals(false, b2);
         assertEquals(1, p2.getFila());
         assertEquals(2, p2.getColumna());
     }
+
+
+
+
 }

@@ -14,13 +14,14 @@ import static DomainModel.Documento.getDocumento;
 /*
 * ClassName ControladorCelda
 *
-* Version info 0.0.4
+* Version info 0.0.5
 *
 * Author David Pérez Barroso
 */
 
 public class ControladorCelda {
    private Celda celdaRef;
+   private Hoja hojaAct;
 
 
    ControladorCelda(){}
@@ -35,8 +36,92 @@ public class ControladorCelda {
    public void asignaCeldaPosicion(int _idh, int _f, int _c){
       Documento d = getDocumento();
       Hoja h = d.getHoja(_idh);
+      this.hojaAct = h;
       this.celdaRef = h.getCelda(_f, _c);
    }
+
+
+    /**
+     * Escribe el contenido que le pasan en la celda, si es una funcion, llama a la funcion correspondiente y ademas
+     * escribe su valor en la celda
+     * @param _content contenido a escribir en la celda
+     */
+  /* public void escribirContenido(String _content){
+       this.celdaRef.setContenido(_content);
+
+
+       String type = Traductor.detecta(_content);
+      // if (_content = ref) ref.borrarRef(me);
+       switch (type) {
+           case "#ABS":
+               valorAbsoluto(-2);
+               break;
+           case "#TRUNC":
+               truncarValor(5.5, 2);
+               break;
+           case "#APROX":
+               aproximarValor(5.35);
+               break;
+           case "#VDB":
+               convertirValorDB(50);
+               break;
+           case "#VBD":
+               convertirValorBD(10);
+               break;
+           case "#VHD":
+               convertirValorHD("a5");
+               break;
+           case "#VDH":
+               convertirValorDH(30);
+               break;
+           case "#VHB":
+               convertirValorHB("a5");
+               break;
+           case "#VBH":
+               convertirValorBH(10);
+               break;
+           case "#MES":
+               obtenerMes("20/05/2001");
+               break;
+           case "#AÑO":
+               obtenerAño("20/05/2001");
+               break;
+           case "#DIAS":
+               obtenerDia("20/05/2001");
+               break;
+           case "#NDIA":
+               obtenerNombreDia("20/05/2001");
+               break;
+           case "#LONG":
+               longitudPalabra("Hola");
+               break;
+           case "#REFERENCE":
+               Celda c = hojaAct.getCelda(1,1);
+               this.celdaRef.addReferenciante(c);
+               break;
+           case "#MEDIA":
+               //Se llama a la funcion  aun no creada
+               break;
+           case "#MEDIANA":
+               //Se llama a la funcion  aun no creada
+               break;
+           case "#VAR":
+               //Se llama a la funcion  aun no creada
+               break;
+           case "#COV":
+               //Se llama a la funcion  aun no creada
+               break;
+           case "#DESV":
+               //Se llama a la funcion  aun no creada
+               break;
+           case "#COEFP":
+               //Se llama a la funcion  aun no creada
+               break;
+           default:
+               this.celdaRef.setValor(_content);
+       }
+
+   }*/
 
 
     /**
@@ -62,9 +147,9 @@ public class ControladorCelda {
            int indice = (int) Math.pow(10, _op);
            _v = (int) (_v * indice);
            _v = (double) (_v / indice);
-           celdaRef.setValor(String.valueOf(_v));
+           celdaRef.setContenido(String.valueOf(_v));
        }
-       else celdaRef.setValor("#ERROR");
+       else celdaRef.setContenido("#ERROR");
 
     }
 
