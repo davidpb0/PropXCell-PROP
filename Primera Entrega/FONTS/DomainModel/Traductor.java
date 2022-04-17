@@ -7,11 +7,9 @@ package DomainModel;
  * Author Iván Risueño Martín
  */
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.regex.Pattern;
 
 public class Traductor {
 
