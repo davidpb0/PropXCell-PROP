@@ -10,7 +10,6 @@ package DomainModel;
 
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class Celda {
     private String valor = "";
