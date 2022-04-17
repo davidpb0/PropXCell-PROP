@@ -7,12 +7,18 @@ package main.Domain.DomainControllers;
  * Author Iván Risueño Martín
  */
 
-import DomainModel.*;
 import main.Domain.DomainModel.*;
 
 public class ControladorBloque {
 
     private BloqueTemporalCopiado bloqueCopiado;
+
+    /**
+     * Constructora básica para el ControladorBloque
+     */
+    public ControladorBloque() {
+        bloqueCopiado = null;
+    }
 
     /**
      * Da de alta un BloqueTemporalCopiado para copiarlo a otro lugar del documento
