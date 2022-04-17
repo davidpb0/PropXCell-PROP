@@ -2,11 +2,10 @@ package test;
 
 import main.Domain.DomainModel.Celda;
 import main.Domain.DomainModel.Posicion;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.assertEquals;
 
 public class CeldaTest {
 

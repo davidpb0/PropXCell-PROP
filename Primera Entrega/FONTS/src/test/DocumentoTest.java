@@ -1,8 +1,8 @@
 package test;
-import static org.junit.Assert.*;
 
 import main.Domain.DomainModel.Documento;
 import main.Domain.DomainModel.Hoja;
+import org.junit.Assert;
 import org.junit.Test;
 
 

@@ -1,9 +1,9 @@
 package test;
-import static org.junit.Assert.*;
 
 import main.Domain.DomainModel.Celda;
 import main.Domain.DomainModel.Hoja;
 import main.Domain.DomainModel.Posicion;
+import org.junit.Assert;
 import org.junit.Test;
 
 

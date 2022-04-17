@@ -2,6 +2,7 @@ package test;
 
 import main.Domain.DomainModel.Celda;
 import main.Domain.DomainModel.Posicion;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.text.ParseException;
@@ -10,7 +11,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class TraductorTest {
 
@@ -18,23 +18,23 @@ public class TraductorTest {
     public void contenidoVacio() {
         Posicion p = new Posicion(0, 0);
         Celda cell = new Celda(p);
-        Assert.assertEquals("", cell.getContenido());
+        assertEquals("", cell.getContenido());
 
         Celda cell2 = new Celda(cell);
-        Assert.assertEquals("", cell2.getContenido());
+        assertEquals("", cell2.getContenido());
     }
 
     @Test
     public void StringInt() {
         String s = "123";
         Assert.assertTrue(s.matches("[0-9.]+"));
-        Assert.assertEquals(Integer.parseInt(s), 123);
+        assertEquals(Integer.parseInt(s), 123);
     }
 
     @Test
     public void StringFloat() {
         String s = "123.4";
-        Assert.assertEquals(Float.parseFloat(s), 123.4f);
+        assertEquals(Float.parseFloat(s), 123.4f);
     }
 
     @Test
@@ -42,26 +42,26 @@ public class TraductorTest {
         String s = "01/01/2001";
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         Date d = formatoFecha.parse(s);
-        Assert.assertEquals(formatoFecha.format(d), "01/01/2001");
+        assertEquals(formatoFecha.format(d), "01/01/2001");
     }
 
     @Test
     public void IntString() {
         int i = 123;
-        Assert.assertEquals(String.valueOf(i), "123");
+        assertEquals(String.valueOf(i), "123");
     }
 
     @Test
     public void FloatString() {
         Float f = 123.4f;
-        Assert.assertEquals(String.valueOf(f), "123.4");
+        assertEquals(String.valueOf(f), "123.4");
     }
 
     @Test
     public void DateString() {
         Date d = new Date(2001, Calendar.JANUARY, 30);
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        Assert.assertEquals(formatoFecha.format(d), "30/01/2001");
+        assertEquals(formatoFecha.format(d), "30/01/2001");
     }
 
 }

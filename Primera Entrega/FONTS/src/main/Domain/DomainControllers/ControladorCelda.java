@@ -1,10 +1,9 @@
 
 package main.Domain.DomainControllers;
-import DomainModel.*;
+
 import main.Domain.DomainModel.Celda;
 import main.Domain.DomainModel.Documento;
 import main.Domain.DomainModel.Hoja;
-
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -25,7 +24,7 @@ public class ControladorCelda {
    private Celda celdaRef;
 
 
-   ControladorCelda(){}
+   public ControladorCelda(){}
 
    /**
     * Se guarda una celda de la hoja, fila y columna que le pasa presentación

@@ -2,9 +2,8 @@ package drivers.components.ControladorCelda;
 
 import main.Domain.DomainControllers.ControladorCelda;
 import main.Domain.DomainModel.Documento;
+import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class ControladorCeldaTest {
 
