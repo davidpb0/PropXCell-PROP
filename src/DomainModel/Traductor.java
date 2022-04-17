@@ -2,7 +2,7 @@ package DomainModel;
 /*
  * ClassName DomainModel.Traductor
  *
- * Version info 0.0.3
+ * Version info 0.0.4
  *
  * Author Iván Risueño Martín
  */
@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 public class Traductor {
 
@@ -73,17 +74,29 @@ public class Traductor {
      * @return tipo de contenido especificado por la fórmula
      */
     private static String detecta(String _formula) {
-        if (_formula.charAt(0) == '=') {
-            if (_formula.contains("abs")) return "#ABS";
-            else if (_formula.contains("trunc")) return "#TRUNC";
-            else if (_formula.contains("aprox")) return "#APROX";
-            else if (_formula.contains("convertirDB")) return "#VDB";
-            else if (_formula.contains("convertirBD")) return "#VBD";
-            else if (_formula.contains("convertirHD")) return "#VHD";
-            else if (_formula.contains("convertirDH")) return "#VDH";
-            else if (_formula.contains("convertirHB")) return "#VHB";
-            else if (_formula.contains("convertirBH")) return "#VBH";
-        } else if (_formula.charAt(0) == '$') {
+        if (_formula.charAt(0) == '=' && _formula.indexOf(')') == _formula.length() - 1) {
+            if (_formula.indexOf("=abs(") == 0) return "#ABS";
+            else if (_formula.indexOf("=trunc(") == 0) return "#TRUNC";
+            else if (_formula.indexOf("=aprox(") == 0) return "#APROX";
+            else if (_formula.indexOf("=convertirDB(") == 0) return "#VDB";
+            else if (_formula.indexOf("=convertirBD(") == 0) return "#VBD";
+            else if (_formula.indexOf("=convertirHD(") == 0) return "#VHD";
+            else if (_formula.indexOf("=convertirDH(") == 0) return "#VDH";
+            else if (_formula.indexOf("=convertirHB(") == 0) return "#VHB";
+            else if (_formula.indexOf("=convertirBH(") == 0) return "#VBH";
+            else if (_formula.indexOf("=mes(") == 0) return "#MES";
+            else if (_formula.indexOf("=año(") == 0) return "#AÑO";
+            else if (_formula.indexOf("=diasemana(") == 0) return "#DIAS";
+            else if (_formula.indexOf("=nombredia(") == 0) return "#NDIA";
+            else if (_formula.indexOf("=longitud(") == 0) return "#LONG";
+            else if (_formula.indexOf("=media(") == 0) return "#MEDIA";
+            else if (_formula.indexOf("=mediana(") == 0) return "#MEDIANA";
+            else if (_formula.indexOf("=varianza(") == 0) return "#VAR";
+            else if (_formula.indexOf("=covarianza(") == 0) return "#COV";
+            else if (_formula.indexOf("=desviacion(") == 0) return "#DESV";
+            else if (_formula.indexOf("=pearson(") == 0) return "#COEFP";
+            else return "#ERRORFUNC";
+        } else if (_formula.charAt(0) == '$' && _formula.length() <= 5) { // Como mucho $AA11
             return "#REFERENCE";
         }
         return "#VALUE";
