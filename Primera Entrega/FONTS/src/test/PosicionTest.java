@@ -1,7 +1,8 @@
 package test;
 
 import main.Domain.DomainModel.Posicion;
-import org.junit.Test;
+import org.junit.Assert;
+import org.testng.annotations.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -20,11 +21,11 @@ class PosicionTest {
         Posicion pos1 = new Posicion("A1");
         Posicion pos2 = new Posicion("C4");
 
-        Assert.assertEquals(1, pos1.columna);
-        Assert.assertEquals(1, pos1.fila);
+        assertEquals(1, pos1.getColumna());
+        assertEquals(1, pos1.getFila());
 
-        Assert.assertEquals(3, pos2.columna);
-        Assert.assertEquals(4, pos2.fila);
+        assertEquals(3, pos2.getColumna());
+        assertEquals(4, pos2.getFila());
     }
 
     /**
