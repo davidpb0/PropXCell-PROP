@@ -1,5 +1,6 @@
 package DomainModel;
 
+import main.Domain.DomainModel.Posicion;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

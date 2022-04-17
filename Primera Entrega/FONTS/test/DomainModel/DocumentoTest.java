@@ -1,5 +1,8 @@
 package DomainModel;
 import static org.junit.Assert.*;
+
+import main.Domain.DomainModel.Documento;
+import main.Domain.DomainModel.Hoja;
 import org.junit.Test;
 
 

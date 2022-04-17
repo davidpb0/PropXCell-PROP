@@ -1,6 +1,7 @@
 package DomainControllers;
 
-import DomainModel.Documento;
+import main.Domain.DomainControllers.ControladorCelda;
+import main.Domain.DomainModel.Documento;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

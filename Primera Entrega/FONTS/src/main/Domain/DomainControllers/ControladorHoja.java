@@ -1,5 +1,7 @@
-package DomainControllers;
+package main.Domain.DomainControllers;
 import DomainModel.*;
+import main.Domain.DomainModel.Documento;
+import main.Domain.DomainModel.Hoja;
 
 /*ClassName ControladorHoja
  *

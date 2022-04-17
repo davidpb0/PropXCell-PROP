@@ -1,14 +1,16 @@
 
-package DomainControllers;
+package main.Domain.DomainControllers;
 import DomainModel.*;
-
+import main.Domain.DomainModel.Celda;
+import main.Domain.DomainModel.Documento;
+import main.Domain.DomainModel.Hoja;
 
 
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.HashMap;
 
-import static DomainModel.Documento.getDocumento;
+import static main.Domain.DomainModel.Documento.getDocumento;
 
 
 /*

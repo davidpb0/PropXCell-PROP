@@ -1,4 +1,4 @@
-package DomainControllers;
+package main.Domain.DomainControllers;
 /*
  * ClassName DomainControllers.ControladorBloque
  *
@@ -8,6 +8,7 @@ package DomainControllers;
  */
 
 import DomainModel.*;
+import main.Domain.DomainModel.*;
 
 public class ControladorBloque {
 

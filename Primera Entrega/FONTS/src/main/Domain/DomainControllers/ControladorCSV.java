@@ -1,5 +1,7 @@
-package DomainControllers;
+package main.Domain.DomainControllers;
 import DomainModel.*;
+import main.Domain.DomainModel.CargaCSV;
+import main.Domain.DomainModel.EscribeCSV;
 
 import java.io.IOException;
 

@@ -1,5 +1,7 @@
 package DomainModel;
 
+import main.Domain.DomainModel.Celda;
+import main.Domain.DomainModel.Posicion;
 import org.junit.Test;
 
 import java.util.ArrayList;

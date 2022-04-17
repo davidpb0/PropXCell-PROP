@@ -1,5 +1,9 @@
 package DomainModel;
 import static org.junit.Assert.*;
+
+import main.Domain.DomainModel.Celda;
+import main.Domain.DomainModel.Hoja;
+import main.Domain.DomainModel.Posicion;
 import org.junit.Test;
 
 

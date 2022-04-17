@@ -1,4 +1,4 @@
-package DomainModel;
+package main.Domain.DomainModel;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

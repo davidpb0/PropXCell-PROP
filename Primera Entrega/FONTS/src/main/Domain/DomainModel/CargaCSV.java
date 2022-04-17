@@ -1,4 +1,4 @@
-package DomainModel;
+package main.Domain.DomainModel;
 /*
  * ClassName DomainModel.CargaCSV
  *
