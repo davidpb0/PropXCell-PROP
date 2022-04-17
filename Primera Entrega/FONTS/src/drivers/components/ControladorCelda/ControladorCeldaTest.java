@@ -1,4 +1,4 @@
-package DomainControllers;
+package drivers.components.ControladorCelda;
 
 import main.Domain.DomainControllers.ControladorCelda;
 import main.Domain.DomainModel.Documento;
@@ -31,10 +31,10 @@ public class ControladorCeldaTest {
         String s4 = d.getHoja(1).getCelda(2,2).getValor();
         System.out.println(s4);
 
-        assertEquals("5.567", s);
-        assertEquals("5.5678", s2);
-        assertEquals("5.0", s3);
-        assertEquals("#ERROR", s4);
+        Assert.assertEquals("5.567", s);
+        Assert.assertEquals("5.5678", s2);
+        Assert.assertEquals("5.0", s3);
+        Assert.assertEquals("#ERROR", s4);
 
     }
     @Test
@@ -56,9 +56,9 @@ public class ControladorCeldaTest {
         String s2 = d.getHoja(1).getCelda(1,2).getValor();
         String s3 = d.getHoja(1).getCelda(2,1).getValor();
 
-        assertEquals("55", s);
-        assertEquals("55", s2);
-        assertEquals("1.34", s3);
+        Assert.assertEquals("55", s);
+        Assert.assertEquals("55", s2);
+        Assert.assertEquals("1.34", s3);
 
     }
 
@@ -81,9 +81,9 @@ public class ControladorCeldaTest {
         String s2 = d.getHoja(1).getCelda(1,2).getValor();
         String s3 = d.getHoja(1).getCelda(2,1).getValor();
 
-        assertEquals("26.0", s);
-        assertEquals("55.0", s2);
-        assertEquals("-1.0", s3);
+        Assert.assertEquals("26.0", s);
+        Assert.assertEquals("55.0", s2);
+        Assert.assertEquals("-1.0", s3);
     }
 
     @Test
@@ -101,8 +101,8 @@ public class ControladorCeldaTest {
         String s = d.getHoja(1).getCelda(1,1).getValor();
         String s2 = d.getHoja(1).getCelda(1,2).getValor();
 
-        assertEquals("10", s);
-        assertEquals("11111111111111111111111111111011", s2);
+        Assert.assertEquals("10", s);
+        Assert.assertEquals("11111111111111111111111111111011", s2);
     }
 
     @Test
@@ -124,9 +124,9 @@ public class ControladorCeldaTest {
         String s2 = d.getHoja(1).getCelda(1,2).getValor();
         String s3 = d.getHoja(1).getCelda(2,1).getValor();
 
-        assertEquals("2", s);
-        assertEquals("a", s2);
-        assertEquals("fffffff6", s3);
+        Assert.assertEquals("2", s);
+        Assert.assertEquals("a", s2);
+        Assert.assertEquals("fffffff6", s3);
     }
 
     @Test
@@ -144,8 +144,8 @@ public class ControladorCeldaTest {
         String s = d.getHoja(1).getCelda(1,1).getValor();
         String s2 = d.getHoja(1).getCelda(1,2).getValor();
 
-        assertEquals("Mayo", s);
-        assertEquals("#ERROR", s2);
+        Assert.assertEquals("Mayo", s);
+        Assert.assertEquals("#ERROR", s2);
     }
 
     @Test
@@ -163,8 +163,8 @@ public class ControladorCeldaTest {
         String s = d.getHoja(1).getCelda(1,1).getValor();
         String s2 = d.getHoja(1).getCelda(1,2).getValor();
 
-        assertEquals("2031", s);
-        assertEquals("#ERROR", s2);
+        Assert.assertEquals("2031", s);
+        Assert.assertEquals("#ERROR", s2);
 
     }
 
@@ -183,8 +183,8 @@ public class ControladorCeldaTest {
         String s = d.getHoja(1).getCelda(1,1).getValor();
         String s2 = d.getHoja(1).getCelda(1,2).getValor();
 
-        assertEquals("Domingo", s);
-        assertEquals("#ERROR", s2);
+        Assert.assertEquals("Domingo", s);
+        Assert.assertEquals("#ERROR", s2);
 
     }
 
@@ -203,8 +203,8 @@ public class ControladorCeldaTest {
         String s = d.getHoja(1).getCelda(1,1).getValor();
         String s2 = d.getHoja(1).getCelda(1,2).getValor();
 
-        assertEquals("4", s);
-        assertEquals("0", s2);
+        Assert.assertEquals("4", s);
+        Assert.assertEquals("0", s2);
 
     }
 

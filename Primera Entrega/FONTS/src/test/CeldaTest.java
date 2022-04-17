@@ -1,4 +1,4 @@
-package DomainModel;
+package test;
 
 import main.Domain.DomainModel.Celda;
 import main.Domain.DomainModel.Posicion;
@@ -16,10 +16,10 @@ public class CeldaTest {
         Posicion p2 = new Posicion(1, 2);
         Celda cell = new Celda(p);
         String cont = cell.getContenido();
-        assertEquals("", cont);
+        Assert.assertEquals("", cont);
 
         Celda cell2 = new Celda(p2,"");
-        assertEquals("", cell2.getContenido());
+        Assert.assertEquals("", cell2.getContenido());
     }
 
     @Test
@@ -28,10 +28,10 @@ public class CeldaTest {
         Posicion p2 = new Posicion(1, 2);
         Celda cell = new Celda(p);
         String val = cell.getValor();
-        assertEquals("", val);
+        Assert.assertEquals("", val);
 
         Celda cell2 = new Celda(p2, "");
-        assertEquals("", cell2.getValor());
+        Assert.assertEquals("", cell2.getValor());
     }
 
     @Test
@@ -41,10 +41,10 @@ public class CeldaTest {
         Celda cell = new Celda(p);
         cell.setContenido("Hola Mundo");
         String cont = cell.getContenido();
-        assertEquals("Hola Mundo", cont);
+        Assert.assertEquals("Hola Mundo", cont);
 
         Celda cell2 = new Celda(p2,"hola");
-        assertEquals("hola", cell2.getContenido());
+        Assert.assertEquals("hola", cell2.getContenido());
     }
 
     @Test
@@ -54,10 +54,10 @@ public class CeldaTest {
         Celda cell = new Celda(p);
         cell.setContenido("Hola Mundo");
         String val = cell.getValor();
-        assertEquals("Hola Mundo", val);
+        Assert.assertEquals("Hola Mundo", val);
 
         Celda cell2 = new Celda(p2,"hola");
-        assertEquals("hola", cell2.getValor());
+        Assert.assertEquals("hola", cell2.getValor());
     }
 
     @Test
@@ -67,10 +67,10 @@ public class CeldaTest {
         Celda cell = new Celda(p);
         cell.setContenido("=SUM(1, 2)");
         String cont = cell.getContenido();
-        assertEquals("=SUM(1, 2)", cont);
+        Assert.assertEquals("=SUM(1, 2)", cont);
 
         Celda cell2 = new Celda(p2,"=SUM(1, 2)");
-        assertEquals("=SUM(1, 2)", cell2.getContenido());
+        Assert.assertEquals("=SUM(1, 2)", cell2.getContenido());
     }
 
     @Test
@@ -85,10 +85,10 @@ public class CeldaTest {
          * no espero que salga el resultado de la función, sinó que espero que
          * la clase detecte que es una función y no un string normal.
          */
-        assertEquals("#FUNC", val);
+        Assert.assertEquals("#FUNC", val);
 
         Celda cell2 = new Celda(p2,"=SUM(1, 2)");
-        assertEquals("#FUNC", cell2.getValor());
+        Assert.assertEquals("#FUNC", cell2.getValor());
     }
 
     @Test
@@ -100,19 +100,19 @@ public class CeldaTest {
         Celda c1 = new Celda(p1);
         Celda c2 = new Celda(p2);
 
-        assertEquals(p1, c1.getPosicion());
-        assertEquals(p2, c2.getPosicion());
+        Assert.assertEquals(p1, c1.getPosicion());
+        Assert.assertEquals(p2, c2.getPosicion());
 
         c1.setPosicion(p3);
 
-        assertEquals(p3, c1.getPosicion());
+        Assert.assertEquals(p3, c1.getPosicion());
     }
 
     @Test
     public void referenciantesVacia () {
         Posicion p = new Posicion(1,1);
         Celda cell = new Celda(p);
-        assertEquals(new ArrayList<Celda>(), cell.getReferenciantes());
+        Assert.assertEquals(new ArrayList<Celda>(), cell.getReferenciantes());
     }
 
     @Test
@@ -124,7 +124,7 @@ public class CeldaTest {
 
         c1.addReferenciante(c2);
 
-        assertEquals("A", c2.getValor());
+        Assert.assertEquals("A", c2.getValor());
     }
 
     @Test
@@ -136,10 +136,10 @@ public class CeldaTest {
 
         //C2 esta referenciando a C1 --> C2 tiene el valor de C1
         c1.addReferenciante(c2);
-        assertEquals("A", c2.getValor());
+        Assert.assertEquals("A", c2.getValor());
 
         c1.borrarReferenciante(c2);
-        assertEquals(new ArrayList<Celda>(), c1.getReferenciantes());
+        Assert.assertEquals(new ArrayList<Celda>(), c1.getReferenciantes());
     }
 
     @Test
@@ -151,10 +151,10 @@ public class CeldaTest {
 
         //C2 esta referenciando a C1 --> C2 tiene el valor de C1
         c1.addReferenciante(c2);
-        assertEquals("A", c2.getValor());
+        Assert.assertEquals("A", c2.getValor());
 
         c1.setContenido("NEW CONTENT");
-        assertEquals("NEW CONTENT", c2.getValor());
+        Assert.assertEquals("NEW CONTENT", c2.getValor());
     }
 
     @Test
@@ -167,10 +167,10 @@ public class CeldaTest {
 
         Celda c2 = new Celda(c1);
 
-        assertEquals(p, c2.getPosicion());
-        assertEquals("ABC", c2.getContenido());
-        assertEquals("ABC", c2.getValor());
-        assertEquals(c1.getReferenciantes(), c2.getReferenciantes());
+        Assert.assertEquals(p, c2.getPosicion());
+        Assert.assertEquals("ABC", c2.getContenido());
+        Assert.assertEquals("ABC", c2.getValor());
+        Assert.assertEquals(c1.getReferenciantes(), c2.getReferenciantes());
 
     }
 

@@ -1,4 +1,4 @@
-package DomainModel;
+package test;
 import static org.junit.Assert.*;
 
 import main.Domain.DomainModel.Celda;
@@ -34,10 +34,10 @@ public class HojaTest {
         Hoja h4 = new Hoja();
         int s4 = h4.getCeldas().size();
 
-        assertEquals(4, s);
-        assertEquals(12, s2);
-        assertEquals(6, s3);
-        assertEquals(2500, s4);
+        Assert.assertEquals(4, s);
+        Assert.assertEquals(12, s2);
+        Assert.assertEquals(6, s3);
+        Assert.assertEquals(2500, s4);
     }
 
 
@@ -58,8 +58,8 @@ public class HojaTest {
         int f = h.getFilas();
         int c = h.getColumnas();
 
-        assertEquals(50, f);
-        assertEquals(50, c);
+        Assert.assertEquals(50, f);
+        Assert.assertEquals(50, c);
     }
 
     /**
@@ -79,8 +79,8 @@ public class HojaTest {
         int f = h.getFilas();
         int c = h.getColumnas();
 
-        assertEquals(20, f);
-        assertEquals(30, c);
+        Assert.assertEquals(20, f);
+        Assert.assertEquals(30, c);
     }
 
 
@@ -99,7 +99,7 @@ public class HojaTest {
         Hoja h =  new Hoja(20, 30);
         h.setFilas(23);
         int f = h.getFilas();
-        assertEquals(23, f);
+        Assert.assertEquals(23, f);
     }
 
     /**
@@ -117,7 +117,7 @@ public class HojaTest {
         Hoja h =  new Hoja(20, 30);
         h.setColumnas(23);
         int c = h.getColumnas();
-        assertEquals(23, c);
+        Assert.assertEquals(23, c);
     }
 
     /**
@@ -144,10 +144,10 @@ public class HojaTest {
         String name = hoja.getNombre();
         String name2 = h2.getNombre();
 
-        assertEquals(1, id);
-        assertEquals("Hoja1", name);
-        assertEquals(2, id2);
-        assertEquals("Hoja2", name2);
+        Assert.assertEquals(1, id);
+        Assert.assertEquals("Hoja1", name);
+        Assert.assertEquals(2, id2);
+        Assert.assertEquals("Hoja2", name2);
     }
 
 
@@ -166,7 +166,7 @@ public class HojaTest {
         hoja.añadeNombreIdHojaDefault(1);
         hoja.asignaNombre("HojaPrueba");
         String name = hoja.getNombre();
-        assertEquals("HojaPrueba", name);
+        Assert.assertEquals("HojaPrueba", name);
     }
 
     /**
@@ -186,8 +186,8 @@ public class HojaTest {
         boolean b = hoja.esHoja(1);
         boolean b2 = hoja.esHoja(2);
 
-        assertEquals(true, b);
-        assertEquals(false, b2);
+        Assert.assertEquals(true, b);
+        Assert.assertEquals(false, b2);
 
     }
 
@@ -210,8 +210,8 @@ public class HojaTest {
         h.añadeNombreIdHojaDefault(2);
         int id2 = h.getId();
 
-        assertEquals(1, id);
-        assertEquals(2, id2);
+        Assert.assertEquals(1, id);
+        Assert.assertEquals(2, id2);
     }
 
     /**
@@ -235,9 +235,9 @@ public class HojaTest {
 
         Hoja h2 = new Hoja(20, 30);
         int c2 = h2.getColumnas();
-        assertEquals(50, c);
-        assertEquals(30, c2);
-        assertEquals(15, c3);
+        Assert.assertEquals(50, c);
+        Assert.assertEquals(30, c2);
+        Assert.assertEquals(15, c3);
     }
 
     /**
@@ -261,9 +261,9 @@ public class HojaTest {
 
         Hoja h2 = new Hoja(20, 30);
         int f2 = h2.getFilas();
-        assertEquals(50, f);
-        assertEquals(20, f2);
-        assertEquals(15, f3);
+        Assert.assertEquals(50, f);
+        Assert.assertEquals(20, f2);
+        Assert.assertEquals(15, f3);
     }
 
 
@@ -286,8 +286,8 @@ public class HojaTest {
         h.añadeNombreIdHojaDefault(2);
         String name2 = h.getNombre();
 
-        assertEquals("HojaPrueba", name);
-        assertEquals("Hoja2", name2);
+        Assert.assertEquals("HojaPrueba", name);
+        Assert.assertEquals("Hoja2", name2);
     }
 
 
@@ -304,7 +304,7 @@ public class HojaTest {
     public void getCeldas(){
         Hoja h = new Hoja(2, 2);
         int clds = h.getCeldas().size();
-        assertEquals(4, clds);
+        Assert.assertEquals(4, clds);
     }
 
     /**
@@ -331,9 +331,9 @@ public class HojaTest {
       String s2 = cel2.getContenido();
       String s3 = cel3.getContenido();
 
-      assertEquals("ABCD", s);
-      assertEquals("", s2);
-      assertEquals("AAAA", s3);
+      Assert.assertEquals("ABCD", s);
+      Assert.assertEquals("", s2);
+      Assert.assertEquals("AAAA", s3);
 
     }
 
@@ -358,8 +358,8 @@ public class HojaTest {
         boolean b = h.existePosicion(p);
         boolean b2 = h.existePosicion(p2);
 
-        assertEquals(true, b);
-        assertEquals(false, b2);
+        Assert.assertEquals(true, b);
+        Assert.assertEquals(false, b2);
     }
 
 
@@ -380,9 +380,9 @@ public class HojaTest {
 
         boolean b = h.getCeldas().containsKey(new Posicion(2, 3));
 
-        assertEquals(true, b);
-        assertEquals(true, b2);
-        assertEquals(false, b3);
+        Assert.assertEquals(true, b);
+        Assert.assertEquals(true, b2);
+        Assert.assertEquals(false, b3);
 
     }
 
@@ -405,9 +405,9 @@ public class HojaTest {
 
         boolean b = h.getCeldas().containsKey(new Posicion(2, 1));
 
-        assertEquals(false, b);
-        assertEquals(true, b2);
-        assertEquals(false, b3);
+        Assert.assertEquals(false, b);
+        Assert.assertEquals(true, b2);
+        Assert.assertEquals(false, b3);
 
     }
 
@@ -421,9 +421,9 @@ public class HojaTest {
         Posicion p2 = c.getPosicion();
 
         boolean b = p == p2;
-        assertEquals(false, b);
-        assertEquals(1, p2.getFila());
-        assertEquals(2, p2.getColumna());
+        Assert.assertEquals(false, b);
+        Assert.assertEquals(1, p2.getFila());
+        Assert.assertEquals(2, p2.getColumna());
     }
 
     @Test
@@ -436,8 +436,8 @@ public class HojaTest {
         Posicion p2 = c.getPosicion();
 
         boolean b = p == p2;
-        assertEquals(false, b);
-        assertEquals(1, p2.getFila());
-        assertEquals(2, p2.getColumna());
+        Assert.assertEquals(false, b);
+        Assert.assertEquals(1, p2.getFila());
+        Assert.assertEquals(2, p2.getColumna());
     }
 }
