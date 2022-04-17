@@ -94,6 +94,13 @@ public class Traductor {
             else return "#ERRORFUNC";
         } else if (_formula.charAt(0) == '$' && _formula.length() <= 5) { // Como mucho $AA11
             return "#REFERENCE";
+        } else if (_formula.charAt(2) == '/' && _formula.charAt(5) == '/') {
+            try {
+                Date fecha = Traductor.StringDate(_formula);
+                return "#FECHA";
+            } catch (ParseException pe) {
+                return "#ERRORFECHA";
+            }
         }
         return "#VALUE";
     }
