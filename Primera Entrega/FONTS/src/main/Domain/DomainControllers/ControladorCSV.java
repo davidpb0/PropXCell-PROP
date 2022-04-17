@@ -1,5 +1,5 @@
 package main.Domain.DomainControllers;
-import DomainModel.*;
+
 import main.Domain.DomainModel.CargaCSV;
 import main.Domain.DomainModel.EscribeCSV;
 
@@ -41,7 +41,7 @@ public class ControladorCSV {
 
     /**
      * invoca la operación lee() de CargaCSV
-     * @throws IOException
+     * @throws IOException exepción que ocurre por leer de algo inexistente, o vacío
      */
     public void cargaCSV() throws IOException {
         cargacsvRef.lee();
