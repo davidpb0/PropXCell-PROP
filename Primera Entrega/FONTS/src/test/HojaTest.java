@@ -5,26 +5,54 @@ import static org.mockito.Mockito.*;
 import main.Domain.DomainModel.Celda;
 import main.Domain.DomainModel.Hoja;
 import main.Domain.DomainModel.Posicion;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.util.HashMap;
 
 
 public class HojaTest {
-    
+
+ /*   @InjectMocks
+    private Hoja hoja;
+
+    @Mock
+    private Celda celda;
+    private Posicion posicion;
+    private HashMap<Posicion, Celda> celdas;
+
+    private static final Posicion validpos = new Posicion(1, 2);
+    private static final Celda validcel = new Celda(validpos);
+
+    @Before
+    public void inicializaMocks(){
+        MockitoAnnotations.initMocks(this);
+
+    }*/
 
 
     /**
      * Objeto de la prueba: Testear la funcion inicializaHoja
      *
+     * - Stubs:
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     * - Valores estudiados:
      *
      * - Operativa: En este test de inicializaHoja se definen varias Hojas con valores distintos en filas y columnas.
      * El objetivo es ver si inicializa correctamente la estructura de datos de las diferentes hojas
      * a la hora de crearlas. Para ello comprobaremos que la estructuras de datos de las Hojas tengan
      * un tamaños igual a tantas celdas como define el numero de columnas y filas que tienen.
      */
-    @Test
-    public void testInicializaHoja(){
+   /* @Test
+    public void InicializaHojaDefault(){
+        int f = 2;
+        int c = 3;
+
+        when(new Posicion(f, c)).thenReturn(validpos);
+        when(new Celda(new Posicion(f, c))).thenReturn(validcel);
         Hoja h = new Hoja(2, 2);
         int s = h.getCeldas().size();
 
@@ -42,7 +70,7 @@ public class HojaTest {
         assertEquals(6, s3);
         assertEquals(2500, s4);
     }
-
+*/
 
     /**
      * Objeto de la prueba: Testear la constructora Hoja, que la crea con valores por defecto.
@@ -467,6 +495,27 @@ public class HojaTest {
         assertEquals(1, p2.getFila());
         assertEquals(2, p2.getColumna());
     }
+
+    /*
+    public static class PosicionStub{
+        int fila;
+        int columna;
+        public PosicionStub(int _f, int _c) {
+            this.fila = _f;
+            this.columna = _c;
+        }
+    }
+
+    public static class CeldaStub{
+        PosicionStub posicionStub;
+        String contenido;
+        String valor;
+        public CeldaStub(PosicionStub _ps) {
+            this.posicionStub = _ps;
+            this.contenido = "";
+            this.valor = "";
+        }
+    }*/
 
 
 

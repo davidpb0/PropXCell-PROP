@@ -2,12 +2,13 @@ package main.Domain.DomainModel;
 /*
  * ClassName DomainModel.Hoja
  *
- * Version info 0.0.5
+ * Version info 0.0.6
  *
  * Author David Perez Barroso
  */
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Hoja implements Serializable {
@@ -231,8 +232,53 @@ public class Hoja implements Serializable {
             return true;
         }
         return false;
+    }
 
 
+    /**
+     * Devuelve un vector con las celdas en columna o en fila segun los parametros introducidos
+     * @param _cel1 primera posicion de la fila o columna
+     * @param _cel2 ultima posicion de la fila o columna que se desea
+     * @return ArrayList<Celda> con las celdas de la columna o fila delimitada por los parametros de entrada
+     */
+    public ArrayList<Celda> getColumnaFila(String _cel1, String _cel2){
+        ArrayList<Celda> agrup = new ArrayList<>();
+
+        Celda celd1 = Traductor.traduceCelda(_cel1, this.id);
+        Posicion pos1 = celd1.getPosicion();
+
+        Celda celd2 = Traductor.traduceCelda(_cel2, this.id);
+        Posicion pos2 = celd2.getPosicion();
+
+        //Columna U->D
+        if (pos1.getFila() < pos2.getFila() && pos1.getColumna() == pos2.getColumna()){
+            for(int i = pos1.getFila(); i <= pos2.getFila(); ++i){
+                agrup.add(this.celdas.get(new Posicion(i, pos1.getColumna())));
+            }
+        }
+        //Columna D->U
+        else if (pos1.getFila() > pos2.getFila() && pos1.getColumna() == pos2.getColumna()){
+            for(int i = pos1.getFila(); i >= pos2.getFila(); --i){
+                agrup.add(this.celdas.get(new Posicion(i, pos1.getColumna())));
+            }
+        }
+        //Fila I->D
+        else if (pos1.getFila() == pos2.getFila() && pos1.getColumna() < pos2.getColumna()){
+            for(int i = pos1.getColumna(); i <= pos2.getColumna(); ++i){
+                agrup.add(this.celdas.get(new Posicion(pos1.getFila(), i)));
+            }
+        }
+        //Fila D->I
+        else if (pos1.getFila() == pos2.getFila() && pos1.getColumna() > pos2.getColumna()){
+            for(int i = pos1.getColumna(); i >= pos2.getColumna(); --i){
+                agrup.add(this.celdas.get(new Posicion(pos1.getFila(), i)));
+            }
+        }
+        else if(pos1.getFila() == pos2.getFila() && pos1.getColumna() == pos2.getColumna()){
+            agrup.add(this.celdas.get(new Posicion(pos1.getFila(), pos1.getColumna())));
+        }
+
+        return agrup;
     }
 
 
