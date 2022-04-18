@@ -10,6 +10,7 @@ package main.Domain.DomainModel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class Traductor {
 
@@ -103,5 +104,63 @@ public class Traductor {
             }
         }
         return "#VALUE";
+    }
+
+    public static int traduceColumna(String _f) {
+        int ret = 0;
+        if (_f.length() == 1) {
+            ret = Traductor.StringInt(_f) - 16;
+        } else {
+            for (int i = 0; i < _f.length(); ++i) {
+                ret += 26 * i + Traductor.traduceColumna(Character.toString(_f.charAt(i)));
+            }
+        }
+        return ret;
+    }
+
+    public static Celda traduceCelda(String _pos, int _idH) {
+        Celda c = null;
+        Hoja h = Documento.getDocumento().getHoja(_idH);
+        String s = _pos.substring(1);
+        int j = 0;
+        while (j < s.length() && s.charAt(j) <= 'Z') ++j;
+        String columna = s.substring(0, j - 1);
+        String fila = s.substring(j);
+        c = h.getCelda(Traductor.StringInt(fila), traduceColumna(columna));
+
+        return c;
+    }
+
+    /**
+     * Retorna los argumentos de una función introducida por el usuario
+     * @param _funcion la expresión introducida por el usuario
+     * @return un array de String con cada valor que especifica el argumento
+     */
+    public static String[] getArgumentos(String _funcion, int _idH) {
+        Hoja h = Documento.getDocumento().getHoja(_idH);
+        String f = _funcion;
+        if (_funcion.startsWith("=")) f = _funcion.substring(1);
+        String[] args = f.split(",");
+        List<String> ret = null;
+
+        for (String arg : args) {
+            if (arg.startsWith("$") && arg.length() <= 5) {                                     // Como mucho $AA11
+                Celda c = Traductor.traduceCelda(arg, _idH);
+                try {
+                    ret.add(c.getValor());
+                } catch (NullPointerException np) {
+                    System.err.println("Intento de acceso a celda inexistente o vacía.");
+                }
+            } else if (arg.contains(":")) {
+                String from = arg.split(":")[0];
+                String to = arg.split(":")[1];
+                from = from.replaceAll("[$]", "");
+                to = to.replaceAll("[$]", "");
+
+                // Terminar caso $A1:$B1
+            } else ret.add(arg);
+        }
+
+        return (String[]) ret.toArray();
     }
 }
