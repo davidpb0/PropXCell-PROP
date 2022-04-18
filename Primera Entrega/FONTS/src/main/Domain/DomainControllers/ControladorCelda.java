@@ -4,6 +4,7 @@ package main.Domain.DomainControllers;
 import main.Domain.DomainModel.Celda;
 import main.Domain.DomainModel.Documento;
 import main.Domain.DomainModel.Hoja;
+import main.Domain.DomainModel.Traductor;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -50,38 +51,129 @@ public class ControladorCelda {
   /* public void escribirContenido(String _content){
        this.celdaRef.setContenido(_content);
 
-
        String type = Traductor.detecta(_content);
+       String[] arg;
       // if (_content = ref) ref.borrarRef(me);
        switch (type) {
            case "#ABS":
-               valorAbsoluto(-2);
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               if(arg.length != 1) {
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               if(!arg[0].matches("[+-]?\\d*(\\.\\d+)?")){
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               valorAbsoluto(Double.parseDouble(arg[0]));
                break;
+
            case "#TRUNC":
-               truncarValor(5.5, 2);
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               if(arg.length != 2) {
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               if(!arg[0].matches("[+-]?\\d*(\\.\\d+)?") && !!arg[0].matches("[+-]?\\d*(\\.\\d+)?")){
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               truncarValor(Double.parseDouble(arg[0]), Integer.parseInt(arg[1]));
                break;
+
            case "#APROX":
-               aproximarValor(5.35);
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               if(arg.length != 1) {
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               if(!arg[0].matches("[+-]?\\d*(\\.\\d+)?")){
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               aproximarValor(Double.parseDouble(arg[0]));
                break;
+
            case "#VDB":
-               convertirValorDB(50);
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               if(arg.length != 1) {
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               if(!arg[0].matches("[+-]?\\d*(\\.\\d+)?")){
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               convertirValorDB(Integer.parseInt(arg[0]));
                break;
+
            case "#VBD":
-               convertirValorBD(10);
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               if(arg.length != 1) {
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               if(!arg[0].matches("[+-]?\\d*(\\.\\d+)?")){
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               convertirValorBD(Integer.parseInt(arg[0]));
                break;
+
            case "#VHD":
-               convertirValorHD("a5");
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               if(arg.length != 1) {
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               convertirValorHD(arg[0]);
                break;
+
            case "#VDH":
-               convertirValorDH(30);
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               if(arg.length != 1) {
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               if(!arg[0].matches("[+-]?\\d*(\\.\\d+)?")){
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               convertirValorDH(Integer.parseInt(arg[0]));
                break;
+
            case "#VHB":
-               convertirValorHB("a5");
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               if(arg.length != 1) {
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               convertirValorHB(arg[0]);
                break;
+
            case "#VBH":
-               convertirValorBH(10);
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               if(arg.length != 1) {
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               if(!arg[0].matches("[+-]?\\d*(\\.\\d+)?")){
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               convertirValorBH(Integer.parseInt(arg[0]));
                break;
+
            case "#MES":
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               if(arg.length != 1) {
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               if(!arg[0].matches("[+-]?\\d*(\\.\\d+)?")){
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
                obtenerMes("20/05/2001");
                break;
            case "#AÑO":
@@ -121,7 +213,6 @@ public class ControladorCelda {
            default:
                this.celdaRef.setValor(_content);
        }
-
    }*/
 
 

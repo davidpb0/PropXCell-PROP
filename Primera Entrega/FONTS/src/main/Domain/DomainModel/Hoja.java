@@ -59,31 +59,47 @@ public class Hoja implements Serializable {
 
     }
 
+
     /**
      * Asigna un numero de filas a la hoja
      * @param _f numero de filas que se asignaran a al hoja
+     * @return Devuelve true si se ha añadido correctamente, false si _f es 0 o menor que 0
      */
-    public void setFilas(int _f){
-        this.filas = _f;
+    public boolean setFilas(int _f){
+        if(_f > 0) {
+            this.filas = _f;
+            return true;
+        }
+        return false;
 
     }
 
     /**
      * Asigna un numero de columnas a la hoja
      * @param _c numero de columnas que se asignaran a la hoja
+     * @return Devuelve true si se ha añadido correctamente, false si _c es 0 o menor que 0
      */
-    public void setColumnas(int _c){
-        this.columnas = _c;
+    public boolean setColumnas(int _c){
+        if (_c > 0){
+            this.columnas = _c;
+            return true;
+        }
+        return false;
 
     }
 
     /**
      * Añade el identificador a la hoja y un nombre default
      * @param _aId identificador que la hoja tomará
+     * @return Devuelve true si se ha asignado un nombre y id correctamente, false si el numero es negativo
      */
-    public void añadeNombreIdHojaDefault(int _aId){
-        this.id = _aId;
-        this.nombre = "Hoja" + this.id;
+    public boolean añadeNombreIdHojaDefault(int _aId){
+        if(_aId > 0){
+            this.id = _aId;
+            this.nombre = "Hoja" + this.id;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -151,7 +167,12 @@ public class Hoja implements Serializable {
      * @return la celda con Posicion(f, c)
      */
     public Celda getCelda(int _f, int _c){
-        Celda cl = this.celdas.get(new Posicion(_f, _c));
+        Posicion p = new Posicion(_f, _c);
+        Celda cl = null;
+        if(this.celdas.containsKey(p)) {
+            cl = this.celdas.get(new Posicion(_f, _c));
+        }
+
         return cl;
     }
 
@@ -250,32 +271,34 @@ public class Hoja implements Serializable {
         Celda celd2 = Traductor.traduceCelda(_cel2, this.id);
         Posicion pos2 = celd2.getPosicion();
 
-        //Columna U->D
-        if (pos1.getFila() < pos2.getFila() && pos1.getColumna() == pos2.getColumna()){
-            for(int i = pos1.getFila(); i <= pos2.getFila(); ++i){
-                agrup.add(this.celdas.get(new Posicion(i, pos1.getColumna())));
+        if (celdas.containsKey(pos1) && celdas.containsKey(pos2)) {
+
+            //Columna U->D
+            if (pos1.getFila() < pos2.getFila() && pos1.getColumna() == pos2.getColumna()) {
+                for (int i = pos1.getFila(); i <= pos2.getFila(); ++i) {
+                    agrup.add(this.celdas.get(new Posicion(i, pos1.getColumna())));
+                }
             }
-        }
-        //Columna D->U
-        else if (pos1.getFila() > pos2.getFila() && pos1.getColumna() == pos2.getColumna()){
-            for(int i = pos1.getFila(); i >= pos2.getFila(); --i){
-                agrup.add(this.celdas.get(new Posicion(i, pos1.getColumna())));
+            //Columna D->U
+            else if (pos1.getFila() > pos2.getFila() && pos1.getColumna() == pos2.getColumna()) {
+                for (int i = pos1.getFila(); i >= pos2.getFila(); --i) {
+                    agrup.add(this.celdas.get(new Posicion(i, pos1.getColumna())));
+                }
             }
-        }
-        //Fila I->D
-        else if (pos1.getFila() == pos2.getFila() && pos1.getColumna() < pos2.getColumna()){
-            for(int i = pos1.getColumna(); i <= pos2.getColumna(); ++i){
-                agrup.add(this.celdas.get(new Posicion(pos1.getFila(), i)));
+            //Fila I->D
+            else if (pos1.getFila() == pos2.getFila() && pos1.getColumna() < pos2.getColumna()) {
+                for (int i = pos1.getColumna(); i <= pos2.getColumna(); ++i) {
+                    agrup.add(this.celdas.get(new Posicion(pos1.getFila(), i)));
+                }
             }
-        }
-        //Fila D->I
-        else if (pos1.getFila() == pos2.getFila() && pos1.getColumna() > pos2.getColumna()){
-            for(int i = pos1.getColumna(); i >= pos2.getColumna(); --i){
-                agrup.add(this.celdas.get(new Posicion(pos1.getFila(), i)));
+            //Fila D->I
+            else if (pos1.getFila() == pos2.getFila() && pos1.getColumna() > pos2.getColumna()) {
+                for (int i = pos1.getColumna(); i >= pos2.getColumna(); --i) {
+                    agrup.add(this.celdas.get(new Posicion(pos1.getFila(), i)));
+                }
+            } else if (pos1.getFila() == pos2.getFila() && pos1.getColumna() == pos2.getColumna()) {
+                agrup.add(this.celdas.get(new Posicion(pos1.getFila(), pos1.getColumna())));
             }
-        }
-        else if(pos1.getFila() == pos2.getFila() && pos1.getColumna() == pos2.getColumna()){
-            agrup.add(this.celdas.get(new Posicion(pos1.getFila(), pos1.getColumna())));
         }
 
         return agrup;
