@@ -1,4 +1,4 @@
-package main.Domain.DomainModel;
+package main.Persistence.PersistenceClasses;
 /*
  * ClassName DomainModel.CargaCSV
  *
@@ -6,6 +6,9 @@ package main.Domain.DomainModel;
  *
  * Author Iván Risueño Martín
  */
+
+import main.Domain.DomainModel.Celda;
+import main.Domain.DomainModel.Posicion;
 
 import java.util.HashMap;
 import java.io.*;

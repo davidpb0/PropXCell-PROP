@@ -1,7 +1,7 @@
-package main.Domain.DomainControllers;
+package main.Persistence.PersistenceControllers;
 
-import main.Domain.DomainModel.CargaCSV;
-import main.Domain.DomainModel.EscribeCSV;
+import main.Persistence.PersistenceClasses.CargaCSV;
+import main.Persistence.PersistenceClasses.EscribeCSV;
 
 import java.io.IOException;
 
