@@ -1,4 +1,4 @@
-package main.Domain.DomainModel;
+package main.Persistence.PersistenceClasses;
 /*
  * ClassName DomainModel.EscribeCSV
  *
@@ -6,6 +6,11 @@ package main.Domain.DomainModel;
  *
  * Author Iván Risueño Martín
  */
+
+import main.Domain.DomainModel.Celda;
+import main.Domain.DomainModel.Documento;
+import main.Domain.DomainModel.Hoja;
+import main.Domain.DomainModel.Posicion;
 
 import java.io.*;
 import java.util.HashMap;
