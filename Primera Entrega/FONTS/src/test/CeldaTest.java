@@ -115,6 +115,22 @@ public class CeldaTest {
     }
 
     @Test
+    public void setReferencianteF () {
+        Posicion p = new Posicion(1,1);
+        Posicion p2 = new Posicion(1, 2);
+        Celda c1 = new Celda(p, "A");
+        Celda c2 = new Celda(p2, "B");
+
+        ArrayList<Celda> celdasReferenciantes = new ArrayList<Celda>();
+        celdasReferenciantes.add(c2);
+
+        c1.setReferenciantes(celdasReferenciantes);
+
+        Assert.assertEquals("A", c2.getValor());
+
+    }
+
+    @Test
     public void addReferencianteF () {
         Posicion p = new Posicion(1,1);
         Posicion p2 = new Posicion(1, 2);

@@ -17,6 +17,7 @@ public class Celda {
     private Posicion posicion;
     private final ArrayList<Celda> referenciantes = new ArrayList<>();
 
+
     /**
      * Constructora de una celda vacía
      * @param _pos objeto posición asignado a la celda
@@ -37,6 +38,10 @@ public class Celda {
         this.setContenido(contenido);
     }
 
+    /**
+     * Constructora de una celda copia de otra
+     * @param c celda a copiar
+     */
     public Celda(Celda c) {
         this.contenido = c.getContenido();
         this.valor = c.getValor();
@@ -131,6 +136,11 @@ public class Celda {
      */
     public ArrayList<Celda> getReferenciantes() {
         return this.referenciantes;
+    }
+
+    public void setReferenciantes(ArrayList<Celda> refs) {
+        this.referenciantes.addAll(refs);
+        this.setValor(this.valor);
     }
 
     /**
