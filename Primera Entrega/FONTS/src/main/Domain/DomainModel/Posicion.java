@@ -1,4 +1,5 @@
 package main.Domain.DomainModel;
+import java.util.Objects;
 
 /*
  * Posicion
@@ -9,8 +10,8 @@ package main.Domain.DomainModel;
  */
 
 public class Posicion {
-    private int fila;
-    private int columna;
+    private final int fila;
+    private final int columna;
 
     /**
      * Constructora de posicion
@@ -49,10 +50,8 @@ public class Posicion {
     }
 
     @Override
-    public int hashCode(){
-        int result = fila;
-        result = 31 * result + columna;
-        return result;
+    public int hashCode() {
+        return Objects.hash(fila, columna);
     }
 
 }
