@@ -1,13 +1,14 @@
 package drivers.components.ControladorBloque;
 
+import main.Domain.DomainModel.BloqueTemporalCopiado;
 import main.Domain.DomainModel.Celda;
+import main.Domain.DomainModel.Posicion;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class DriverControladorBloque {
-
-    static StubBloqueTemporalCopiado cont = null;
+    private static StubBloqueTemporalCopiado cont = null;
 
     public static void testConstructora() {
         cont = new StubBloqueTemporalCopiado();
@@ -67,6 +68,8 @@ public class DriverControladorBloque {
                     System.out.println("No es posible pegar si no se ha copiado nada.");
                 }
                 else {
+                    if (optionSelected != 1 && cont == null) System.out.println("Primero hay que crear el bloque.");
+                    else
                     switch (optionSelected) {
                         case 0:
                             salir = true;
@@ -95,6 +98,19 @@ public class DriverControladorBloque {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    public static class StubBloqueTemporalCopiado extends BloqueTemporalCopiado {
+        private Celda[][] bloqueCopiado;
+        private Boolean cortar;
+
+        public StubBloqueTemporalCopiado() {
+            for (int i = 1; i <= 3; ++i) {
+                for (int j = 1; j <= 3; ++j) {
+                    bloqueCopiado[i][j] = new Celda(new Posicion(i, j), "dummy número " + i*j);
+                }
+            }
         }
     }
 }
