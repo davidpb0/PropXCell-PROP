@@ -9,6 +9,7 @@ package main.Domain.DomainModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -106,18 +107,29 @@ public class Traductor {
         return "#VALUE";
     }
 
-    public static int traduceColumna(String _f) {
+    /**
+     * Retorna el número de columna que corresponde a su valor alfabético
+     * @param _c columna(alfabético)
+     * @return identificador de la columna que corresponde a su valor alfabético
+     */
+    public static int traduceColumna(String _c) {
         int ret = 0;
-        if (_f.length() == 1) {
-            ret = Traductor.StringInt(_f) - 16;
+        if (_c.length() == 1) {
+            ret = Traductor.StringInt(_c) - 16;
         } else {
-            for (int i = 0; i < _f.length(); ++i) {
-                ret += 26 * i + Traductor.traduceColumna(Character.toString(_f.charAt(i)));
+            for (int i = 0; i < _c.length(); ++i) {
+                ret += 26 * i + Traductor.traduceColumna(Character.toString(_c.charAt(i)));
             }
         }
         return ret;
     }
 
+    /**
+     * Retorna la celda asociada a los parámetros de entrada
+     * @param _pos posición de la celda en la hoja
+     * @param _idH hoja en la que se encuentra la celda
+     * @return la celda identificada por los parámetros de entrada
+     */
     public static Celda traduceCelda(String _pos, int _idH) {
         Celda c = null;
         Hoja h = Documento.getDocumento().getHoja(_idH);
@@ -157,7 +169,10 @@ public class Traductor {
                 from = from.replaceAll("[$]", "");
                 to = to.replaceAll("[$]", "");
 
-                // Terminar caso $A1:$B1
+                ArrayList<Celda> intervalo = h.getColumnaFila(from, to);
+                for (Celda c : intervalo) {
+                    ret.add(c.getValor());
+                }
             } else ret.add(arg);
         }
 
