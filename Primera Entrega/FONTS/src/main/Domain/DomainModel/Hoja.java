@@ -21,10 +21,10 @@ public class Hoja implements Serializable {
 
 
     /**
-     * Funcion privada que inicializa la estructura de datos
+     * Funcion que inicializa la estructura de datos de hoja
      * @param _h hoja a inicializar
      */
-    private void inicializaHoja(Hoja _h){
+    public void inicializaHoja(Hoja _h){
         int f = _h.getFilas();
         int c = _h.getColumnas();
 
@@ -36,6 +36,10 @@ public class Hoja implements Serializable {
         }
     }
 
+    public void setCeldas(HashMap<Posicion, Celda> celdas) {
+        this.celdas = celdas;
+    }
+
     /**
      * Creadora con los valores por defecto
      */
@@ -43,7 +47,6 @@ public class Hoja implements Serializable {
         this.filas = 50;
         this.columnas = 50;
         this.celdas = new HashMap<Posicion, Celda>();
-        inicializaHoja(this);
     }
 
     /**
@@ -55,7 +58,6 @@ public class Hoja implements Serializable {
         this.filas = _filas;
         this.columnas = _columnas;
         this.celdas = new HashMap<Posicion, Celda>();
-        inicializaHoja(this);
 
     }
 
@@ -228,13 +230,16 @@ public class Hoja implements Serializable {
         Posicion pant = new Posicion(_fant, _cant);
         Posicion pdp = new Posicion(_fdp, _cdp);
 
+        //Si contiene las dos posiciones -> cambia la posicion
         if (this.celdas.containsKey(pdp) && this.celdas.containsKey(pant)) {
             Celda c = this.celdas.get(pant);
-            //c.addReferenciante(this.celdas.get(pdp).getReferenciantes());
+            c.setReferenciantes(this.celdas.get(pdp).getReferenciantes());
             this.celdas.replace(pdp, c);
             c.setPosicion(pdp);
             return true;
         }
+
+        //Si una de las dos no existe, no hace nada y devuelve falso
         return false;
 
     }
@@ -245,13 +250,14 @@ public class Hoja implements Serializable {
      * @param c celda que va a cambiar de posicion
      */
     public boolean cambiarPosicionCelda(Posicion p, Celda c){
-
+        //Si contiene la posicion -> cambia la posicion
         if (this.celdas.containsKey(p)) {
-            //c.addReferenciante(this.celdas.get(p).getReferenciantes());
+            c.setReferenciantes(this.celdas.get(p).getReferenciantes());
             this.celdas.replace(p, c);
             c.setPosicion(p);
             return true;
         }
+        //Si no existe, no hace nada y devuelve falso
         return false;
     }
 

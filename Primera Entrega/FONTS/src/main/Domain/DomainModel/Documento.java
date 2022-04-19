@@ -128,6 +128,7 @@ public class Documento implements Serializable {
      */
     public void añadeHojaDf(){
         Hoja h = new Hoja();
+        h.inicializaHoja(h);
         h.añadeNombreIdHojaDefault(hojasContenidas.size()+1);
         this.hojasContenidas.put(hojasContenidas.size()+1, h);
         recalculaNumHojas();
@@ -140,6 +141,7 @@ public class Documento implements Serializable {
      */
     public void añadeHoja(int _f, int _c){
         Hoja h = new Hoja(_f, _c);
+        h.inicializaHoja(h);
         h.añadeNombreIdHojaDefault(hojasContenidas.size()+1);
         this.hojasContenidas.put(hojasContenidas.size()+1, h);
         recalculaNumHojas();
