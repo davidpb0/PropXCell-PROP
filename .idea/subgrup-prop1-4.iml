@@ -89,8 +89,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="mockito-core-4.4.0" level="project" />
     <orderEntry type="library" name="junit-4.12" level="project" />
-    <orderEntry type="library" name="mockito-core-3.5.6-javadoc (2)" level="project" />
+    <orderEntry type="library" name="mockito-core-3.5.6" level="project" />
   </component>
 </module>
