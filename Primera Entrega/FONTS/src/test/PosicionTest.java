@@ -1,8 +1,7 @@
 package test;
 
 import main.Domain.DomainModel.Posicion;
-import org.junit.Assert;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

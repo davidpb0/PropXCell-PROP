@@ -90,5 +90,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="mockito-core-3.5.0.jar" level="project" />
+    <orderEntry type="library" name="mockito-core-4.4.0" level="project" />
+    <orderEntry type="library" name="junit-4.12" level="project" />
   </component>
 </module>
