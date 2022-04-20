@@ -21,10 +21,10 @@ public class Hoja implements Serializable {
 
 
     /**
-     * Funcion que inicializa la estructura de datos de hoja
+     * Funcion privada que inicializa la estructura de datos de hoja
      * @param _h hoja a inicializar
      */
-    public void inicializaHoja(Hoja _h){
+    private void inicializaHoja(Hoja _h){
         int f = _h.getFilas();
         int c = _h.getColumnas();
 
@@ -47,6 +47,7 @@ public class Hoja implements Serializable {
         this.filas = 50;
         this.columnas = 50;
         this.celdas = new HashMap<Posicion, Celda>();
+        inicializaHoja(this);
     }
 
     /**
@@ -58,6 +59,7 @@ public class Hoja implements Serializable {
         this.filas = _filas;
         this.columnas = _columnas;
         this.celdas = new HashMap<Posicion, Celda>();
+        inicializaHoja(this);
 
     }
 
@@ -107,9 +109,16 @@ public class Hoja implements Serializable {
     /**
      * Le asigna un nombre a la hoja
      * @param _nombre nombre asignado
+     * @return devuelve true, si se ha introducido correctamente el nombre y este no era vacio, de lo contrario
+     * devuelve false
      */
-    public void asignaNombre(String _nombre){
-        this.nombre = _nombre;
+    public boolean asignaNombre(String _nombre){
+
+        if (!_nombre.isEmpty()){
+            this.nombre = _nombre;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -169,10 +178,12 @@ public class Hoja implements Serializable {
      * @return la celda con Posicion(f, c)
      */
     public Celda getCelda(int _f, int _c){
-        Posicion p = new Posicion(_f, _c);
+        Posicion p = null;
+        //Mockito no se puede burlar de las creadoras, utilizamos este if para poder testear
+        if(p == null) p = new Posicion(_f, _c); //Cuando Junit realiza el test, se obtiene el objeto mocked(not null)
         Celda cl = null;
         if(this.celdas.containsKey(p)) {
-            cl = this.celdas.get(new Posicion(_f, _c));
+            cl = this.celdas.get(p);
         }
 
         return cl;
@@ -279,25 +290,25 @@ public class Hoja implements Serializable {
 
         if (celdas.containsKey(pos1) && celdas.containsKey(pos2)) {
 
-            //Columna U->D
+            //Columna Up->Down
             if (pos1.getFila() < pos2.getFila() && pos1.getColumna() == pos2.getColumna()) {
                 for (int i = pos1.getFila(); i <= pos2.getFila(); ++i) {
                     agrup.add(this.celdas.get(new Posicion(i, pos1.getColumna())));
                 }
             }
-            //Columna D->U
+            //Columna Down->Up
             else if (pos1.getFila() > pos2.getFila() && pos1.getColumna() == pos2.getColumna()) {
                 for (int i = pos1.getFila(); i >= pos2.getFila(); --i) {
                     agrup.add(this.celdas.get(new Posicion(i, pos1.getColumna())));
                 }
             }
-            //Fila I->D
+            //Fila Izq->Der
             else if (pos1.getFila() == pos2.getFila() && pos1.getColumna() < pos2.getColumna()) {
                 for (int i = pos1.getColumna(); i <= pos2.getColumna(); ++i) {
                     agrup.add(this.celdas.get(new Posicion(pos1.getFila(), i)));
                 }
             }
-            //Fila D->I
+            //Fila Der->Izq
             else if (pos1.getFila() == pos2.getFila() && pos1.getColumna() > pos2.getColumna()) {
                 for (int i = pos1.getColumna(); i >= pos2.getColumna(); --i) {
                     agrup.add(this.celdas.get(new Posicion(pos1.getFila(), i)));
