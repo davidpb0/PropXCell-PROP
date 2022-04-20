@@ -1,19 +1,20 @@
-CLASES = ./main/domain/DomainModel/*.java ./main/domain/DomainControllers/*.java
+CLASES = ./main/Domain/DomainModel/*.java ./main/Domain/DomainControllers/*.java
 DRIVERS_INTEGRATION = ./drivers/integration/*.java
 DRIVERS_COMPONENTS = ./drivers/components/*/*.java
 JUNIT_TESTS = ./test/*.java
 EJECUTABLES = ../../EXE/out/
-JUNIT_LIB = ../../lib/junit-4.12.jar
+LIB = ../../lib/junit-4.12.jar:../../lib/mockito-all-1.10.19.jar
 IMPORTS = ./main/Domain/*/*.java
 
 build:
-		javac -Xlint:unchecked -target 11 -d $(EJECUTABLES) -g $(CLASES)
+		javac -Xlint:unchecked -target 11 -cp $(LIB) -d $(EJECUTABLES) -g $(CLASES) $(DRIVERS_COMPONENTS)
     	javac -Xlint:unchecked -target 11 -d $(EJECUTABLES) -g $(DRIVERS_COMPONENTS)
     	javac -Xlint:unchecked -target 11 -d $(EJECUTABLES) -g $(DRIVERS_INTEGRATION)
-    	javac -cp $(JUNIT_LIB) -d $(EJECUTABLES) $(IMPORTS) $(JUNIT_TESTS)
+    	javac -cp $(LIB) -d $(EJECUTABLES) $(IMPORTS)
+    	javac -cp $(LIB) -d $(EJECUTABLES) $(JUNIT_TESTS)
 
 JUnit:
-		java -cp $(JUNIT_LIB):$(EJECUTABLES) org.junit.runner.JUnitCore TestRunner
+		java -cp $(LIB):$(EJECUTABLES) org.junit.runner.JUnitCore TestRunner
 
 Main:
 		java -cp $(EJECUTABLES) drivers.integration.MainTest
