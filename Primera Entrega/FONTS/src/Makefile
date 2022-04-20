@@ -6,8 +6,8 @@ EJECUTABLES = ../../EXE/out/
 LIB = ../../lib/junit-4.12.jar:../../lib/mockito-core-4.4.0.jar
 
 build:
-		#javac -Xlint:unchecked -target 11 -cp $(LIB) -d $(EJECUTABLES) $(CLASES)
-		#javac -Xlint:unchecked -target 11 -cp $(LIB) $(CLASES) -d $(EJECUTABLES) $(JUNIT_TESTS)
+		#javac -Xlint:unchecked -target 11 -cp $(LIB) -d $(EJECUTABLES) $(CLASES) $(DRIVERS_COMPONENTS)
+		javac -Xlint:unchecked -target 11 -cp $(LIB) $(CLASES) -d $(EJECUTABLES) $(JUNIT_TESTS)
     	javac -Xlint:unchecked -target 11 -cp $(CLASES) -d $(EJECUTABLES) -g $(DRIVERS_COMPONENTS)
     	javac -Xlint:unchecked -target 11 -cp $(CLASES) -d $(EJECUTABLES) -g $(DRIVERS_INTEGRATION)
 

@@ -1,11 +1,5 @@
 package test;
 
-import main.Domain.DomainModel.Posicion;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-
-
 class PosicionTest {
 
 
@@ -15,7 +9,7 @@ class PosicionTest {
      *      - Creando una posición A1, comprobar que se asignan los valores correctos (1, 1)
      *      - Creando una posición C4, comprobar que se asignan los valores correctos (3, 4)
      */
-    @Test
+    /*@Test
     void testContructora () {
         Posicion pos1 = new Posicion("A1");
         Posicion pos2 = new Posicion("C4");
@@ -25,7 +19,7 @@ class PosicionTest {
 
         assertEquals(3, pos2.getColumna());
         assertEquals(4, pos2.getFila());
-    }
+    }*/
 
     /**
      * Pruebas del método getPosición()
@@ -33,14 +27,14 @@ class PosicionTest {
      *      - Creando una posición A1, comprobar que se retorna la posición correcta ("A1")
      *      - Creando una posición C4, comprobar que se retorna la posición correcta ("C4")
      */
-    @Test
+    /*@Test
     void testGet () {
         Posicion pos1 = new Posicion("A1");
         Posicion pos2 = new Posicion("C4");
 
         assertEquals("A1", pos1.getPosicion());
         assertEquals("C4", pos2.getPosicion());
-    }
+    }*/
 
 
 }
