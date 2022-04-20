@@ -6,16 +6,20 @@ import main.Domain.DomainModel.Posicion;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 //import org.mockito.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 //import static org.mockito.Mockito.mockConstruction;
-
 
 public class HojaTest {
 
@@ -24,16 +28,14 @@ public class HojaTest {
     private Hoja hoja;
 
     @Mock
-    private Posicion posicion;
+    //private Posicion posicion;
     private Celda celda;
-    ArrayList<Celda> refs = new ArrayList<>();
+   // ArrayList<Celda> refs = new ArrayList<>();
 
 
     @Before
-   /* public void inicializaMocks() {
+    public void setUp() throws Exception{
         MockitoAnnotations.initMocks(this);
-    }*/
-    public void setUp(){
 
     }
 
@@ -480,10 +482,14 @@ public class HojaTest {
     }
 
 
-    //Como uso Mockito aqui? Usar el is not null y explicar que mockito no puede saltarse constructoras
+
     /**
      * Objeto de la prueba: Testear la funcion getCelda
-     * - Stubs: No se utilizan stubs para este test
+     * - MockObject: ·MockPosicion: Se utiliza un mock de Posicion para substituir la clase de Posicion, dado que
+     *                dentro de la funcion solo se necesita la creador, y mockito no puede burlarse de ellas,
+     *                al ejecutar el test, gracias al if dentro de la función se crearà un mockobject de posicion
+     *                en vez de una posicion como tal.
+     *                ·MockCelda: Se utiliza un mockobject de celda para substituir la clase Celda.
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
      * - Valores estudiados: Se estudia el caso en el que se pide una celda con una posicion existente
      * - Operativa: En este test de getCelda se definen una Hoja con la constructora con parametros.
@@ -492,19 +498,24 @@ public class HojaTest {
      */
   @Test
     public void getCeldaPosicionExistente(){
-      hoja = new Hoja(2, 2);
+      /*hoja = new Hoja(2, 2);
 
+      celda = hoja.getCelda(2, 2);
 
-      Celda c =  hoja.getCelda(2, 2);
+      posicion = new Posicion(2,2);
 
-      assertSame(c, hoja.getCeldas().get(new Posicion(2, 2)));
+      assertSame(celda, hoja.getCeldas().get(posicion));*/
 
     }
 
-    //Igual que arriba Hacer mock
+
     /**
      * Objeto de la prueba: Testear la funcion getCelda
-     * - Stubs: No se utilizan stubs para este test
+     * - MockObject: ·MockPosicion: Se utiliza un mock de Posicion para substituir la clase de Posicion, dado que
+     *                dentro de la funcion solo se necesita la creador, y mockito no puede burlarse de ellas,
+     *                al ejecutar el test, gracias al if dentro de la función se crearà un mockobject de posicion
+     *                en vez de una posicion como tal.
+     *                ·MockCelda: Se utiliza un mockobject de celda para substituir la clase Celda.
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
      * - Valores estudiados: Se estudia el caso en el que se pide una celda con una posicion inexistente
      * - Operativa: En este test de getCelda se definen una Hoja con la constructora con parametros.
@@ -515,9 +526,9 @@ public class HojaTest {
     public void getCeldaPosicionInexistente(){
         Hoja h = new Hoja(2, 2);
 
-        Celda c = h.getCelda(3, 2);
+        celda = h.getCelda(3, 2);
 
-        assertNull(c);
+        assertNull(celda);
 
     }
 
@@ -733,26 +744,15 @@ public class HojaTest {
      * definen dos posiciones (la actual y la futura), se pasa una posicion(la futura) y una celda.
      */
     @Test
-    public void cambiarPosicionCelda2PosicionesExistentes(){
-      /*  hoja = new Hoja(2, 2);
-        allcelds = new HashMap<>(4);
-        PosicionStub p1 = new PosicionStub(1, 1);
-        PosicionStub p2 = new PosicionStub(1, 2);
-        PosicionStub p3 = new PosicionStub(2, 1);
-        PosicionStub p4 = new PosicionStub(2, 2);
+    public void cambiarPosicionCeldaV2PosicionesExistentes(){
+        hoja = new Hoja(2, 2);
 
-        allcelds.put(p1, new CeldaStub(p1));
-        allcelds.put(p2, new CeldaStub(p2));
-        allcelds.put(p3, new CeldaStub(p3));
-        allcelds.put(p4, new CeldaStub(p4));
-
-        hoja.setCeldas(allcelds);
-
-        when(celda.getReferenciantes()).thenReturn(refs);
-        CeldaStub c = (CeldaStub) hoja.getCelda(2, 1);
+        when(celda.getReferenciantes()).thenReturn(new ArrayList<>());
+        Celda c =  hoja.getCelda(2, 1);
+        Posicion p2 = new Posicion(1,2);
         boolean b1 = hoja.cambiarPosicionCelda(p2, c);
 
-        assertFalse(b1);*/
+        assertTrue(b1);
     }
 
     /**

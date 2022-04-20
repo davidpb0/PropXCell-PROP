@@ -20,6 +20,7 @@ public class Hoja implements Serializable {
     private HashMap<Posicion, Celda> celdas;
 
 
+
     /**
      * Funcion privada que inicializa la estructura de datos de hoja
      * @param _h hoja a inicializar

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="mockitov3.5.6">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/Primera Entrega/lib/mockito-core-3.5.6-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/Primera Entrega/FONTS/src" />
+    </SOURCES>
+  </library>
+</component>
