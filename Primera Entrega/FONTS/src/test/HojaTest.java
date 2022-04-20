@@ -6,6 +6,8 @@ import main.Domain.DomainModel.Posicion;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 //import org.mockito.*;
 
 import java.util.ArrayList;
@@ -18,10 +20,10 @@ import static org.junit.Assert.*;
 public class HojaTest {
 
     HashMap<Posicion, Celda> allcelds;
-   // @InjectMocks
+    @InjectMocks
     private Hoja hoja;
 
-    //@Mock
+    @Mock
     private Posicion posicion;
     private Celda celda;
     ArrayList<Celda> refs = new ArrayList<>();
