@@ -56,16 +56,17 @@ public class HojaTest {
      * a la hora de crearlas. Para ello comprobaremos que la estructuras de datos de las Hojas tengan
      * un tamaños igual a tantas celdas como define el numero de columnas y filas que tienen.
      */
-   /* @Test
+   @Test
     public void inicializaHojaDefault(){
-        PowerMockito.whenNew(Posicion.class).withArguments(Mockito.anyInt()).thenReturn(posicion);
-        PowerMockito.whenNew(Celda.class).withArguments(Mockito.anyInt()).thenReturn(celda);
+        MockedConstruction<Posicion> mocked = mockConstruction(Posicion.class);
+        whenNew(Posicion.class).withArguments(Mockito.anyInt()).thenReturn(posicion);
+        whenNew(Celda.class).withArguments(Mockito.anyInt()).thenReturn(celda);
         hoja = new Hoja();
         hoja.inicializaHoja(hoja);
         int s = hoja.getCeldas().size();
         assertEquals(2500, s);
 
-    }*/
+    }
 
     /**
      * Objeto de la prueba: Testear la funcion inicializaHoja
