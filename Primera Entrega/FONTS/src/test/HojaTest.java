@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 //import org.mockito.*;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class HojaTest {
 
     @Before
     public void setUp() throws Exception{
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
     }
 
@@ -745,7 +745,7 @@ public class HojaTest {
      */
     @Test
     public void cambiarPosicionCeldaV2PosicionesExistentes(){
-        hoja = new Hoja(2, 2);
+        //hoja = new Hoja(2, 2);
 
         when(celda.getReferenciantes()).thenReturn(new ArrayList<>());
         Celda c =  hoja.getCelda(2, 1);
