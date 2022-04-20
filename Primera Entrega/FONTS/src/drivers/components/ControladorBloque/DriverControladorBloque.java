@@ -101,16 +101,39 @@ public class DriverControladorBloque {
         }
     }
 
+    public static class StubPosicion extends Posicion {
+        public StubPosicion(int _f, int _c) {
+            super(_f, _c);
+        }
+    }
+
+    public static class StubCelda extends Celda {
+        String contenido;
+        StubPosicion pos;
+
+        public StubCelda(StubCelda sc) {
+            super(sc);
+        }
+
+        public StubCelda(StubPosicion _pos, String _valor) {
+            super(_pos, _valor);
+        }
+    }
+
     public static class StubBloqueTemporalCopiado extends BloqueTemporalCopiado {
-        private Celda[][] bloqueCopiado;
+        private StubCelda[][] bloqueCopiado;
         private Boolean cortar;
 
         public StubBloqueTemporalCopiado() {
             for (int i = 1; i <= 3; ++i) {
                 for (int j = 1; j <= 3; ++j) {
-                    bloqueCopiado[i][j] = new Celda(new Posicion(i, j), "dummy número " + i*j);
+                    bloqueCopiado[i][j] = new StubCelda(new StubPosicion(i, j), "dummy número " + i*j);
                 }
             }
+        }
+
+        public void setCortar(Boolean _cortar) {
+            this.cortar = _cortar;
         }
     }
 }

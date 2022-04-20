@@ -3,15 +3,13 @@ DRIVERS_INTEGRATION = ./drivers/integration/*.java
 DRIVERS_COMPONENTS = ./drivers/components/*/*.java
 JUNIT_TESTS = ./test/*.java
 EJECUTABLES = ../../EXE/out/
-LIB = ../../lib/junit-4.12.jar:../../lib/mockito-all-1.10.19.jar
-IMPORTS = ./main/Domain/*/*.java
+LIB = ../../lib/junit-4.12.jar:../../lib/mockito-core-4.4.0.jar
 
 build:
-		javac -Xlint:unchecked -target 11 -cp $(LIB) -d $(EJECUTABLES) -g $(CLASES) $(DRIVERS_COMPONENTS)
-    	javac -Xlint:unchecked -target 11 -d $(EJECUTABLES) -g $(DRIVERS_COMPONENTS)
-    	javac -Xlint:unchecked -target 11 -d $(EJECUTABLES) -g $(DRIVERS_INTEGRATION)
-    	javac -cp $(LIB) -d $(EJECUTABLES) $(IMPORTS)
-    	javac -cp $(LIB) -d $(EJECUTABLES) $(JUNIT_TESTS)
+		#javac -Xlint:unchecked -target 11 -cp $(LIB) -d $(EJECUTABLES) $(CLASES)
+		#javac -Xlint:unchecked -target 11 -cp $(LIB) $(CLASES) -d $(EJECUTABLES) $(JUNIT_TESTS)
+    	javac -Xlint:unchecked -target 11 -cp $(CLASES) -d $(EJECUTABLES) -g $(DRIVERS_COMPONENTS)
+    	javac -Xlint:unchecked -target 11 -cp $(CLASES) -d $(EJECUTABLES) -g $(DRIVERS_INTEGRATION)
 
 JUnit:
 		java -cp $(LIB):$(EJECUTABLES) org.junit.runner.JUnitCore TestRunner

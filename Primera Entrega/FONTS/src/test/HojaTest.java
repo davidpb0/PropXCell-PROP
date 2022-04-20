@@ -1,7 +1,4 @@
 package test;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
-
 
 import main.Domain.DomainModel.Celda;
 import main.Domain.DomainModel.Hoja;
@@ -9,14 +6,13 @@ import main.Domain.DomainModel.Posicion;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
+import org.mockito.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mockConstruction;
 
 
 public class HojaTest {
@@ -59,8 +55,8 @@ public class HojaTest {
    @Test
     public void inicializaHojaDefault(){
         MockedConstruction<Posicion> mocked = mockConstruction(Posicion.class);
-        whenNew(Posicion.class).withArguments(Mockito.anyInt()).thenReturn(posicion);
-        whenNew(Celda.class).withArguments(Mockito.anyInt()).thenReturn(celda);
+        //whenNew(Posicion.class).withArguments(Mockito.anyInt()).thenReturn(posicion);
+        //whenNew(Celda.class).withArguments(Mockito.anyInt()).thenReturn(celda);
         hoja = new Hoja();
         hoja.inicializaHoja(hoja);
         int s = hoja.getCeldas().size();
