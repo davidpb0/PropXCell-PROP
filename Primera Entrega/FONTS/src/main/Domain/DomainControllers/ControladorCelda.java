@@ -251,6 +251,7 @@ public class ControladorCelda {
      * @param _a numero a poner en valor absoluto
      */
     public void valorAbsoluto(double _a){
+        //Para enteros que en decimal se escribe -> 5.0
         if((_a % 1) == 0) {
              int aux = (int) Math.abs(_a);
             celdaRef.setValor(String.valueOf(aux));
