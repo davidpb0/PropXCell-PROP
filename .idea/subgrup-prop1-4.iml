@@ -89,6 +89,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="mockito.all" level="project" />
+    <orderEntry type="library" name="mockito-core-3.5.0.jar" level="project" />
   </component>
 </module>
