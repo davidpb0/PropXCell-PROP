@@ -15,17 +15,28 @@ import java.util.List;
 
 public class Traductor {
 
+    private Traductor traductor;
+
+    /**
+     * Método para acceder al traductor
+     * @return la instancia singleton del traductor
+     */
+    public Traductor getTraductor() {
+        if (this.traductor == null) this.traductor = new Traductor();
+        return this.traductor;
+    }
+
     /**
      * Creadora por defecto.
      */
-    public Traductor() {}
+    private Traductor() {}
 
     /**
      * @return el string convertido a número entero.
      * Convierte un string a un número entero, si su sintaxis es correcta.
      * @param _s el parámetro a convertir a entero.
      */
-    public static int StringInt(String _s) {
+    public int StringInt(String _s) {
         return Integer.parseInt(_s);
     }
 
@@ -34,7 +45,7 @@ public class Traductor {
      * Convierte un string a una float, si su sintaxis es correcta.
      * @param _s el parámetro a convertir a float.
      */
-    public static float StringFloat(String _s) {
+    public float StringFloat(String _s) {
         return Float.parseFloat(_s);
     }
 
@@ -43,7 +54,7 @@ public class Traductor {
      * Convierte un string a una fecha, si su sintaxis es correcta.
      * @param _s el parámetro a convertir a fecha.
      */
-    public static Date StringDate(String _s) throws ParseException {
+    public Date StringDate(String _s) throws ParseException {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         return formatoFecha.parse(_s);
     }
@@ -53,21 +64,21 @@ public class Traductor {
      * Convierte un entero a String.
      * @param _entero el entero a convertir a String.
      */
-    public static String IntString(Integer _entero) { return String.valueOf(_entero); }
+    public String IntString(Integer _entero) { return String.valueOf(_entero); }
 
     /**
      * @return el float convertido a String.
      * Convierte un float a String.
      * @param _float el float a convertir a String.
      */
-    public static String FloatString(Float _float) { return String.valueOf(_float); }
+    public String FloatString(Float _float) { return String.valueOf(_float); }
 
     /**
      * @return la fecha convertido a String.
      * Convierte una fecha a String en formato dd/MM/aaaa.
      * @param _fecha la fecha a convertir a String.
      */
-    public static String DateString(Date _fecha) {
+    public String DateString(Date _fecha) {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         return formatoFecha.format(_fecha);
     }
@@ -76,7 +87,7 @@ public class Traductor {
      * @param _formula contenido introducido por el usuario
      * @return tipo de contenido especificado por la fórmula
      */
-    public static String detecta(String _formula) {
+    public String detecta(String _formula) {
         if (_formula.charAt(0) == '=' && _formula.indexOf(')') == _formula.length() - 1) {
             if (_formula.indexOf("=abs(") == 0) return "#ABS";
             else if (_formula.indexOf("=trunc(") == 0) return "#TRUNC";
@@ -103,7 +114,7 @@ public class Traductor {
             return "#REFERENCIA";
         } else if (_formula.charAt(2) == '/' && _formula.charAt(5) == '/') {
             try {
-                Date fecha = Traductor.StringDate(_formula);
+                Date fecha = getTraductor().StringDate(_formula);
                 return "#FECHA";
             } catch (ParseException pe) {
                 return "#ERRORFECHA";
@@ -117,13 +128,13 @@ public class Traductor {
      * @param _c columna(alfabético)
      * @return identificador de la columna que corresponde a su valor alfabético
      */
-    public static int traduceColumna(String _c) {
+    public int traduceColumna(String _c) {
         int ret = 0;
         if (_c.length() == 1) {
-            ret = Traductor.StringInt(_c) - 16;
+            ret = getTraductor().StringInt(_c) - 16;
         } else {
             for (int i = 0; i < _c.length(); ++i) {
-                ret += 26 * i + Traductor.traduceColumna(Character.toString(_c.charAt(i)));
+                ret += 26 * i + getTraductor().traduceColumna(Character.toString(_c.charAt(i)));
             }
         }
         return ret;
@@ -135,7 +146,7 @@ public class Traductor {
      * @param _idH hoja en la que se encuentra la celda
      * @return la celda identificada por los parámetros de entrada
      */
-    public static Celda traduceCelda(String _pos, int _idH) {
+    public Celda traduceCelda(String _pos, int _idH) {
         Celda c = null;
         Hoja h = Documento.getDocumento().getHoja(_idH);
         String s = _pos.substring(1);
@@ -143,7 +154,7 @@ public class Traductor {
         while (j < s.length() && s.charAt(j) <= 'Z') ++j;
         String columna = s.substring(0, j - 1);
         String fila = s.substring(j);
-        Posicion p = new Posicion(Traductor.StringInt(fila), traduceColumna(columna));
+        Posicion p = new Posicion(getTraductor().StringInt(fila), traduceColumna(columna));
         c = h.getCelda(p);
 
         return c;
@@ -154,7 +165,7 @@ public class Traductor {
      * @param _funcion la expresión introducida por el usuario
      * @return un array de String con cada valor que especifica el argumento
      */
-    public static String[] getArgumentos(String _funcion, int _idH) {
+    public String[] getArgumentos(String _funcion, int _idH) {
         Hoja h = Documento.getDocumento().getHoja(_idH);
         String f = _funcion;
         if (_funcion.startsWith("=")) f = _funcion.substring(_funcion.indexOf('('), _funcion.lastIndexOf(')'));
@@ -163,7 +174,7 @@ public class Traductor {
 
         for (String arg : args) {
             if (arg.startsWith("$") && arg.length() <= 5) {                                     // Como mucho $AA11
-                Celda c = Traductor.traduceCelda(arg, _idH);
+                Celda c = getTraductor().traduceCelda(arg, _idH);
                 try {
                     ret.add(c.getValor());
                 } catch (NullPointerException np) {
@@ -185,7 +196,7 @@ public class Traductor {
         return (String[]) ret.toArray();
     }
 
-    public Posicion getPosReferencia(String _ref){
-        return;
-    }
+    /*public Posicion getPosReferencia(String _ref){
+
+    }*/
 }
