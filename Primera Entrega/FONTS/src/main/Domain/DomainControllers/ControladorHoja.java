@@ -210,7 +210,7 @@ public class ControladorHoja {
     * @param _y segundo conjunto de celdas sobre las que se calculará el coeficiente de correlación de Pearson
     * @return coeficiente de correlación de Pearson de los valores las celdas indicadas por _x e _y
     */
-    public static double CorrelacionPearson(ArrayList<Celda> _x, ArrayList<Celda> _y) {
+    public static double correlacionPearson(ArrayList<Celda> _x, ArrayList<Celda> _y) {
         double sx = 0.0;
         double sy = 0.0;
         double sxx = 0.0;
