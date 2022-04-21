@@ -3,23 +3,22 @@ package test;
 import main.Domain.DomainModel.Celda;
 import main.Domain.DomainModel.Hoja;
 import main.Domain.DomainModel.Posicion;
+import main.Domain.DomainModel.Traductor;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
-//import org.mockito.*;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
-//import static org.mockito.Mockito.mockConstruction;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.*;
+
 
 public class HojaTest {
 
@@ -30,8 +29,13 @@ public class HojaTest {
 
     @Mock
     private Celda celda;
+
+    @Mock
+    Traductor traductor;
+
     @Mock
     private Posicion posicion;
+
 
 
 
@@ -68,9 +72,9 @@ public class HojaTest {
         int c = hoja.getColumnas();
         int s = hoja.getCeldas().size();
 
-        assertEquals(50, f);
-        assertEquals(50, c);
-        assertEquals(2500, s);
+        String s1 = f + " " + c + " " + s;
+
+        assertEquals("50 50 2500", s1);
     }
 
     /**
@@ -92,9 +96,9 @@ public class HojaTest {
         int c = hoja.getColumnas();
         int s = hoja.getCeldas().size();
 
-        assertEquals(20, f);
-        assertEquals(30, c);
-        assertEquals(600, s);
+        String s1 = f + " " + c + " " + s;
+
+        assertEquals("20 30 600", s1);
     }
 
 
@@ -115,15 +119,15 @@ public class HojaTest {
         boolean b = hoja.setFilas(23);
         int f = hoja.getFilas();
 
-        assertEquals(23, f);
-        assertTrue(b);
+        String s = b + " " + f;
+        assertEquals("true 23", s);
     }
 
     /**
      * Objeto de la prueba: Testear la funcion setFilas
      * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se colocan manualmente las filas, con un valor negativo
+     * - Valores estudiados: Se estudia el caso extremo en el que se colocan manualmente las filas, con un valor negativo
      * - Operativa: En este test de setFilas se define una Hoja con la constructora con parametros.
      * El objetivo es comprobar que no se cambia el valor de las filas de la hoja por el valor introducido, ya que este
      * es negativo.
@@ -137,8 +141,8 @@ public class HojaTest {
 
         int f = hoja.getFilas();
 
-        assertEquals(20, f);
-        assertFalse(b);
+        String s = b + " " + f;
+        assertEquals("false 20", s);
     }
 
 
@@ -159,15 +163,16 @@ public class HojaTest {
         boolean b = hoja.setColumnas(23);
         int c = hoja.getColumnas();
 
-        assertEquals(23, c);
-        assertTrue(b);
+        String s = b + " " + c;
+        assertEquals("true 23", s);;
     }
 
     /**
      * Objeto de la prueba: Testear la funcion setColumnas
      * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se colocan manualmente las columnas, con un numero negativo
+     * - Valores estudiados: Se estudia el caso extremo en el que se colocan manualmente las columnas con un
+     *   numero negativo
      * - Operativa: En este test de setColumnas se define una Hoja con la constructora con parametros.
      * El objetivo es comprobar que no se cambia el valor de las columnas de la hoja por el valor introducido.
      * Para ello crearemos una hoja con la constructora con parametros, comprobaremos que el numero de columnas
@@ -181,8 +186,8 @@ public class HojaTest {
         boolean b = hoja.setColumnas(-23);
         int c = hoja.getColumnas();
 
-        assertEquals(30, c);
-        assertFalse(b);
+        String s = b + " " + 30;
+        assertEquals("false 30", s);;
     }
 
     /**
@@ -204,8 +209,9 @@ public class HojaTest {
         int id = hoja.getId();
         String name = hoja.getNombre();
 
-        assertEquals(1, id);
-        assertEquals("Hoja1", name);
+        String s = id + " " + name;
+
+        assertEquals("1 Hoja1", s);
 
     }
 
@@ -213,7 +219,7 @@ public class HojaTest {
      * Objeto de la prueba: Testear la funcion añadeNombreIdHojaDefault
      * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se colocan un nombre y un identificador en negativo.
+     * - Valores estudiados: Se estudia el caso extremno en el que se colocan un nombre y un identificador en negativo.
      * - Operativa: En este test de añadeNombreIdHojaDefault se define una Hoja con la constructora sin parametros.
      * El objetivo es comprobar que tanto el nombre de la hoja como su id no son inicializados dado que se le introduce
      * un numero en negativo. Para ello crearemos una hoja, e intentaremos añadir un nombre y un identificador
@@ -252,7 +258,7 @@ public class HojaTest {
      * Objeto de la prueba: Testear la funcion asignaNombre
      * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se coloca un nombre vacio a la hoja manualmente.
+     * - Valores estudiados: Se estudia el caso extremo en el que se coloca un nombre vacio a la hoja manualmente.
      * - Operativa: En este test de asignaNombre se definen una Hoja con la constructora sin parametros.
      * El objetivo es comprobar que  si se introduce un nombre vacio, este no se asigna
      * Para ello crearemos un hoja, les asignaremos un nombre vacio y comprobaremos que la funcion devuelve false,
@@ -293,7 +299,7 @@ public class HojaTest {
      * Objeto de la prueba: Testear la funcion esHoja
      * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se comprueba que no es la hoja correcta.
+     * - Valores estudiados: Se estudia el caso algo extremo en el que se comprueba que no es la hoja correcta.
      * - Operativa: En este test de esHoja se definen una Hoja con la constructora sin parametros.
      * El objetivo es comprobar que la hoja, no es la hoja que tiene el identificador introducido
      * Para ello crearemos una hoja, le asignaremos un identificador, seguidamente comprobaremos que devuelve false
@@ -318,8 +324,8 @@ public class HojaTest {
      *   un identidicador positivo.
      * - Operativa: En este test de getId se definen una Hoja con la constructora sin parametros.
      * El objetivo es comprobar que devuelve correctamente el identificador de la hoja
-     * Para ello, despues de crear la hoja, le asignaremos un id mediante la funcion "añadeNombreIdHojaDefault"
-     * ya probada y comprobaremos que devuelve el identificador que previamente se le ha asignado
+     * Para ello, despues de crear la hoja, le asignaremos un id y comprobaremos que devuelve el identificador
+     * que previamente se le ha asignado
      */
     @Test
     public void getIdAsignado(){
@@ -336,8 +342,8 @@ public class HojaTest {
      * Objeto de la prueba: Testear la funcion getId
      * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se quiere obtener el identificador de una hoja que aun no
-     * tiene identificador.
+     * - Valores estudiados: Se estudia un caso algo extremo en el que se quiere obtener el identificador de una hoja
+     * que aun no tiene identificador.
      * - Operativa: En este test de getId se definen una Hoja con la constructora sin parametros.
      * El objetivo es comprobar que devuelve un identificador sin iniciar, es decir 0
      * Para ello crearemos una hoja, pero no añadiremos el identificador que se crea por defecto con la funcion
@@ -398,7 +404,7 @@ public class HojaTest {
      * Objeto de la prueba: Testear la funcion getNombre
      * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se obtiene el nombre de una Hoja con nombre
+     * - Valores estudiados: Se estudia un caso en el que se obtiene el nombre de una Hoja con nombre
      * - Operativa: En este test de getNombre se definen una Hoja con la constructora sin parametros.
      * El objetivo es comprobar que devuelve correctamente el nombre de la hoja
      * Para ello, despues de crearla, le añadiremos un nombre manualmente, seguidamente comprobaremos que devuelve
@@ -419,7 +425,7 @@ public class HojaTest {
      * Objeto de la prueba: Testear la funcion getNombre
      * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se obtiene el nombre de una Hoja sin nombre
+     * - Valores estudiados: Se estudia un caso algo extremo en el que se obtiene el nombre de una Hoja sin nombre
      * - Operativa: En este test de getNombre se definen una Hoja con la constructora sin parametros.
      * El objetivo es comprobar que devuelve null al no tener nombre la hoja
      * Para ello comprobaremos que despues de crearla, sin añadirle ningun nombre, devuelve null.
@@ -441,12 +447,12 @@ public class HojaTest {
      * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la calse del modelo
      *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la clase del modelo
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se pretende coger las celdas de una hoja que tiene celdas
+     * - Valores estudiados: Se estudia un caso poco extremo en el que se pretende coger las celdas de una hoja
+     * que tiene celdas
      * - Operativa: En este test de getCeldas se definen una Hoja con la constructora con parametros, 4 posiciones y
      *   4 celdas con las cuales se llenara la hoja .
      * El objetivo es comprobar que devuelve correctamente la estructura de datos "celdas" de la hoja
-     * Para ello comprobaremos que el tamaño de la estructura que devuelve sea el mismo que el que tiene la Hoja y que
-     * la estructura sea la misma
+     * Para ello comprobaremos que el tamaño de la estructura que devuelve sea el mismo que el que tiene la hoja.
      */
     @Test
     public void getCeldasLleno(){
@@ -469,40 +475,37 @@ public class HojaTest {
         HashMap<Posicion, Celda> m = hoja.getCeldas();
 
         assertEquals(4, clds);
-        assertSame(m, hoja.getCeldas());
+
     }
     /**
      * Objeto de la prueba: Testear la funcion getCeldas
      * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el se pretende coger las celdas de una hoja que no tiene celdas
+     * - Valores estudiados: Se estudia el caso extremo en el se pretende coger las celdas de una hoja que no
+     * tiene celdas
      * - Operativa: En este test de getCeldas se definen una Hoja con la constructora con parametros.
      * El objetivo es comprobar que devuelve correctamente la estructura de datos "celdas" de la hoja vacia
      * Para ello crearemos una hoja sin filas ni columnas y comprobaremos que el tamaño de la estructura que
-     * devuelve sea el mismo que el que tiene la Hoja, es decir 0 y que la estructura se la misma.
+     * devuelve sea el mismo que el que tiene la Hoja, es decir 0.
      */
     @Test
     public void getCeldasVacio(){
         hoja = new Hoja(0, 0);
+
         int clds = hoja.getCeldas().size();
 
-        HashMap<Posicion, Celda> m = hoja.getCeldas();
-
         assertEquals(0, clds);
-        assertSame(m, hoja.getCeldas());
+
     }
 
 
 
     /**
      * Objeto de la prueba: Testear la funcion getCelda
-     * - MockObject: ·MockPosicion: Se utiliza un mock de Posicion para substituir la clase de Posicion, dado que
-     *                dentro de la funcion solo se necesita la creadora, y mockito no puede burlarse de ellas,
-     *                al ejecutar el test, gracias al if dentro de la función se crearà un mock de posicion
-     *                en vez de una posicion como tal.
-     *                ·MockCelda: Se utiliza un mock de Celda para substituir la clase Celda.
+     * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la clase del modelo
+     *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la clase del modelo
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se pide una celda con una posicion existente
+     * - Valores estudiados: Se estudia un caso poco extremo en el que se pide una celda con una posicion existente
      * - Operativa: En este test de getCelda se definen una Hoja con la constructora con parametros.
      * El objetivo es comprobar que devuelve correctamente la celda en la posicion introducida existente
      * Para ello despues de crear la hoja, comprobaremos que la celda devuelta es la que hay en la posicion pedida
@@ -511,9 +514,9 @@ public class HojaTest {
     public void getCeldaPosicionExistente(){
       hoja = new Hoja(2, 2);
 
-      celda = hoja.getCelda(2, 2);
+      CeldaStub celda = (CeldaStub) hoja.getCelda(new PosicionStub(2, 2));
 
-      posicion = new Posicion(2,2);
+      PosicionStub posicion = new PosicionStub(2,2);
 
       assertSame(celda, hoja.getCeldas().get(posicion));
 
@@ -522,13 +525,10 @@ public class HojaTest {
 
     /**
      * Objeto de la prueba: Testear la funcion getCelda
-     * - MockObject: ·MockPosicion: Se utiliza un mock de Posicion para substituir la clase de Posicion, dado que
-     *                dentro de la funcion solo se necesita la creador, y mockito no puede burlarse de ellas,
-     *                al ejecutar el test, gracias al if dentro de la función se crearà un mock de posicion
-     *                en vez de una posicion como tal.
-     *                ·MockCelda: Se utiliza un mock de celda para substituir la clase Celda.
+     * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la clase del modelo
+     *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la clase del modelo
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se pide una celda con una posicion inexistente
+     * - Valores estudiados: Se estudia un caso algo extremo en el que se pide una celda con una posicion inexistente
      * - Operativa: En este test de getCelda se definen una Hoja con la constructora con parametros.
      * El objetivo es comprobar que devuelve una celda nula, q siginificara que no existe.
      * Para ello despues de crear la hoja, comprobaremos que la celda devuelta es nula.
@@ -537,7 +537,7 @@ public class HojaTest {
     public void getCeldaPosicionInexistente(){
         hoja = new Hoja(2, 2);
 
-        celda = hoja.getCelda(3, 2);
+        CeldaStub celda = (CeldaStub) hoja.getCelda(new PosicionStub(2, 2));
 
         assertNull(celda);
 
@@ -549,7 +549,7 @@ public class HojaTest {
      * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la clase del modelo
      *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la clase del modelo
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *- Valores estudiados: Se estudia el caso en el que se comprueba si existe una posicion existente
+     *- Valores estudiados: Se estudia un caso poco extremo en el que se comprueba si existe una posicion existente
      * - Operativa: En este test de existePosicion se definen una Hoja con la constructora con parametros, 4 posiciones
      * y 4 celdas.
      * El objetivo es comprobar que devuelve true si la Posicion introducida existe en la Hoja.
@@ -573,9 +573,8 @@ public class HojaTest {
 
         hoja.setCeldas(allcelds);
 
-        PosicionStub p = new PosicionStub(1, 2);
 
-        boolean b = hoja.existePosicion(p);
+        boolean b = hoja.existePosicion(p2);
 
         assertTrue(b);
     }
@@ -585,9 +584,9 @@ public class HojaTest {
      * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la clase del modelo
      *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la clase del modelo
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *- Valores estudiados: Se estudia el caso en el que se comprueba si existe una posicion inexistente
-     * - Operativa: En este test de existePosicion se definen una Hoja con la constructora con parametros, 4 posiciones
-     *   y 4 celdas.
+     *- Valores estudiados: Se estudia un caso poco extremo en el que se comprueba si existe una posicion inexistente
+     * - Operativa: En este test de existePosicion se definen una Hoja con la constructora con parametros, 4 posiciones,
+     *   4 celdas y 1 posicion inexistente.
      * El objetivo es comprobar que devuelve false si la Posicion introducida no existe en la Hoja.
      * Para ello crearemos 4 posiciones junto a 4 celdas, que se añadiran a un HashMap para llenar la hoja,
      * seguidamente se creara una posicion inexistente y comprobaremos que el valor devuelto es false
@@ -616,170 +615,24 @@ public class HojaTest {
     }
 
 //----------------------------------------------------------------
-    //Problema Mockito
     /**
      * Objeto de la prueba: Testear la funcion addCeldaVacia
-     * - Stubs: No se utilizan stubs para este test
+     * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la clase del modelo
+     *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la clase del modelo
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se añade una celda vacia a una posicion inexistente
-     * - Operativa: En este test de addCeldaVacia se definen una Hoja con la constructora con parametros.
-     * El objetivo es comprobar que se añade una celda vacia a la Hoja
-     * Para ello comprobaremos que una vez introducida esta celda, existe en la hoja
+     * - Valores estudiados: Se estudia un caso poco extremo en el que se añade una celda vacia a una hoja en
+     *   una posicion inexistente
+     * - Operativa: En este test de addCeldaVacia se definen una Hoja con la constructora con parametros, 4 posiciones,
+     *   4 celdas y una posicion inexistente.
+     * El objetivo es comprobar que se añade una celda vacia a la Hoja en una posicion no existente
+     * Para ello crearemos una hoja con la creadora con parametros, que tendra dos filas y dos columnas, es decir
+     * 4 celdas y 4 posiciones, la llenaremos con 4 celdas y 4 posiciones creadas, seguidamente comprobaremos que
+     * se añade la celda en la posicion inexistente introducida devolviendonos true.
      */
     @Test
     public void addCeldaVaciaPosicionInexistente(){
-        Hoja h = new Hoja(2, 2);
-        h.addCeldaVacia(2, 3);
-
-        boolean b = h.getCeldas().containsKey(new Posicion(2, 3));
-
-        assertTrue(b);
-
-    }
-
-    //Problema Mockito
-    /**
-     * Objeto de la prueba: Testear la funcion addCeldaVacia
-     * - Stubs: No se utilizan stubs para este test
-     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se añade una celda vacia a una posicion existente
-     * - Operativa: En este test de addCeldaVacia se definen una Hoja con la constructora con parametros.
-     * El objetivo es comprobar que no añade una celda vacia a la Hoja si la posicion ya existe
-     * Para ello comprobaremos que la funcion devuelve false
-     */
-    @Test
-    public void addCeldaVaciaPosicionExistente(){
-        Hoja h = new Hoja(2, 2);
-        boolean b2 = h.addCeldaVacia(2, 1);
-
-        assertFalse(b2);
-
-    }
-
-    //Problema Mockito
-    /**
-     * Objeto de la prueba: Testear la funcion quitarCelda
-     * - Stubs: No se utilizan stubs para este test
-     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se elimina una posicion y una celda en una posicion existente
-     * - Operativa: En este test de quitarCelda se definen una Hoja con la constructora con parametros.
-     * El objetivo es comprobar que se borra una celda de la estructura de datos, y que devuelve true si la posicion
-     * existe
-     * Para ello quitaremos una posicion existente, comprobaremos que devuelve los valores correctos y
-     * que la existente ha sido eliminada del mapa
-     */
-    @Test
-    public void quitarCeldaPosicionExistente(){
-        Hoja h = new Hoja(2, 2);
-
-        boolean b2 =  h.quitarCelda(2, 1);
-
-        boolean b = h.getCeldas().containsKey(new Posicion(2, 1));
-
-        assertFalse(b);
-        assertTrue(b2);
-
-    }
-
-    //Problema Mockito
-    /**
-     * Objeto de la prueba: Testear la funcion quitarCelda
-     * - Stubs: No se utilizan stubs para este test
-     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se elimina una posicion y una celda en una posicion inexistente
-     * - Operativa: En este test de quitarCelda se definen una Hoja con la constructora con parametros.
-     * El objetivo es comprobar que no se borra una celda de la estructura de datos si la posicion no existe.
-     * Para ello quitaremos una posicion inexistente, comprobaremos que devuelve false.
-     */
-    @Test
-    public void quitarCeldaPosicionInexistente(){
-        Hoja h = new Hoja(2, 2);
-
-        boolean b2 =  h.quitarCelda(2, 3);
-
-        assertFalse(b2);
-
-    }
-
-    /**
-     * Objeto de la prueba: Testear la funcion cambiarPosicionCelda
-     * - Stubs: No se utilizan stubs para este test
-     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *- Valores estudiados: Se estudia el caso en el que se cambia una celda, dadas dos posiciones existentes
-     * - Operativa: En este test de cambiarPosicionCelda se definen una Hoja con la constructora con parametros.
-     * El objetivo es comprobar que se cambia la celda de la primera posicion dada a la segunda posicion dada.
-     * Para ello cambiaremos una celda de posicion por otra dada, una vez hecho cogeremos la posicion de la celda.
-     * Finalmente comprobamos que la nueva posicion corresponde con la introducida.
-     */
-    @Test
-    public void cambiarPosicionCeldaPosicionesExistentes(){
-        Hoja h = new Hoja(2, 2);
-        Celda c = h.getCeldas().get(new Posicion(2, 1));
-
-        h.cambiarPosicionCelda(2, 1, 1, 2);
-
-        Posicion p2 = c.getPosicion();
-
-        assertEquals(1, p2.getFila());
-        assertEquals(2, p2.getColumna());
-    }
-
-    /**
-     * Objeto de la prueba: Testear la funcion cambiarPosicionCelda
-     * - Stubs: No se utilizan stubs para este test
-     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se cambia una celda, dadas dos posiciones una de ellas
-     * inexistentes.
-     * - Operativa: En este test de cambiarPosicionCelda se definen una Hoja con la constructora con parametros.
-     * El objetivo es comprobar que no se cambia la celda de la primera posicion dada a la segunda posicion dada.
-     * Para ello comprobaremos que la funcion devuelve false, ya que significara que esta no hace nada
-     */
-    @Test
-    public void cambiarPosicionCeldaPosicionesInxistentes(){
-        Hoja h = new Hoja(2, 2);
-
-        boolean b =h.cambiarPosicionCelda(2, 1, 1, 3);
-
-        assertFalse(b);
-    }
-
-    //Mockito Problem
-    /**
-     * Objeto de la prueba: Testear la variante de la funcion cambiarPosicionCelda
-     *- Stubs: No se utilizan stubs para este test
-     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *- Valores estudiados: Se estudia el caso en el que se cambia una celda, dadas una posicion y una celda existentes.
-     * - Operativa: En este test de cambiarPosicionCelda se definen una Hoja con la constructora con parametros.
-     * El objetivo es comprobar que la variante de la funcion cambiarPosicionCelda funciona correctamente.
-     * El funcionamiento es igual a la otra variante, lo diferente en esta, es que en lugar de introducir 4 enteros que
-     * definen dos posiciones (la actual y la futura), se pasa una posicion(la futura) y una celda.
-     */
-    @Test
-    public void cambiarPosicionCeldaV2PosicionesExistentes(){
         hoja = new Hoja(2, 2);
 
-        when(celda.getReferenciantes()).thenReturn(new ArrayList<>());
-        Celda c =  hoja.getCelda(2, 1);
-        Posicion p2 = new Posicion(1,2);
-        boolean b1 = hoja.cambiarPosicionCelda(p2, c);
-
-        assertTrue(b1);
-    }
-
-    /**
-     * Objeto de la prueba: Testear la funcion cambiarPosicionCelda
-     * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la calse del modelo
-     *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la calse del modelo
-     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se cambia una celda, dadas una posicion inexistente y una
-     * celda.
-     * - Operativa: En este test de cambiarPosicionCelda se definen una Hoja con la constructora con parametros.
-     * El objetivo es comprobar que no se cambia la celda de la primera posicion dada a la segunda posicion dada.
-     * Para ello comprobaremos que la funcion devuelve false, ya que significara que esta no hace nada
-     */
-    @Test
-    public void cambiarPosicionCelda2PosicionesInexistentes(){
-        hoja = new Hoja(2, 2);
         allcelds = new HashMap<>(4);
         PosicionStub p1 = new PosicionStub(1, 1);
         PosicionStub p2 = new PosicionStub(1, 2);
@@ -793,8 +646,308 @@ public class HojaTest {
 
         hoja.setCeldas(allcelds);
 
-        CeldaStub c = (CeldaStub) hoja.getCelda(2, 1);
-        boolean b1 = hoja.cambiarPosicionCelda(new PosicionStub(1, 3), c);
+        PosicionStub p5 = new PosicionStub(3, 2);
+
+        boolean b = hoja.addCeldaVacia(p5);
+
+        assertTrue(b);
+
+    }
+
+    /**
+     * Objeto de la prueba: Testear la funcion addCeldaVacia
+     * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la clase del modelo
+     *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la clase del modelo
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     * - Valores estudiados: Se estudia un caso algo extremo en el que se añade una celda vacia a una posicion
+     *  existente en la hoja
+     * - Operativa: En este test de addCeldaVacia se definen una Hoja con la constructora con parametros, 4 posiciones
+     *  y 4 celdas.
+     * El objetivo es comprobar que no añade una celda vacia a la Hoja si la posicion ya existe en ella.
+     * Para ello crearemos una hoja con la creadora con parametros, que tendra dos filas y dos columnas, es decir
+     * 4 celdas y 4 posiciones, la llenaremos con 4 celdas y 4 posiciones creadas, seguidamente comprobaremos que
+     * no se añade la celda en la posicion existente introducida devolviendonos false.
+     */
+    @Test
+    public void addCeldaVaciaPosicionExistente(){
+        hoja = new Hoja(2, 2);
+
+        allcelds = new HashMap<>(4);
+        PosicionStub p1 = new PosicionStub(1, 1);
+        PosicionStub p2 = new PosicionStub(1, 2);
+        PosicionStub p3 = new PosicionStub(2, 1);
+        PosicionStub p4 = new PosicionStub(2, 2);
+
+        allcelds.put(p1, new CeldaStub(p1));
+        allcelds.put(p2, new CeldaStub(p2));
+        allcelds.put(p3, new CeldaStub(p3));
+        allcelds.put(p4, new CeldaStub(p4));
+
+        hoja.setCeldas(allcelds);
+
+        boolean b2 = hoja.addCeldaVacia(p2);
+
+        assertFalse(b2);
+
+    }
+
+    /**
+     * Objeto de la prueba: Testear la funcion quitarCelda
+     * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la clase del modelo
+     *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la clase del modelo
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     * - Valores estudiados: Se estudia un caso no tan extremo en el que se elimina una posicion y una celda en una
+     * posicion existente para comprobar el buen funcionamiento de la funcion
+     * - Operativa: En este test de quitarCelda se definen una Hoja con la constructora con parametros , 4 posiciones y
+     * 4 celdas.
+     * El objetivo es comprobar que se borra una celda de la estructura de datos.
+     * Para ello, crearemos una hoja con 4 columnas y 4 filas, la llenaremos con 4 celdas y 4 posiciones creadas,
+     * comprobaremos que devuelve true si introducidomos una posicion exsitente lo que significara que ha sido
+     * eliminada del mapa.
+     */
+    @Test
+    public void quitarCeldaPosicionExistente(){
+        hoja = new Hoja(2, 2);
+
+        allcelds = new HashMap<>(4);
+        PosicionStub p1 = new PosicionStub(1, 1);
+        PosicionStub p2 = new PosicionStub(1, 2);
+        PosicionStub p3 = new PosicionStub(2, 1);
+        PosicionStub p4 = new PosicionStub(2, 2);
+
+        allcelds.put(p1, new CeldaStub(p1));
+        allcelds.put(p2, new CeldaStub(p2));
+        allcelds.put(p3, new CeldaStub(p3));
+        allcelds.put(p4, new CeldaStub(p4));
+
+        hoja.setCeldas(allcelds);
+
+        boolean b2 =  hoja.quitarCelda(p2);
+
+        assertTrue(b2);
+
+    }
+
+    /**
+     * Objeto de la prueba: Testear la funcion quitarCelda
+     * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la clase del modelo
+     *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la clase del modelo
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     * - Valores estudiados: Se estudia un caso algo extremo en el que se pretende eliminar una posicion y una celda
+     *   en una posicion inexistente
+     * - Operativa: En este test de quitarCelda se definen una Hoja con la constructora con parametros, 4 posiciones y
+     *   4 celdas.
+     * El objetivo es comprobar que no se borra una celda de la estructura de datos si la posicion no existe.
+     * Para ello, crearemos una hoja con 4 columnas y 4 filas, la llenaremos con 4 celdas y 4 posiciones creadas,
+     * comprobaremos que devuelve false si introducidomos una posicion inexsitente lo que significara que no se ha
+     * sido eliminada del mapa.
+     */
+    @Test
+    public void quitarCeldaPosicionInexistente(){
+        hoja = new Hoja(2, 2);
+
+        allcelds = new HashMap<>(4);
+        PosicionStub p1 = new PosicionStub(1, 1);
+        PosicionStub p2 = new PosicionStub(1, 2);
+        PosicionStub p3 = new PosicionStub(2, 1);
+        PosicionStub p4 = new PosicionStub(2, 2);
+
+        allcelds.put(p1, new CeldaStub(p1));
+        allcelds.put(p2, new CeldaStub(p2));
+        allcelds.put(p3, new CeldaStub(p3));
+        allcelds.put(p4, new CeldaStub(p4));
+
+        hoja.setCeldas(allcelds);
+
+        PosicionStub p5 = new PosicionStub(3, 3);
+
+        boolean b2 =  hoja.quitarCelda(p5);
+
+        assertFalse(b2);
+
+    }
+
+    /**
+     * Objeto de la prueba: Testear la funcion cambiarPosicionCelda
+     * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la clase del modelo
+     *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la clase del modelo
+     *  -Mocks: ·MockCelda: Se utiliza un mock de celda para substituir la clase Celda y las funciones necesarias para
+     *           el test.
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     *- Valores estudiados: Se estudia un caso no tan extremo en el que se cambia una celda, dadas
+     *  dos posiciones existentes.
+     * - Operativa: En este test de cambiarPosicionCelda se definen una Hoja con la constructora con parametros,
+     *  4 posiciones y 4 celdas para llenar la estructura de la hoja.
+     * El objetivo es comprobar que se cambia la celda de la primera posicion dada a la segunda posicion dada.
+     * Para ello, crearemos una hoja con 4 columnas y 4 filas, la llenaremos con 4 celdas creadas y 4 posiciones
+     * creadas, cambiaremos el comportamiento de las funciones de celda que utiliza la funcion a probar, con mockito,
+     * probaremos a cambiar una celda de posicion por otra dada, comprobamos que se devuelve true, lo que signficiara
+     * que la  celda se ha cambiado de posicion.
+     */
+    @Test
+    public void cambiarPosicionCeldaPosicionesExistentes(){
+        hoja = new Hoja(2, 2);
+
+        allcelds = new HashMap<>(4);
+        PosicionStub p1 = new PosicionStub(1, 1);
+        PosicionStub p2 = new PosicionStub(1, 2);
+        PosicionStub p3 = new PosicionStub(2, 1);
+        PosicionStub p4 = new PosicionStub(2, 2);
+
+        allcelds.put(p1, new CeldaStub(p1));
+        allcelds.put(p2, new CeldaStub(p2));
+        allcelds.put(p3, new CeldaStub(p3));
+        allcelds.put(p4, new CeldaStub(p4));
+
+        hoja.setCeldas(allcelds);
+
+        when(celda.getReferenciantes()).thenReturn(new ArrayList<>());
+        doNothing().when(celda).setReferenciantes(isA(ArrayList.class));
+        doNothing().when(celda).setPosicion(isA(Posicion.class));
+
+
+        boolean b = hoja.cambiarPosicionCelda(p3, p2);
+
+        assertTrue(b);
+    }
+
+    /**
+     * Objeto de la prueba: Testear la funcion cambiarPosicionCelda
+     * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la clase del modelo
+     *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la clase del modelo
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     * - Valores estudiados: Se estudia un caso algo extremo donde el que se pretende cambiar una celda,
+     *  dadas dos posiciones, una de ellas inexistente.
+     * - Operativa: En este test de cambiarPosicionCelda se definen una Hoja con la constructora con parametros,
+     *   4 posiciones y 4 celdas para llenar la estructura de la hoja y una posicion inexistente.
+     * El objetivo es comprobar que no se cambia la celda de la primera posicion dada a la segunda posicion dada.
+     * Para ello, crearemos una hoja con 4 columnas y 4 filas, la llenaremos con 4 celdas y 4 posiciones, crearemos
+     * una posicion que no existe en la hoja, intentaremos cambiar una celda de posicion por la inexistente,
+     * comprobamos que se devuelve false, lo que signficiara que la celda no se ha cambiado de posicion.
+     * Como aqui no entraremos en la parte de la funcion que utiliza celda, no hara falta cambiar el comportamiento de
+     * las funciones utilizadas dentro de la funcion a probar con mockito.
+     */
+    @Test
+    public void cambiarPosicionCeldaPosicionesInxistentes(){
+
+        hoja = new Hoja(2, 2);
+
+        allcelds = new HashMap<>(4);
+        PosicionStub p1 = new PosicionStub(1, 1);
+        PosicionStub p2 = new PosicionStub(1, 2);
+        PosicionStub p3 = new PosicionStub(2, 1);
+        PosicionStub p4 = new PosicionStub(2, 2);
+
+        allcelds.put(p1, new CeldaStub(p1));
+        allcelds.put(p2, new CeldaStub(p2));
+        allcelds.put(p3, new CeldaStub(p3));
+        allcelds.put(p4, new CeldaStub(p4));
+
+        hoja.setCeldas(allcelds);
+
+        PosicionStub p5 = new PosicionStub(3, 2);
+        boolean b = hoja.cambiarPosicionCelda(p3, p5);
+
+        assertFalse(b);
+    }
+
+
+    /**
+     * Objeto de la prueba: Testear la variante de la funcion cambiarPosicionCelda
+     * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la clase del modelo
+     *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la clase del modelo
+     *  -Mocks: ·MockCelda: Se utiliza un mock de celda para substituir la clase Celda y las funciones necesarias para
+     *           el test.
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     *- Valores estudiados: Se estudia el caso en el que se cambia una celda, dadas una posicion y una celda existentes.
+     * - Operativa: En este test de cambiarPosicionCelda se definen una Hoja con la constructora con parametros.
+     * El objetivo es comprobar que la variante de la funcion cambiarPosicionCelda funciona correctamente.
+     * El funcionamiento es igual a la otra variante, lo diferente en esta, es que en lugar de introducir 4 enteros que
+     * definen dos posiciones (la actual y la futura), se pasa una posicion(la futura) y una celda.
+     * Para comprobar el correcto funcionamiento, crearemos una hoja con 4 columnas y 4 filas, la llenaremos con
+     * 4 celdas y 4 posiciones, cambiaremos el comportamiento de las funciones de celda que utiliza la funcion a probar,
+     * con mockito, intentaremos cambiar una celda de posicion por otra posicion existente y comprobamos que
+     * se devuelve true, lo que signficiara que la celda se ha cambiado de posicion.
+     */
+    @Test
+    public void cambiarPosicionCeldaV2PosicionesExistentes(){
+        hoja = new Hoja(2, 2);
+
+        allcelds = new HashMap<>(4);
+
+        PosicionStub p1 = new PosicionStub(1, 1);
+        PosicionStub p2 = new PosicionStub(1, 2);
+        PosicionStub p3 = new PosicionStub(2, 1);
+        PosicionStub p4 = new PosicionStub(2, 2);
+
+        CeldaStub c1 = new CeldaStub(p1);
+        CeldaStub c2 = new CeldaStub(p2);
+        CeldaStub c3 = new CeldaStub(p3);
+        CeldaStub c4 = new CeldaStub(p4);
+
+        allcelds.put(p1, c1);
+        allcelds.put(p2, c2);
+        allcelds.put(p3, c3);
+        allcelds.put(p4, c4);
+
+        hoja.setCeldas(allcelds);
+
+        //Cambio de comportamiento de las funciones de celda utilizadas mediante mock
+        when(celda.getReferenciantes()).thenReturn(new ArrayList<>());
+        when(celda.getReferenciantes()).thenReturn(new ArrayList<>());
+        doNothing().when(celda).setReferenciantes(isA(ArrayList.class));
+        doNothing().when(celda).setPosicion(isA(Posicion.class));
+
+
+        //Se desea cambiar la celda c3 a la posicion 2
+        boolean b1 = hoja.cambiarPosicionCelda(p2, c3);
+
+        assertTrue(b1);
+    }
+
+    /**
+     * Objeto de la prueba: Testear la funcion cambiarPosicionCelda
+     * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la calse del modelo
+     *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la calse del modelo
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     * - Valores estudiados: Se estudia un caso algo extremo en el que se pretendende cambiar una celda, dadas
+     * una posicion inexistente y una celda.
+     * - Operativa: En este test de cambiarPosicionCelda se definen una Hoja con la constructora con parametros.
+     * El objetivo es comprobar que no se cambia la celda de la primera posicion dada a la segunda posicion dada.
+     * Para ello, crearemos una hoja con 4 columnas y 4 filas, la llenaremos con 4 celdas y 4 posiciones, crearemos
+     * una posicion que no existe en la hoja, intentaremos cambiar una celda de posicion por la inexistente,
+     * comprobamos que se devuelve false, lo que signficiara que la celda no se ha cambiado de posicion.
+     * Como aqui no entraremos en la parte de la funcion que utiliza celda, no hara falta cambiar el comportamiento de
+     * las funciones utilizadas dentro de la funcion a probar con mockito.
+     */
+    @Test
+    public void cambiarPosicionCelda2PosicionesInexistentes(){
+        hoja = new Hoja(2, 2);
+
+        allcelds = new HashMap<>(4);
+
+        PosicionStub p1 = new PosicionStub(1, 1);
+        PosicionStub p2 = new PosicionStub(1, 2);
+        PosicionStub p3 = new PosicionStub(2, 1);
+        PosicionStub p4 = new PosicionStub(2, 2);
+
+        CeldaStub c1 = new CeldaStub(p1);
+        CeldaStub c2 = new CeldaStub(p2);
+        CeldaStub c3 = new CeldaStub(p3);
+        CeldaStub c4 = new CeldaStub(p4);
+
+        allcelds.put(p1, c1);
+        allcelds.put(p2, c2);
+        allcelds.put(p3, c3);
+        allcelds.put(p4, c4);
+
+        hoja.setCeldas(allcelds);
+
+        PosicionStub p5 = new PosicionStub(3, 3);
+
+        //Se desea cambiar la celda c3 a la posicion 5 (inexistente)
+        boolean b1 = hoja.cambiarPosicionCelda(p5, c3);
+
         assertFalse(b1);
     }
 
@@ -810,11 +963,34 @@ public class HojaTest {
      */
     @Test
     public void cogerColumnaArribaAbajo(){
-        Hoja h = new Hoja(3, 3);
-        String p1 = "A1";
-        String p2 = "A3";
+        hoja = new Hoja(2, 2);
 
-        ArrayList<Celda> cls = h.getColumnaFila(p1, p2);
+
+        allcelds = new HashMap<>(4);
+
+        PosicionStub p1 = new PosicionStub(1, 1);
+        PosicionStub p2 = new PosicionStub(1, 2);
+        PosicionStub p3 = new PosicionStub(2, 1);
+        PosicionStub p4 = new PosicionStub(2, 2);
+
+        CeldaStub c1 = new CeldaStub(p1);
+        CeldaStub c2 = new CeldaStub(p2);
+        CeldaStub c3 = new CeldaStub(p3);
+        CeldaStub c4 = new CeldaStub(p4);
+
+        allcelds.put(p1, c1);
+        allcelds.put(p2, c2);
+        allcelds.put(p3, c3);
+        allcelds.put(p4, c4);
+
+        hoja.setCeldas(allcelds);
+
+        String s1 = "A1";
+        String s2 = "A2";
+
+        when(traductor.traduceCelda(isA(String.class), isA(Integer.class))).thenReturn(c1);
+
+        ArrayList<Celda> cls = hoja.getColumnaFila(s1, s2);
 
         assertEquals(3, cls.size());
 
@@ -831,7 +1007,7 @@ public class HojaTest {
      * El objetivo es comprobar se consigue un conjunto de celdas correcto.
      * Para ello comprobaremos que el ArrayList que devuelve la función es el correcto.
      */
-    @Test
+   /* @Test
     public void cogerFilaIzquierdaDerecha(){
         Hoja h = new Hoja(3, 3);
         String p1 = "A1";
@@ -842,9 +1018,9 @@ public class HojaTest {
         assertEquals(3, cls.size());
 
 
-    }
+    }*/
 
-
+    //Stub de Posicion que sustituye la clase Posicion asi como los metodos necesarios para el test
     public static class PosicionStub extends Posicion{
 
         public PosicionStub(int _fila, int _columna) {
@@ -852,9 +1028,12 @@ public class HojaTest {
         }
     }
 
+
+    //Stub de Celda que sustituye la clase Celda asi como los metodos necesarios para el test
     public static class CeldaStub extends Celda{
         private PosicionStub pos;
         String contenido;
+        ArrayList<Celda> refs;
 
         public CeldaStub(PosicionStub _pos) {
             super(_pos);
@@ -863,12 +1042,19 @@ public class HojaTest {
 
         }
 
-        public PosicionStub getPos() {
+        @Override
+        public PosicionStub getPosicion() {
             return pos;
         }
 
-        public String getContenidoStub() {
+       /* public String getContenidoStub() {
             return contenido;
+        }*/
+
+        @Override
+        public void setReferenciantes(ArrayList<Celda> _refs){
+            refs = new ArrayList<>();
+
         }
 
         public void setContentStub(String _s){

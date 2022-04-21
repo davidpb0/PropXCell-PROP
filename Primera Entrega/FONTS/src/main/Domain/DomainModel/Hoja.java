@@ -289,6 +289,7 @@ public class Hoja implements Serializable {
      */
     public ArrayList<Celda> getColumnaFila(String _cel1, String _cel2){
         ArrayList<Celda> agrup = new ArrayList<>();
+        Traductor t = Traductor.getTraductor();
 
         Celda celd1 = Traductor.traduceCelda(_cel1, this.id);
         Posicion pos1 = celd1.getPosicion();

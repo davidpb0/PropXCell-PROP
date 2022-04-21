@@ -89,12 +89,42 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="mockito-core-4.4.0" level="project" />
     <orderEntry type="library" name="junit-4.12" level="project" />
-    <orderEntry type="library" name="mockito-core-3.5.6-javadoc (2)" level="project" />
-    <orderEntry type="library" name="byte-buddy-1.12.9 (2)" level="project" />
-    <orderEntry type="library" name="byte-buddy-agent-1.12.9 (2)" level="project" />
-    <orderEntry type="library" name="mockito-core-4.5.0 (2)" level="project" />
-    <orderEntry type="library" name="objenesis-3.2 (2)" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/Primera Entrega/lib/mockito-core-4.5.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/Primera Entrega/lib/byte-buddy-1.12.9.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/Primera Entrega/lib/byte-buddy-agent-1.12.9.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/Primera Entrega/lib/objenesis-3.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

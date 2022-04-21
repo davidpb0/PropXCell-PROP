@@ -1,10 +1,7 @@
 
 package main.Domain.DomainControllers;
 
-import main.Domain.DomainModel.Celda;
-import main.Domain.DomainModel.Documento;
-import main.Domain.DomainModel.Hoja;
-import main.Domain.DomainModel.Traductor;
+import main.Domain.DomainModel.*;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -35,11 +32,11 @@ public class ControladorCelda {
     * @param _c columna de la celda
     */
 
-   public void asignaCeldaPosicion(int _idh, int _f, int _c){
+   public void asignaCeldaPosicion(String _idh, String _f, String _c){
       Documento d = getDocumento();
-      Hoja h = d.getHoja(_idh);
+      Hoja h = d.getHoja(Integer.parseInt(_idh));
       this.hojaAct = h;
-      this.celdaRef = h.getCelda(_f, _c);
+      this.celdaRef = h.getCelda(new Posicion(Integer.parseInt(_f), Integer.parseInt(_c)));
    }
 
 
@@ -48,7 +45,7 @@ public class ControladorCelda {
      * escribe su valor en la celda
      * @param _content contenido a escribir en la celda
      */
-  /* public void escribirContenido(String _content){
+  public void escribirContenido(String _content){
        this.celdaRef.setContenido(_content);
 
        String type = Traductor.detecta(_content);
@@ -170,51 +167,166 @@ public class ControladorCelda {
                    this.celdaRef.setValor("#ERROR");
                    break;
                }
-               if(!arg[0].matches("[+-]?\\d*(\\.\\d+)?")){
+               if(!esFechaValida(arg[0])){
                    this.celdaRef.setValor("#ERROR");
                    break;
                }
-               obtenerMes("20/05/2001");
+               obtenerMes(arg[0]);
                break;
            case "#AÑO":
-               obtenerAño("20/05/2001");
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               if(arg.length != 1) {
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               if(!esFechaValida(arg[0])){
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               obtenerAño(arg[0]);
                break;
            case "#DIAS":
-               obtenerDia("20/05/2001");
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               if(arg.length != 1) {
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               if(!esFechaValida(arg[0])){
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               obtenerDia(arg[0]);
                break;
            case "#NDIA":
-               obtenerNombreDia("20/05/2001");
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               if(arg.length != 1) {
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               if(!esFechaValida(arg[0])){
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               obtenerNombreDia(arg[0]);
                break;
            case "#LONG":
-               longitudPalabra("Hola");
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               if(arg.length != 1) {
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               longitudPalabra(arg[0]);
                break;
-           case "#REFERENCE":
-               Celda c = hojaAct.getCelda(1,1);
-               this.celdaRef.addReferenciante(c);
+           case "#REFERENCIA":
+               //falta añadir la celda referenciada a la refrenciante
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               this.celdaRef.setValor(arg[0]);
                break;
            case "#MEDIA":
-               //Se llama a la funcion  aun no creada
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+
+               boolean b  = false;
+               for(String v : arg){
+                   if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
+                       this.celdaRef.setValor("#ERROR");
+                       b = true;
+                       break;
+                   }
+               }
+               if (b) break;
+             /*  double m = ControladorHoja.media(arg);
+               this.celdaRef.setValor(String.valueOf(m));*/
                break;
            case "#MEDIANA":
-               //Se llama a la funcion  aun no creada
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+
+               b  = false;
+               for(String v : arg){
+                   if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
+                       this.celdaRef.setValor("#ERROR");
+                       b = true;
+                       break;
+                   }
+               }
+               if (b) break;
+               /*double m = ControladorHoja.mediana(arg);
+               this.celdaRef.setValor(String.valueOf(m));*/
                break;
            case "#VAR":
-               //Se llama a la funcion  aun no creada
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+
+               b  = false;
+               for(String v : arg){
+                   if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
+                       this.celdaRef.setValor("#ERROR");
+                       b = true;
+                       break;
+                   }
+               }
+               if (b) break;
+               /*double m = ControladorHoja.varianza(arg);
+               this.celdaRef.setValor(String.valueOf(m));*/
+
                break;
            case "#COV":
-               //Se llama a la funcion  aun no creada
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+
+               b  = false;
+               for(String v : arg){
+                   if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
+                       this.celdaRef.setValor("#ERROR");
+                       b = true;
+                       break;
+                   }
+               }
+               if (b) break;
+               /*double m = ControladorHoja.covarianza(arg);
+               this.celdaRef.setValor(String.valueOf(m));*/
                break;
            case "#DESV":
-               //Se llama a la funcion  aun no creada
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+
+               b  = false;
+               for(String v : arg){
+                   if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
+                       this.celdaRef.setValor("#ERROR");
+                       b = true;
+                       break;
+                   }
+               }
+               if (b) break;
+               /*double m = ControladorHoja.desvEstandar(arg);
+               this.celdaRef.setValor(String.valueOf(m));*/
                break;
            case "#COEFP":
-               //Se llama a la funcion  aun no creada
+               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+
+               b  = false;
+               for(String v : arg){
+                   if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
+                       this.celdaRef.setValor("#ERROR");
+                       b = true;
+                       break;
+                   }
+               }
+               if (b) break;
+               /*double m = ControladorHoja.CorrelacionPearson(arg);
+               this.celdaRef.setValor(String.valueOf(m));*/
                break;
            default:
                this.celdaRef.setValor(_content);
        }
-   }*/
+   }
 
+
+   public boolean esFechaValida(String _fecha){
+       String dp[] = _fecha.split("/");
+       if(dp.length != 3) return false;
+       if(!dp[0].matches("[+-]?\\d*(\\.\\d+)?")) return false;
+       if(!dp[1].matches("[+-]?\\d*(\\.\\d+)?")) return false;
+       if(!dp[2].matches("[+-]?\\d*(\\.\\d+)?")) return false;
+       return true;
+   }
 
     /**
      * Trunca el numero decimal introducido y lo pone en el valor de la celda
