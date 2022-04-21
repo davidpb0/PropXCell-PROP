@@ -29,11 +29,10 @@ public class BloqueSeleccionadoTest {
         BloqueSeleccionado b = BloqueSeleccionado.getBloque();
         HojaStub h = new HojaStub();
         CeldaStub c = new CeldaStub("hola");
-        CeldaStub d = new CeldaStub("adios");
+        CeldaStub d = new CeldaStub("irrelevante");
         b.setCelda(c, d, h);
 
         assertEquals(b.getCeldaInicial().getContenido(), new CeldaStub("hola"));
-        assertEquals(b.getCeldaFinal().getContenido(), new CeldaStub("adios"));
     }
 
     /**
