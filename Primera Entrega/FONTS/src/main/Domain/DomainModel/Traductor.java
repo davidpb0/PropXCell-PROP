@@ -16,6 +16,11 @@ import java.util.List;
 public class Traductor {
 
     /**
+     * Creadora por defecto.
+     */
+    public Traductor() {}
+
+    /**
      * @return el string convertido a número entero.
      * Convierte un string a un número entero, si su sintaxis es correcta.
      * @param _s el parámetro a convertir a entero.
@@ -95,7 +100,7 @@ public class Traductor {
             else if (_formula.indexOf("=pearson(") == 0) return "#COEFP";
             else return "#ERRORFUNC";
         } else if (_formula.charAt(0) == '$' && _formula.length() <= 5) { // Como mucho $AA11
-            return "#REFERENCE";
+            return "#REFERENCIA";
         } else if (_formula.charAt(2) == '/' && _formula.charAt(5) == '/') {
             try {
                 Date fecha = Traductor.StringDate(_formula);
