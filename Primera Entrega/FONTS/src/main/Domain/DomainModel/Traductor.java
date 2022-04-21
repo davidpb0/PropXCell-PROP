@@ -143,7 +143,8 @@ public class Traductor {
         while (j < s.length() && s.charAt(j) <= 'Z') ++j;
         String columna = s.substring(0, j - 1);
         String fila = s.substring(j);
-        c = h.getCelda(Traductor.StringInt(fila), traduceColumna(columna));
+        Posicion p = new Posicion(Traductor.StringInt(fila), traduceColumna(columna));
+        c = h.getCelda(p);
 
         return c;
     }
@@ -156,7 +157,7 @@ public class Traductor {
     public static String[] getArgumentos(String _funcion, int _idH) {
         Hoja h = Documento.getDocumento().getHoja(_idH);
         String f = _funcion;
-        if (_funcion.startsWith("=")) f = _funcion.substring(1);
+        if (_funcion.startsWith("=")) f = _funcion.substring(_funcion.indexOf('('), _funcion.lastIndexOf(')'));
         String[] args = f.split(",");
         List<String> ret = null;
 
