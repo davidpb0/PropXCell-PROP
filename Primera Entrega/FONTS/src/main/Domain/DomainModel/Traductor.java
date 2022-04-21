@@ -184,4 +184,8 @@ public class Traductor {
 
         return (String[]) ret.toArray();
     }
+
+    public Posicion getPosReferencia(String _ref){
+        return;
+    }
 }
