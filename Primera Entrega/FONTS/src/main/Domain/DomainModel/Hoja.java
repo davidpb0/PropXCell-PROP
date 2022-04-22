@@ -19,12 +19,17 @@ public class Hoja implements Serializable {
     private int columnas;
     private HashMap<Posicion, Celda> celdas;
 
+    //Posiciones auxiliar para los test
+    private Posicion p;
+    private Posicion p2;
+
+
 
     /**
-     * Funcion que inicializa la estructura de datos de hoja
+     * Funcion privada que inicializa la estructura de datos de hoja
      * @param _h hoja a inicializar
      */
-    public void inicializaHoja(Hoja _h){
+    private void inicializaHoja(Hoja _h){
         int f = _h.getFilas();
         int c = _h.getColumnas();
 
@@ -47,6 +52,7 @@ public class Hoja implements Serializable {
         this.filas = 50;
         this.columnas = 50;
         this.celdas = new HashMap<Posicion, Celda>();
+        inicializaHoja(this);
     }
 
     /**
@@ -58,6 +64,7 @@ public class Hoja implements Serializable {
         this.filas = _filas;
         this.columnas = _columnas;
         this.celdas = new HashMap<Posicion, Celda>();
+        inicializaHoja(this);
 
     }
 
@@ -107,9 +114,16 @@ public class Hoja implements Serializable {
     /**
      * Le asigna un nombre a la hoja
      * @param _nombre nombre asignado
+     * @return devuelve true, si se ha introducido correctamente el nombre y este no era vacio, de lo contrario
+     * devuelve false
      */
-    public void asignaNombre(String _nombre){
-        this.nombre = _nombre;
+    public boolean asignaNombre(String _nombre){
+
+        if (!_nombre.isEmpty()){
+            this.nombre = _nombre;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -164,19 +178,18 @@ public class Hoja implements Serializable {
 
     /**
      * Devuelve la celda en la fila y columna pedidas
-     * @param _f fila en la que se encuentra la celda
-     * @param _c columna en la que se encuentra la fila
+     * @param _p posicion donde se encuebntra la celda
      * @return la celda con Posicion(f, c)
      */
-    public Celda getCelda(int _f, int _c){
-        Posicion p = new Posicion(_f, _c);
+    public Celda getCelda(Posicion _p){
         Celda cl = null;
-        if(this.celdas.containsKey(p)) {
-            cl = this.celdas.get(new Posicion(_f, _c));
+        if(this.celdas.containsKey(_p)) {
+            cl = this.celdas.get(_p);
         }
 
         return cl;
     }
+
 
     /**
      * Comprueba si existe en la hoja la posicion dada
@@ -190,13 +203,14 @@ public class Hoja implements Serializable {
     /**
      * Añada una celda vacia en la posicion indicada, el que llama a la funcion se encarga de actualizar el valor de
      * filas y columnas, devuelve false si en la posicion introducida ya hay una celda
-     * @param _f fila de la posicion en la que se encontrara la celda
-     * @param _c columna de la posicion en la que se encontrara la celda
+     * @param _p nueva posicion donde se va a añadir la nueva celda
+     * @return devuleve true si se ha añadido la celda y la posicion correctamente, flase si la posicion ya existe o
+     * ha habido algun error.
      */
-    public boolean addCeldaVacia(int _f, int _c){
-        if (!this.celdas.containsKey(new Posicion(_f, _c))){
-            Posicion p = new Posicion(_f, _c);
-            this.celdas.put(p, new Celda(p));
+    public boolean addCeldaVacia(Posicion _p){
+
+        if (!this.celdas.containsKey(_p)){
+            this.celdas.put(_p, new Celda(_p));
             return true;
         }
         return false;
@@ -206,14 +220,17 @@ public class Hoja implements Serializable {
     /**
      * Borra una celda con la posicion dada, el que llama a la funcion se encarga de actualizar el valor de
      * filas y columnas, devuelve false si la posicion no existe
-     * @param _f fila de la posicion de la celda a borrar
-     * @param _c columna de la posicion de la celda a borrar
+     * @param _p posicion de la celda a borrar
+     * @return devuelve true en caso de exito en el borrado, false si la posicion no existia o si no se ha borrado
+     * correctamente
      */
-    public boolean quitarCelda(int _f, int _c){
-        if (this.celdas.containsKey(new Posicion(_f, _c))) {
-            this.celdas.remove(new Posicion(_f, _c));
+    public boolean quitarCelda(Posicion _p){
 
-            return true;
+        if (this.celdas.containsKey(_p)) {
+            this.celdas.remove(_p);
+
+            if(!celdas.containsKey(_p)) return true;
+            return false;
         }
         return false;
 
@@ -221,22 +238,22 @@ public class Hoja implements Serializable {
 
     /**
      * Cambia la posicion de una celda a otra posicion dada, devuelve false si una de las posiciones no existe
-     * @param _fant fila de la posicion de la celda a la cual pertenece
-     * @param _cant columna de la posicion de la celda a la cual pertenece
-     * @param _fdp fila de la nueva posicion a la que se mueve la celda
-     * @param _cdp columna de la nueva posicion a la que se mueve la celda
+     * @param _pant posicion actual de la celda
+     * @param _pdp posicion a la cual se desea cambiar la celda
+     * @return devuelve true si se ha realizado correctamente el cambio, false si alguna de las posiciones no existe o
+     * no se ha realizado correctamente el cambio
      */
-    public boolean cambiarPosicionCelda(int _fant, int _cant, int _fdp, int _cdp){
-        Posicion pant = new Posicion(_fant, _cant);
-        Posicion pdp = new Posicion(_fdp, _cdp);
+    public boolean cambiarPosicionCelda(Posicion _pant, Posicion _pdp){
 
         //Si contiene las dos posiciones -> cambia la posicion
-        if (this.celdas.containsKey(pdp) && this.celdas.containsKey(pant)) {
-            Celda c = this.celdas.get(pant);
-            c.setReferenciantes(this.celdas.get(pdp).getReferenciantes());
-            this.celdas.replace(pdp, c);
-            c.setPosicion(pdp);
-            return true;
+        if (this.celdas.containsKey(_pdp) && this.celdas.containsKey(_pant)) {
+            Celda c = this.celdas.get(_pant);
+            c.setReferenciantes(this.celdas.get(_pdp).getReferenciantes());
+            this.celdas.replace(_pdp, c);
+            c.setPosicion(_pdp);
+            //Comprobamos que ha cambiado a la posicon deseada
+            if (c.getPosicion() == _pdp) return true;
+            return false;
         }
 
         //Si una de las dos no existe, no hace nada y devuelve falso
@@ -251,11 +268,13 @@ public class Hoja implements Serializable {
      */
     public boolean cambiarPosicionCelda(Posicion p, Celda c){
         //Si contiene la posicion -> cambia la posicion
-        if (this.celdas.containsKey(p)) {
+        if (this.celdas.containsKey(p) && this.celdas.containsValue(c)) {
             c.setReferenciantes(this.celdas.get(p).getReferenciantes());
             this.celdas.replace(p, c);
             c.setPosicion(p);
-            return true;
+            //Comprobamos que ha cambiado a la posicon deseada
+            if (c.getPosicion() == p) return true;
+            return false;
         }
         //Si no existe, no hace nada y devuelve falso
         return false;
@@ -279,25 +298,25 @@ public class Hoja implements Serializable {
 
         if (celdas.containsKey(pos1) && celdas.containsKey(pos2)) {
 
-            //Columna U->D
+            //Columna Up->Down
             if (pos1.getFila() < pos2.getFila() && pos1.getColumna() == pos2.getColumna()) {
                 for (int i = pos1.getFila(); i <= pos2.getFila(); ++i) {
                     agrup.add(this.celdas.get(new Posicion(i, pos1.getColumna())));
                 }
             }
-            //Columna D->U
+            //Columna Down->Up
             else if (pos1.getFila() > pos2.getFila() && pos1.getColumna() == pos2.getColumna()) {
                 for (int i = pos1.getFila(); i >= pos2.getFila(); --i) {
                     agrup.add(this.celdas.get(new Posicion(i, pos1.getColumna())));
                 }
             }
-            //Fila I->D
+            //Fila Izq->Der
             else if (pos1.getFila() == pos2.getFila() && pos1.getColumna() < pos2.getColumna()) {
                 for (int i = pos1.getColumna(); i <= pos2.getColumna(); ++i) {
                     agrup.add(this.celdas.get(new Posicion(pos1.getFila(), i)));
                 }
             }
-            //Fila D->I
+            //Fila Der->Izq
             else if (pos1.getFila() == pos2.getFila() && pos1.getColumna() > pos2.getColumna()) {
                 for (int i = pos1.getColumna(); i >= pos2.getColumna(); --i) {
                     agrup.add(this.celdas.get(new Posicion(pos1.getFila(), i)));

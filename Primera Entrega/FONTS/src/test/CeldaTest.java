@@ -51,9 +51,9 @@ public class CeldaTest {
         Posicion p = new Posicion(1,1);
         Posicion p2 = new Posicion(1, 2);
         Celda cell = new Celda(p);
-        cell.setContenido("Hola Mundo");
+        cell.setContenido("hola mundo");
         String val = cell.getValor();
-        Assert.assertEquals("Hola Mundo", val);
+        Assert.assertEquals("hola mundo", val);
 
         Celda cell2 = new Celda(p2,"hola");
         Assert.assertEquals("hola", cell2.getValor());

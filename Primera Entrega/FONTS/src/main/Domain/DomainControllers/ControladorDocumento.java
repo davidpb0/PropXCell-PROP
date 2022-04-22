@@ -1,10 +1,10 @@
 package main.Domain.DomainControllers;
 /*
- * ClassName DomainModel.Traductor
+ * Traductor
  *
- * Version info 0.0.1
+ * 0.0.1
  *
- * Author Iván Risueño Martín
+ * Joaquim Torra Garcia
  */
 
 import main.Domain.DomainModel.Documento;

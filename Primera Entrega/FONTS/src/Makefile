@@ -1,19 +1,18 @@
-CLASES = ./main/domain/DomainModel/*.java ./main/domain/DomainControllers/*.java
+CLASES = ./main/Domain/DomainModel/*.java ./main/Domain/DomainControllers/*.java
 DRIVERS_INTEGRATION = ./drivers/integration/*.java
 DRIVERS_COMPONENTS = ./drivers/components/*/*.java
 JUNIT_TESTS = ./test/*.java
 EJECUTABLES = ../../EXE/out/
-JUNIT_LIB = ../../lib/junit-4.12.jar
-IMPORTS = ./main/Domain/*/*.java
+LIB = ../../lib/junit-4.12.jar:../../lib/byte-buddy-1.12.9.jar:../../lib/byte-buddy-agent-1.12.9.jar:../../lib/mockito-core-4.5.0.jar:../../lib/objenesis-3.2.jar
 
 build:
-		javac -Xlint:unchecked -target 11 -d $(EJECUTABLES) -g $(CLASES)
-    	javac -Xlint:unchecked -target 11 -d $(EJECUTABLES) -g $(DRIVERS_COMPONENTS)
-    	javac -Xlint:unchecked -target 11 -d $(EJECUTABLES) -g $(DRIVERS_INTEGRATION)
-    	javac -cp $(JUNIT_LIB) -d $(EJECUTABLES) $(IMPORTS) $(JUNIT_TESTS)
+		#javac -Xlint:unchecked -target 11 -cp $(LIB) -d $(EJECUTABLES) $(CLASES) $(DRIVERS_COMPONENTS)
+		javac -Xlint:unchecked -target 11 -cp $(LIB) $(CLASES) -d $(EJECUTABLES) $(JUNIT_TESTS)
+    	javac -Xlint:unchecked -target 11 -cp $(CLASES) -d $(EJECUTABLES) -g $(DRIVERS_COMPONENTS)
+    	javac -Xlint:unchecked -target 11 -cp $(CLASES) -d $(EJECUTABLES) -g $(DRIVERS_INTEGRATION)
 
 JUnit:
-		java -cp $(JUNIT_LIB):$(EJECUTABLES) org.junit.runner.JUnitCore TestRunner
+		java -cp $(LIB):$(EJECUTABLES) org.junit.runner.JUnitCore TestRunner
 
 Main:
 		java -cp $(EJECUTABLES) drivers.integration.MainTest

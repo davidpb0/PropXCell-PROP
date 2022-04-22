@@ -16,6 +16,11 @@ import java.util.List;
 public class Traductor {
 
     /**
+     * Creadora por defecto.
+     */
+    public Traductor() {}
+
+    /**
      * @return el string convertido a número entero.
      * Convierte un string a un número entero, si su sintaxis es correcta.
      * @param _s el parámetro a convertir a entero.
@@ -95,7 +100,7 @@ public class Traductor {
             else if (_formula.indexOf("=pearson(") == 0) return "#COEFP";
             else return "#ERRORFUNC";
         } else if (_formula.charAt(0) == '$' && _formula.length() <= 5) { // Como mucho $AA11
-            return "#REFERENCE";
+            return "#REFERENCIA";
         } else if (_formula.charAt(2) == '/' && _formula.charAt(5) == '/') {
             try {
                 Date fecha = Traductor.StringDate(_formula);
@@ -138,7 +143,8 @@ public class Traductor {
         while (j < s.length() && s.charAt(j) <= 'Z') ++j;
         String columna = s.substring(0, j - 1);
         String fila = s.substring(j);
-        c = h.getCelda(Traductor.StringInt(fila), traduceColumna(columna));
+        Posicion p = new Posicion(Traductor.StringInt(fila), traduceColumna(columna));
+        c = h.getCelda(p);
 
         return c;
     }
@@ -151,7 +157,7 @@ public class Traductor {
     public static String[] getArgumentos(String _funcion, int _idH) {
         Hoja h = Documento.getDocumento().getHoja(_idH);
         String f = _funcion;
-        if (_funcion.startsWith("=")) f = _funcion.substring(1);
+        if (_funcion.startsWith("=")) f = _funcion.substring(_funcion.indexOf('('), _funcion.lastIndexOf(')'));
         String[] args = f.split(",");
         List<String> ret = null;
 
@@ -177,5 +183,9 @@ public class Traductor {
         }
 
         return (String[]) ret.toArray();
+    }
+
+    public Posicion getPosReferencia(String _ref){
+        return;
     }
 }

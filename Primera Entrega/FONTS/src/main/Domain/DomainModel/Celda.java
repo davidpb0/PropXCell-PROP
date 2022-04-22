@@ -3,7 +3,7 @@ package main.Domain.DomainModel;
 /*
  * Celda
  *
- * v0.0.2
+ * v0.0.6
  *
  * Joaquim Torra Garcia
  */
@@ -16,6 +16,7 @@ public class Celda {
     private String contenido = "";
     private Posicion posicion;
     private final ArrayList<Celda> referenciantes = new ArrayList<>();
+    public boolean isRef = false;
 
 
     /**
@@ -50,6 +51,7 @@ public class Celda {
         for (Celda cel : refs) {
             this.addReferenciante(cel);
         }
+        this.isRef = c.isRef;
     }
 
     /**
@@ -84,35 +86,26 @@ public class Celda {
      */
     public void setContenido(String _contenido) {
         /*
-        !! Lo que hay que conseguir:
-
-            if (this.contenido = ref)
-            then
-               ref.borrarRef(me)
-
-            this.contenido = _contenido
-
-            type = detectContentType ();
-            switch (type)
-                case FUNCTION:
-                    valor = function.result
-                case REFERENCE:
-                    ref.añadirRef(me)
-                case DATE:
-                case INTEGER:
-                default:
-                    this.valor = _contenido
-         */
+        if (isRef) {
+            // Consigue la celda de referencia y me borro de su lista de referenciante
+     -----> isRef = false;
+        }
 
         this.contenido = _contenido;
-        if (_contenido.startsWith("=")) {
-            setValor("#FUNC");
-            if (_contenido.startsWith("=$")) {
-                setValor("#REF");
-            }
-        }
-        else
-            setValor(_contenido);
+
+        String type = Traductor.detecta(_contenido);
+        System.out.println(type);
+        switch (type) {
+            case "#REFERENCE":
+       ----->   isRef = true;
+                break;
+            case "#FECHA":
+            case "#VALUE":
+                setValor(_contenido);
+                break;
+            case "":
+                break;
+        } */
 
         this.contenido = _contenido;
     }

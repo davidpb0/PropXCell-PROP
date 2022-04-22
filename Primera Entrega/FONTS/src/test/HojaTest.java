@@ -1,7 +1,4 @@
 package test;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
-
 
 import main.Domain.DomainModel.Celda;
 import main.Domain.DomainModel.Hoja;
@@ -9,33 +6,38 @@ import main.Domain.DomainModel.Posicion;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
+import org.mockito.junit.MockitoJUnitRunner;
+//import org.mockito.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
+//import static org.mockito.Mockito.mockConstruction;
 
 public class HojaTest {
 
     HashMap<Posicion, Celda> allcelds;
-   // @InjectMocks
+
+    @InjectMocks
     private Hoja hoja;
 
-   // @Mock
-    private Posicion posicion;
+    @Mock
     private Celda celda;
-    ArrayList<Celda> refs = new ArrayList<>();
+    @Mock
+    private Posicion posicion;
+
 
 
     @Before
-    public void inicializaMocks() {
-        MockitoAnnotations.initMocks(this);
-    }
-    public void setUp(){
+    public void setUp() throws Exception{
+        MockitoAnnotations.openMocks(this);
 
     }
 
@@ -44,54 +46,10 @@ public class HojaTest {
 
     }
 
-    /**
-     * Objeto de la prueba: Testear la funcion inicializaHoja
-     *He probado a hacer Mocks para el hashmap y me sale esto->
-     * - Stubs:  you stub either of: final/private/equals()/hashCode() methods.
-     *    Those methods *cannot* be stubbed/verified.
-     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso de la creador con los valores por defecto.
-     * - Operativa: En este test de inicializaHoja se definen varias Hojas con valores distintos en filas y columnas.
-     * El objetivo es ver si inicializa correctamente la estructura de datos de las diferentes hojas
-     * a la hora de crearlas. Para ello comprobaremos que la estructuras de datos de las Hojas tengan
-     * un tamaños igual a tantas celdas como define el numero de columnas y filas que tienen.
-     */
-   /* @Test
-    public void inicializaHojaDefault(){
-        PowerMockito.whenNew(Posicion.class).withArguments(Mockito.anyInt()).thenReturn(posicion);
-        PowerMockito.whenNew(Celda.class).withArguments(Mockito.anyInt()).thenReturn(celda);
-        hoja = new Hoja();
-        hoja.inicializaHoja(hoja);
-        int s = hoja.getCeldas().size();
-        assertEquals(2500, s);
 
-    }*/
 
-    /**
-     * Objeto de la prueba: Testear la funcion inicializaHoja
-     *He probado a hacer Mocks para el hashmap y me sale esto->
-     * - Stubs:  you stub either of: final/private/equals()/hashCode() methods.
-     *    Those methods *cannot* be stubbed/verified.
-     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso de la creador con los valores dados.
-     * - Operativa: En este test de inicializaHoja se definen varias Hojas con valores distintos en filas y columnas.
-     * El objetivo es ver si inicializa correctamente la estructura de datos de las diferentes hojas
-     * a la hora de crearlas. Para ello comprobaremos que la estructuras de datos de las Hojas tengan
-     * un tamaños igual a tantas celdas como define el numero de columnas y filas que tienen.
-     */
-   /* @Test
-    public void inicializaHoja(){
-        PowerMockito.whenNew(Posicion.class).withArguments(Mockito.anyInt()).thenReturn(posicion);
-        PowerMockito.whenNew(Celda.class).withArguments(Mockito.anyInt()).thenReturn(celda);
-        hoja = new Hoja(2, 3);
-        hoja.inicializaHoja(hoja);
-        int s = hoja.getCeldas().size();
-        assertEquals(2500, s);
-        assertEquals(6, s);
 
-    }*/
 
-//Creo que no hace falta
    /**
      * Objeto de la prueba: Testear la constructora Hoja, que la crea con valores por defecto.
      * - Stubs: No se utilizan stubs para este test
@@ -99,8 +57,8 @@ public class HojaTest {
      * - Valores estudiados: Se estudia el caso en el que se crea una hoja sin pasarle parametros
      * - Operativa: En este test de Hoja se define una Hoja con la constructora sin parametros.
      * El objetivo es comprobar que se crea una Hoja con los valores por defecto, es decir, con 50 filas
-     * y 50 columnas. Para ello simplemente crearemos una Hoja con la creadora sin parametros y comprobaremos
-     * su numero de filas y columnas.
+     * ,50 columnas y que se llena su estructura de datos. Para ello simplemente crearemos una Hoja con la creadora sin
+     *  parametros y comprobaremos su numero de filas, columnas y tamaño de su estructura de Datos.
      */
     @Test
     public void constructoraDefault(){
@@ -108,12 +66,13 @@ public class HojaTest {
 
         int f = hoja.getFilas();
         int c = hoja.getColumnas();
+        int s = hoja.getCeldas().size();
 
         assertEquals(50, f);
         assertEquals(50, c);
+        assertEquals(2500, s);
     }
 
-    //Creo que no hace falta
     /**
      * Objeto de la prueba: Testear la constructora Hoja, que la crea con valores dados
      * - Stubs: No se utilizan stubs para este test
@@ -122,7 +81,8 @@ public class HojaTest {
      * - Operativa: En este test de Hoja se define una Hoja con la constructora con parametros.
      * El objetivo es comprobar que se crea una Hoja con los valores dados del numero de filas y el numero
      * de columnas. Para ello crearemos una Hoja con la creadora con parametros y comprobaremos que su numero de filas
-     * y columnas sean equivalentes a los introducidos en la creadora
+     * y columnas sean equivalentes a los introducidos en la creadora y su estructura de datos este tan llena como
+     * los valores introducidos indican
      */
     @Test
     public void constructoraValores(){
@@ -130,12 +90,14 @@ public class HojaTest {
 
         int f = hoja.getFilas();
         int c = hoja.getColumnas();
+        int s = hoja.getCeldas().size();
 
         assertEquals(20, f);
         assertEquals(30, c);
+        assertEquals(600, s);
     }
 
-    //Creo que no hace falta
+
     /**
      * Objeto de la prueba: Testear la funcion setFilas
      * - Stubs: No se utilizan stubs para este test
@@ -157,7 +119,6 @@ public class HojaTest {
         assertTrue(b);
     }
 
-    //Creo que no hace falta
     /**
      * Objeto de la prueba: Testear la funcion setFilas
      * - Stubs: No se utilizan stubs para este test
@@ -180,7 +141,7 @@ public class HojaTest {
         assertFalse(b);
     }
 
-    //Creo que no hace falta
+
     /**
      * Objeto de la prueba: Testear la funcion setColumnas
      * - Stubs: No se utilizan stubs para este test
@@ -202,7 +163,6 @@ public class HojaTest {
         assertTrue(b);
     }
 
-    //Creo que no hace falta
     /**
      * Objeto de la prueba: Testear la funcion setColumnas
      * - Stubs: No se utilizan stubs para este test
@@ -210,7 +170,8 @@ public class HojaTest {
      * - Valores estudiados: Se estudia el caso en el que se colocan manualmente las columnas, con un numero negativo
      * - Operativa: En este test de setColumnas se define una Hoja con la constructora con parametros.
      * El objetivo es comprobar que no se cambia el valor de las columnas de la hoja por el valor introducido.
-     * Para ello comprobaremos que el numero de columnas corresponde al  que viene puesto por cualquiera de las dos
+     * Para ello crearemos una hoja con la constructora con parametros, comprobaremos que el numero de columnas
+     * corresponde al  que viene puesto por la constructora y que efectivamente devuelve false
      * constructoras y devuelve false
      */
     @Test
@@ -255,7 +216,8 @@ public class HojaTest {
      * - Valores estudiados: Se estudia el caso en el que se colocan un nombre y un identificador en negativo.
      * - Operativa: En este test de añadeNombreIdHojaDefault se define una Hoja con la constructora sin parametros.
      * El objetivo es comprobar que tanto el nombre de la hoja como su id no son inicializados dado que se le introduce
-     * un numero en negativo. Para ello comprobaremos que devuelve false.
+     * un numero en negativo. Para ello crearemos una hoja, e intentaremos añadir un nombre y un identificador
+     * introduciendo un numero negativo, comprobaremos que devuelve false.
      */
     @Test
     public void añadeNombreIdHojaDefaultNegativo(){
@@ -270,13 +232,14 @@ public class HojaTest {
      * Objeto de la prueba: Testear la funcion asignaNombre
      * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se colocan un nombre a la hoja manualmente.
+     * - Valores estudiados: Se estudia el caso en el que se coloca un nombre a la hoja manualmente.
      * - Operativa: En este test de asignaNombre se definen una Hoja con la constructora sin parametros.
      * El objetivo es comprobar que  el nombre de la hoja corresponde con el nombre introducido
-     * Para ello comprobaremos que el nombre de la hoja sea el mismo que se ha introducido
+     * Para ello crearemos un hoja y le asignaremos un nombre, seguidamente comprobaremos que el nombre de la hoja ç
+     * sea el mismo que se ha introducido
      */
     @Test
-    public void asignaNombre(){
+    public void asignaNombreLleno(){
         hoja = new Hoja();
         hoja.asignaNombre("HojaPrueba");
 
@@ -286,13 +249,34 @@ public class HojaTest {
     }
 
     /**
+     * Objeto de la prueba: Testear la funcion asignaNombre
+     * - Stubs: No se utilizan stubs para este test
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     * - Valores estudiados: Se estudia el caso en el que se coloca un nombre vacio a la hoja manualmente.
+     * - Operativa: En este test de asignaNombre se definen una Hoja con la constructora sin parametros.
+     * El objetivo es comprobar que  si se introduce un nombre vacio, este no se asigna
+     * Para ello crearemos un hoja, les asignaremos un nombre vacio y comprobaremos que la funcion devuelve false,
+     * ya que significara que esta no hace nada.
+     */
+    @Test
+    public void asignaNombreVacio(){
+        hoja = new Hoja();
+
+        boolean b = hoja.asignaNombre("");
+
+        assertFalse(b);
+
+    }
+
+    /**
      * Objeto de la prueba: Testear la funcion esHoja
      *- Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se comprueba una hoja correcta.
+     * - Valores estudiados: Se estudia el caso en el que se comprueba que es la hoja correcta.
      * - Operativa: En este test de esHoja se definen una Hoja con la constructora sin parametros.
      * El objetivo es comprobar que la hoja, es la hoja que tiene el identificador introducido
-     * Para ello comprobaremos que devuelve cierto si el identificador es el mismo.
+     * Para ello crearemos una hoja, le asignaremos un identificador, seguidamente comprobaremos que devuelve cierto
+     * si el identificador es el mismo.
      */
     @Test
     public void esHojaCorrecta(){
@@ -309,10 +293,11 @@ public class HojaTest {
      * Objeto de la prueba: Testear la funcion esHoja
      * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se comprueba una hoja incorrecta.
+     * - Valores estudiados: Se estudia el caso en el que se comprueba que no es la hoja correcta.
      * - Operativa: En este test de esHoja se definen una Hoja con la constructora sin parametros.
      * El objetivo es comprobar que la hoja, no es la hoja que tiene el identificador introducido
-     * Para ello comprobaremos que devuelve false si el identificador no es el mismo.
+     * Para ello crearemos una hoja, le asignaremos un identificador, seguidamente comprobaremos que devuelve false
+     * si el identificador no es el mismo.
      */
     @Test
     public void esHojaIncorrecta(){
@@ -329,13 +314,15 @@ public class HojaTest {
      * Objeto de la prueba: Testear la funcion getId
      * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se obtiene el identificador de una hoja.
+     * - Valores estudiados: Se estudia el caso en el que se obtiene el identificador de una hoja a partir de
+     *   un identidicador positivo.
      * - Operativa: En este test de getId se definen una Hoja con la constructora sin parametros.
      * El objetivo es comprobar que devuelve correctamente el identificador de la hoja
-     * Para ello comprobaremos que devuelve el identificador que previamente le habremos asignado
+     * Para ello, despues de crear la hoja, le asignaremos un id mediante la funcion "añadeNombreIdHojaDefault"
+     * ya probada y comprobaremos que devuelve el identificador que previamente se le ha asignado
      */
     @Test
-    public void getId(){
+    public void getIdAsignado(){
         hoja = new Hoja();
         hoja.añadeNombreIdHojaDefault(1);
 
@@ -346,14 +333,35 @@ public class HojaTest {
     }
 
     /**
+     * Objeto de la prueba: Testear la funcion getId
+     * - Stubs: No se utilizan stubs para este test
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     * - Valores estudiados: Se estudia el caso en el que se quiere obtener el identificador de una hoja que aun no
+     * tiene identificador.
+     * - Operativa: En este test de getId se definen una Hoja con la constructora sin parametros.
+     * El objetivo es comprobar que devuelve un identificador sin iniciar, es decir 0
+     * Para ello crearemos una hoja, pero no añadiremos el identificador que se crea por defecto con la funcion
+     * "añadeNombreIdHojaDefault" y comprobaremos que devuelve 0
+     */
+    @Test
+    public void getIdNoAsignado(){
+        hoja = new Hoja();
+
+        int id = hoja.getId();
+
+        assertEquals(0, id);
+
+    }
+
+    /**
      * Objeto de la prueba: Testear la funcion getColumnas
      * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
      * - Valores estudiados: Se estudia el caso en el que se obtiene el numero de columnas de una Hoja
      * - Operativa: En este test de getColumnas se definen una Hoja con la constructora sin parametros.
      * El objetivo es comprobar que devuelve correctamente el numero de columnas de la hoja
-     * Para ello comprobaremos que devuelve el numero de columnas que previamente se asigna a la hora de crearla
-     * o manualmente
+     * Para ello crearemos una hoja y comprobaremos que devuelve el numero de columnas que previamente se le
+     * asigna a la hora de crearla.
      */
     @Test
     public void getColumnas(){
@@ -372,8 +380,8 @@ public class HojaTest {
      * - Valores estudiados: Se estudia el caso en el que se obtiene el numero de filas de una Hoja
      * - Operativa: En este test de getFilas se definen una Hoja con la constructora sin parametros.
      * El objetivo es comprobar que devuelve correctamente el numero de filas de la hoja
-     * Para ello comprobaremos que devuelve el numero de filas que previamente se asigna a la hora de crearla
-     * o manualmente
+     * Para ello crearemos una hoja y comprobaremos que devuelve el numero de filas que previamente se le
+     * asigna a la hora de crearla.
      */
     @Test
     public void getFilas(){
@@ -390,13 +398,34 @@ public class HojaTest {
      * Objeto de la prueba: Testear la funcion getNombre
      * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que se obtiene el nombre de una Hoja
+     * - Valores estudiados: Se estudia el caso en el que se obtiene el nombre de una Hoja con nombre
      * - Operativa: En este test de getNombre se definen una Hoja con la constructora sin parametros.
      * El objetivo es comprobar que devuelve correctamente el nombre de la hoja
-     * Para ello comprobaremos que devuelve el nombre que previamente se asigna manualmente.
+     * Para ello, despues de crearla, le añadiremos un nombre manualmente, seguidamente comprobaremos que devuelve
+     * el nombre que previamente se le ha asignado.
      */
     @Test
-    public void getNombre(){
+    public void getNombreIni(){
+        hoja = new Hoja();
+        hoja.asignaNombre("HojaPrueba");
+
+        String name = hoja.getNombre();
+
+        assertEquals("HojaPrueba", name);
+
+    }
+
+    /**
+     * Objeto de la prueba: Testear la funcion getNombre
+     * - Stubs: No se utilizan stubs para este test
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     * - Valores estudiados: Se estudia el caso en el que se obtiene el nombre de una Hoja sin nombre
+     * - Operativa: En este test de getNombre se definen una Hoja con la constructora sin parametros.
+     * El objetivo es comprobar que devuelve null al no tener nombre la hoja
+     * Para ello comprobaremos que despues de crearla, sin añadirle ningun nombre, devuelve null.
+     */
+    @Test
+    public void getNombreNoIni(){
         hoja = new Hoja();
         hoja.asignaNombre("HojaPrueba");
 
@@ -410,9 +439,9 @@ public class HojaTest {
     /**
      * Objeto de la prueba: Testear la funcion getCeldas
      * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la calse del modelo
-     *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la calse del modelo
+     *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la clase del modelo
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que la hoja tiene celdas
+     * - Valores estudiados: Se estudia el caso en el que se pretende coger las celdas de una hoja que tiene celdas
      * - Operativa: En este test de getCeldas se definen una Hoja con la constructora con parametros, 4 posiciones y
      *   4 celdas con las cuales se llenara la hoja .
      * El objetivo es comprobar que devuelve correctamente la estructura de datos "celdas" de la hoja
@@ -446,10 +475,11 @@ public class HojaTest {
      * Objeto de la prueba: Testear la funcion getCeldas
      * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     * - Valores estudiados: Se estudia el caso en el que la hoja no tiene celdas
+     * - Valores estudiados: Se estudia el caso en el se pretende coger las celdas de una hoja que no tiene celdas
      * - Operativa: En este test de getCeldas se definen una Hoja con la constructora con parametros.
      * El objetivo es comprobar que devuelve correctamente la estructura de datos "celdas" de la hoja vacia
-     * Para ello comprobaremos que el tamaño de la estructura que devuelve sea el mismo que el que tiene la Hoja
+     * Para ello crearemos una hoja sin filas ni columnas y comprobaremos que el tamaño de la estructura que
+     * devuelve sea el mismo que el que tiene la Hoja, es decir 0 y que la estructura se la misma.
      */
     @Test
     public void getCeldasVacio(){
@@ -463,55 +493,63 @@ public class HojaTest {
     }
 
 
-    //Como uso Mockito aqui?
+
     /**
      * Objeto de la prueba: Testear la funcion getCelda
-     * - Stubs: No se utilizan stubs para este test
+     * - MockObject: ·MockPosicion: Se utiliza un mock de Posicion para substituir la clase de Posicion, dado que
+     *                dentro de la funcion solo se necesita la creadora, y mockito no puede burlarse de ellas,
+     *                al ejecutar el test, gracias al if dentro de la función se crearà un mock de posicion
+     *                en vez de una posicion como tal.
+     *                ·MockCelda: Se utiliza un mock de Celda para substituir la clase Celda.
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
      * - Valores estudiados: Se estudia el caso en el que se pide una celda con una posicion existente
      * - Operativa: En este test de getCelda se definen una Hoja con la constructora con parametros.
      * El objetivo es comprobar que devuelve correctamente la celda en la posicion introducida existente
-     * Para ello comprobaremos que la celda devuelta es la que hay en la posicion pedida
+     * Para ello despues de crear la hoja, comprobaremos que la celda devuelta es la que hay en la posicion pedida
      */
-  @Test
+    @Test
     public void getCeldaPosicionExistente(){
       hoja = new Hoja(2, 2);
 
-      hoja.inicializaHoja(hoja);
+      celda = hoja.getCelda(2, 2);
 
-      Celda c =  hoja.getCelda(2, 2);
+      posicion = new Posicion(2,2);
 
-      assertSame(c, hoja.getCeldas().get(new Posicion(2, 2)));
+      assertSame(celda, hoja.getCeldas().get(posicion));
 
     }
 
-    //Igual que arriba
+
     /**
      * Objeto de la prueba: Testear la funcion getCelda
-     * - Stubs: No se utilizan stubs para este test
+     * - MockObject: ·MockPosicion: Se utiliza un mock de Posicion para substituir la clase de Posicion, dado que
+     *                dentro de la funcion solo se necesita la creador, y mockito no puede burlarse de ellas,
+     *                al ejecutar el test, gracias al if dentro de la función se crearà un mock de posicion
+     *                en vez de una posicion como tal.
+     *                ·MockCelda: Se utiliza un mock de celda para substituir la clase Celda.
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
      * - Valores estudiados: Se estudia el caso en el que se pide una celda con una posicion inexistente
      * - Operativa: En este test de getCelda se definen una Hoja con la constructora con parametros.
-     * El objetivo es comprobar que devuelve una celda nula.
-     * Para ello comprobaremos que la celda devuelta es nula.
+     * El objetivo es comprobar que devuelve una celda nula, q siginificara que no existe.
+     * Para ello despues de crear la hoja, comprobaremos que la celda devuelta es nula.
      */
     @Test
     public void getCeldaPosicionInexistente(){
-        Hoja h = new Hoja(2, 2);
+        hoja = new Hoja(2, 2);
 
-        Celda c = h.getCelda(3, 2);
+        celda = hoja.getCelda(3, 2);
 
-        assertNull(c);
+        assertNull(celda);
 
     }
 
 
     /**
      * Objeto de la prueba: Testear la funcion existePosicion
-     * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la calse del modelo
-     *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la calse del modelo
+     * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la clase del modelo
+     *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la clase del modelo
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *- Valores estudiados: Se estudia el caso en el que se comprueba una posicion existente
+     *- Valores estudiados: Se estudia el caso en el que se comprueba si existe una posicion existente
      * - Operativa: En este test de existePosicion se definen una Hoja con la constructora con parametros, 4 posiciones
      * y 4 celdas.
      * El objetivo es comprobar que devuelve true si la Posicion introducida existe en la Hoja.
@@ -544,15 +582,15 @@ public class HojaTest {
 
     /**
      * Objeto de la prueba: Testear la funcion existePosicion
-     * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la calse del modelo
-     *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la calse del modelo
+     * - Stubs: ·CeldaStub: Se ha creado un stub de la clase Celda el cual reemplaza a la clase del modelo
+     *          ·PosicionStub: Se ha creado un stub de la clase Posicion el cual reemplaza a la clase del modelo
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *- Valores estudiados: Se estudia el caso en el que se comprueba una posicion inexistente
-     * - Operativa: En este test de existePosicion se definen una Hoja con la constructora con parametros 4 posiciones
+     *- Valores estudiados: Se estudia el caso en el que se comprueba si existe una posicion inexistente
+     * - Operativa: En este test de existePosicion se definen una Hoja con la constructora con parametros, 4 posiciones
      *   y 4 celdas.
      * El objetivo es comprobar que devuelve false si la Posicion introducida no existe en la Hoja.
-     * Para ello crearemos 4 posiciones junto a 4 celdas para llenar la hoja, seguidamente una posicion inexistente
-     * y comprobaremos si los valores son los correctos
+     * Para ello crearemos 4 posiciones junto a 4 celdas, que se añadiran a un HashMap para llenar la hoja,
+     * seguidamente se creara una posicion inexistente y comprobaremos que el valor devuelto es false
      */
     @Test
     public void existePosicionInexistente(){
@@ -577,7 +615,7 @@ public class HojaTest {
         assertFalse(b);
     }
 
-
+//----------------------------------------------------------------
     //Problema Mockito
     /**
      * Objeto de la prueba: Testear la funcion addCeldaVacia
@@ -717,26 +755,15 @@ public class HojaTest {
      * definen dos posiciones (la actual y la futura), se pasa una posicion(la futura) y una celda.
      */
     @Test
-    public void cambiarPosicionCelda2PosicionesExistentes(){
-      /*  hoja = new Hoja(2, 2);
-        allcelds = new HashMap<>(4);
-        PosicionStub p1 = new PosicionStub(1, 1);
-        PosicionStub p2 = new PosicionStub(1, 2);
-        PosicionStub p3 = new PosicionStub(2, 1);
-        PosicionStub p4 = new PosicionStub(2, 2);
+    public void cambiarPosicionCeldaV2PosicionesExistentes(){
+        hoja = new Hoja(2, 2);
 
-        allcelds.put(p1, new CeldaStub(p1));
-        allcelds.put(p2, new CeldaStub(p2));
-        allcelds.put(p3, new CeldaStub(p3));
-        allcelds.put(p4, new CeldaStub(p4));
-
-        hoja.setCeldas(allcelds);
-
-        when(celda.getReferenciantes()).thenReturn(refs);
-        CeldaStub c = (CeldaStub) hoja.getCelda(2, 1);
+        when(celda.getReferenciantes()).thenReturn(new ArrayList<>());
+        Celda c =  hoja.getCelda(2, 1);
+        Posicion p2 = new Posicion(1,2);
         boolean b1 = hoja.cambiarPosicionCelda(p2, c);
 
-        assertFalse(b1);*/
+        assertTrue(b1);
     }
 
     /**

@@ -1,4 +1,4 @@
-package drivers.components.ControladorCelda;
+package test.old.ControladorCeldaTest;
 
 import main.Domain.DomainControllers.ControladorCelda;
 import main.Domain.DomainModel.Documento;
