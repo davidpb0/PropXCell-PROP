@@ -85,18 +85,18 @@ public class TraductorTest {
 
     @Test
     public void testDetecta() {
-        String[] funcs = {"abs()", "trunc()", "aprox()", "convertirDB()", "convertirBD", "convertirHD", "convertirDH", "convertirHB", "convertirBH", "mes()", "año()", "diasemana()", "nombredia()", "longitud()", "media()", "mediana()", "varianza()", "covarianza()", "desviacion()", "pearson()", "funcionerronea()", "$A1", "01/01/2000", "99/99/9999"};
-        String[] codigos = {"#ABS", "#TRUNC", "#APROX", "#VDB", "#VBD", "#VHD", "#VDH", "#VHB", "#VBH", "#MES", "#AÑO", "#DIAS", "#NDIA", "#LONG", "#MEDIA", "#MEDIANA", "#VAR", "#COV", "#DESV", "#COEFP", "#ERRORFUNC", "#REFERENCIA", "#FECHA", "#ERRORFECHA"};
+        String[] funcs = {"abs()", "trunc()", "aprox()", "convertirDB()", "convertirBD", "convertirHD", "convertirDH", "convertirHB", "convertirBH", "mes()", "año()", "diasemana()", "nombredia()", "longitud()", "media()", "mediana()", "varianza()", "covarianza()", "desviacion()", "pearson()", "contarLetra()", "reemplazarPal()", "reemplazarLet()", "funcionerronea()", "$A1", "01/01/2000", "99/99/9999"};
+        String[] codigos = {"#ABS", "#TRUNC", "#APROX", "#VDB", "#VBD", "#VHD", "#VDH", "#VHB", "#VBH", "#MES", "#AÑO", "#DIAS", "#NDIA", "#LONG", "#MEDIA", "#MEDIANA", "#VAR", "#COV", "#DESV", "#COEFP", "#CLETRA", "#REEMPPAL", "#REEMPLET", "#ERRORFUNC", "#REFERENCIA", "#FECHA", "#ERRORFECHA"};
         Random random = new Random();
         int funcRandom = random.nextInt(funcs.length);
-        assertEquals(Traductor.detecta(funcs[funcRandom]), codigos[funcRandom]);
+        assertEquals(traductor.getTraductor().detecta(funcs[funcRandom]), codigos[funcRandom]);
     }
 
     @Test
     public void testTraduceColumna() {
         when(traductor.StringInt(isA(String.class))).thenReturn(1);
         String col = "A";
-        assertEquals(Traductor.traduceColumna(col), 1);
+        assertEquals(traductor.getTraductor().traduceColumna(col), 1);
     }
 
     @Test
@@ -105,7 +105,7 @@ public class TraductorTest {
         when(new Posicion(isA(Integer.class), isA(Integer.class))).thenReturn(new PosicionStub(1, 1));
         when(hoja.getCelda(isA(PosicionStub.class))).thenReturn(new CeldaStub(new PosicionStub(1, 1)));
 
-        CeldaStub c = (CeldaStub) Traductor.traduceCelda("A1", 1);
+        CeldaStub c = (CeldaStub) traductor.getTraductor().traduceCelda("A1", 1);
         assertEquals(c, new CeldaStub(new PosicionStub(1, 1), "1"));
     }
 
