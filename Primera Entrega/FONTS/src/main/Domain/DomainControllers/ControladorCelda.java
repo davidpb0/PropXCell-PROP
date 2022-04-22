@@ -13,7 +13,7 @@ import static main.Domain.DomainModel.Documento.getDocumento;
 /*
 * ClassName ControladorCelda
 *
-* Version info 0.0.5
+* Version info 0.0.6
 *
 * Author David Pérez Barroso
 */
@@ -525,6 +525,65 @@ public class ControladorCelda {
      */
     public void longitudPalabra(String _palabra){
         this.celdaRef.setValor(String.valueOf(_palabra.length()));
+    }
+
+
+    /**
+     * Cuenta el numero de veces que aparece una letra en una palabra y deja el valor en la celda
+     * @param _palabra palabra donde se va a contar el numero de veces en la que aparece la letra
+     * @param _letra letra a contar
+     * @return Devuelve true si la función se ha relaizado correctamente, false si la palabra no contiene la letra a
+     * contar
+     */
+    public boolean contarLetra(String _palabra, String _letra){
+        char aux;
+        int count = 0;
+        if(!_palabra.contains(_letra)) return false;
+
+        for(int i = 0; i < _palabra.length(); i++){
+            aux = _palabra.charAt(i);
+            if(aux == _letra.charAt(0)) {
+                ++count;
+            }
+        }
+        this.celdaRef.setValor(String.valueOf(count));
+        return true;
+    }
+
+
+    /**
+     * Sustituye parte de una cadena de texto por otra cadena y lo pone en el valor de la celda
+     * @param _txt texto del cual una parte va a ser sustituida
+     * @param _pos posicion donde comenzará la sustitución
+     * @param _long numero de caracteres del texto que se sustituirán
+     * @param _ntxt texto que se insertará en el texto original
+     * @return Devuelve cierto si la funcion se ha realizado correctamente, falso en caso de que hay algun error en los
+     * parametros introducidos
+     */
+
+    public boolean reemplazarPalabra(String _txt, int _pos, int _long,  String _ntxt){
+        if(_pos > _txt.length()) return false;
+        if(_pos < 0 || _long <= 0) return false;
+        if(_long-1 > _txt.length()-_pos) return false;
+       String s = _txt.substring(_pos-1, _pos+_long-1);
+       this.celdaRef.setValor(_txt.replaceAll(s, _ntxt));
+       return true;
+
+    }
+
+    /**
+     * Remplaza un caracter elegido por otro en el texto original y lo ponen en el valor de la celda
+     * @param _txt texto al cual se le va a reemplazar un caracter
+     * @param _cr caracter a reemplazar
+     * @param _nc caracter nuevo
+     * @return Devuelve cierto si la funcion se ha realizado correctamente, falso en caso de que el caracter a sustituir
+     * no exista en el texto introducido
+     */
+    public boolean reemplazarCaracter(String _txt, String _cr, String _nc){
+        if(!_txt.contains(_cr)) return false;
+        this.celdaRef.setValor(_txt.replace(_cr, _nc));
+        return true;
+
     }
 
 
