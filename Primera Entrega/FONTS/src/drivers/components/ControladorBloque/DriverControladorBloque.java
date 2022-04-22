@@ -1,5 +1,6 @@
 package drivers.components.ControladorBloque;
 
+import main.Domain.DomainControllers.ControladorBloque;
 import main.Domain.DomainModel.BloqueTemporalCopiado;
 import main.Domain.DomainModel.Celda;
 import main.Domain.DomainModel.Posicion;
@@ -8,27 +9,13 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class DriverControladorBloque {
-    private static StubBloqueTemporalCopiado cont = null;
-
-    public static void testConstructora() {
-        cont = new StubBloqueTemporalCopiado();
-        System.out.println("Se ha creado el stub del bloque temporal copiado correctamente.");
-    }
-
-    public static void testCopiar() {
-        cont.setCortar(false);
-        System.out.println("Ahora el booleano Cortar vale "+ false);
-    }
-
-    public static void testCortar() {
-        cont.setCortar(true);
-        System.out.println("Ahora el booleano Cortar vale "+ true);
-    }
+    static ControladorBloque cont = null;
 
     public static void testPegar() {
         for (int f = 1; f <= 3; ++f) {
             for (int c = 1; c <= 3; ++c) {
-                Celda cell = cont.getCelda(f, c);
+                StubPosicion p = new StubPosicion(f, c);
+                StubCelda cell = cont.getCelda(p);
                 System.out.println(cell.getContenido() + ' ');
             }
             System.out.println("\n");
@@ -50,6 +37,8 @@ public class DriverControladorBloque {
     }
 
     public static void main(String[] args) {
+        DriverControladorBloque cb = null;
+        StubBloqueTemporalCopiado cont = null;
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             boolean salir = false;
@@ -64,11 +53,11 @@ public class DriverControladorBloque {
                     optionSelected = Integer.parseInt(datos[0]);
                 } catch (NumberFormatException ignored) {}
 
-                if (cont == null && optionSelected == 4) {
+                if (cb == null && optionSelected == 4) {
                     System.out.println("No es posible pegar si no se ha copiado nada.");
                 }
                 else {
-                    if (optionSelected != 1 && cont == null) System.out.println("Primero hay que crear el bloque.");
+                    if (optionSelected > 1 && cb == null) System.out.println("Primero hay que crear el controlador.");
                     else
                     switch (optionSelected) {
                         case 0:
@@ -76,15 +65,21 @@ public class DriverControladorBloque {
                             break;
 
                         case 1:
-                            testConstructora();
+                            System.out.println("Test de la constructora de ControladorBloque:");
+                            cb = new DriverControladorBloque();
+                            System.out.println("Se ha creado el ControladorBloque correctamente.");
                             break;
 
                         case 2:
-                            testCopiar();
+                            System.out.println("Test de copiar():");
+                            cb.copiar();
+                            System.out.println("Ahora el booleano Cortar vale "+ false);
                             break;
 
                         case 3:
-                            testCortar();
+                            System.out.println("Test de cortar():");
+                            cb.cortar();
+                            System.out.println("Ahora el booleano Cortar vale "+ true);
                             break;
 
                         case 4:
@@ -99,6 +94,14 @@ public class DriverControladorBloque {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public DriverControladorBloque() {
+        cont = new StubBloqueTemporalCopiado();
+    }
+
+    public void copiar() {
+        cont.
     }
 
     public static class StubPosicion extends Posicion {
@@ -125,6 +128,7 @@ public class DriverControladorBloque {
         private Boolean cortar;
 
         public StubBloqueTemporalCopiado() {
+            System.out.println("asd");
             for (int i = 1; i <= 3; ++i) {
                 for (int j = 1; j <= 3; ++j) {
                     bloqueCopiado[i][j] = new StubCelda(new StubPosicion(i, j), "dummy número " + i*j);
@@ -134,6 +138,10 @@ public class DriverControladorBloque {
 
         public void setCortar(Boolean _cortar) {
             this.cortar = _cortar;
+        }
+
+        public StubCelda getCelda(int _f, int _c) {
+            return bloqueCopiado[_f - 1][_c - 1];
         }
     }
 }
