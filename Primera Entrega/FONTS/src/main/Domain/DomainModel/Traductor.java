@@ -15,15 +15,15 @@ import java.util.List;
 
 public class Traductor {
 
-    private Traductor traductor;
+    private static Traductor traductor;
 
     /**
      * Método para acceder al traductor
      * @return la instancia singleton del traductor
      */
-    public Traductor getTraductor() {
-        if (this.traductor == null) this.traductor = new Traductor();
-        return this.traductor;
+    public static Traductor getTraductor() {
+        if (traductor == null) traductor = new Traductor();
+        return traductor;
     }
 
     /**
@@ -37,7 +37,14 @@ public class Traductor {
      * @param _s el parámetro a convertir a entero.
      */
     public int StringInt(String _s) {
-        return Integer.parseInt(_s);
+        try {
+            return Integer.parseInt(_s);
+        } catch (NumberFormatException e) {
+            System.err.println("String no convertible a int: el valor del String es " + _s);
+            e.printStackTrace();
+        }
+
+        return -1;
     }
 
     /**
@@ -46,7 +53,14 @@ public class Traductor {
      * @param _s el parámetro a convertir a float.
      */
     public float StringFloat(String _s) {
-        return Float.parseFloat(_s);
+        try {
+            return Float.parseFloat(_s);
+        } catch (NumberFormatException e) {
+            System.err.println("String no convertible a float: el valor del String es " + _s);
+            e.printStackTrace();
+        }
+
+        return -1f;
     }
 
     /**
@@ -54,9 +68,16 @@ public class Traductor {
      * Convierte un string a una fecha, si su sintaxis es correcta.
      * @param _s el parámetro a convertir a fecha.
      */
-    public Date StringDate(String _s) throws ParseException {
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-        return formatoFecha.parse(_s);
+    public Date StringDate(String _s) {
+        try {
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+            return formatoFecha.parse(_s);
+        } catch (ParseException pe) {
+            System.err.println("String no convertible a date: el valor del String es " + _s);
+            pe.printStackTrace();
+        }
+
+        return null;
     }
 
     /**
@@ -109,6 +130,9 @@ public class Traductor {
             else if (_formula.indexOf("=covarianza(") == 0) return "#COV";
             else if (_formula.indexOf("=desviacion(") == 0) return "#DESV";
             else if (_formula.indexOf("=pearson(") == 0) return "#COEFP";
+            else if (_formula.indexOf("=contarLetra(") == 0) return "#CLETRA";
+            else if (_formula.indexOf("=reemplazarPal(") == 0) return "#REEMPPAL";
+            else if (_formula.indexOf("=reemplazarLet(") == 0) return "#REEMPLET";
             else return "#ERRORFUNC";
         } else if (_formula.charAt(0) == '$' && _formula.length() <= 5) { // Como mucho $AA11
             return "#REFERENCIA";
@@ -149,7 +173,8 @@ public class Traductor {
     public Celda traduceCelda(String _pos, int _idH) {
         Celda c = null;
         Hoja h = Documento.getDocumento().getHoja(_idH);
-        String s = _pos.substring(1);
+        String s = _pos;
+        if (_pos.startsWith("$")) s = _pos.substring(1);
         int j = 0;
         while (j < s.length() && s.charAt(j) <= 'Z') ++j;
         String columna = s.substring(0, j - 1);

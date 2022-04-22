@@ -210,7 +210,7 @@ public class ControladorCelda {
                obtenerNombreDia(arg[0]);
                break;
            case "#LONG":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
                if(arg.length != 1) {
                    this.celdaRef.setValor("#ERROR");
                    break;

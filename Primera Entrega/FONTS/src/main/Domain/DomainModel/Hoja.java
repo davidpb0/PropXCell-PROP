@@ -291,10 +291,10 @@ public class Hoja implements Serializable {
         ArrayList<Celda> agrup = new ArrayList<>();
         Traductor t = Traductor.getTraductor();
 
-        Celda celd1 = Traductor.traduceCelda(_cel1, this.id);
+        Celda celd1 = Traductor.getTraductor().traduceCelda(_cel1, this.id);
         Posicion pos1 = celd1.getPosicion();
 
-        Celda celd2 = Traductor.traduceCelda(_cel2, this.id);
+        Celda celd2 = Traductor.getTraductor().traduceCelda(_cel2, this.id);
         Posicion pos2 = celd2.getPosicion();
 
         if (celdas.containsKey(pos1) && celdas.containsKey(pos2)) {
