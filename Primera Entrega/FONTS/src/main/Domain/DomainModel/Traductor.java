@@ -37,7 +37,13 @@ public class Traductor {
      * @param _s el parámetro a convertir a entero.
      */
     public int StringInt(String _s) {
-        return Integer.parseInt(_s);
+        try {
+            return Integer.parseInt(_s);
+        } catch (NumberFormatException e) {
+            System.err.println("String no convertible a int: el valor del String es " + _s);
+        }
+
+        return
     }
 
     /**
@@ -109,6 +115,9 @@ public class Traductor {
             else if (_formula.indexOf("=covarianza(") == 0) return "#COV";
             else if (_formula.indexOf("=desviacion(") == 0) return "#DESV";
             else if (_formula.indexOf("=pearson(") == 0) return "#COEFP";
+            else if (_formula.indexOf("=contarLetra(") == 0) return "#CLETRA";
+            else if (_formula.indexOf("=reemplazarPal(") == 0) return "#REEMPPAL";
+            else if (_formula.indexOf("=reemplazarLet(") == 0) return "#REEMPLET";
             else return "#ERRORFUNC";
         } else if (_formula.charAt(0) == '$' && _formula.length() <= 5) { // Como mucho $AA11
             return "#REFERENCIA";
@@ -149,7 +158,8 @@ public class Traductor {
     public Celda traduceCelda(String _pos, int _idH) {
         Celda c = null;
         Hoja h = Documento.getDocumento().getHoja(_idH);
-        String s = _pos.substring(1);
+        String s = _pos;
+        if (_pos.startsWith("$")) s = _pos.substring(1);
         int j = 0;
         while (j < s.length() && s.charAt(j) <= 'Z') ++j;
         String columna = s.substring(0, j - 1);
