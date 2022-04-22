@@ -254,9 +254,9 @@ public class DriverControladorCelda {
                             quit = true;
                             break;
                         default:
-                            System.out.println("El parametre insertat no es correcte, ha de ser un nombre natural entre 0 i 31");
+                            System.out.println("El parametro insertado no es correcto, tiene que ser un nombre natural entre 0 y 44");
                     }
-                    System.out.print("\nPolsa ENTER tecla per continuar");
+                    System.out.print("\nPulsa ENTER tecla para continuar");
                     br.readLine();
                 }
             }
