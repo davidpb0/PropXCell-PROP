@@ -1,12 +1,15 @@
 package drivers.integration;
 
-import main.Domain.DomainModel.Documento;
+import main.Domain.DomainControllers.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class MainTest {
-    private static Documento d = null;
+    private static ControladorDocumento cd = null;
+    private static ControladorHoja ch = null;
+    private static ControladorCelda cc = null;
+    private static ControladorBloque cb = null;
     private static BufferedReader br = null;
     private static String[] inputs;
 
@@ -21,6 +24,10 @@ public class MainTest {
         System.out.println("Selecciona un caso de uso para realizar:");
         System.out.println("\t1: Crear documento.");
         System.out.println("\t2: Cerrar documento.");
+        System.out.println("\t3: Seleccionar hoja.");
+        System.out.println("\t4: Añadir una hoja.");
+        System.out.println("\t5: Renombrar la hoja actual.");
+        System.out.println("\t0: Salir del programa.");
         System.out.print("Escoge una opción: ");
     }
 
@@ -28,27 +35,85 @@ public class MainTest {
         br = new BufferedReader(new InputStreamReader(System.in));
         try {
             boolean salir = false;
+            boolean hojaSeleccionada = false;
             while (!salir) {
                 //opcionesDeCarga();
                 //inputs = br.readLine().split(" ");
                 int opcion = -1;
-                try {
+                /*try {
                     opcion = Integer.parseInt(inputs[0]);
-                } catch (NumberFormatException ne) {}
+                } catch (NumberFormatException ne) {}*/
 
                 casosDeUso();
                 int caso = Integer.parseInt(br.readLine());
-                if (caso != 1 && d == null) System.out.println("Primero hay que crear el documento.");
+                if (caso > 1 && cd == null) System.out.println("Primero hay que crear el documento.");
                 else {
                     switch (caso) {
                         case 1:
-                            d = Documento.getDocumento();
+                            cd = new ControladorDocumento();
+                            ch = new ControladorHoja();
+                            cc = new ControladorCelda();
+                            cb = new ControladorBloque();
                             System.out.println("Documento creado correctamente.");
                             break;
 
                         case 2:
-                            d = null;
+                            cd = null;
+                            ch = null;
+                            cc = null;
+                            cb = null;
                             System.out.println("Documento cerrado correctamente.");
+                            break;
+
+                        case 3:
+                            System.out.print("Selecciona la hoja con la que quieres trabajar: ");
+                            int idh = -1;
+                            try {
+                                idh = Integer.parseInt(br.readLine());
+                            } catch (NumberFormatException e) {
+                                System.out.println("El ID de la hoja introducido es incorrecto, debe ser un número entero mayor o igual que 0.");
+                                break;
+                            }
+                            if (idh >= cd.getNumHojas()) System.out.println("Error: la hoja no existe.");
+                            else {
+                                ch.asignaHoja(idh);
+                                hojaSeleccionada = true;
+                                System.out.println("Hoja con id " + idh + " seleccionada correctamente.");
+                            }
+                            break;
+
+                        case 4:
+                            System.out.println("Escribe el tamaño de la hoja a añadir:");
+                            System.out.print("filas: ");
+                            String filas = br.readLine();
+                            System.out.print("columnas: ");
+                            String columnas = br.readLine();
+                            int f = -1;
+                            int c = -1;
+                            try {
+                                f = Integer.parseInt(filas);
+                                c = Integer.parseInt(columnas);
+                            } catch (NumberFormatException e) {
+                                System.out.println("Algún valor introducido es incorrecto.");
+                                break;
+                            }
+                            cd.anadirHoja(f, c);
+                            System.out.println("Hoja añadida con " + f + " filas y " + c + " columnas.");
+                            ch.asignaHoja(cd.getNumHojas() - 1);
+                            System.out.println("Ahora la nueva hoja es la seleccionada.");
+                            hojaSeleccionada = true;
+                            break;
+
+                        case 5:
+                            if (!hojaSeleccionada) {
+                                System.out.println("Actualmente no hay ninguna hoja seleccionada.");
+                                break;
+                            } else {
+                                System.out.print("Escribe el nombre de la hoja: ");
+                                String nombre = br.readLine();
+                                ch.renombraHoja(nombre);
+                                System.out.println("Ahora la hoja con ID " + ch.getIdHoja() + " se llama " + nombre + ".");
+                            }
                             break;
 
                         case 0:
@@ -61,6 +126,7 @@ public class MainTest {
                             break;
                     }
                 }
+
 
                 if (opcion == 0) salir = true;
 

@@ -151,7 +151,7 @@ public class Documento implements Serializable {
      * @return true si se ha borrado, false si la hoja no existe
      */
     public boolean eliminaHoja(int _id){
-        if (this.hojasContenidas.containsKey(_id) && !this.hojasContenidas.isEmpty()){
+        if (!this.hojasContenidas.isEmpty() && this.hojasContenidas.containsKey(_id)){
             this.hojasContenidas.remove(_id);
             recalculaNumHojas();
             return true;
@@ -165,7 +165,7 @@ public class Documento implements Serializable {
      * Elimina la instancia de Documento
      */
     public void eliminaDocumento(){
-        this.instanceOfThisClass = null;
+        instanceOfThisClass = null;
         this.nombre = null;
         this.numHojas = 0;
         this.fechaUltMod = null;

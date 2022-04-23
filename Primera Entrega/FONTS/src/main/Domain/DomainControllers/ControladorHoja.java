@@ -1,10 +1,10 @@
 package main.Domain.DomainControllers;
 
-import java.util.Arrays;
-
 import main.Domain.DomainModel.Documento;
 import main.Domain.DomainModel.Hoja;
 import main.Domain.DomainModel.Posicion;
+
+import java.util.Arrays;
 
 /*ClassName ControladorHoja
  *
@@ -25,6 +25,22 @@ public class ControladorHoja {
     */
     public void asignaHoja(int _idh) {
         hojaRef = Documento.getDocumento().getHoja(_idh);
+    }
+
+    /**
+     * Se cambia el nombre de la hoja.
+     * @param _nuevoNombre nombre de la hoja pasado por presentación.
+     */
+    public void renombraHoja(String _nuevoNombre) {
+        hojaRef.asignaNombre(_nuevoNombre);
+    }
+
+    /**
+     * Devuelve el id de la hoja actual.
+     * @return el id de la hoja actual.
+     */
+    public int getIdHoja() {
+        return hojaRef.getId();
     }
 
     /**
