@@ -1,9 +1,7 @@
 package drivers.components.ControladorCelda;
 
 import main.Domain.DomainControllers.ControladorCelda;
-import main.Domain.DomainModel.Celda;
-import main.Domain.DomainModel.Posicion;
-import main.Domain.DomainModel.Traductor;
+import main.Domain.DomainModel.*;
 import org.junit.Before;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -12,6 +10,7 @@ import org.mockito.MockitoAnnotations;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 import static org.mockito.ArgumentMatchers.isA;
@@ -24,13 +23,19 @@ public class DriverControladorCelda {
     private static int constructor = 0;
 
     @InjectMocks
-    private ControladorCelda cc = null;
+    private static ControladorCelda cc = null;
 
     @Mock
     Traductor traductor = Traductor.getTraductor();
 
     @Mock
     private Celda celda;
+
+    @Mock
+    private Hoja hoja;
+
+    @Mock
+    private Documento documento;
 
     @Before
     public void setUp() throws Exception{
@@ -97,6 +102,7 @@ public class DriverControladorCelda {
 
             DriverControladorCelda driver = new DriverControladorCelda();
             while (!quit) {
+                System.out.println("");
                 opciones();
                 String line = br.readLine();
                 if (!Objects.equals(line, "")) palabras = line.split(" ");
@@ -104,22 +110,17 @@ public class DriverControladorCelda {
                 int opcionSelc = -1;
                 try {
                     opcionSelc = Integer.parseInt(palabras[0]);
-                } catch (NumberFormatException ignored) {
-                }
+                } catch (NumberFormatException ignored) {}
 
-                if (constructor == 0 && opcionSelc != 1) {
-                    System.out.println("Primero tienes que llamar a la constructora");
-                    opcionSelc = -1;
-                } else if (constructor == 1 && opcionSelc > 2) {
-                    System.out.println("Hace falta que selecciones una celda");
-                    opcionSelc = -1;
-
+                if(cc == null && opcionSelc > 1 && constructor == 0) System.out.println("Primero tienes que llamar a la constructora");
+                else if(constructor == 1 && opcionSelc > 2) System.out.println("Hace falta que selecciones una celda");
+                else{
                     switch (opcionSelc) {
                         case 1: //constructora
                             if (nParamValido(0)) driver.constructorTest();
                             break;
                         case 2:
-                            if (nParamValido(3)) driver.asignaCeldaPosicionTest();
+                            if (nParamValido(2)) driver.asignaCeldaPosicionTest();
                             break;
                         case 3:
                             if (nParamValido(1)) driver.escribirContenidoFTruncamientoTest();
@@ -273,12 +274,16 @@ public class DriverControladorCelda {
     private void constructorTest() {
             cc = new ControladorCelda();
             constructor = 1;
+            System.out.println("Se ha construido correctamente el ControladorCelda");
     }
 
     private void asignaCeldaPosicionTest(){
-        cc.asignaCeldaPosicion(palabras[1],palabras[2],palabras[3]);
-        System.out.println("Se ha asignado la celda " + palabras[2] + " " + palabras[3] + " de la hoja " +
-                palabras[1] + " correctamente.");
+        Documento d = Documento.getDocumento();
+        d.inicializaDocumentoDefault("Doc1");
+        cc.asignaCeldaPosicion(String.valueOf(1),palabras[1],palabras[2]);
+        constructor = 2;
+        System.out.println("Se ha asignado la celda " + palabras[1] + " " + palabras[2] + " de la hoja " +
+                1 + " correctamente.");
 
     }
 
@@ -288,6 +293,7 @@ public class DriverControladorCelda {
                 "un numero valido");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -298,6 +304,7 @@ public class DriverControladorCelda {
                 "un numero valido");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -308,6 +315,7 @@ public class DriverControladorCelda {
                 "un numero valido");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -317,6 +325,7 @@ public class DriverControladorCelda {
                 "un numero valido");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -327,6 +336,7 @@ public class DriverControladorCelda {
                 "un numero binario valido");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -337,6 +347,7 @@ public class DriverControladorCelda {
                 "un numero hexadecimal valido");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -347,6 +358,7 @@ public class DriverControladorCelda {
                 "un numero valido");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -357,6 +369,7 @@ public class DriverControladorCelda {
                 "un numero hexadecimal valido");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -366,6 +379,7 @@ public class DriverControladorCelda {
                 "un numero binario valido");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -376,6 +390,7 @@ public class DriverControladorCelda {
                 "una fecha valida");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -386,6 +401,7 @@ public class DriverControladorCelda {
                 "una fecha valida");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -395,6 +411,7 @@ public class DriverControladorCelda {
                 "una fecha valida");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -404,12 +421,14 @@ public class DriverControladorCelda {
                 "una fecha valida");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
     private void escribirContenidoFLongitudTest(){
         cc.escribirContenido(palabras[1]);
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+        System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
 
     }
@@ -420,6 +439,7 @@ public class DriverControladorCelda {
                 "una letra contenida en la palabra");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -430,6 +450,7 @@ public class DriverControladorCelda {
                 "introducido para substituir existe en la palabra");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -439,6 +460,7 @@ public class DriverControladorCelda {
                 "correctamente posicion y longitud, estas no deberian ser negativas o mayores que el texto ");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -449,6 +471,7 @@ public class DriverControladorCelda {
                 "numeros correctos");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -459,6 +482,7 @@ public class DriverControladorCelda {
                 "numeros correctos");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -468,6 +492,7 @@ public class DriverControladorCelda {
                 "numeros correctos");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -477,6 +502,7 @@ public class DriverControladorCelda {
                 "numeros correctos");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -487,6 +513,7 @@ public class DriverControladorCelda {
                 "numeros correctos");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -496,6 +523,7 @@ public class DriverControladorCelda {
                 "numeros correctos");
         else{
             System.out.println("Se ha escrito correctamente el contenido de la funcion");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
@@ -515,6 +543,7 @@ public class DriverControladorCelda {
         cc.escribirContenido(palabras[1]);
 
         System.out.println("Se ha referenciado correctamente el contenido de la celda");
+        System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
         System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
 
     }
@@ -523,6 +552,7 @@ public class DriverControladorCelda {
         cc.escribirContenido(palabras[1]);
 
         System.out.println("Se ha escrito correctamente el contenido");
+        System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
         System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
 
     }
@@ -673,7 +703,6 @@ public class DriverControladorCelda {
 
 
 
-
     //Stub de Posicion que sustituye la clase Posicion asi como los metodos necesarios para el test
     private static class PosicionStub extends Posicion {
 
@@ -686,12 +715,14 @@ public class DriverControladorCelda {
     private static class CeldaStub extends Celda {
         private PosicionStub pos;
         String contenido;
+        String valor;
         ArrayList<Celda> refs;
 
         public CeldaStub(PosicionStub _pos) {
             super(_pos);
             pos = _pos;
             contenido = "";
+            valor = "";
 
         }
 
@@ -700,9 +731,6 @@ public class DriverControladorCelda {
             return pos;
         }
 
-       /* public String getContenidoStub() {
-            return contenido;
-        }*/
 
         @Override
         public void setReferenciantes(ArrayList<Celda> _refs){
@@ -710,11 +738,35 @@ public class DriverControladorCelda {
 
         }
 
-        public void setContentStub(String _s){
-            contenido = _s;
+        @Override
+        public void setValor(String valor) {
+            this.valor = valor;
+        }
+    }
+
+    private static class DocumentoStub{
+        private String nombre;
+        private int numHojas;
+        private HashMap<Integer, Hoja> hojasContenidas = new HashMap<Integer, Hoja>();
+
+        public DocumentoStub(){
+            this.nombre = "Doc1";
 
         }
 
+    }
+
+    private static class HojaStub extends Hoja{
+        private int id;
+        HojaStub(){
+            id = 1;
+
+        }
+
+        @Override
+        public int getId() {
+            return id;
+        }
     }
 
 
