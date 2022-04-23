@@ -104,19 +104,19 @@ public class BloqueSeleccionadoTest {
         assertEquals(b.getHoja(), h);
     }
 
-    public class PosicionStub extends Posicion {
+    private class PosicionStub extends Posicion {
         public PosicionStub(int _f, int _c) {
             super(_f, _c);
         }
     }
 
-    public class CeldaStub extends Celda {
+    private class CeldaStub extends Celda {
         public CeldaStub(String _cont) {
             super(new PosicionStub(1, 1), _cont);
         }
     }
 
-    public class HojaStub extends Hoja {
+    private class HojaStub extends Hoja {
         public HojaStub() {}
     }
 }

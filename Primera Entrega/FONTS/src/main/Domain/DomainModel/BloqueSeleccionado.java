@@ -52,4 +52,21 @@ public class BloqueSeleccionado {
     public Hoja getHoja() {
         return this.hoja;
     }
+
+    /**
+     * Resetea el valor de las celdas que forman el bloque.
+     */
+    public void clearCeldas() {
+        this.celdaInicial = null;
+        this.celdaFinal = null;
+        this.hoja = null;
+    }
+
+    /**
+     * Comprueba si existe un bloque seleccionado.
+     * @return true si existe un bloque seleccionado actualmente, falso en caso contrario.
+     */
+    public Boolean existeBloque() {
+        return !(this.celdaInicial == null && this.celdaFinal == null && this.hoja == null);
+    }
 }
