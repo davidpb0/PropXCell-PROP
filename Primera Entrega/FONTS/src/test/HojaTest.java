@@ -14,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.isA;
@@ -801,8 +802,8 @@ public class HojaTest {
 
         hoja.setCeldas(allcelds);
 
-        when(celda.getReferenciantes()).thenReturn(new ArrayList<>());
-        doNothing().when(celda).setReferenciantes(isA(ArrayList.class));
+        when(celda.getReferenciantes()).thenReturn(new LinkedList<>());
+        doNothing().when(celda).setReferenciantes(isA(LinkedList.class));
         doNothing().when(celda).setPosicion(isA(Posicion.class));
 
 
@@ -893,9 +894,9 @@ public class HojaTest {
         hoja.setCeldas(allcelds);
 
         //Cambio de comportamiento de las funciones de celda utilizadas mediante mock
-        when(celda.getReferenciantes()).thenReturn(new ArrayList<>());
-        when(celda.getReferenciantes()).thenReturn(new ArrayList<>());
-        doNothing().when(celda).setReferenciantes(isA(ArrayList.class));
+        when(celda.getReferenciantes()).thenReturn(new LinkedList<>());
+        when(celda.getReferenciantes()).thenReturn(new LinkedList<>());
+        doNothing().when(celda).setReferenciantes(isA(LinkedList.class));
         doNothing().when(celda).setPosicion(isA(Posicion.class));
 
 
@@ -1052,7 +1053,7 @@ public class HojaTest {
         }*/
 
         @Override
-        public void setReferenciantes(ArrayList<Celda> _refs){
+        public void setReferenciantes(LinkedList<Celda> _refs){
             refs = new ArrayList<>();
 
         }

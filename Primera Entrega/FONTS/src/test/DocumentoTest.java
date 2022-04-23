@@ -1,10 +1,17 @@
 package test;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.when;
 
 import main.Domain.DomainModel.Documento;
 import main.Domain.DomainModel.Hoja;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,185 +19,216 @@ import java.util.HashMap;
 
 
 public class DocumentoTest {
+    @InjectMocks
+    private Documento d;
+
+    @Mock
+    Hoja hoja;
+
+    @Before
+    public void setUp() throws Exception{
+        MockitoAnnotations.openMocks(this);
+
+    }
+    @After
+    public void tearDown(){
+        d.eliminaDocumento();
+    }
 
 
     /**
      * Objeto de la prueba: Testear la funcion getDocumento
-     *
+     * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *
+     * - Valores estudiados: Se estudia el caso en el que se crea o se coge un documento
      * - Operativa: En este test de getDocumento se utiliza o crea la instancia de Documento
      * El objetivo es ver si se crea o utiliza correctamente la instancia de Documento (al ser Singleton solo habra una)
-     * Para ello dado que su creadora es vacia, tambien tendremos que inicialzarlo con los valores default
-     * para poder comprobar algunos valores, comprobaremos despues de inicializarlo, que el nombre corresponde
-     * con el de documento y que tiene una hoja, ademas comprobaremos que el objeto es el mismo que el que se obtiene
-     * al pedir instancia de Documento
+     * Para ello comrpobaremos que el objeto que se devuelve de la llamada es un documento no nullo
      */
     @Test
     public void cogerDocumentoTest(){
-        Documento d = Documento.getDocumento();
-        d.inicializaDocumentoDefault("Doc1");
+        d = Documento.getDocumento();;
 
-        int i = d.getNumHojas();
+        boolean b = d == null;
+        String b2 = d.getClass().getSimpleName();
 
-        assertEquals(1, i);
-        assertEquals("Doc1", d.getNombre());
-        assertSame(Documento.getDocumento(), d);
-
+        b2 = b2 + b;
+        assertEquals("Documentofalse", b2);
         d.eliminaDocumento();
     }
 
     /**
      * Objeto de la prueba: Testear la funcion inicializaDocumento
-     *
+     * - Mock: -MockHoja: Se utiliza un mock de Hoja para sustituir la clase hoja y las funcionalidades necesarias para
+     *                    el test.
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *
+     * - Valores estudiados: Se estudia el caso en el que se inicializa un documento con valores dados para la hoja
      * - Operativa: En este test de inicializaDocumento se utiliza o crea la instancia de Documento.
      * El objetivo es ver que el Documento se inicializa correctamente.
      * Para ello cogeremos la instancia de Documento y la inicializaremos con un nombre dado y valores de fila y columna
      * dados para la Hoja, comprobaremos despues que el nombre corresponde con el introducido, la fecha corresponde
-     * con la actual y que tiene una hoja, con el tamaño indicado, con el identificador que le añade segun el numero
-     * de hojas que haya y nombre por defecto.
+     * con la actual y que tiene una hoja.
      */
     @Test
     public void inicializaDocumentoTest(){
-        Documento d = Documento.getDocumento();
+        DateTimeFormatter fm = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String exp = "Doc1" + 1 + 1 + LocalDateTime.now().format(fm);
+
+        d = Documento.getDocumento();
+
+        when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
         d.inicializaDocumento("Doc1", 2, 3);
-        Hoja h =  d.getHoja(1);
 
         String s = d.getNombre();
-        String s2 = h.getNombre();
 
         int i = d.getNumHojas();
-        int i2 = h.getCeldas().size();
         int i3 = d.getHojasContenidas().size();
-        int i4 = h.getId();
 
-        DateTimeFormatter fm = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String s1 = s + i + i3 + d.getFecha();
 
-        assertEquals(LocalDateTime.now().format(fm), d.getFecha());
-        assertEquals(1, i);
-        assertEquals(6, i2);
-        assertEquals("Doc1", s);
-        assertEquals("Hoja1", s2);
-        assertEquals(1, i3);
-        assertEquals(1, i4);
-
-        d.eliminaDocumento();
+        assertEquals(exp, s1);
     }
 
 
     /**
      * Objeto de la prueba: Testear la funcion inicializaDocumentoDefault
-     *
+     * - Mock: -MockHoja: Se utiliza un mock de Hoja para sustituir la clase hoja y las funcionalidades necesarias para
+     *                    el test.
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *
+     * - Valores estudiados: Se estudia el caso en el que se inicializa un documento con valores default para la hoja
      *- Operativa: En este test de inicializaDocumento se utiliza o crea la instancia de Documento.
      * El objetivo es ver que el Documento se inicializa correctamente con los valores para la Hoja por defecto.
      * Para ello cogeremos la instancia de Documento y la inicializaremos con un nombre dado,
      * comprobaremos despues que el nombre corresponde con el introducido, la fecha corresponde con la actual
-     * y que tiene una hoja, con el tamaño por defecto con el identificador que le añade segun el numero
-     * de hojas que haya y nombre por defecto.
+     * y que tiene una hoja.
      */
     @Test
     public void inicializaDocumentoDefaultTest(){
-        Documento d = Documento.getDocumento();
+        DateTimeFormatter fm = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String exp = "Doc1" + 1 + 1 + LocalDateTime.now().format(fm);
+
+        d = Documento.getDocumento();
+
+        when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
         d.inicializaDocumentoDefault("Doc1");
-        Hoja h =  d.getHoja(1);
 
         String s = d.getNombre();
-        String s2 = h.getNombre();
 
         int i = d.getNumHojas();
-        int i2 = h.getCeldas().size();
         int i3 = d.getHojasContenidas().size();
-        int i4 = h.getId();
 
+        String s1 = s + i + i3 + d.getFecha();
 
-        DateTimeFormatter fm = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
-        assertEquals(LocalDateTime.now().format(fm), d.getFecha());
-        assertEquals(1, i);
-        assertEquals(2500, i2);
-        assertEquals("Doc1", s);
-        assertEquals("Hoja1", s2);
-        assertEquals(1, i3);
-        assertEquals(1, i4);
-
-        d.eliminaDocumento();
+        assertEquals(exp, s1);
     }
 
 
     /**
      * Objeto de la prueba: Testear la funcion getNumHoja
-     *
+     * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *
+     * - Valores estudiados: Se estudia el caso algo extremo en el que se pretende coger el numero de hojas,
+     * de un documento vacio
      *- Operativa: En este test de getNumHoja se utiliza o crea la instancia de Documento.
      * El objetivo es ver que se devuelve el numero de hojas correcto
-     * Para ello cogeremos la instancia de Documento, comprobaremos aqui el numero de hojas que deberia ser 0,
-     * seguidamente lo  inicializaremos con un nombre dado, comprobaremos despues el numero de hojas, añadiremos unas
-     * hojas mas e iremos comprobando que el numero que devuelve es el correcto.
+     * Para ello cogeremos la instancia de Documento, y comprobaremos sin inicializarlo que
+     * el numero de hojas deberia ser 0.
      */
     @Test
-    public void getNumHojasTest(){
-        Documento d = Documento.getDocumento();
+    public void getNumHojasVacioTest(){
+        d = Documento.getDocumento();
 
         int n = d.getNumHojas();
 
-        d.inicializaDocumentoDefault("Doc1");
-        int n2 = d.getNumHojas();
-
-        d.añadeHojaDf();
-        int n3 = d.getNumHojas();
-
-        d.añadeHojaDf();
-        int n4 = d.getNumHojas();
-
         assertEquals(0, n);
-        assertEquals(1, n2);
-        assertEquals(2, n3);
-        assertEquals(3, n4);
 
-        d.eliminaDocumento();
+
+    }
+
+    /**
+     * Objeto de la prueba: Testear la funcion getNumHoja
+     * - Mock: -MockHoja: Se utiliza un mock de Hoja para sustituir la clase hoja y las funcionalidades necesarias para
+     *          el test.
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     * - Valores estudiados: Se estudia el caso poco extremo en el que se pretende coger el numero de hojas,
+     * de un documento vacio
+     *- Operativa: En este test de getNumHoja se utiliza o crea la instancia de Documento.
+     * El objetivo es ver que se devuelve el numero de hojas correcto
+     * Para ello cogeremos la instancia de Documento, esta vez lo inicializaremos para que contenga alguna hoja,
+     * comrpobaremos que devuelve el numero de hojas correcto
+     */
+    @Test
+    public void getNumHojasLlenoTest(){
+        d = Documento.getDocumento();
+
+        when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
+
+        d.inicializaDocumentoDefault("Doc1");
+
+        int n = d.getNumHojas();
+
+        assertEquals(1, n);
+
 
     }
 
 
     /**
      * Objeto de la prueba: Testear la funcion getHoja
-     *
+     * - Mock: -MockHoja: Se utiliza un mock de Hoja para sustituir la clase hoja y las funcionalidades necesarias para
+     *          el test.
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *
+     * - Valores estudiados: Se estudia el caso poco extremo en el que se pretende coger una hoja existente en
+     *                       el documento.
      * - Operativa: En este test de getHoja se utiliza o crea la instancia de Documento.
      * El objetivo es ver que se devuelve la Hoja indicada
      * Para ello cogeremos la instancia de Documento y la inicializaremos con un nombre dado, seguidamente
-     * comprobaremos que pidiendo la hoja con el identificador dado, devuelve la correcta, ademas se comprueba
-     * que si pedimos una hoja que no existe devuelve Null
+     * pediremos una hoja existente y comprobaremos que devuelve una Hoja no nula
      */
     @Test
-    public void getHojaTest(){
-        Documento d = Documento.getDocumento();
+    public void getHojaContenidaTest(){
+        d = Documento.getDocumento();
+
+        when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
         d.inicializaDocumentoDefault("Doc1");
 
-        Hoja h = d.getHoja(1);
-        Hoja h2 = d.getHoja(2);
+        Hoja h =  d.getHoja(1);
 
-        int i = h.getId();
-        boolean b = h2 == null;
-
-        assertEquals(1, i);
-        assertTrue(b);
         assertNotNull(h);
 
-        d.eliminaDocumento();
     }
+    /**
+     * Objeto de la prueba: Testear la funcion getHoja
+     * - Mock: -MockHoja: Se utiliza un mock de Hoja para sustituir la clase hoja y las funcionalidades necesarias para
+     *          el test.
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     * - Valores estudiados: Se estudia el caso algo extremo en el que se pretende coger una hoja inexistente en
+     *                       el documento.
+     * - Operativa: En este test de getHoja se utiliza o crea la instancia de Documento.
+     * El objetivo es ver que se devuelve una Hoja nulla
+     * Para ello cogeremos la instancia de Documento y la inicializaremos con un nombre dado, seguidamente
+     * pediremos una hoja inexistente y comprobaremos que devuelve una Hoja  nula
+     */
+    @Test
+    public void getHojaNoContenidaTest(){
+        d = Documento.getDocumento();
+
+        when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
+        d.inicializaDocumentoDefault("Doc1");
+
+        Hoja h =  d.getHoja(2);
+
+        assertNull(h);
+
+    }
+
 
     /**
      * Objeto de la prueba: Testear la funcion getNombre
-     *
+     * - Mock: -MockHoja: Se utiliza un mock de Hoja para sustituir la clase hoja y las funcionalidades necesarias para
+     *          el test.
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *
+     * - Valores estudiados: Se estudia el caso poco extremo en el que quiere obtener el nombre del documento
      * - Operativa: En este test de getNombre se utiliza o crea la instancia de Documento.
      * El objetivo es ver que se devuelve el nombre del Documento indicado al inicializarlo.
      * Para ello cogeremos la instancia de Documento y la inicializaremos con un nombre dado, seguidamente
@@ -198,19 +236,20 @@ public class DocumentoTest {
      */
     @Test
     public void getNombreTest(){
-        Documento d = Documento.getDocumento();
+        d = Documento.getDocumento();
+        when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
         d.inicializaDocumentoDefault("Doc1");
 
         assertEquals("Doc1", d.getNombre());
 
-        d.eliminaDocumento();
     }
 
     /**
      * Objeto de la prueba: Testear la funcion getFecha
-     *
+     * - Mock: -MockHoja: Se utiliza un mock de Hoja para sustituir la clase hoja y las funcionalidades necesarias para
+     *   el test.
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *
+     * - Valores estudiados: Se estudia el caso poco extremo en el que quiere obtener la fecha del documento
      * - Operativa: En este test de getFecha se utiliza o crea la instancia de Documento.
      * El objetivo es ver que se devuelve la fecha de ultima modificacion de documento
      * Para ello cogeremos la instancia de Documento y la inicializaremos con un nombre dado, seguidamente
@@ -218,220 +257,185 @@ public class DocumentoTest {
      */
     @Test
     public void getFechaTest(){
-        Documento d = Documento.getDocumento();
+        DateTimeFormatter fm = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String exp =  LocalDateTime.now().format(fm);
+
+        when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
+
+        d = Documento.getDocumento();
+
         d.inicializaDocumentoDefault("Doc1");
 
-        assertEquals("17-04-2022", d.getFecha());
+        assertEquals(exp, d.getFecha());
 
-        d.eliminaDocumento();
     }
 
     /**
      * Objeto de la prueba: Testear la funcion getHojasContenidas
-     *
+     * - Mock: -MockHoja: Se utiliza un mock de Hoja para sustituir la clase hoja y las funcionalidades necesarias para
+     *          el test.
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *
+     * - Valores estudiados: Se estudia el caso en el que se pretende coger todas las hojas que contiene un documento
+     * con alguna hoja
      * - Operativa: En este test de getHojasContenidas se utiliza o crea la instancia de Documento.
-     * El objetivo es ver que se devuelve el numero de Hojas que contiene el documento.
+     * El objetivo es ver que se devuelve las Hojas que contiene el documento.
      * Para ello cogeremos la instancia de Documento y la inicializaremos con un nombre dado, seguidamente
-     * comprobaremos que el tamaño de la estructura de datos que almacena las hojas sea el esperado
+     * comprobaremos que la estructura de datos que devuelve tenga el mismo tamaño que la que almacena almacena
+     * el documento
      */
     @Test
-    public void getHojasContenidasTest(){
-        Documento d = Documento.getDocumento();
+    public void getHojasContenidasLlenoTest(){
+        d = Documento.getDocumento();
+
+        when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
         d.inicializaDocumentoDefault("Doc1");
 
         HashMap<Integer, Hoja> hc = d.getHojasContenidas();
         int s = hc.size();
 
-        d.añadeHojaDf();
-        int s2 = hc.size();
-
-        d.añadeHojaDf();
-        int s3 = hc.size();
-
-        d.añadeHojaDf();
-        int s4 = hc.size();
 
         assertEquals(s, 1);
-        assertEquals(s2, 2);
-        assertEquals(s3, 3);
-        assertEquals(s4, 4);
 
-         d.eliminaDocumento();
     }
-
     /**
-     * Objeto de la prueba: Testear la funcion recalculaNumHojas
-     *
+     * Objeto de la prueba: Testear la funcion getHojasContenidas
+     * - Stubs: No se utilizan stubs para este test
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *
-     * - Operativa: En este test de recalculaNumHojas se utiliza o crea la instancia de Documento.
-     * El objetivo es ver que se calcula el numero de hojas correctamente
-     * Para ello cogeremos la instancia de Documento y la inicializaremos con un nombre dado, añadiremos alguna hoja
-     * e iremos comprobando que el numero recalculado es el correcto
+     * - Valores estudiados: Se estudia el caso algo extremo en el que se pretende coger todas las hojas que
+     *  un documento vacio contiene.
+     * - Operativa: En este test de getHojasContenidas se utiliza o crea la instancia de Documento.
+     * El objetivo es ver que se devuelve las Hojas que contiene el documento.
+     * Para ello cogeremos la instancia de Documento y sin inicializarla comprobaremos que el tamaño de la estructura
+     * de datos devuelta sea el mismo que la que almacena el documento.
      */
     @Test
-    public void recalculaNumHojasTest(){
-        Documento d = Documento.getDocumento();
-        d.inicializaDocumentoDefault("Doc1");
+    public void getHojasContenidasVacioTest(){
+        d = Documento.getDocumento();
 
-        int s = d.getNumHojas();
-        assertEquals(s, 1);
+        HashMap<Integer, Hoja> hc = d.getHojasContenidas();
+        int s = hc.size();
 
-        d.añadeHojaDf();
-        int s2 = d.getNumHojas();
-        assertEquals(s2, 2);
 
-        d.añadeHojaDf();
-        int s3 = d.getNumHojas();
-        assertEquals(s3, 3);
-
-        d.añadeHojaDf();
-        int s4 = d.getNumHojas();
-        assertEquals(s4, 4);
-
-        d.eliminaHoja(2);
-        int s5 = d.getNumHojas();
-        assertEquals(s5, 3);
-
-        d.eliminaDocumento();
+        assertEquals(s, 0);
 
     }
+
+
 
     /**
      * Objeto de la prueba: Testear la funcion añadeHojaDf
-     *
+     * - Mock: -MockHoja: Se utiliza un mock de Hoja para sustituir la clase hoja y las funcionalidades necesarias para
+     *          el test.
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *
+     *  - Valores estudiados: Se estudia el caso en el que se quiere añadir una hoja con tamaño default
      * - Operativa: En este test de añadeHojaDf se utiliza o crea la instancia de Documento.
      * El objetivo es ver que se añade una Hoja al documento correctamente
-     * Para ello cogeremos la instancia de Documento y la inicializaremos con un nombre dado, añadiremos alguna hoja
-     * e iremos comprobando que se ha añadido correctamente comprobando el numero de hojas que hay y que las hojas
-     * añadidadas tienen los parametros por defecto
+     * Para ello cogeremos la instancia de Documento y sin inicializarlo, añadiremos una hoja, puesto que no
+     * lo inicializamos, este solo tendra la hoja que le añadamos, comprobaremos que el tamaño de la estructura que
+     * almacena las hojas sea el correcto.
      */
     @Test
     public void añadeHojaDfTest(){
-        Documento d = Documento.getDocumento();
-        d.inicializaDocumentoDefault("Doc1");
-
+        //La creadora no se puede 'burlar' con mock
+        when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
+        d = Documento.getDocumento();
         d.añadeHojaDf();
-        int s2 = d.getNumHojas();
-        Hoja h2 =  d.getHoja(2);
-        int i2 = h2.getCeldas().size();
-        String n2 = h2.getNombre();
-        int id2 = h2.getId();
 
-        assertEquals(s2, 2);
-        assertEquals(2500, i2);
-        assertEquals("Hoja2", n2);
-        assertEquals(2, id2);
+        int r = d.getHojasContenidas().size();
 
-        d.añadeHojaDf();
-        int s3 = d.getNumHojas();
-        Hoja h3 =  d.getHoja(3);
-        int i3 = h3.getCeldas().size();
-        String n3 = h3.getNombre();
-        int id3 = h3.getId();
-
-        assertEquals(s3, 3);
-        assertEquals(2500, i3);
-        assertEquals("Hoja3", n3);
-        assertEquals(3, id3);
-
-        d.eliminaDocumento();
+        assertEquals(r, 1);
 
     }
 
     /**
      * Objeto de la prueba: Testear la funcion añadeHoja
-     *
+     * - Mock: -MockHoja: Se utiliza un mock de Hoja para sustituir la clase hoja y las funcionalidades necesarias para
+     *          el test.
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *
+     * - Valores estudiados: Se estudia el caso en el que se quiere añadir una hoja con tamaño dado
      * - Operativa: En este test de añadeHoja se utiliza o crea la instancia de Documento.
-     * El objetivo es ver que se añade una Hoja al documento correctamente con los valores dados.
-     * Para ello cogeremos la instancia de Documento y la inicializaremos con un nombre dado, añadiremos alguna hoja
-     * con filas y columnas dadas e iremos comprobando que se ha añadido correctamente comprobando el numero de hojas
-     * que hay y que las hojas añadidadas tienen los parametros correctos.
+     * El objetivo es ver que se añade una Hoja al documento correctamente
+     * Para ello cogeremos la instancia de Documento y sin inicializarlo, añadiremos una hoja, puesto que no
+     * lo inicializamos, este solo tendra la hoja que le añadamos, comprobaremos que el tamaño de la estructura que
+     * almacena las hojas sea el correcto.
      */
     @Test
     public void añadeHojaTest(){
-        Documento d = Documento.getDocumento();
-        d.inicializaDocumentoDefault("Doc1");
-
+        //La creadora no se puede 'burlar' con mock
+        when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
+        d = Documento.getDocumento();
         d.añadeHoja(2, 2);
-        int s2 = d.getNumHojas();
-        Hoja h2 =  d.getHoja(2);
-        int i2 = h2.getCeldas().size();
-        String n2 = h2.getNombre();
-        int id2 = h2.getId();
 
-        assertEquals(s2, 2);
-        assertEquals(4, i2);
-        assertEquals("Hoja2", n2);
-        assertEquals(2, id2);
+        int r = d.getHojasContenidas().size();
 
-
-        d.añadeHoja(3, 4);
-        int s3 = d.getNumHojas();
-        Hoja h3 =  d.getHoja(3);
-        int i3 = h3.getCeldas().size();
-        String n3 = h3.getNombre();
-        int id3 = h3.getId();
-
-        assertEquals(s3, 3);
-        assertEquals(12, i3);
-        assertEquals("Hoja3", n3);
-        assertEquals(3, id3);
-
-        d.eliminaDocumento();
+        assertEquals(r, 1);
 
     }
 
     /**
      * Objeto de la prueba: Testear la funcion eliminaHoja
-     *
+     * - Mock: -MockHoja: Se utiliza un mock de Hoja para sustituir la clase hoja y las funcionalidades necesarias para
+     *        el test.
      * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
-     *
+     * - Valores estudiados: Se estudia el caso en el que se quiere eliminar una hoja existente en el documento
      * - Operativa: En este test de eliminaHoja se utiliza o crea la instancia de Documento.
-     * El objetivo es ver que se elimina una Hoja al documento correctamente
-     * Para ello cogeremos la instancia de Documento y la inicializaremos con un nombre dado, añadiremos alguna hoja
-     * para que no solo haya una e iremos comprobando que se han ido eliminando correctamente comprobando el numero
-     * de hojas que hay en el documento, ademas comprobaremos si devuelve false en caso de que la hoja pedida para
-     * borrara no exista
+     * El objetivo es ver que se elimina una Hoja del documento correctamente
+     * Para ello cogeremos la instancia de Documento y la inicializaremos con un nombre dado, para comprobar que
+     * se ha eliminado la hoja, miraremos el tamaño de la estructura que las almacenaa hoja.
      */
     @Test
-    public void eliminaHojaTest(){
-        Documento d = Documento.getDocumento();
+    public void eliminaHojaExistenteTest(){
+        //La creadora no se puede 'burlar' con mock
+        when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
+
+        d = Documento.getDocumento();
         d.inicializaDocumentoDefault("Doc1");
 
-        boolean b1 = d.eliminaHoja(1);
-        int s1 = d.getNumHojas();
-        assertEquals(true, b1);
-        assertEquals(0, s1);
+        d.eliminaHoja(1);
 
-        boolean b2 = d.eliminaHoja(1);
-        int s2 = d.getNumHojas();
-        assertEquals(0, s2);
-        assertEquals(false, b2);
+        int r = d.getHojasContenidas().size();
+        assertEquals(0, r);
 
+    }
 
-        d.añadeHojaDf();
-        d.añadeHojaDf();
-        d.añadeHojaDf();
+    /**
+     * Objeto de la prueba: Testear la funcion eliminaHoja
+     * - Stubs: No se utilizan stubs para este test
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     * - Valores estudiados: Se estudia el caso en el que se quiere eliminar una hoja inexistente en el documento
+     * - Operativa: En este test de eliminaHoja se utiliza o crea la instancia de Documento.
+     * El objetivo es ver que no se elimina una Hoja del documento si esta no existe
+     * Para ello cogeremos la instancia de Documento y no la inicializaremos, asi nos aseguraremos de que no
+     * hay ninguna hoja, comprobaremos que devuelve false.
+     */
+    @Test
+    public void eliminaHojaInExistenteTest(){
 
-        d.eliminaHoja(2);
-        int s3 = d.getNumHojas();
-        assertEquals(2, s3);
+        d = Documento.getDocumento();
 
-        int id1 = d.getHoja(1).getId();
-        assertEquals(1, id1);
+        boolean b = d.eliminaHoja(1);
 
-        int id3 = d.getHoja(3).getId();
-        assertEquals(3, id3);
+        assertFalse(b);
 
+    }
+
+    /**
+     * Objeto de la prueba: Testear la funcion eliminaDocumento
+     * - Stubs: No se utilizan stubs para este test
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     * - Valores estudiados: Se estudia el caso en el que se quiere eliminar la instancia de un documento
+     * - Operativa: En este test de eliminaDicumento se utiliza o crea la instancia de Documento.
+     * El objetivo es ver que se elimina la instancia de documento correctamente
+     * Para ello cogeremos la instancia de Documento, que esta si no existe la crea, y la eliminaremos, comprobaremos
+     * que efectivamente el documento es nulo
+     */
+    @Test
+    public void eliminaDocumentoTest(){
+
+        d = Documento.getDocumento();
         d.eliminaDocumento();
 
+        assertNotNull(d);
 
     }
 

@@ -22,26 +22,8 @@ public class DriverControladorCelda {
     private static String[] palabras;
     private static int constructor = 0;
 
-    @InjectMocks
     private static ControladorCelda cc = null;
 
-    @Mock
-    Traductor traductor = Traductor.getTraductor();
-
-    @Mock
-    private Celda celda;
-
-    @Mock
-    private Hoja hoja;
-
-    @Mock
-    private Documento documento;
-
-    @Before
-    public void setUp() throws Exception{
-        MockitoAnnotations.openMocks(this);
-
-    }
 
 
     private static void opciones() {
@@ -90,6 +72,7 @@ public class DriverControladorCelda {
         System.out.println("\t42: contarLetra(String _palabra, String _letra)");
         System.out.println("\t43: reemplazarPalabra(String _txt, int _pos, int _long,  String _ntxt)");
         System.out.println("\t44: reemplazarCaracter(String _txt, String _cr, String _nc)");
+        System.out.println("\t45: esFechaValida(String _txt)");
         System.out.println("\t0: quit");
         System.out.print("Escoge una opcion: ");
 
@@ -248,11 +231,14 @@ public class DriverControladorCelda {
                         case 44:
                             if (nParamValido(3)) driver.reemplazarCaracterTest();
                             break;
+                        case 45:
+                            if (nParamValido(1)) driver.esFechaValidaTest();
+                            break;
                         case 0:
                             quit = true;
                             break;
                         default:
-                            System.out.println("El parametro insertado no es correcto, tiene que ser un nombre natural entre 0 y 44");
+                            System.out.println("El parametro insertado no es correcto, tiene que ser un nombre natural entre 0 y 45");
                     }
                     System.out.print("\nPulsa ENTER tecla para continuar");
                     br.readLine();
@@ -529,16 +515,16 @@ public class DriverControladorCelda {
     }
 
     private void escribirContenidoReferenciaTest(){
-        System.out.println("Dado que esta funcion precisa de celdas, creamos una celda con valor 5.");
-        System.out.println("Esta celda sera la referenciada.");
+      //  System.out.println("Dado que esta funcion precisa de celdas, creamos una celda con valor 5.");
+       // System.out.println("Esta celda sera la referenciada.");
 
-        String arg[] = {"5"};
-        CeldaStub c = new CeldaStub(new PosicionStub(1, 2));
+       // String arg[] = {"5"};
+       // CeldaStub c = new CeldaStub(new PosicionStub(1, 2));
 
         //tratamos las dependencias con mock
-        when(traductor.traduceCelda(isA(String.class), isA(Integer.class))).thenReturn(c);
-        doNothing().when(celda).addReferenciante(isA(Celda.class));
-        when(traductor.getArgumentosFuncion1aria(isA(String.class), isA(Integer.class))).thenReturn(arg);
+       // when(traductor.traduceCelda(isA(String.class), isA(Integer.class))).thenReturn(c);
+       // doNothing().when(celda).addReferenciante(isA(Celda.class));
+       // when(traductor.getArgumentosFuncion1aria(isA(String.class), isA(Integer.class))).thenReturn(arg);
 
         cc.escribirContenido(palabras[1]);
 
@@ -633,13 +619,13 @@ public class DriverControladorCelda {
     }
 
     private void convertirValorBinHexTest(){
-            String s = cc.convertirValorHD(palabras[1]);
+            String s = cc.convertirValorBH(Integer.parseInt(palabras[1]));
             System.out.println("Se ha convertido el valor a Hexadecimal correctamente");
             System.out.println("El valor ahora es: " + s);
     }
 
     private void convertirValorHexBinTest(){
-            String s = cc.convertirValorHD(palabras[1]);
+            String s = cc.convertirValorHB(palabras[1]);
             System.out.println("Se ha convertido el valor a binario correctamente");
             System.out.println("El valor ahora es: " + s);
 
@@ -647,26 +633,38 @@ public class DriverControladorCelda {
 
     private void obtenerMesTest(){
             String s = cc.obtenerMes(palabras[1]);
+        if(s.equals("#ERROR")) System.out.println("Mes en la fecha introducido incorrectamente");
+        else {
             System.out.println("Se ha obtenido el mes de la fecha introducida correctamente");
-            System.out.println("El mes es el " + s);
+            System.out.println("El mes es: " + s);
+        }
     }
 
     private void obtenerAñoTest(){
         String s = cc.obtenerAño(palabras[1]);
+        if(s.equals("#ERROR")) System.out.println("Año en la fecha introducido incorrectamente");
+        else{
         System.out.println("Se ha obtenido el año de la fecha introducida correctamente");
         System.out.println("El año es el " + s);
+        }
     }
 
     private void obtenerDiaTest(){
         String s = cc.obtenerDia(palabras[1]);
-        System.out.println("Se ha obtenido el dia de la fecha introducida correctamente");
-        System.out.println("El dia es el " + s);
+        if(s.equals("#ERROR")) System.out.println("Dia en la fecha introducido incorrectamente");
+        else {
+            System.out.println("Se ha obtenido el dia de la fecha introducida correctamente");
+            System.out.println("El dia es el " + s);
+        }
     }
 
     private void obtenerNombreDiaTest(){
         String s = cc.obtenerNombreDia(palabras[1]);
-        System.out.println("Se ha obtenido el dia de la fecha introducida correctamente");
-        System.out.println("El dia es: " + s);
+        if(s.equals("#ERROR")) System.out.println("Dia en la fecha introducido incorrectamente");
+        else {
+            System.out.println("Se ha obtenido el dia de la fecha introducida correctamente");
+            System.out.println("El dia es: " + s);
+        }
     }
 
     private void longitudPalabraTest(){
@@ -676,9 +674,12 @@ public class DriverControladorCelda {
     }
     private void contarLetraTest(){
         String s = cc.contarLetra(palabras[1], palabras[2]);
-        System.out.println("Se ha obtenido el numero de veces que aparece la letra " + palabras[1] + " en la palabra" +
-                " introducida correctamente");
-        System.out.println("El numero de veces es: " + s);
+        if (s == "-1") System.out.println("La letra " + palabras[2] + " no existe en la palabra");
+        else {
+            System.out.println("Se ha obtenido el numero de veces que aparece la letra " + palabras[2] + " en la palabra" +
+                    " introducida correctamente");
+            System.out.println("El numero de veces es: " + s);
+        }
     }
 
     private void reemplazarPalabraTest(){
@@ -686,88 +687,33 @@ public class DriverControladorCelda {
                 Integer.parseInt(palabras[3]), palabras[4]);
         if (s == "-1") System.out.println("Alguno de los parametros introducidos no es correcto, recuerda introducir " +
                 "tanto una posicion valida como una longitud valida");
-        System.out.println("Se ha remplazado la palabra correctamente");
-        System.out.println("La palabra ahora es: " + s);
+       else {
+            System.out.println("Se ha remplazado la palabra correctamente");
+            System.out.println("La palabra ahora es: " + s);
+        }
     }
 
     private void reemplazarCaracterTest(){
         String s = cc.reemplazarCaracter(palabras[1], palabras[2], palabras[3]);
         if (s == "-1") System.out.println("El caracter " + palabras[2] + " no existe en la palabra");
-        System.out.println("Se ha remplazado el caracter correctamente");
-        System.out.println("La palabra ahora es: " + s);
+        else{
+            System.out.println("Se ha remplazado el caracter correctamente");
+            System.out.println("La palabra ahora es: " + s);
+        }
+    }
+
+    private void esFechaValidaTest(){
+        String s = String.valueOf(cc.esFechaValida(palabras[1]));
+        if (s == "false") System.out.println("No es una fecha valida");
+        else{
+            System.out.println("Es una fecha valida");
+        }
+
     }
 
 
 
 
-
-
-
-    //Stub de Posicion que sustituye la clase Posicion asi como los metodos necesarios para el test
-    private static class PosicionStub extends Posicion {
-
-        public PosicionStub(int _fila, int _columna) {
-            super(_fila, _columna);
-        }
-    }
-
-    //Stub de Celda que sustituye la clase Celda asi como los metodos necesarios para el test
-    private static class CeldaStub extends Celda {
-        private PosicionStub pos;
-        String contenido;
-        String valor;
-        ArrayList<Celda> refs;
-
-        public CeldaStub(PosicionStub _pos) {
-            super(_pos);
-            pos = _pos;
-            contenido = "";
-            valor = "";
-
-        }
-
-        @Override
-        public PosicionStub getPosicion() {
-            return pos;
-        }
-
-
-        @Override
-        public void setReferenciantes(ArrayList<Celda> _refs){
-            refs = new ArrayList<>();
-
-        }
-
-        @Override
-        public void setValor(String valor) {
-            this.valor = valor;
-        }
-    }
-
-    private static class DocumentoStub{
-        private String nombre;
-        private int numHojas;
-        private HashMap<Integer, Hoja> hojasContenidas = new HashMap<Integer, Hoja>();
-
-        public DocumentoStub(){
-            this.nombre = "Doc1";
-
-        }
-
-    }
-
-    private static class HojaStub extends Hoja{
-        private int id;
-        HojaStub(){
-            id = 1;
-
-        }
-
-        @Override
-        public int getId() {
-            return id;
-        }
-    }
 
 
 
