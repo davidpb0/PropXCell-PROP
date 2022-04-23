@@ -229,7 +229,7 @@ public class Traductor {
      * con los argumentos después de la coma.
      */
     public String[][] getArgumentosFuncionNaria(String _funcion, int _idH) {
-        String[][] ret = new String[2][];
+        String[][] ret = new String[4][];
         String f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')'));
         String[] args = f.split(",");
         if (args.length < 2) {} //EXCEPCION

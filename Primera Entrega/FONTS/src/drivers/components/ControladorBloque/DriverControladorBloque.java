@@ -15,6 +15,9 @@ import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.when;
 
 public class DriverControladorBloque {
+    private static BufferedReader br;
+    private static String[] palabras;
+    private static boolean constructor = false;
 
     @InjectMocks
     private static ControladorBloque cb = null;
@@ -38,7 +41,7 @@ public class DriverControladorBloque {
     @After
     public void tearDown() {}
 
-    public static void testPegar() {
+    private static void testPegar() {
         when(hoja.getCelda(isA(Posicion.class))).thenReturn(celda = new Celda(posicion, "hola"));
         for (int f = 1; f <= 3; ++f) {
             for (int c = 1; c <= 3; ++c) {
@@ -54,19 +57,20 @@ public class DriverControladorBloque {
         }
     }
 
-    public static void opciones() {
+    private static void opciones() {
         System.out.println("Funciones disponibles para la clase ControladorBloque:");
         System.out.println("\t1: ControladorBloque()");
         System.out.println("\t2: Copiar()");
         System.out.println("\t3: Cortar()");
-        System.out.println("\t4: Pegar()");
+        System.out.println("\t4: Pegar(int _numHoja, int _filaInicio, int _columnaInicio)");
+        System.out.println("\t5: SetBloqueSeleccionado(int _idH, int _filaInicial, int _columnaInicial, int _filaFinal, int _columnaFinal)");
         System.out.println("\t0: Salir\n");
         System.out.println("Escoge una opción: ");
     }
 
     public static void main(String[] args) {
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            br = new BufferedReader(new InputStreamReader(System.in));
             boolean salir = false;
 
             DriverControladorBloque driver = new DriverControladorBloque();
@@ -74,17 +78,16 @@ public class DriverControladorBloque {
             while(!salir){
                 opciones();
                 String line = br.readLine();
-                String[] datos = line.split(" ");
+                if (line != "") palabras = line.split(" ");
+                else palabras[0] = "-1";
 
                 int optionSelected = -1;
                 try {
-                    optionSelected = Integer.parseInt(datos[0]);
+                    optionSelected = Integer.parseInt(palabras[0]);
                 } catch (NumberFormatException ignored) {}
 
-
-
-                    if (optionSelected > 1 && cb == null) System.out.println("Primero hay que crear el controlador.");
-                    else {
+                if (optionSelected > 1 && !constructor) System.out.println("Primero hay que llamar a la constructora.");
+                else {
                     switch (optionSelected) {
                         case 0:
                             salir = true;
