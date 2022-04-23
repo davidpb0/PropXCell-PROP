@@ -54,4 +54,9 @@ public class ControladorBloque {
             bloqueCopiado = null;
         }
     }
+
+    public void setBloqueSeleccionado(int _idH, int _filaInicial, int _columnaInicial, int _filaFinal, int _columnaFinal) {
+        Hoja h = Documento.getDocumento().getHoja(_idH);
+
+    }
 }
