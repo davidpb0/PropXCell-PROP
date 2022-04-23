@@ -9,14 +9,13 @@ package main.Domain.DomainModel;
  */
 
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Celda {
     private String valor = "";
     private String contenido = "";
     private Posicion posicion;
-    private final ArrayList<Celda> referenciantes = new ArrayList<>();
-    public boolean isRef = false;
+    private final LinkedList<Celda> referenciantes = new LinkedList<>();
 
 
     /**
@@ -40,18 +39,13 @@ public class Celda {
     }
 
     /**
-     * Constructora de una celda copia de otra
+     * Constructora de una celda copia de otra, sin copiar sus referencias.
      * @param c celda a copiar
      */
     public Celda(Celda c) {
         this.contenido = c.getContenido();
         this.valor = c.getValor();
         this.posicion = c.getPosicion();
-        ArrayList<Celda> refs = c.getReferenciantes();
-        for (Celda cel : refs) {
-            this.addReferenciante(cel);
-        }
-        this.isRef = c.isRef;
     }
 
     /**
@@ -80,33 +74,10 @@ public class Celda {
     }
 
     /**
-     * Asigna un nuevo contenido a la celda. Si éste contenido empieza con el símbolo "=", asigna el valor "#FUNC"
-     * !!! De momento implementa #FUNC para representar que el valor sería el resultado de la función pedida. El valor que pone cambiará una vez tengamos implementadas las funciones necesarias. !!!
+     * Asigna un nuevo contenido a la celda.
      * @param _contenido el nuevo contenido a asignar a la celda
      */
     public void setContenido(String _contenido) {
-        /*
-        if (isRef) {
-            // Consigue la celda de referencia y me borro de su lista de referenciante
-     -----> isRef = false;
-        }
-
-        this.contenido = _contenido;
-
-        String type = Traductor.detecta(_contenido);
-        System.out.println(type);
-        switch (type) {
-            case "#REFERENCE":
-       ----->   isRef = true;
-                break;
-            case "#FECHA":
-            case "#VALUE":
-                setValor(_contenido);
-                break;
-            case "":
-                break;
-        } */
-
         this.contenido = _contenido;
     }
 
@@ -127,11 +98,17 @@ public class Celda {
     /**
      * @return la lista de celdas referenciantes
      */
-    public ArrayList<Celda> getReferenciantes() {
+    public LinkedList<Celda> getReferenciantes() {
         return this.referenciantes;
     }
 
-    public void setReferenciantes(ArrayList<Celda> refs) {
+    public void setReferenciantes(LinkedList<Celda> refs) {
+        for(Celda ref : refs) {
+           if(ref == this || ref.getReferenciantes().contains(this)) {
+               System.out.println("!!! AUTO REFERENCIA o REFERENCIA CIRCULAR NO PERMITIDAS !!!");
+               return;
+           }
+        }
         this.referenciantes.addAll(refs);
         this.setValor(this.valor);
     }
@@ -141,6 +118,10 @@ public class Celda {
      * @param _ref la celda referenciante
      */
     public void addReferenciante(Celda _ref) {
+        if(_ref == this || _ref.getReferenciantes().contains(this)) {
+            System.out.println("!!! AUTO REFERENCIA o REFERENCIA CIRCULAR NO PERMITIDAS !!!");
+            return;
+        }
         referenciantes.add(_ref);
         _ref.setValor(this.valor);
     }

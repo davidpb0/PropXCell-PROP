@@ -1,192 +1,399 @@
-package test;
 
 import main.Domain.DomainModel.Celda;
 import main.Domain.DomainModel.Posicion;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
+import javax.lang.model.type.ArrayType;
+import java.sql.Array;
+import java.util.LinkedList;
 
 public class CeldaTest {
 
-    @Test
-    public void contenidoVacio() {
-        Posicion p = new Posicion(1,1);
-        Posicion p2 = new Posicion(1, 2);
-        Celda cell = new Celda(p);
-        String cont = cell.getContenido();
-        Assert.assertEquals("", cont);
+    @InjectMocks
+    private Celda c1;
 
-        Celda cell2 = new Celda(p2,"");
-        Assert.assertEquals("", cell2.getContenido());
-    }
+    @Mock
+    private Celda c2;
 
-    @Test
-    public void valorVacio() {
-        Posicion p = new Posicion(1,1);
-        Posicion p2 = new Posicion(1, 2);
-        Celda cell = new Celda(p);
-        String val = cell.getValor();
-        Assert.assertEquals("", val);
+    @Mock
+    private Posicion p1;
 
-        Celda cell2 = new Celda(p2, "");
-        Assert.assertEquals("", cell2.getValor());
-    }
+    @Mock
+    private Posicion p2;
 
-    @Test
-    public void contenidoString() {
-        Posicion p = new Posicion(1,1);
-        Posicion p2 = new Posicion(1, 2);
-        Celda cell = new Celda(p);
-        cell.setContenido("Hola Mundo");
-        String cont = cell.getContenido();
-        Assert.assertEquals("Hola Mundo", cont);
+    @Before
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
 
-        Celda cell2 = new Celda(p2,"hola");
-        Assert.assertEquals("hola", cell2.getContenido());
-    }
-
-    @Test
-    public void valorString() {
-        Posicion p = new Posicion(1,1);
-        Posicion p2 = new Posicion(1, 2);
-        Celda cell = new Celda(p);
-        cell.setContenido("hola mundo");
-        String val = cell.getValor();
-        Assert.assertEquals("hola mundo", val);
-
-        Celda cell2 = new Celda(p2,"hola");
-        Assert.assertEquals("hola", cell2.getValor());
-    }
-
-    @Test
-    public void contenidoFunc() {
-        Posicion p = new Posicion(1,1);
-        Posicion p2 = new Posicion(1, 2);
-        Celda cell = new Celda(p);
-        cell.setContenido("=SUM(1, 2)");
-        String cont = cell.getContenido();
-        Assert.assertEquals("=SUM(1, 2)", cont);
-
-        Celda cell2 = new Celda(p2,"=SUM(1, 2)");
-        Assert.assertEquals("=SUM(1, 2)", cell2.getContenido());
-    }
-
-    @Test
-    public void valorFunc() {
-        Posicion p = new Posicion(1,1);
-        Posicion p2 = new Posicion(1, 2);
-        Celda cell = new Celda(p);
-        cell.setContenido("=SUM(1, 2)");
-        String val = cell.getValor();
-        /* !!!
-         * En este caso, como de momento no tenemos implementadas las funciones,
-         * no espero que salga el resultado de la función, sinó que espero que
-         * la clase detecte que es una función y no un string normal.
-         */
-        Assert.assertEquals("#FUNC", val);
-
-        Celda cell2 = new Celda(p2,"=SUM(1, 2)");
-        Assert.assertEquals("#FUNC", cell2.getValor());
-    }
-
-    @Test
-    public void posicionTest() {
-        Posicion p1 = new Posicion(1, 1);
-        Posicion p2 = new Posicion(1, 2);
-        Posicion p3 = new Posicion(2, 1);
-
-        Celda c1 = new Celda(p1);
-        Celda c2 = new Celda(p2);
-
-        Assert.assertEquals(p1, c1.getPosicion());
-        Assert.assertEquals(p2, c2.getPosicion());
-
-        c1.setPosicion(p3);
-
-        Assert.assertEquals(p3, c1.getPosicion());
-    }
-
-    @Test
-    public void referenciantesVacia () {
-        Posicion p = new Posicion(1,1);
-        Celda cell = new Celda(p);
-        Assert.assertEquals(new ArrayList<Celda>(), cell.getReferenciantes());
-    }
-
-    @Test
-    public void setReferencianteF () {
-        Posicion p = new Posicion(1,1);
-        Posicion p2 = new Posicion(1, 2);
-        Celda c1 = new Celda(p, "A");
-        Celda c2 = new Celda(p2, "B");
-
-        ArrayList<Celda> celdasReferenciantes = new ArrayList<Celda>();
-        celdasReferenciantes.add(c2);
-
-        c1.setReferenciantes(celdasReferenciantes);
-
-        Assert.assertEquals("A", c2.getValor());
+        p1 = new StubPosicion(1, 1);
+        p2 = new StubPosicion(1, 2);
+        c1 = new Celda(p1);
+        c2 = new Celda(p2);
 
     }
 
-    @Test
-    public void addReferencianteF () {
-        Posicion p = new Posicion(1,1);
-        Posicion p2 = new Posicion(1, 2);
-        Celda c1 = new Celda(p, "A");
-        Celda c2 = new Celda(p2, "B");
+    @After
+    public void tearDown(){
 
+    }
+
+    /**
+     * Objeto de la prueba: Testear la constructora de una celda vacía
+     * - Stubs: StubPosicion
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia que la posición se asigna bien a la celda al ser creada con la constructora
+     * - Operativa: se definen una posicion con fila y columna y una celda con esa posición
+     *
+     */
+    @Test
+    public void ConstructoraVacia () {
+        Celda c = new Celda(p1);
+        Assert.assertEquals(p1, c.getPosicion());
+    }
+
+    /**
+     * Objeto de la prueba: Testear la constructora de una celda con contenido
+     * - Stubs: StubPosicion
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia que el contenido se asigna correctamente al crear una celda con contenido
+     * - Operativa: se definen una posicion con fila y columna, un String con el contenido y una celda con esa posición y ese contenido
+     *
+     */
+    @Test
+    public void ConstructoraContenido () {
+        String cont = "contenido";
+        Celda c = new Celda(p1, cont);
+        Assert.assertEquals(cont, c.getContenido());
+    }
+
+    /**
+     * Objeto de la prueba: Testear la constructora de una celda copia de otra
+     * - Stubs: StubPosicion
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia que una celda creada a partir de otra sea igual, sin copiar las referencias
+     * - Operativa: se define una celda con contenido, valor y posición. Se define una segunda celda copia de la primera
+     *
+     */
+    @Test
+    public void ConstructoraCopia () {
+        String cont = "contenido";
+        String val = "valor";
+        c1 = new Celda(p1, cont);
+        c1.setValor(val);
+
+        Celda copia = new Celda(c1);
+        String attrC1 = c1.getPosicion() + c1.getContenido() + c1.getValor();
+        String attrCopia = copia.getPosicion() + copia.getContenido() + copia.getValor();
+        Assert.assertEquals(attrC1, attrCopia);
+    }
+
+    /**
+     * Objeto de la prueba: Testear la función SetValor
+     * - Stubs: StubPosicion
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia la asignación correcta de el valor pasado por parámetro
+     * - Operativa: se define una celda vacía, un String con el valor. Se añade el valor a la celda
+     *
+     */
+    @Test
+    public void SetValorString () {
+        String val = "valor";
+        c1.setValor(val);
+
+        Assert.assertEquals(val, c1.getValor());
+    }
+
+    /**
+     * Objeto de la prueba: Testear la función SetContenido
+     * - Stubs: StubPosicion
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia la asignación correcta de el contenido pasado por parámetro
+     * - Operativa: se define una celda vacía, un String con el contenido. Se añade el contenido a la celda
+     *
+     */
+    @Test
+    public void SetContenidoString () {
+        String cont = "contenido";
+        c1.setContenido(cont);
+
+        Assert.assertEquals(cont, c1.getContenido());
+    }
+
+    /**
+     * Objeto de la prueba: Testear la función SetPosicion
+     * - Stubs: StubPosicion
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia la asignación correcta de la posición pasada por parámetro
+     * - Operativa: se define una celda vacía, y una posición adicional. Se asigna la posición adicional a la celda
+     *
+     */
+    @Test
+    public void SetPosicion () {
+        c1.setPosicion(p2);
+
+        Assert.assertEquals(p2, c1.getPosicion());
+    }
+
+    /**
+     * Objeto de la prueba: Testear la función AddReferenciante
+     * - Stubs: ninguno
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia que se añada correctamente una celda referenciante
+     * - Operativa: se definen 2 celdas distintas. La segunda celda referencia a la otra // Añadimos la segunda celda
+     *              como referenciante de la primera
+     *
+     */
+    @Test
+    public void AddReferenciante () {
         c1.addReferenciante(c2);
 
-        Assert.assertEquals("A", c2.getValor());
+        LinkedList<Celda> cs = new LinkedList<>();
+        cs.add(c2);
+        Assert.assertEquals(cs, c1.getReferenciantes());
     }
 
+
+    /**
+     * Objeto de la prueba: Testear la funcionalidad de Referenciar a una celda
+     * - Stubs: ninguno
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia que se asigne el valor de la celda referenciada a la celda referenciante
+     * - Operativa: se definen 2 celdas distintas y un String valor. Se asigna el valor a la primera celda y
+     *              se añade la 2a celda como refernciante de la primera.
+     *
+     */
     @Test
-    public void borrarReferencianteF () {
-        Posicion p = new Posicion(1,1);
-        Posicion p2 = new Posicion(1, 2);
-        Celda c1 = new Celda(p, "A");
-        Celda c2 = new Celda(p2, "B");
-
-        //C2 esta referenciando a C1 --> C2 tiene el valor de C1
+    public void ValorEnReferencia () {
+        String val = "valor_c1";
+        c1.setValor(val);
+        // C2 referencia a C1, el valor de c2 deberia ser el valor de c1
         c1.addReferenciante(c2);
-        Assert.assertEquals("A", c2.getValor());
 
+        Assert.assertEquals(val, c2.getValor());
+    }
+
+    /**
+     * Objeto de la prueba: Testear la funcionalidad de cambiar el valor al Referenciar a una celda
+     * - Stubs: ninguno
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia que se asigne, al cambiar el valor de la celda referenciada, se asigne a la
+     *                       celda referenciante
+     * - Operativa: se definen 2 celdas distintas y un dos Strings val1 y val2. Se asigna val1 a la primera celda,
+     *              se añade la 2a celda como referenciante de la primera y se cambia el valor de la 1a por val2.
+     *
+     */
+    @Test
+    public void CambioValorEnReferencia () {
+        String val1 = "valor1_c1";
+        String val2 = "valor2_c1";
+
+        c1.setValor(val1);
+        c1.addReferenciante(c2);
+        // C2 referencia C1 : el valor de c2 es val1 (demostrado en test anterior)
+        // Al cambiar el valor de C1, el valor de C2 cambia también.
+        c1.setValor(val2);
+
+        Assert.assertEquals(val2, c2.getValor());
+    }
+
+    /**
+     * Objeto de la prueba: Testear los límites de la funcionalidad de Referenciar a una celda
+     * - Stubs: StubPosicion
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia la asignación correcta del un valor al referenciar una celda que, a su vez,
+     *                       referencia a otra.
+     * - Operativa: se definen 3 celdas distintas y un String val. Se asigna el valor val a la primera celda. La
+     *              segunda celda referencia a la primera, y la tercera celda referencia a la segunda.
+     *
+     */
+    @Test
+    public void DobleReferencia () {
+        Celda c3 = new Celda(new StubPosicion(1,3));
+
+        String val = "valor_c1";
+        c1.setValor(val);
+        // C2 referencia a C1 || C3 referencia a C2 --> C3 deberia tener el mismo valor que C1
+        c1.addReferenciante(c2);
+        c2.addReferenciante(c3);
+
+        Assert.assertEquals(val, c3.getValor());
+    }
+
+    /**
+     * Objeto de la prueba: Testear los límites de la funcionalidad de Referenciar a una celda
+     * - Stubs: StubPosicion
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia la asignación correcta del un valor al referenciar una celda que, a su vez,
+     *                       referencia a otra, en un orden distinto.
+     * - Operativa: se definen 3 celdas distintas y un String val. Se asigna el valor val a la primera celda. La
+     *              tercera celda referencia a la segunda, y la segunda celda referencia a la primera.
+     *
+     */
+    @Test
+    public void DobleReferenciaDesordenada () {
+        Celda c3 = new Celda(new Posicion(1,3));
+
+        String val = "valor_c1";
+        c1.setValor(val);
+        // C3 referencia a C2 || C2 referencia a C1 --> C3 deberia tener el mismo valor que C1
+        c2.addReferenciante(c3);
+        c1.addReferenciante(c2);
+
+        Assert.assertEquals(val, c3.getValor());
+    }
+
+    /**
+     * Objeto de la prueba: Testear los límites de la funcionalidad de Referenciar a una celda
+     * - Stubs: StubPosicion
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia la asignación correcta del un valor al referenciar una celda que, a su vez,
+     *                       referencia a otra, en un orden distinto.
+     * - Operativa: se definen 3 celdas distintas y 2 Strings val y val2. Se asigna el valor val a la primera celda. La
+     *              tercera celda referencia a la segunda, y la segunda celda referencia a la primera. El valor de la
+     *              primera celda cambia a val2.
+     *
+     */
+    @Test
+    public void CambioValorDobleRefDesordenada () {
+        Celda c3 = new Celda(new Posicion(1,3));
+
+        String val = "valor_c1";
+        String val2 = "VALOR2_C1";
+        c1.setValor(val);
+        // C3 referencia a C2 || C2 referencia a C1 --> C3 deberia tener el mismo valor que C1
+        c2.addReferenciante(c3);
+        c1.addReferenciante(c2);
+
+        c1.setValor(val2);
+
+        Assert.assertEquals(val2, c3.getValor());
+    }
+
+    /**
+     * Objeto de la prueba: Testear el comportamiento en AutoReferencia
+     * - Stubs: ninguno
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia el comportamiento ante una Auto Referencia, en concreto, que la
+     *                       referencia que genera el error no se añada
+     * - Operativa: se defie 1 celda. Esa celda se referencia a sí misma.
+     *
+     */
+    @Test
+    public void AutoReferencia () {
+        c1.addReferenciante(c1);
+        Assert.assertEquals(new LinkedList<Celda>(), c1.getReferenciantes());
+    }
+
+    /**
+     * Objeto de la prueba: Testear el comportamiento en Referencia circular
+     * - Stubs: ninguno
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia el comportamiento ante una Referencia Circular Directa, en concreto, que la
+     *                       referencia que genera el error no se añada
+     * - Operativa: se defien 2 celdas distintas. La segunda celda referncia a la primera, y la primera
+     *              referencia a la segunda
+     *
+     */
+    @Test
+    public void ReferenciaCircular () {
+        c1.addReferenciante(c2);
+        c2.addReferenciante(c1);
+
+        // Al estar C2 referenciando ya a C1, C1 no podrá referenciar a C2, con lo que la lista de referenciantes
+        // de C2 será vacia.
+
+        Assert.assertEquals(new LinkedList<Celda>(), c2.getReferenciantes());
+    }
+
+    /**
+     * Objeto de la prueba: Testear la función BorrarReferenciante
+     * - Stubs: ninguno
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia que se borre correctamente una celda de la lista de referenciantes
+     * - Operativa: se definen 2 celdas distintas. La segunda referencia a la primera. Se borra la segunda celda de
+     *              la lista de referencias de la primera.
+     *
+     */
+    @Test
+    public void BorrarReferenciante () {
+        c1.addReferenciante(c2);
         c1.borrarReferenciante(c2);
-        Assert.assertEquals(new ArrayList<Celda>(), c1.getReferenciantes());
+
+        Assert.assertEquals(new LinkedList<Celda>(), c1.getReferenciantes());
     }
 
+    /**
+     * Objeto de la prueba: Testear la función SetReferenciantes
+     * - Stubs: ninguno
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia que se añada una lista de referenciantes correctamente.
+     * - Operativa: se definen dos celdas y una lista de celdas. Se añade la segunda celda a la lista. Se asigna la
+     *              lista a la primera celda.
+     *
+     */
     @Test
-    public void cambioValorReferenciaF() {
-        Posicion p = new Posicion(1,1);
-        Posicion p2 = new Posicion(1, 2);
-        Celda c1 = new Celda(p, "A");
-        Celda c2 = new Celda(p2, "B");
+    public void SetReferenciantes () {
+        LinkedList<Celda> lista = new LinkedList<>();
+        lista.add(c2);
+        c1.setReferenciantes(lista);
 
-        //C2 esta referenciando a C1 --> C2 tiene el valor de C1
+        Assert.assertEquals(lista, c1.getReferenciantes());
+    }
+
+    /**
+     * Objeto de la prueba: Testear el comportamiento en AutoReferencia
+     * - Stubs: ninguno
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia el comportamiento de la funcion Set ante una Auto Referencia, en concreto,
+     *                       que la referencia que genera el error no se añada
+     * - Operativa: se defie 1 celda. Se añade esa celda a una lista de celdas. Se asigna la lista a la misma celda.
+     *
+     */
+    @Test
+    public void SetAutoReferencia () {
+        LinkedList<Celda> lista = new LinkedList<>();
+        lista.add(c1);
+        c1.setReferenciantes(lista);
+        Assert.assertEquals(new LinkedList<Celda>(), c1.getReferenciantes());
+    }
+
+    /**
+     * Objeto de la prueba: Testear el comportamiento en Referencia circular
+     * - Stubs: ninguno
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia el comportamiento ante una Referencia Circular Directa de la función Set, en
+     *                       concreto, que la referencia que genera el error no se añada
+     * - Operativa: se defien 2 celdas distintas. La segunda celda referencia a la primera. Se añade la primera a una
+     *              lista de celdas. Se asigna la lista a la segunda celda.
+     *
+     */
+    @Test
+    public void SetReferenciaCircular () {
         c1.addReferenciante(c2);
-        Assert.assertEquals("A", c2.getValor());
+        LinkedList<Celda> lista = new LinkedList<>();
+        lista.add(c1);
+        c2.setReferenciantes(lista);
 
-        c1.setContenido("NEW CONTENT");
-        Assert.assertEquals("NEW CONTENT", c2.getValor());
+        // Al estar C2 referenciando ya a C1, C1 no podrá referenciar a C2, con lo que la lista de referenciantes
+        // de C2 será vacia.
+
+        Assert.assertEquals(new LinkedList<Celda>(), c2.getReferenciantes());
     }
 
-    @Test
-    public void constructoraCopia(){
-        Posicion p = new Posicion(1, 1);
-        Posicion p2 = new Posicion(1, 2);
-        Celda c1 = new Celda(p, "ABC");
-        Celda cRef = new Celda(p2, "#REF");
-        c1.addReferenciante(cRef);
-
-        Celda c2 = new Celda(c1);
-
-        Assert.assertEquals(p, c2.getPosicion());
-        Assert.assertEquals("ABC", c2.getContenido());
-        Assert.assertEquals("ABC", c2.getValor());
-        Assert.assertEquals(c1.getReferenciantes(), c2.getReferenciantes());
-
+    /** ==========================
+     *  Stub de la clase Posicion
+     *  ==========================
+     */
+    private static class StubPosicion extends Posicion {
+        public StubPosicion (int _fila, int _columna) {
+            super(_fila, _columna);
+        }
     }
 
 }
