@@ -19,11 +19,6 @@ public class Hoja implements Serializable {
     private int columnas;
     private HashMap<Posicion, Celda> celdas;
 
-    //Posiciones auxiliar para los test
-    private Posicion p;
-    private Posicion p2;
-
-
 
     /**
      * Funcion privada que inicializa la estructura de datos de hoja
