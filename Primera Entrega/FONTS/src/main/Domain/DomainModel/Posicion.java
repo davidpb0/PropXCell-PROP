@@ -15,8 +15,8 @@ public class Posicion {
 
     /**
      * Constructora de posicion
-     * @param columna un entero que representa la columna
-     * @param fila un entero que representa la fila
+     * @param columna un entero que representa la columna, siempre es >=1
+     * @param fila un entero que representa la fila, siempre es >= 1
      */
     public Posicion(int _fila, int _columna) {
         this.fila = _fila;
