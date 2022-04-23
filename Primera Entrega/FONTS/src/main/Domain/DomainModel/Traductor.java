@@ -170,7 +170,7 @@ public class Traductor {
      * @return la celda identificada por los parámetros de entrada
      */
     public Celda traduceCelda(String _pos, int _idH) {
-        Celda c = null;
+        Celda c;
         Hoja h = Documento.getDocumento().getHoja(_idH);
         String s = _pos;
         if (_pos.startsWith("$")) s = _pos.substring(1);
@@ -194,32 +194,30 @@ public class Traductor {
         Hoja h = Documento.getDocumento().getHoja(_idH);
         String f = _funcion;
         if (_funcion.startsWith("=")) f = f.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')') - 1);
-
-        String[] args = f.split(",");
+        else System.err.println("Argumento erróneo, el string proporcionado tiene que ser de tipo =func(arg). String actual: " + _funcion);
         List<String> ret = null;
 
-        for (String arg : args) {
-            if (arg.startsWith("$") && arg.length() <= 5) {                                     // Como mucho $AA11
-                Celda c = getTraductor().traduceCelda(arg, _idH);
-                try {
-                    ret.add(c.getValor());
-                } catch (NullPointerException np) {
-                    System.err.println("Intento de acceso a celda inexistente o vacía.");
-                }
-            } else if (arg.contains(":")) {
-                String from = arg.split(":")[0];
-                String to = arg.split(":")[1];
-                from = from.replaceAll("[$]", "");
-                to = to.replaceAll("[$]", "");
 
-                ArrayList<Celda> intervalo = h.getColumnaFila(from, to);
-                for (Celda c : intervalo) {
-                    ret.add(c.getValor());
-                }
-            } else ret.add(arg);
-        }
+        if (f.startsWith("$") && f.length() <= 5) { // Como mucho $AA11
+            Celda c = getTraductor().traduceCelda(f.substring(1, f.length() - 1), _idH);
+            try {
+                ret.add(c.getValor());
+            } catch (NullPointerException np) {
+                System.err.println("Intento de acceso a celda inexistente o vacía.");
+            }
+        } else if (f.contains(":")) { // $A1:$B2
+            String from = f.split(":")[0];
+            String to = f.split(":")[1];
+            from = from.replaceAll("[$]", "");
+            to = to.replaceAll("[$]", "");
 
-        return (String[]) ret.toArray();
+            ArrayList<Celda> intervalo = h.getColumnaFila(from, to);
+            for (Celda c : intervalo) {
+                ret.add(c.getValor());
+            }
+        } else ret.add(f); // Otro valor
+
+        return ret.toArray(new String[0]);
     }
 
     /**
@@ -233,7 +231,7 @@ public class Traductor {
         String[][] ret = new String[2][];
         String f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')') - 1);
         String[] args = f.split(",");
-        if (args.length != 2) {} //EXCEPCION
+        if (args.length < 2) {} //EXCEPCION
 
         for (int i = 0; i < 2; ++i) {
             if (args[i].contains(":")) { //$A1:$B1
