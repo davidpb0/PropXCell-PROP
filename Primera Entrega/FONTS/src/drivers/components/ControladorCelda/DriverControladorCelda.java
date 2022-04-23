@@ -9,10 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-
-
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -513,7 +510,7 @@ public class DriverControladorCelda {
         //tratamos las dependencias con mock
         when(traductor.traduceCelda(isA(String.class), isA(Integer.class))).thenReturn(c);
         doNothing().when(celda).addReferenciante(isA(Celda.class));
-        when(traductor.getArgumentos(isA(String.class), isA(Integer.class))).thenReturn(arg);
+        when(traductor.getArgumentosFuncion1aria(isA(String.class), isA(Integer.class))).thenReturn(arg);
 
         cc.escribirContenido(palabras[1]);
 

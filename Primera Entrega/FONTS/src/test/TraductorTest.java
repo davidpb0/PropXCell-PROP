@@ -116,17 +116,17 @@ public class TraductorTest {
         when(celda.getValor()).thenReturn("hola");
         when(hoja.getColumnaFila(isA(String.class), isA(String.class))).thenReturn(new ArrayList<Celda>());
 
-        String[] res = traductor.getArgumentos("abs(A1)", 1);
+        String[] res = traductor.getArgumentosFuncion1aria("abs(A1)", 1);
         assertArrayEquals(res, new String[]{"A1"});
     }
 
-    public static class PosicionStub extends Posicion {
+    private static class PosicionStub extends Posicion {
         public PosicionStub(int _f, int _c) {
             super(_f, _c);
         }
     }
 
-    public static class CeldaStub extends Celda {
+    private static class CeldaStub extends Celda {
         PosicionStub pos;
         String contenido = "";
 
@@ -146,7 +146,7 @@ public class TraductorTest {
         }
     }
 
-    public static class HojaStub extends Hoja {
+    private static class HojaStub extends Hoja {
         HashMap<PosicionStub, CeldaStub> celdas;
 
         public HojaStub() {
