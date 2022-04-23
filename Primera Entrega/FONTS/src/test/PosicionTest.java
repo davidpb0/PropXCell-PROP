@@ -17,66 +17,56 @@ class PosicionTest {
 
     @Before
     void inicializaPosiciones() {
-        p1 = new Posicion(10, 15);
-        p2 = new Posicion(4, 1);
+        p1 = new Posicion(5, 1);
     }
 
     @Test
     void testContructora () {
-        Posicion pos1 = new Posicion(1, 1);
-        Posicion pos2 = new Posicion(3, 4);
+        Posicion pos1 = new Posicion(1, 8);
 
-        assertEquals(1, pos1.getColumna());
-        assertEquals(1, pos1.getFila());
+        int f =  pos1.getColumna();
+        int c = pos1.getFila();
 
-        assertEquals(3, pos2.getColumna());
-        assertEquals(4, pos2.getFila());
+        String test = f + " " + c;
+        assertEquals("1 8", test);
     }
     
     @Test
     void testGetFila() {
-        assertEquals(10, p1.getFila());
-        assertEquals(4, p2.getFila());
+        assertEquals(5, p1.getFila());
     }
     
     @Test
     void testGetColumna() {
-        assertEquals(15, p1.getColumna());
-        assertEquals(1, p2.getColumna());
+        assertEquals(1, p1.getColumna());
     }
 
     @Test
     void testEquals() {
 
         //Propiedad reflexiva
-        assertTrue(p1.equals(p1));
-        assertTrue(p2.equals(p2));
+        boolean reflex =  p1.equals(p1);
 
 
         p1 = new Posicion(2, 3);
         p2 = new Posicion(2, 3);
 
         //Propiedad simetrica
-        assertTrue(p1.equals(p2));
-        assertTrue(p2.equals(p1));
+        boolean simetr = p1.equals(p2) && p2.equals(p1);
+
 
         Posicion p3 = new Posicion(2, 3);
 
         //Propiedad transitiva
-        assertTrue(p1.equals(p2));
-        assertTrue(p2.equals(p3));
-        assertTrue(p1.equals(p3));
+        boolean trans = p1.equals(p2) && p2.equals(p3) && p1.equals(p3);
 
         //Consistencia
-        assertTrue(p1.equals(p2));
-        assertTrue(p1.equals(p2));
-        assertTrue(p1.equals(p2));
+        boolean cons = p1.equals(p2) && p1.equals(p2) && p1.equals(p2);
 
         //Comparacion con null
-        assertNotNull(p1);
-        assertNotNull(p2);
-        assertFalse(p1.equals(null));
-        assertFalse(p2.equals(null));
+        boolean notNull = (p1 != null) && (p1.equals(null) == false);
+
+        assertTrue(reflex && simetr && trans && cons && notNull);
     }
 
     @Test
@@ -86,9 +76,8 @@ class PosicionTest {
         p2 = new Posicion(15, 30);
 
         //Si son iguales segun equals(), mismo hash code
-        assertEquals(p1, p2);
-
-        assertNotEquals(p1, null);
-        assertNotEquals(p2, null);
+        boolean sonIguales = p1.equals(p2);
+        boolean mismoHashCode = p1.hashCode() == p2.hashCode();
+        assertTrue(sonIguales && mismoHashCode);
     }
 }

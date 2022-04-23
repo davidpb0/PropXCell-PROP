@@ -16,6 +16,7 @@ public class BloqueTemporalCopiado {
     /**
      * Constructora
      * Crea una copia del bloque de celdas seleccionado
+     * Se garantiza que el bloque de celdas indicado en BloqueSeleccionado es válido
      */
     public BloqueTemporalCopiado() {
         Celda celdaInicial = BloqueSeleccionado.getBloque().getCeldaInicial();
