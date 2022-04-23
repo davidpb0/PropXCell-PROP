@@ -74,4 +74,12 @@ public class ControladorDocumento {
     public void asignaNombreHoja(int _idH, String _nuevoNombre) {
         documento_ref.getHoja(_idH).asignaNombre(_nuevoNombre);
     }
+
+    /**
+     * Obtiene el número de hojas del documento actual.
+     * @return el número de hojas del documento aceual.
+     */
+    public int getNumHojas() {
+        return documento_ref.getNumHojas();
+    }
 }
