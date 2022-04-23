@@ -27,6 +27,7 @@ public class MainTest {
         System.out.println("\t3: Seleccionar hoja.");
         System.out.println("\t4: Añadir una hoja.");
         System.out.println("\t5: Renombrar la hoja actual.");
+        System.out.println("\t6: Eliminar la hoja actual.");
         System.out.println("\t0: Salir del programa.");
         System.out.print("Escoge una opción: ");
     }
@@ -45,7 +46,11 @@ public class MainTest {
                 } catch (NumberFormatException ne) {}*/
 
                 casosDeUso();
-                int caso = Integer.parseInt(br.readLine());
+                int caso = -1;
+                try {
+                     caso = Integer.parseInt(br.readLine());
+                } catch (NumberFormatException ignored) {}
+
                 if (caso > 1 && cd == null) System.out.println("Primero hay que crear el documento.");
                 else {
                     switch (caso) {
@@ -66,6 +71,7 @@ public class MainTest {
                             break;
 
                         case 3:
+                            System.out.println("Actualmente hay " + cd.getNumHojas() + " hojas.");
                             System.out.print("Selecciona la hoja con la que quieres trabajar: ");
                             int idh = -1;
                             try {
@@ -105,7 +111,8 @@ public class MainTest {
                             break;
 
                         case 5:
-                            if (!hojaSeleccionada) {
+                            if (ch.getIdHoja() == 0) System.out.println("Bug: Con la hoja 0 no se puede trabajar. Selecciona otra.");
+                            else if (!hojaSeleccionada) {
                                 System.out.println("Actualmente no hay ninguna hoja seleccionada.");
                                 break;
                             } else {
@@ -113,6 +120,28 @@ public class MainTest {
                                 String nombre = br.readLine();
                                 ch.renombraHoja(nombre);
                                 System.out.println("Ahora la hoja con ID " + ch.getIdHoja() + " se llama " + nombre + ".");
+                            }
+                            break;
+
+                        case 6:
+                            if (!hojaSeleccionada) {
+                                System.out.println("Actualmente no hay ninguna hoja seleccionada.");
+                                break;
+                            } else {
+                                System.out.println("Se va a eliminar la hoja actual(hoja " + ch.getIdHoja() + "), ¿quieres continuar? (1: Continuar - 2: Cancelar)");
+                                int i = -1;
+                                try {
+                                     i = Integer.parseInt(br.readLine());
+                                } catch (NumberFormatException e) {
+                                    System.out.println("El valor introducido es incorrecto.");
+                                    break;
+                                }
+
+                                if (i == 1) {
+                                    cd.eliminarHoja(ch.getIdHoja());
+                                    System.out.println("Hoja eliminada correctamente, hay que volver a seleccionar una hoja para continuar.");
+                                } else System.out.println("Cancelando...");
+
                             }
                             break;
 

@@ -27,7 +27,7 @@ public class Documento implements Serializable {
     /**
      * Creador del Documento
      */
-    private Documento(){}
+    private Documento() {}
 
     /**
      * Funcion que obtiene la instancia de Documento

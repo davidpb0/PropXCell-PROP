@@ -17,6 +17,7 @@ public class ControladorDocumento {
      */
     public ControladorDocumento() {
         documento_ref = Documento.getDocumento();
+        if (documento_ref.getNumHojas() == 0) documento_ref.inicializaDocumento("Documento sin título", 50, 50);
     }
 
     /**
@@ -33,6 +34,7 @@ public class ControladorDocumento {
     public void crearDocumento() {
         cerrarDocumento();
         documento_ref = Documento.getDocumento();
+        if (documento_ref.getNumHojas() == 0) documento_ref.inicializaDocumento("Documento sin título", 50, 50);
         // No sé cómo hacer que presentación abra un documento nuevo xd
     }
 

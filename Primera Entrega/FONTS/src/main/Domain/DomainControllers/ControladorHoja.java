@@ -24,7 +24,7 @@ public class ControladorHoja {
     * @param _idh identificador de la hoja que siempre corresponderá a una hoja existente
     */
     public void asignaHoja(int _idh) {
-        hojaRef = Documento.getDocumento().getHoja(_idh);
+        this.hojaRef = Documento.getDocumento().getHoja(_idh);
     }
 
     /**
