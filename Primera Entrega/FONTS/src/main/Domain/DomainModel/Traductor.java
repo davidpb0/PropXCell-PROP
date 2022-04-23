@@ -192,7 +192,7 @@ public class Traductor {
     public String[] getArgumentosFuncion1aria(String _funcion, int _idH) {
         Hoja h = Documento.getDocumento().getHoja(_idH);
         String f = _funcion;
-        if (_funcion.startsWith("=")) f = f.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')') - 1);
+        if (_funcion.startsWith("=")) f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')'));
         else System.err.println("Argumento erróneo, el string proporcionado tiene que ser de tipo =func(arg). String actual: " + _funcion);
         ArrayList<String> ret = new ArrayList<String>();
 
