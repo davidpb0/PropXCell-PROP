@@ -13,7 +13,7 @@ import static main.Domain.DomainModel.Documento.getDocumento;
 /*
 * ClassName ControladorCelda
 *
-* Version info 0.0.6
+* Version info 1.0.0
 *
 * Author David Pérez Barroso
 */
@@ -47,373 +47,552 @@ public class ControladorCelda {
      * escribe su valor en la celda
      * @param _content contenido a escribir en la celda
      */
-  public void escribirContenido(String _content){
-       this.celdaRef.setContenido(_content);
+  public void escribirContenido(String _content) {
+      this.celdaRef.setContenido(_content);
 
-       String type = Traductor.getTraductor().detecta(_content);
-       String[] arg;
-      // if (_content = ref) ref.borrarRef(me);
-       switch (type) {
-           case "#ABS":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length != 1) {
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               if(!arg[0].matches("[+-]?\\d*(\\.\\d+)?")){
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               String s = valorAbsoluto(Double.parseDouble(arg[0]));
-               this.celdaRef.setValor(s);
-               break;
+      String type = Traductor.getTraductor().detecta(_content);
+      String[] arg;
+      String[] arg1;
+      String[] arg2;
+      switch (type) {
+          case "#ABS": // =abs()
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
-           case "#TRUNC":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length != 2) {
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               if(!arg[0].matches("[+-]?\\d*(\\.\\d+)?") && !!arg[0].matches("[+-]?\\d*(\\.\\d+)?")){
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               String s1 = truncarValor(Double.parseDouble(arg[0]), Integer.parseInt(arg[1]));
-               this.celdaRef.setValor(s1);
-               break;
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length != 1) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              //Se comprueba que los argumentos sean numeros
+              if (!arg[0].matches("[+-]?\\d*(\\.\\d+)?")) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              String s = valorAbsoluto(Double.parseDouble(arg[0]));
+              this.celdaRef.setValor(s);
+              break;
 
-           case "#APROX":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length != 1) {
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               if(!arg[0].matches("[+-]?\\d*(\\.\\d+)?")){
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               String s2 = aproximarValor(Double.parseDouble(arg[0]));
-               this.celdaRef.setValor(s2);
-               break;
+          case "#TRUNC": // =trunc()
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
-           case "#VDB":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length != 1) {
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               if(!arg[0].matches("[+-]?\\d*(\\.\\d+)?")){
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               String s3 = convertirValorDB(Integer.parseInt(arg[0]));
-               this.celdaRef.setValor(s3);
-               break;
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length != 2) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              //Se comprueba que los argumentos sean numeros
+              if (!arg[0].matches("[+-]?\\d*(\\.\\d+)?") && !arg[1].matches("[+-]?\\d*(\\.\\d+)?")) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              String s1 = truncarValor(Double.parseDouble(arg[0]), Integer.parseInt(arg[1]));
+              this.celdaRef.setValor(s1);
+              break;
 
-           case "#VBD":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length != 1) {
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               if(!arg[0].matches("[+-]?\\d*(\\.\\d+)?")){
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               boolean b  = false;
-               for (int i = 0; i < arg[0].length(); i++) {
-                   char c = arg[0].charAt(i);
-                   if(c != '0' || c != '1'){
-                       b = true;
-                       this.celdaRef.setValor("#ERROR");
-                       break;
-                   }
-               }
-               if (b) break;
-               String s4 = convertirValorBD(Integer.parseInt(arg[0]));
-               this.celdaRef.setValor(s4);
-               break;
+          case "#APROX": // =aprox()
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
-           case "#VHD":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length != 1) {
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               String s5 = convertirValorHD(arg[0]);
-               this.celdaRef.setValor(s5);
-               break;
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length != 1) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              //Se comprueba que los argumentos sean numeros
+              if (!arg[0].matches("[+-]?\\d*(\\.\\d+)?")) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              String s2 = aproximarValor(Double.parseDouble(arg[0]));
+              this.celdaRef.setValor(s2);
+              break;
 
-           case "#VDH":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length != 1) {
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               if(!arg[0].matches("[+-]?\\d*(\\.\\d+)?")){
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               String s6 = convertirValorDH(Integer.parseInt(arg[0]));
-               this.celdaRef.setValor(s6);
-               break;
+          case "#VDB": // =convertirDB()
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
-           case "#VHB":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length != 1) {
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               String s7 = convertirValorHB(arg[0]);
-               this.celdaRef.setValor(s7);
-               break;
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length != 1) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              //Se comprueba que los argumentos sean numeros
+              if (!arg[0].matches("[+-]?\\d*(\\.\\d+)?")) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              String s3 = convertirValorDB(Integer.parseInt(arg[0]));
+              this.celdaRef.setValor(s3);
+              break;
 
-           case "#VBH":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length != 1) {
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               if(!arg[0].matches("[+-]?\\d*(\\.\\d+)?")){
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               b = false;
-               for (int i = 0; i < arg[0].length(); i++) {
-                   char c = arg[0].charAt(i);
-                   if(c != '0' || c != '1'){
-                       b = true;
-                       this.celdaRef.setValor("#ERROR");
-                       break;
-                   }
-               }
-               if (b) break;
-               String s8 = convertirValorBH(Integer.parseInt(arg[0]));
-               this.celdaRef.setValor(s8);
-               break;
+          case "#VBD": // =convertirValorBD()
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
-           case "#MES":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length != 1) {
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               if(!esFechaValida(arg[0])){
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               String s9 = obtenerMes(arg[0]);
-               this.celdaRef.setValor(s9);
-               break;
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length != 1) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
 
-           case "#AÑO":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length != 1) {
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               if(!esFechaValida(arg[0])){
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               String s10 = obtenerAño(arg[0]);
-               this.celdaRef.setValor(s10);
-               break;
+              //Se comprueba que los argumentos sean numeros
+              if (!arg[0].matches("[+-]?\\d*(\\.\\d+)?")) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
 
-           case "#DIAS":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length != 1) {
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               if(!esFechaValida(arg[0])){
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               String s11 = obtenerDia(arg[0]);
-               this.celdaRef.setValor(s11);
-               break;
+              //Se comprueba que los argumentos sean '1' i '0'
+              boolean b = false;
+              for (int i = 0; i < arg[0].length(); i++) {
+                  char c = arg[0].charAt(i);
+                  if (c != '0' || c != '1') {
+                      b = true;
+                      this.celdaRef.setValor("#ERROR");
+                      break;
+                  }
+              }
+              if (b) break;
+              String s4 = convertirValorBD(Integer.parseInt(arg[0]));
+              this.celdaRef.setValor(s4);
+              break;
 
-           case "#NDIA":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length != 1) {
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               if(!esFechaValida(arg[0])){
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               String s12 = obtenerNombreDia(arg[0]);
-               this.celdaRef.setValor(s12);
-               break;
+          case "#VHD": // =convertirHD()
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
-           case "#LONG":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length != 1) {
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               String s13 = longitudPalabra(arg[0]);
-               this.celdaRef.setValor(s13);
-               break;
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length != 1) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              String s5 = convertirValorHD(arg[0]);
 
-           case "#CLETRA":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length != 2) {
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               String s14 = contarLetra(arg[0], arg[1]);
+              //Devuelve -1 si el argumento no es un numero hexadecimal valido
+              if (s5 == "-1") {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              this.celdaRef.setValor(s5);
+              break;
 
-               if(s14 == "-1") this.celdaRef.setValor("#ERROR");
-               else this.celdaRef.setValor(s14);
-               break;
+          case "#VDH": // =convertirDH()
 
-           case "#REEMPPAL":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length != 4) {
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               String s15 = reemplazarPalabra(arg[0], Integer.parseInt(arg[1]), Integer.parseInt(arg[2]), arg[3]);
-               if(s15 == "-1") this.celdaRef.setValor("#ERROR");
-               else this.celdaRef.setValor(s15);
-               break;
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
-           case "#REEMPLET":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length != 2) {
-                   this.celdaRef.setValor("#ERROR");
-                   break;
-               }
-               String s16 = reemplazarCaracter(arg[0], arg[1], arg[2]);
-               if(s16 == "-1") this.celdaRef.setValor("#ERROR");
-               else this.celdaRef.setValor(s16);
-               break;
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length != 1) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
 
-           case "#REFERENCIA":
-               Celda reft = Traductor.getTraductor().traduceCelda(_content, this.hojaAct.getId());
-               reft.addReferenciante(this.celdaRef);
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               this.celdaRef.setValor(arg[0]);
-               break;
+              //Se comprueba que los argumentos sean numeros
+              if (!arg[0].matches("[+-]?\\d*(\\.\\d+)?")) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              String s6 = convertirValorDH(Integer.parseInt(arg[0]));
+              this.celdaRef.setValor(s6);
+              break;
 
-           case "#MEDIA":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length == 0) {
-                   this.celdaRef.setValor("#FALTANARGS");
-                   break;
-               }
-               b = false;
-               for(String v : arg){
-                   if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
-                       this.celdaRef.setValor("#ERROR");
-                       b = true;
-                       break;
-                   }
-               }
-               if (b) break;
-             /*  double m = ControladorHoja.media(arg);
-               this.celdaRef.setValor(String.valueOf(m));*/
-               break;
-           case "#MEDIANA":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length == 0) {
-                   this.celdaRef.setValor("#FALTANARGS");
-                   break;
-               }
-               b  = false;
-               for(String v : arg){
-                   if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
-                       this.celdaRef.setValor("#ERROR");
-                       b = true;
-                       break;
-                   }
-               }
-               if (b) break;
-               /*double m = ControladorHoja.mediana(arg);
-               this.celdaRef.setValor(String.valueOf(m));*/
-               break;
-           case "#VAR":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length == 0) {
-                   this.celdaRef.setValor("#FALTANARGS");
-                   break;
-               }
-               b  = false;
-               for(String v : arg){
-                   if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
-                       this.celdaRef.setValor("#ERROR");
-                       b = true;
-                       break;
-                   }
-               }
-               if (b) break;
-               /*double m = ControladorHoja.varianza(arg);
-               this.celdaRef.setValor(String.valueOf(m));*/
+          case "#VHB": // =convertirHB()
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
-               break;
-           case "#COV":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length == 0) {
-                   this.celdaRef.setValor("#FALTANARGS");
-                   break;
-               }
-               b  = false;
-               for(String v : arg){
-                   if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
-                       this.celdaRef.setValor("#ERROR");
-                       b = true;
-                       break;
-                   }
-               }
-               if (b) break;
-               /*double m = ControladorHoja.covarianza(arg);
-               this.celdaRef.setValor(String.valueOf(m));*/
-               break;
-           case "#DESV":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length == 0) {
-                   this.celdaRef.setValor("#FALTANARGS");
-                   break;
-               }
-               b  = false;
-               for(String v : arg){
-                   if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
-                       this.celdaRef.setValor("#ERROR");
-                       b = true;
-                       break;
-                   }
-               }
-               if (b) break;
-               /*double m = ControladorHoja.desvEstandar(arg);
-               this.celdaRef.setValor(String.valueOf(m));*/
-               break;
-           case "#COEFP":
-               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
-               if(arg.length == 0) {
-                   this.celdaRef.setValor("#FALTANARGS");
-                   break;
-               }
-               b  = false;
-               for(String v : arg){
-                   if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
-                       this.celdaRef.setValor("#ERROR");
-                       b = true;
-                       break;
-                   }
-               }
-               if (b) break;
-               /*double m = ControladorHoja.CorrelacionPearson(arg);
-               this.celdaRef.setValor(String.valueOf(m));*/
-               break;
-           default:
-               this.celdaRef.setValor(_content);
-       }
-   }
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length != 1) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              String s7 = convertirValorHB(arg[0]);
+
+              //Devuelve -1 si el argumento no es un numero hexadecimal valido
+              if (s7 == "-1") {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              this.celdaRef.setValor(s7);
+              break;
+
+          case "#VBH": // =convertirBH()
+
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
+
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length != 1) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+
+              //Se comprueba que los argumentos sean numeros
+              if (!arg[0].matches("[+-]?\\d*(\\.\\d+)?")) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+
+              //Se comprueba que los argumentos sean '1' i '0'
+              b = false;
+              for (int i = 0; i < arg[0].length(); i++) {
+                  char c = arg[0].charAt(i);
+                  if (c != '0' || c != '1') {
+                      b = true;
+                      this.celdaRef.setValor("#ERROR");
+                      break;
+                  }
+              }
+              if (b) break;
+              String s8 = convertirValorBH(Integer.parseInt(arg[0]));
+              this.celdaRef.setValor(s8);
+              break;
+
+          case "#MES": // =mes()
+
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
+
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length != 1) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+
+              //Se comprueba que sea una fecha valida
+              if (!esFechaValida(arg[0])) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              String s9 = obtenerMes(arg[0]);
+              this.celdaRef.setValor(s9);
+              break;
+
+          case "#AÑO": // =año()
+
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
+
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length != 1) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+
+              //Se comprueba que sea una fecha valida
+              if (!esFechaValida(arg[0])) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              String s10 = obtenerAño(arg[0]);
+              this.celdaRef.setValor(s10);
+              break;
+
+          case "#DIAS": // =diasemana()
+
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
+
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length != 1) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+
+              //Se comprueba que sea una fecha valida
+              if (!esFechaValida(arg[0])) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              String s11 = obtenerDia(arg[0]);
+              this.celdaRef.setValor(s11);
+              break;
+
+          case "#NDIA": // =nombredia()
+
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
+
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length != 1) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+
+              //Se comprueba que sea una fecha valida
+              if (!esFechaValida(arg[0])) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              String s12 = obtenerNombreDia(arg[0]);
+              this.celdaRef.setValor(s12);
+              break;
+
+          case "#LONG": // =longitud()
+
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
+
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length != 1) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              String s13 = longitudPalabra(arg[0]);
+              this.celdaRef.setValor(s13);
+              break;
+
+          case "#CLETRA": // =contarletra()
+
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
+
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length != 2) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              String s14 = contarLetra(arg[0], arg[1]);
+
+              //Si devuelve -1 ha habido un fallo al introducir los argumentos
+              if (s14.equals("-1")) this.celdaRef.setValor("#ERROR");
+              else this.celdaRef.setValor(s14);
+              break;
+
+          case "#REEMPPAL": // =reemplazarPal()
+
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
+
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length != 4) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              String s15 = reemplazarPalabra(arg[0], Integer.parseInt(arg[1]), Integer.parseInt(arg[2]), arg[3]);
+
+              //Si devuelve -1 ha habido un fallo al introducir los argumentos
+              if (s15.equals("-1")) this.celdaRef.setValor("#ERROR");
+              else this.celdaRef.setValor(s15);
+              break;
+
+          case "#REEMPLET": // =reemplazarLet()
+
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
+
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length != 2) {
+                  this.celdaRef.setValor("#ERROR");
+                  break;
+              }
+              String s16 = reemplazarCaracter(arg[0], arg[1], arg[2]);
+
+              //Si devuelve -1 ha habido un fallo al introducir los argumentos
+              if (s16.equals("-1")) this.celdaRef.setValor("#ERROR");
+              else this.celdaRef.setValor(s16);
+              break;
+
+          case "#REFERENCIA": // $C1 (por ejemplo)
+              //Se coge la celda referenciantes, para añadirle la referenciada
+              Celda reft = Traductor.getTraductor().traduceCelda(_content, this.hojaAct.getId());
+              reft.addReferenciante(this.celdaRef);
+
+              //Se coge el valor de la celda referenciante
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
+              this.celdaRef.setValor(arg[0]);
+              break;
+
+          case "#MEDIA": // =media()
+
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
+
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length == 0) {
+                  this.celdaRef.setValor("#FALTANARGS");
+                  break;
+              }
+
+              //Se comprueba que los argumentos sean numeros
+              b = false;
+              for (String v : arg) {
+                  if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
+                      this.celdaRef.setValor("#ERROR");
+                      b = true;
+                      break;
+                  }
+              }
+              if (b) break;
+
+              double m = ControladorHoja.media(arg);
+              this.celdaRef.setValor(String.valueOf(m));
+              break;
+
+          case "#MEDIANA": // =mediana()
+
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
+
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length == 0) {
+                  this.celdaRef.setValor("#FALTANARGS");
+                  break;
+              }
+
+              //Se comprueba que los argumentos sean numeros
+              b = false;
+              for (String v : arg) {
+                  if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
+                      this.celdaRef.setValor("#ERROR");
+                      b = true;
+                      break;
+                  }
+              }
+              if (b) break;
+
+              m = ControladorHoja.mediana(arg);
+              this.celdaRef.setValor(String.valueOf(m));
+              break;
+
+          case "#VAR": // =varianza()
+
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
+
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length == 0) {
+                  this.celdaRef.setValor("#FALTANARGS");
+                  break;
+              }
+
+              //Se comprueba que los argumentos sean numeros
+              b = false;
+              for (String v : arg) {
+                  if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
+                      this.celdaRef.setValor("#ERROR");
+                      b = true;
+                      break;
+                  }
+              }
+              if (b) break;
+
+              m = ControladorHoja.varianza(arg);
+              this.celdaRef.setValor(String.valueOf(m));
+
+              break;
+
+          case "#COV":// =covarianza()
+
+              //Se cogen los argumentos necesarios para realizar la operacion
+              String[][] aux = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
+              arg1 = aux[0];
+              arg2 = aux[1];
+
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg1.length == arg2.length) {
+                  this.celdaRef.setValor("#FALLOARGS");
+                  break;
+              }
+
+              //Se comprueba que los argumentos sean numeros
+              b = false;
+              for (String v : arg1) {
+                  if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
+                      this.celdaRef.setValor("#ERROR");
+                      b = true;
+                      break;
+                  }
+              }
+              if (b) break;
+              for (String v : arg2) {
+                  if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
+                      this.celdaRef.setValor("#ERROR");
+                      b = true;
+                      break;
+                  }
+              }
+              if (b) break;
+              m = ControladorHoja.covarianza(arg1, arg2);
+              this.celdaRef.setValor(String.valueOf(m));
+              break;
+
+          case "#DESV":// =desviacion()
+
+              //Se cogen los argumentos necesarios para realizar la operacion
+              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
+
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg.length == 0) {
+                  this.celdaRef.setValor("#FALTANARGS");
+                  break;
+              }
+
+              //Se comprueba que los argumentos sean numeros
+              b = false;
+              for (String v : arg) {
+                  if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
+                      this.celdaRef.setValor("#ERROR");
+                      b = true;
+                      break;
+                  }
+              }
+              if (b) break;
+
+              m = ControladorHoja.desvEstandar(arg);
+              this.celdaRef.setValor(String.valueOf(m));
+              break;
+
+          case "#COEFP": // =pearson()
+
+              //Se cogen los argumentos necesarios para realizar la operacion
+              aux = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
+              arg1 = aux[0];
+              arg2 = aux[1];
+
+              //Se comprueba que el numero de argumentos sea el correcto
+              if (arg1.length == arg2.length) {
+                  this.celdaRef.setValor("#FALLOARGS");
+                  break;
+              }
+              b = false;
+
+              //Se comprueba que los argumentos sean numeros
+              for (String v : arg1) {
+                  if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
+                      this.celdaRef.setValor("#ERROR");
+                      b = true;
+                      break;
+                  }
+              }
+              if (b) break;
+
+              //Se comprueba que los argumentos sean numeros
+              for (String v : arg2) {
+                  if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
+                      this.celdaRef.setValor("#ERROR");
+                      b = true;
+                      break;
+                  }
+              }
+              if (b) break;
+
+              m = ControladorHoja.correlacionPearson(arg1, arg2);
+              this.celdaRef.setValor(String.valueOf(m));
+              break;
+
+          default: //caso en el que no se escribe una funcion
+              this.celdaRef.setValor(_content);
+      }
+  }
 
 
+
+    /**
+     * Comprueba que la fecha introducida sea valida
+     * @param _fecha fecha a comprobar
+     * @return Devuelve true si la fecha es valida, false de lo contrario
+     */
    public boolean esFechaValida(String _fecha){
        String dp[] = _fecha.split("/");
        if(dp.length != 3) return false;
@@ -424,11 +603,11 @@ public class ControladorCelda {
    }
 
     /**
-     * Trunca el numero decimal introducido y lo pone en el valor de la celda
+     * Trunca el numero decimal introducido
      * @param _v valor decimal a truncar
      * @param _op numero de decimales a truncar
+     * @return Devuelve un String con el valor truncado
      */
-
    public String truncarValor(double _v, int _op) {
 
        String str = String.valueOf(Math.abs(_v));
@@ -454,8 +633,9 @@ public class ControladorCelda {
 
 
     /**
-     * Pone el valor absoluto del numero introducido en el valor de la celda
+     * Pone el valor absoluto del numero introducido en un string
      * @param _a numero a poner en valor absoluto
+     * @return Devuelve un String con el valor absoluto del introducido
      */
     public String valorAbsoluto(double _a){
         //Para enteros que en decimal se escribe -> 5.0
@@ -471,8 +651,9 @@ public class ControladorCelda {
     }
 
     /**
-     * Aproxima el numero decimal introducido y lo pone en el valor de la celda
+     * Aproxima el numero decimal introducido
      * @param _v valor a aproximar
+     * @return Devuelve un String con el valor aproximado
      */
     public String aproximarValor(double _v){
         _v = Math.round(_v);
@@ -481,16 +662,18 @@ public class ControladorCelda {
     }
 
     /**
-     * Covierte el valor en base decimal introducido y lo deja en el valor de la celda en base binaria
+     * Covierte el valor en base decimal introducido a base binaria
      * @param _dec valor decimal a convertir en binario
+     * @return Devuelve un String con el valor en binario
      */
     public String convertirValorDB(int _dec){
         return Integer.toBinaryString(_dec);
     }
 
     /**
-     * Covierte el valor en base binaria introducido y lo deja en el valor de la celda en base decimal
+     * Covierte el valor en base binaria introducido a base decimal
      * @param _b valor binario a convertir en decimal
+     * @return Devuelve un String con el valor en decimal
      */
     public String convertirValorBD(int _b){
         int dec = Integer.parseInt(String.valueOf(_b), 2);
@@ -498,8 +681,9 @@ public class ControladorCelda {
     }
 
     /**
-     * Covierte el valor en base decimal introducido y lo deja en el valor de la celda en base hexadecimal
+     * Covierte el valor en base decimal introducido a base hexadecimal
      * @param _dec valor en decimal a convertir en hexadecimal
+     * @return Devuelve un String con el valor en hexadecimal
      */
     public String convertirValorDH(int _dec){
         return Integer.toHexString(_dec);
@@ -507,17 +691,23 @@ public class ControladorCelda {
 
 
     /**
-     * Covierte el valor en base hexadecimal introducido y lo deja en el valor de la celda en base decimal
+     * Covierte el valor en base hexadecimal introducido a base decimal
      * @param _h valor hexadecimal a convertir en decimal
+     * @return Devuelve un String con el valor en decimal
      */
     public String convertirValorHD(String _h){
-        int dec = Integer.parseInt(_h, 16);
-        return String.valueOf(dec);
+        try {
+            int dec = Integer.parseInt(_h, 16);
+            return String.valueOf(dec);
+        } catch (NumberFormatException e) {
+           return "-1";
+        }
     }
 
     /**
-     * Covierte el valor en base binairia introducido y lo deja en el valor de la celda en base hexadecimal
+     * Covierte el valor en base binairia introducido a base hexadecimal
      * @param _b valor binario a convertir en hexadecimal
+     * @return Devuelve un String con el valor en hexadecimal
      */
     public String convertirValorBH(int _b){
         int dec = Integer.parseInt(String.valueOf(_b), 2);
@@ -526,18 +716,23 @@ public class ControladorCelda {
 
 
     /**
-     * Covierte el valor en base hexadecimal introducido y lo deja en el valor de la celda en base binaria
+     * Covierte el valor en base hexadecimal introducido a base binaria
      * @param _h valor hexadecimal a convertir en binario
-     * @return
+     * @return Devuelve un String con el valor en binario
      */
     public String convertirValorHB(String _h){
-        int decConv = Integer.parseInt(_h, 16);
-        return Integer.toBinaryString(decConv);
+        try {
+            int decConv = Integer.parseInt(_h, 16);
+            return Integer.toBinaryString(decConv);
+        } catch (NumberFormatException e) {
+            return "-1";
+        }
     }
 
     /** Pre: _fecha es una fecha valida
-     * Obtiene el mes de la fecha introducida y lo pone en el valor de la celda
+     * Obtiene el mes de la fecha introducida
      * @param _fecha de donde se obtiene el mes
+     * @return Devuelve un String con el mes
      */
     public String obtenerMes(String _fecha){
         String months[] = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
@@ -556,8 +751,9 @@ public class ControladorCelda {
 
 
     /** Pre: _fecha es una fecha valida
-     * Obtiene el año de la fecha introducida y lo pone en el valor de la celda
+     * Obtiene el año de la fecha introducida
      * @param _fecha introducida de donde se obtiene el año
+     * @return Devuelve un String con el año
      */
     public String obtenerAño(String _fecha){
         String dp[] = _fecha.split("/");
@@ -570,8 +766,9 @@ public class ControladorCelda {
     }
 
     /** Pre: _fecha es una fecha valida
-     * Obtiene el dia en forma numerica de la fecha introducida y lo pone en el valor de la celda
+     * Obtiene el dia en forma numerica de la fecha introducida
      * @param _fecha introducida de donde se obtiene el dia
+     * @return Devuelve un String con el dia
      */
     public String obtenerDia(String _fecha){
         String dp[] = _fecha.split("/");
@@ -584,8 +781,9 @@ public class ControladorCelda {
     }
 
     /** Pre: _fecha es una fecha valida
-     * Obtiene el nombre del dia en castellano de la fecha introducida y lo pone en el valor de la celda
+     * Obtiene el nombre del dia en castellano de la fecha introducida
      * @param _fecha introducida de donde se obtiene el nombre del dia
+     * @return Devuelve un String con el nombre del dia
      */
     public String obtenerNombreDia(String _fecha){
         /*Dado que DayOfWeek nos devuelve el dia en ingles, utilizaremos estas dos estructuras de datos para
@@ -616,8 +814,9 @@ public class ControladorCelda {
 
 
     /**
-     * Mide la longitud de la palabra introducia y lo pone en el valor de la celda
+     * Mide la longitud de la palabra introducia
      * @param _palabra introducida a medir
+     * @return Devuelve un String con la longitud de la palabra
      */
     public String longitudPalabra(String _palabra){
         return String.valueOf(_palabra.length());
