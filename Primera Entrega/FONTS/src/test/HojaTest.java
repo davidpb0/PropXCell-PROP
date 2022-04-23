@@ -1021,7 +1021,7 @@ public class HojaTest {
     }*/
 
     //Stub de Posicion que sustituye la clase Posicion asi como los metodos necesarios para el test
-    public static class PosicionStub extends Posicion{
+    private static class PosicionStub extends Posicion{
 
         public PosicionStub(int _fila, int _columna) {
             super(_fila, _columna);
@@ -1030,7 +1030,7 @@ public class HojaTest {
 
 
     //Stub de Celda que sustituye la clase Celda asi como los metodos necesarios para el test
-    public static class CeldaStub extends Celda{
+    private static class CeldaStub extends Celda{
         private PosicionStub pos;
         String contenido;
         ArrayList<Celda> refs;

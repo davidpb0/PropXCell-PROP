@@ -39,7 +39,9 @@ public class ControladorCelda {
       this.celdaRef = h.getCelda(new Posicion(Integer.parseInt(_f), Integer.parseInt(_c)));
    }
 
-
+    public Celda getCeldaRef(){
+       return this.celdaRef;
+    }
     /**
      * Escribe el contenido que le pasan en la celda, si es una funcion, llama a la funcion correspondiente y ademas
      * escribe su valor en la celda
@@ -48,12 +50,12 @@ public class ControladorCelda {
   public void escribirContenido(String _content){
        this.celdaRef.setContenido(_content);
 
-       String type = Traductor.detecta(_content);
+       String type = Traductor.getTraductor().detecta(_content);
        String[] arg;
       // if (_content = ref) ref.borrarRef(me);
        switch (type) {
            case "#ABS":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
                if(arg.length != 1) {
                    this.celdaRef.setValor("#ERROR");
                    break;
@@ -62,11 +64,12 @@ public class ControladorCelda {
                    this.celdaRef.setValor("#ERROR");
                    break;
                }
-               valorAbsoluto(Double.parseDouble(arg[0]));
+               String s = valorAbsoluto(Double.parseDouble(arg[0]));
+               this.celdaRef.setValor(s);
                break;
 
            case "#TRUNC":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
                if(arg.length != 2) {
                    this.celdaRef.setValor("#ERROR");
                    break;
@@ -75,11 +78,12 @@ public class ControladorCelda {
                    this.celdaRef.setValor("#ERROR");
                    break;
                }
-               truncarValor(Double.parseDouble(arg[0]), Integer.parseInt(arg[1]));
+               String s1 = truncarValor(Double.parseDouble(arg[0]), Integer.parseInt(arg[1]));
+               this.celdaRef.setValor(s1);
                break;
 
            case "#APROX":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
                if(arg.length != 1) {
                    this.celdaRef.setValor("#ERROR");
                    break;
@@ -88,11 +92,12 @@ public class ControladorCelda {
                    this.celdaRef.setValor("#ERROR");
                    break;
                }
-               aproximarValor(Double.parseDouble(arg[0]));
+               String s2 = aproximarValor(Double.parseDouble(arg[0]));
+               this.celdaRef.setValor(s2);
                break;
 
            case "#VDB":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
                if(arg.length != 1) {
                    this.celdaRef.setValor("#ERROR");
                    break;
@@ -101,11 +106,12 @@ public class ControladorCelda {
                    this.celdaRef.setValor("#ERROR");
                    break;
                }
-               convertirValorDB(Integer.parseInt(arg[0]));
+               String s3 = convertirValorDB(Integer.parseInt(arg[0]));
+               this.celdaRef.setValor(s3);
                break;
 
            case "#VBD":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
                if(arg.length != 1) {
                    this.celdaRef.setValor("#ERROR");
                    break;
@@ -114,20 +120,32 @@ public class ControladorCelda {
                    this.celdaRef.setValor("#ERROR");
                    break;
                }
-               convertirValorBD(Integer.parseInt(arg[0]));
+               boolean b  = false;
+               for (int i = 0; i < arg[0].length(); i++) {
+                   char c = arg[0].charAt(i);
+                   if(c != '0' || c != '1'){
+                       b = true;
+                       this.celdaRef.setValor("#ERROR");
+                       break;
+                   }
+               }
+               if (b) break;
+               String s4 = convertirValorBD(Integer.parseInt(arg[0]));
+               this.celdaRef.setValor(s4);
                break;
 
            case "#VHD":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
                if(arg.length != 1) {
                    this.celdaRef.setValor("#ERROR");
                    break;
                }
-               convertirValorHD(arg[0]);
+               String s5 = convertirValorHD(arg[0]);
+               this.celdaRef.setValor(s5);
                break;
 
            case "#VDH":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
                if(arg.length != 1) {
                    this.celdaRef.setValor("#ERROR");
                    break;
@@ -136,20 +154,22 @@ public class ControladorCelda {
                    this.celdaRef.setValor("#ERROR");
                    break;
                }
-               convertirValorDH(Integer.parseInt(arg[0]));
+               String s6 = convertirValorDH(Integer.parseInt(arg[0]));
+               this.celdaRef.setValor(s6);
                break;
 
            case "#VHB":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
                if(arg.length != 1) {
                    this.celdaRef.setValor("#ERROR");
                    break;
                }
-               convertirValorHB(arg[0]);
+               String s7 = convertirValorHB(arg[0]);
+               this.celdaRef.setValor(s7);
                break;
 
            case "#VBH":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
                if(arg.length != 1) {
                    this.celdaRef.setValor("#ERROR");
                    break;
@@ -158,11 +178,22 @@ public class ControladorCelda {
                    this.celdaRef.setValor("#ERROR");
                    break;
                }
-               convertirValorBH(Integer.parseInt(arg[0]));
+               b = false;
+               for (int i = 0; i < arg[0].length(); i++) {
+                   char c = arg[0].charAt(i);
+                   if(c != '0' || c != '1'){
+                       b = true;
+                       this.celdaRef.setValor("#ERROR");
+                       break;
+                   }
+               }
+               if (b) break;
+               String s8 = convertirValorBH(Integer.parseInt(arg[0]));
+               this.celdaRef.setValor(s8);
                break;
 
            case "#MES":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
                if(arg.length != 1) {
                    this.celdaRef.setValor("#ERROR");
                    break;
@@ -171,10 +202,12 @@ public class ControladorCelda {
                    this.celdaRef.setValor("#ERROR");
                    break;
                }
-               obtenerMes(arg[0]);
+               String s9 = obtenerMes(arg[0]);
+               this.celdaRef.setValor(s9);
                break;
+
            case "#AÑO":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
                if(arg.length != 1) {
                    this.celdaRef.setValor("#ERROR");
                    break;
@@ -183,10 +216,12 @@ public class ControladorCelda {
                    this.celdaRef.setValor("#ERROR");
                    break;
                }
-               obtenerAño(arg[0]);
+               String s10 = obtenerAño(arg[0]);
+               this.celdaRef.setValor(s10);
                break;
+
            case "#DIAS":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
                if(arg.length != 1) {
                    this.celdaRef.setValor("#ERROR");
                    break;
@@ -195,10 +230,12 @@ public class ControladorCelda {
                    this.celdaRef.setValor("#ERROR");
                    break;
                }
-               obtenerDia(arg[0]);
+               String s11 = obtenerDia(arg[0]);
+               this.celdaRef.setValor(s11);
                break;
+
            case "#NDIA":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
                if(arg.length != 1) {
                    this.celdaRef.setValor("#ERROR");
                    break;
@@ -207,25 +244,68 @@ public class ControladorCelda {
                    this.celdaRef.setValor("#ERROR");
                    break;
                }
-               obtenerNombreDia(arg[0]);
+               String s12 = obtenerNombreDia(arg[0]);
+               this.celdaRef.setValor(s12);
                break;
+
            case "#LONG":
                arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
                if(arg.length != 1) {
                    this.celdaRef.setValor("#ERROR");
                    break;
                }
-               longitudPalabra(arg[0]);
+               String s13 = longitudPalabra(arg[0]);
+               this.celdaRef.setValor(s13);
                break;
+
+           case "#CLETRA":
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
+               if(arg.length != 2) {
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               String s14 = contarLetra(arg[0], arg[1]);
+
+               if(s14 == "-1") this.celdaRef.setValor("#ERROR");
+               else this.celdaRef.setValor(s14);
+               break;
+
+           case "#REEMPPAL":
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
+               if(arg.length != 4) {
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               String s15 = reemplazarPalabra(arg[0], Integer.parseInt(arg[1]), Integer.parseInt(arg[2]), arg[3]);
+               if(s15 == "-1") this.celdaRef.setValor("#ERROR");
+               else this.celdaRef.setValor(s15);
+               break;
+
+           case "#REEMPLET":
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
+               if(arg.length != 2) {
+                   this.celdaRef.setValor("#ERROR");
+                   break;
+               }
+               String s16 = reemplazarCaracter(arg[0], arg[1], arg[2]);
+               if(s16 == "-1") this.celdaRef.setValor("#ERROR");
+               else this.celdaRef.setValor(s16);
+               break;
+
            case "#REFERENCIA":
-               //falta añadir la celda referenciada a la refrenciante
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
+               Celda reft = Traductor.getTraductor().traduceCelda(_content, this.hojaAct.getId());
+               reft.addReferenciante(this.celdaRef);
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
                this.celdaRef.setValor(arg[0]);
                break;
-           case "#MEDIA":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
 
-               boolean b  = false;
+           case "#MEDIA":
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
+               if(arg.length == 0) {
+                   this.celdaRef.setValor("#FALTANARGS");
+                   break;
+               }
+               b = false;
                for(String v : arg){
                    if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
                        this.celdaRef.setValor("#ERROR");
@@ -238,8 +318,11 @@ public class ControladorCelda {
                this.celdaRef.setValor(String.valueOf(m));*/
                break;
            case "#MEDIANA":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
-
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
+               if(arg.length == 0) {
+                   this.celdaRef.setValor("#FALTANARGS");
+                   break;
+               }
                b  = false;
                for(String v : arg){
                    if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
@@ -253,8 +336,11 @@ public class ControladorCelda {
                this.celdaRef.setValor(String.valueOf(m));*/
                break;
            case "#VAR":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
-
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
+               if(arg.length == 0) {
+                   this.celdaRef.setValor("#FALTANARGS");
+                   break;
+               }
                b  = false;
                for(String v : arg){
                    if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
@@ -269,8 +355,11 @@ public class ControladorCelda {
 
                break;
            case "#COV":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
-
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
+               if(arg.length == 0) {
+                   this.celdaRef.setValor("#FALTANARGS");
+                   break;
+               }
                b  = false;
                for(String v : arg){
                    if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
@@ -284,8 +373,11 @@ public class ControladorCelda {
                this.celdaRef.setValor(String.valueOf(m));*/
                break;
            case "#DESV":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
-
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
+               if(arg.length == 0) {
+                   this.celdaRef.setValor("#FALTANARGS");
+                   break;
+               }
                b  = false;
                for(String v : arg){
                    if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
@@ -299,8 +391,11 @@ public class ControladorCelda {
                this.celdaRef.setValor(String.valueOf(m));*/
                break;
            case "#COEFP":
-               arg = Traductor.getArgumentos(_content, hojaAct.getId());
-
+               arg = Traductor.getTraductor().getArgumentos(_content, hojaAct.getId());
+               if(arg.length == 0) {
+                   this.celdaRef.setValor("#FALTANARGS");
+                   break;
+               }
                b  = false;
                for(String v : arg){
                    if(!v.matches("[+-]?\\d*(\\.\\d+)?")){
@@ -334,7 +429,7 @@ public class ControladorCelda {
      * @param _op numero de decimales a truncar
      */
 
-   public void truncarValor(double _v, int _op) {
+   public String truncarValor(double _v, int _op) {
 
        String str = String.valueOf(Math.abs(_v));
 
@@ -351,9 +446,9 @@ public class ControladorCelda {
            int indice = (int) Math.pow(10, _op);
            _v = (int) (_v * indice);
            _v = (double) (_v / indice);
-           celdaRef.setContenido(String.valueOf(_v));
+           return (String.valueOf(_v));
        }
-       else celdaRef.setContenido("#ERROR");
+       else return "#ERROR";
 
     }
 
@@ -362,15 +457,15 @@ public class ControladorCelda {
      * Pone el valor absoluto del numero introducido en el valor de la celda
      * @param _a numero a poner en valor absoluto
      */
-    public void valorAbsoluto(double _a){
+    public String valorAbsoluto(double _a){
         //Para enteros que en decimal se escribe -> 5.0
         if((_a % 1) == 0) {
              int aux = (int) Math.abs(_a);
-            celdaRef.setValor(String.valueOf(aux));
+             return String.valueOf(aux);
         }
         else{
             _a = Math.abs(_a);
-            celdaRef.setValor(String.valueOf(_a));
+            return String.valueOf(_a);
         }
 
     }
@@ -379,9 +474,9 @@ public class ControladorCelda {
      * Aproxima el numero decimal introducido y lo pone en el valor de la celda
      * @param _v valor a aproximar
      */
-    public void aproximarValor(double _v){
+    public String aproximarValor(double _v){
         _v = Math.round(_v);
-        celdaRef.setValor(String.valueOf(_v));
+        return (String.valueOf(_v));
 
     }
 
@@ -389,25 +484,25 @@ public class ControladorCelda {
      * Covierte el valor en base decimal introducido y lo deja en el valor de la celda en base binaria
      * @param _dec valor decimal a convertir en binario
      */
-    public void convertirValorDB(int _dec){
-        this.celdaRef.setValor(Integer.toBinaryString(_dec));
+    public String convertirValorDB(int _dec){
+        return Integer.toBinaryString(_dec);
     }
 
     /**
      * Covierte el valor en base binaria introducido y lo deja en el valor de la celda en base decimal
      * @param _b valor binario a convertir en decimal
      */
-    public void convertirValorBD(int _b){
+    public String convertirValorBD(int _b){
         int dec = Integer.parseInt(String.valueOf(_b), 2);
-        this.celdaRef.setValor(String.valueOf(dec));
+        return (String.valueOf(dec));
     }
 
     /**
      * Covierte el valor en base decimal introducido y lo deja en el valor de la celda en base hexadecimal
      * @param _dec valor en decimal a convertir en hexadecimal
      */
-    public void convertirValorDH(int _dec){
-        this.celdaRef.setValor(Integer.toHexString(_dec));
+    public String convertirValorDH(int _dec){
+        return Integer.toHexString(_dec);
     }
 
 
@@ -415,35 +510,36 @@ public class ControladorCelda {
      * Covierte el valor en base hexadecimal introducido y lo deja en el valor de la celda en base decimal
      * @param _h valor hexadecimal a convertir en decimal
      */
-    public void convertirValorHD(String _h){
+    public String convertirValorHD(String _h){
         int dec = Integer.parseInt(_h, 16);
-        this.celdaRef.setValor(String.valueOf(dec));
+        return String.valueOf(dec);
     }
 
     /**
      * Covierte el valor en base binairia introducido y lo deja en el valor de la celda en base hexadecimal
      * @param _b valor binario a convertir en hexadecimal
      */
-    public void convertirValorBH(int _b){
+    public String convertirValorBH(int _b){
         int dec = Integer.parseInt(String.valueOf(_b), 2);
-        this.celdaRef.setValor(Integer.toHexString(dec));
+        return Integer.toHexString(dec);
     }
 
 
     /**
      * Covierte el valor en base hexadecimal introducido y lo deja en el valor de la celda en base binaria
      * @param _h valor hexadecimal a convertir en binario
+     * @return
      */
-    public void convertirValorHB(String _h){
+    public String convertirValorHB(String _h){
         int decConv = Integer.parseInt(_h, 16);
-        this.celdaRef.setValor(Integer.toBinaryString(decConv));
+        return Integer.toBinaryString(decConv);
     }
 
-    /**
+    /** Pre: _fecha es una fecha valida
      * Obtiene el mes de la fecha introducida y lo pone en el valor de la celda
      * @param _fecha de donde se obtiene el mes
      */
-    public void obtenerMes(String _fecha){
+    public String obtenerMes(String _fecha){
         String months[] = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
             "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
 
@@ -452,46 +548,46 @@ public class ControladorCelda {
 
         int mth = Integer.parseInt(m);
         if(mth > 0 && mth <= 12){
-            this.celdaRef.setValor(months[mth-1]);
+            return (months[mth-1]);
         }
-        else this.celdaRef.setValor("#ERROR");
+        return "#ERROR";
 
     }
 
 
-    /**
+    /** Pre: _fecha es una fecha valida
      * Obtiene el año de la fecha introducida y lo pone en el valor de la celda
      * @param _fecha introducida de donde se obtiene el año
      */
-    public void obtenerAño(String _fecha){
+    public String obtenerAño(String _fecha){
         String dp[] = _fecha.split("/");
         String y = dp[2];
 
         int yr = Integer.parseInt(y);
-        if(yr >= 0) this.celdaRef.setValor(y);
-        else this.celdaRef.setValor("#ERROR");
+        if(yr >= 0) return y;
+        else return"#ERROR";
 
     }
 
-    /**
+    /** Pre: _fecha es una fecha valida
      * Obtiene el dia en forma numerica de la fecha introducida y lo pone en el valor de la celda
      * @param _fecha introducida de donde se obtiene el dia
      */
-    public void obtenerDia(String _fecha){
+    public String obtenerDia(String _fecha){
         String dp[] = _fecha.split("/");
         String d = dp[0];
 
         int dy = Integer.parseInt(d);
-        if(dy >= 0) this.celdaRef.setValor(d);
-        else this.celdaRef.setValor("#ERROR");
+        if(dy >= 0) return d;
+        else return "#ERROR";
 
     }
 
-    /**
+    /** Pre: _fecha es una fecha valida
      * Obtiene el nombre del dia en castellano de la fecha introducida y lo pone en el valor de la celda
      * @param _fecha introducida de donde se obtiene el nombre del dia
      */
-    public void obtenerNombreDia(String _fecha){
+    public String obtenerNombreDia(String _fecha){
         /*Dado que DayOfWeek nos devuelve el dia en ingles, utilizaremos estas dos estructuras de datos para
         traducirlos al castellano*/
 
@@ -513,8 +609,8 @@ public class ControladorCelda {
         int dy = Integer.parseInt(dp[0]);
 
         if(dy >= 0 && y >= 0 && (mt > 0 && mt < 12)) {
-            this.celdaRef.setValor(dias.get(LocalDate.of(y, m, dy).getDayOfWeek().getValue()));
-        } else this.celdaRef.setValor("#ERROR");
+            return dias.get(LocalDate.of(y, m, dy).getDayOfWeek().getValue());
+        } return "#ERROR";
 
     }
 
@@ -523,8 +619,8 @@ public class ControladorCelda {
      * Mide la longitud de la palabra introducia y lo pone en el valor de la celda
      * @param _palabra introducida a medir
      */
-    public void longitudPalabra(String _palabra){
-        this.celdaRef.setValor(String.valueOf(_palabra.length()));
+    public String longitudPalabra(String _palabra){
+        return String.valueOf(_palabra.length());
     }
 
 
@@ -535,10 +631,10 @@ public class ControladorCelda {
      * @return Devuelve true si la función se ha relaizado correctamente, false si la palabra no contiene la letra a
      * contar
      */
-    public boolean contarLetra(String _palabra, String _letra){
+    public String contarLetra(String _palabra, String _letra){
         char aux;
         int count = 0;
-        if(!_palabra.contains(_letra)) return false;
+        if(!_palabra.contains(_letra)) return "-1";
 
         for(int i = 0; i < _palabra.length(); i++){
             aux = _palabra.charAt(i);
@@ -546,8 +642,8 @@ public class ControladorCelda {
                 ++count;
             }
         }
-        this.celdaRef.setValor(String.valueOf(count));
-        return true;
+        return String.valueOf(count);
+
     }
 
 
@@ -561,13 +657,13 @@ public class ControladorCelda {
      * parametros introducidos
      */
 
-    public boolean reemplazarPalabra(String _txt, int _pos, int _long,  String _ntxt){
-        if(_pos > _txt.length()) return false;
-        if(_pos < 0 || _long <= 0) return false;
-        if(_long-1 > _txt.length()-_pos) return false;
+    public String reemplazarPalabra(String _txt, int _pos, int _long,  String _ntxt){
+        if(_pos > _txt.length()) return "-1";
+        if(_pos < 0 || _long <= 0) return "-1";
+        if(_long-1 > _txt.length()-_pos) return "-1";
        String s = _txt.substring(_pos-1, _pos+_long-1);
-       this.celdaRef.setValor(_txt.replaceAll(s, _ntxt));
-       return true;
+       return _txt.replaceAll(s, _ntxt);
+
 
     }
 
@@ -579,10 +675,10 @@ public class ControladorCelda {
      * @return Devuelve cierto si la funcion se ha realizado correctamente, falso en caso de que el caracter a sustituir
      * no exista en el texto introducido
      */
-    public boolean reemplazarCaracter(String _txt, String _cr, String _nc){
-        if(!_txt.contains(_cr)) return false;
-        this.celdaRef.setValor(_txt.replace(_cr, _nc));
-        return true;
+    public String reemplazarCaracter(String _txt, String _cr, String _nc){
+        if(!_txt.contains(_cr)) return "-1";
+        return _txt.replace(_cr, _nc);
+
 
     }
 
