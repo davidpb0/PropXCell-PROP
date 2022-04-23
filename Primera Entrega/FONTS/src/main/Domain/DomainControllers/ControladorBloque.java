@@ -55,8 +55,18 @@ public class ControladorBloque {
         }
     }
 
+    /**
+     * Define los parámetros del bloque seleccionado
+     * @param _idH id de la hoja a la que pertenece el bloque
+     * @param _filaInicial fila de la celda superior izquierda que define el bloque
+     * @param _columnaInicial columna de la celda superior izquierda que define el bloque
+     * @param _filaFinal fila de la celda inferior derecha que define el bloque
+     * @param _columnaFinal columna de la celda inferior derecha que define el bloque
+     */
     public void setBloqueSeleccionado(int _idH, int _filaInicial, int _columnaInicial, int _filaFinal, int _columnaFinal) {
         Hoja h = Documento.getDocumento().getHoja(_idH);
-
+        Celda inicialC = h.getCelda(new Posicion(_filaInicial, _columnaInicial));
+        Celda finalC = h.getCelda(new Posicion(_filaFinal, _columnaFinal));
+        BloqueSeleccionado.getBloque().setCelda(inicialC, finalC, h);
     }
 }
