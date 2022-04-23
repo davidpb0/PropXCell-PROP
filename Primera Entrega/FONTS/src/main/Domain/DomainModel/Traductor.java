@@ -217,7 +217,7 @@ public class Traductor {
                 ret.add(c.getValor());
             }
         } else { // Otro valor
-            System.out.println("Es un valor.");
+            System.out.println("Es un valor. String a añadir: " + f);
             ret.add(f);
         }
 
