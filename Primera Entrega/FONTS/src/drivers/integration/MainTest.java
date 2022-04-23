@@ -57,6 +57,8 @@ public class MainTest {
                         case 1:
                             cd = new ControladorDocumento();
                             ch = new ControladorHoja();
+                            ch.asignaHoja(1);
+                            hojaSeleccionada = true;
                             cc = new ControladorCelda();
                             cb = new ControladorBloque();
                             System.out.println("Documento creado correctamente.");
@@ -111,8 +113,7 @@ public class MainTest {
                             break;
 
                         case 5:
-                            if (ch.getIdHoja() == 0) System.out.println("Bug: Con la hoja 0 no se puede trabajar. Selecciona otra.");
-                            else if (!hojaSeleccionada) {
+                            if (!hojaSeleccionada) {
                                 System.out.println("Actualmente no hay ninguna hoja seleccionada.");
                                 break;
                             } else {
