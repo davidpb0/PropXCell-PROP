@@ -11,7 +11,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Traductor {
 
@@ -195,10 +194,11 @@ public class Traductor {
         String f = _funcion;
         if (_funcion.startsWith("=")) f = f.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')') - 1);
         else System.err.println("Argumento erróneo, el string proporcionado tiene que ser de tipo =func(arg). String actual: " + _funcion);
-        List<String> ret = null;
+        ArrayList<String> ret = new ArrayList<String>();
 
 
         if (f.startsWith("$") && f.length() <= 5) { // Como mucho $AA11
+            System.out.println("Es una referencia a una celda.");
             Celda c = getTraductor().traduceCelda(f.substring(1, f.length() - 1), _idH);
             try {
                 ret.add(c.getValor());
@@ -206,6 +206,7 @@ public class Traductor {
                 System.err.println("Intento de acceso a celda inexistente o vacía.");
             }
         } else if (f.contains(":")) { // $A1:$B2
+            System.out.println("Es un intervalo de celdas.");
             String from = f.split(":")[0];
             String to = f.split(":")[1];
             from = from.replaceAll("[$]", "");
@@ -215,7 +216,10 @@ public class Traductor {
             for (Celda c : intervalo) {
                 ret.add(c.getValor());
             }
-        } else ret.add(f); // Otro valor
+        } else { // Otro valor
+            System.out.println("Es un valor.");
+            ret.add(f);
+        }
 
         return ret.toArray(new String[0]);
     }
