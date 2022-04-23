@@ -8,6 +8,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
         BloqueSeleccionadoTest.class,
+        BloqueTemporalCopiadoTest.class,
         CeldaTest.class,
         DocumentoTest.class,
         HojaTest.class,

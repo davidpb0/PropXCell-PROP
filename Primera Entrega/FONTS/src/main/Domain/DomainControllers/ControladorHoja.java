@@ -1,15 +1,14 @@
 package main.Domain.DomainControllers;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import main.Domain.DomainModel.Celda;
 import main.Domain.DomainModel.Documento;
 import main.Domain.DomainModel.Hoja;
+import main.Domain.DomainModel.Posicion;
 
 /*ClassName ControladorHoja
  *
- * Version info 0.1
+ * Version info 1.0.0
  *
  * Author Daniel Gallardo Peña
  */
@@ -22,7 +21,7 @@ public class ControladorHoja {
 
     /**
     * Se guarda la hoja que le pasa presentación.
-    * @param _idh identificador de la hoja
+    * @param _idh identificador de la hoja que siempre corresponderá a una hoja existente
     */
     public void asignaHoja(int _idh) {
         hojaRef = Documento.getDocumento().getHoja(_idh);
@@ -31,8 +30,10 @@ public class ControladorHoja {
     /**
     * Se añaden un conjunto de filas en blanco a partir un número de fila.
     * Las filas que habían en la posición _pos y posteriores se moveran _num posiciones hacia delante.
-    * @param _pos numero de fila que tendrá la primera fila del bloque añadido
-    * @param _num numero de filas añadidas
+    * @param _pos numero de fila que tendrá la primera fila del bloque añadido.
+    * Siempre será un número de fila existente o el inmediatamente superior a la última fila
+    * @param _num numero de filas añadidas, siempre es positivo
+    * @
     */
     public void addFilas(int _pos, int _num) {
         int numFilas = hojaRef.getFilas();
@@ -41,14 +42,15 @@ public class ControladorHoja {
         // Movemos todas las filas por encima de _pos _num posiciones 
         for (int iterFilas = numFilas; iterFilas >= _pos; --iterFilas) {
             for (int iterColums = 1; iterColums <= numColums; ++iterColums) {
-                hojaRef.cambiarPosicionCelda(iterFilas, iterColums, iterFilas + _num, iterColums);
+                hojaRef.cambiarPosicionCelda(new Posicion(iterFilas, iterColums), new Posicion(iterFilas + _num, iterColums));
             }
         }
 
         // Añadimos las nuevas filas
         for (int iterFilas = 0; iterFilas < _num; ++iterFilas) {
             for (int iterColums = 1; iterColums <= numColums; ++iterColums) {
-                hojaRef.addCeldaVacia(_pos + iterFilas, iterColums);
+                hojaRef.addCeldaVacia(new Posicion(_pos + iterFilas, iterColums));
+
             }
         }
 
@@ -59,7 +61,8 @@ public class ControladorHoja {
     * Se añaden un conjunto de columnas en blanco a partir un número de columna.
     * Las columnas que habían en la posición _pos y posteriores se moveran _num posiciones hacia delante.
     * @param _pos numero de columna que tendrá la primera columna del bloque añadido
-    * @param _num numero de columnas añadidas
+    * Siempre será un número de columna existente o el inmediatamente superior a la última fila
+    * @param _num numero de columnas añadidas, siempre es positivo
     */
     public void addColumnas(int _pos, int _num) {
         int numFilas = hojaRef.getFilas();
@@ -68,14 +71,14 @@ public class ControladorHoja {
         // Movemos todas las columnas a la derecha de _pos _num posiciones 
         for (int iterFilas = 1; iterFilas <= numFilas; ++iterFilas) {
             for (int iterColums = numColums; iterColums >= _pos; --iterColums) {
-                hojaRef.cambiarPosicionCelda(iterFilas, iterColums, iterFilas, iterColums + _num);
+                hojaRef.cambiarPosicionCelda(new Posicion(iterFilas, iterColums), new Posicion(iterFilas, iterColums + _num));
             }
         }
 
         // Añadimos las nuevas columnas
         for (int iterFilas = 1; iterFilas <= numFilas; ++iterFilas) {
             for (int iterColums = 0; iterColums < _num; ++iterColums) {
-                hojaRef.addCeldaVacia(iterFilas, _pos + iterColums);
+                hojaRef.addCeldaVacia(new Posicion(iterFilas, _pos + iterColums));
             }
         }
 
@@ -84,9 +87,11 @@ public class ControladorHoja {
 
     /**
     * Se elimina el conjunto de filas contiguas indicadas a partir de un número de fila.
-    * Las filas posteriores al conjunto de filas indicado reocuparan esas posiciones inferiores.
-    * @param _pos numero de columna que tendrá la primera fila del conjunto a borrar
-    * @param _num numero de filas a eliminar
+    * Las filas posteriores al conjunto de filas borrado reocuparan esas posiciones inferiores.
+    * @param _pos numero de columna que tendrá la primera fila del conjunto a borrar.
+    * Siempre será un número de fila existente
+    * @param _num numero de filas a eliminar, siempre es >= 1 
+    * Pre: Se garantiza que numero de filas total - _pos >= _num + 1
     */
     public void eliminarFilas(int _pos, int _num) {
         int numFilas = hojaRef.getFilas();
@@ -95,14 +100,14 @@ public class ControladorHoja {
         // Borramos las filas indicada
         for (int iterFilas = 0; iterFilas < _num; ++iterFilas) {
             for (int iterColums = 1; iterColums <= numColums; ++iterColums) {
-                hojaRef.quitarCelda(_pos + iterFilas, iterColums);
+                hojaRef.quitarCelda(new Posicion(_pos + iterFilas, iterColums));
             }
         }
 
         // Reasignamos la posicion a las filas posteriores
         for (int iterFilas = _pos + 1; iterFilas <= numFilas; ++iterFilas) {
             for (int iterColums = 1; iterColums <= numColums; ++iterColums) {
-                hojaRef.cambiarPosicionCelda(iterFilas, iterColums, iterFilas - 1, iterColums);
+                hojaRef.cambiarPosicionCelda(new Posicion(iterFilas, iterColums), new Posicion(iterFilas - 1, iterColums));
             }
         }
 
@@ -111,9 +116,11 @@ public class ControladorHoja {
 
     /**
     * Se elimina el conjunto de columnas contiguas indicadas a partir de un número de columna.
-    * Las columnas posteriores al conjunto de columnas indicado reocuparan esas posiciones inferiores.
-    * @param _pos numero de columna que tendrá la primera columna del conjunto a borrar
-    * @param _num numero de columnas a eliminar
+    * Las columnas posteriores al conjunto de columnas borrado reocuparan esas posiciones inferiores.
+    * @param _pos numero de columna que tendrá la primera columna del conjunto a borrar.
+    * Siempre será un número de columna existente
+    * @param _num numero de columnas a eliminar, siempre es >= 1
+    * Pre: Se garantiza que numero de filas total - _pos >= _num + 1
     */
     public void eliminarColumnas(int _pos, int _num) {
         int numFilas = hojaRef.getFilas();
@@ -122,14 +129,14 @@ public class ControladorHoja {
         // Borramos las columna indicada
         for (int iterFilas = 1; iterFilas <= numFilas; ++iterFilas) {
             for (int iterColums = 0; iterColums < _num; ++iterColums) {
-                hojaRef.quitarCelda(iterFilas, _pos + iterColums);
+                hojaRef.quitarCelda(new Posicion(iterFilas, _pos + iterColums));
             }
         }
 
         // Reasignamos la posicion a las columnas posteriores
         for (int iterFilas = 1; iterFilas <= numFilas; ++iterFilas) {
             for (int iterColums =  _pos + 1; iterColums <= numColums; ++iterColums) {
-                hojaRef.cambiarPosicionCelda(iterFilas, iterColums, iterFilas, iterColums - 1);
+                hojaRef.cambiarPosicionCelda(new Posicion(iterFilas, iterColums), new Posicion(iterFilas, iterColums - 1));
             }
         }
 
@@ -137,41 +144,26 @@ public class ControladorHoja {
     }
 
     /**
-    * Devuelve los valores de las celdas indicadas en formato array.
-    * @param _celdas ArrayList de celdas de las cuales obtener los valores
-    * @return Array de valores de las columnas indicadas en formato double
+    * Obtiene la media aritmética de los valores del conjunto indicado.
+    * @param _valores conjunto de valores sobre las que se calculará la media, todos son números válidos
+    * @return media aritmética de los elementos de _valores
     */
-    private static double[] getValores(ArrayList<Celda> _celdas) {
-        int numValores = _celdas.size();
-        double[] valores = new double[_celdas.size()];
-
-        for (int i = 0; i < numValores; i++) {
-            valores[i] = Double.parseDouble(_celdas.get(i).getValor());
-        }
-
-        return valores;
-    }
-
-    /**
-    * Obtiene la media aritmética de los valores que contienen las celdas que se indican.
-    * @param _celdas conjunto de celdas sobre las que se calculará la media
-    * @return media aritmética del valor las celdas indicadas por _celdas
-    */
-    public static double media(ArrayList<Celda> _celdas) {
+    public static double media(String[] _valores) {
         double media = 0;
 
-        for (Celda celda : _celdas) media += Double.parseDouble(celda.getValor());
+        for (String v : _valores) media += Double.parseDouble(v);
         
-        return media / _celdas.size();
+        return media / _valores.length;
     }
 
     /**
-    * Obtiene la mediana de los valores que contienen las celdas que se indican.
-    * @param _celdas conjunto de celdas sobre las que se calculará la mediana
-    * @return mediana del valor las celdas indicadas por _celdas
+    * Obtiene la mediana de los valores del conjunto indicado.
+    * @param _valores conjunto de valores sobre las que se calculará la mediana, todos son números válidos
+    * @return mediana de los elementos de _valores
     */
-    public static double mediana(ArrayList<Celda> _celdas) {
-        double[] valores = ControladorHoja.getValores(_celdas);
+    public static double mediana(String[] _valores) {
+        //Convertimos el array de Strings a array de Double
+        double[] valores = Arrays.stream(_valores).mapToDouble(Double::parseDouble).toArray();
 
         Arrays.sort(valores);
         double mediana;
@@ -182,45 +174,78 @@ public class ControladorHoja {
     }
 
     /**
-    * Obtiene la varianza de los valores que contienen las celdas que se indican.
-    * @param _celdas conjunto de celdas sobre las que se calculará la varianza
-    * @return varianza del valor las celdas indicadas por _celdas
+    * Obtiene la varianza de los valores del conjunto indicado.
+    * @param _valores conjunto de valores sobre las que se calculará la varianza, todos son números válidos
+    * @return varianza de los elementos de _valores
     */
-    public static double varianza(ArrayList<Celda> _celdas) {
-        double media = ControladorHoja.media(_celdas);
+    public static double varianza(String[] _valores) {
+        double sx = 0;
+        double sxx = 0;
+        int n = _valores.length;
 
-        double varianza = 0;
-        for (Celda celda : _celdas) varianza += Math.pow(Double.parseDouble(celda.getValor()) - media, 2);
+        for (String x : _valores) {
+            double valor = Double.parseDouble(x);
+            sx += valor;
+            sxx += valor * valor; 
+        }
 
-        return varianza / _celdas.size();
+        // Varianza = E(X^2) - E(X)^2
+        return sxx/n - sx/n * sx/n;
     }
 
     /**
-    * Obtiene la desviación estandard de los valores que contienen las celdas que se indican.
-    * @param _celdas conjunto de celdas sobre las que se calculará la desviación estandard
-    * @return desviación estandard del valor las celdas indicadas por _celdas
+    * Obtiene la desviación estandard de los valores del conjunto indicado.
+    * @param _valores conjunto de valores sobre las que se calculará la desviación estandard, todos son números válidos
+    * @return desviación estandard de los elementos de _valores
     */
-    public static double desvEstandar(ArrayList<Celda> _celdas) {
-        return Math.sqrt(ControladorHoja.varianza(_celdas));
+    public static double desvEstandar(String[] _valores) {
+        return Math.sqrt(ControladorHoja.varianza(_valores));
     }
 
     /**
-    * Obtiene el coeficiente de Pearson de los valores que contienen los dos conjuntos de celdas indicados.
-    * @param _x primer conjunto de celdas sobre las que se calculará el coeficiente de correlación de Pearson
-    * @param _y segundo conjunto de celdas sobre las que se calculará el coeficiente de correlación de Pearson
-    * @return coeficiente de correlación de Pearson de los valores las celdas indicadas por _x e _y
+    * Obtiene la covarianza resultante de los dos conjuntos de valores indicados.
+    * @param _valoresX primer conjunto de valores sobre las que se calculará la covarianza, todos son números válidos
+    * @param _valoresY segundo conjunto de celdas sobre las que se calculará la covarianza, todos son números válidos
+    * @return covarianza resultante de los dos conjuntos de valores _valoresX y _valoresY
+    * Pre: Tanto _valoresX como _valoresY tienen el mismo número de elementos
     */
-    public static double CorrelacionPearson(ArrayList<Celda> _x, ArrayList<Celda> _y) {
-        double sx = 0.0;
-        double sy = 0.0;
-        double sxx = 0.0;
-        double syy = 0.0;
-        double sxy = 0.0;
-    
-        int n = _x.size();
+    public static double covarianza(String[] _valoresX, String[] _valoresY) {
+        double sx = 0;
+        double sy = 0;
+        double sxy = 0;
+        int n = _valoresX.length;
+
         for(int i = 0; i < n; ++i) {
-            double x = Double.parseDouble(_x.get(i).getValor());
-            double y = Double.parseDouble(_y.get(i).getValor());
+            double x = Double.parseDouble(_valoresX[i]);
+            double y = Double.parseDouble(_valoresY[i]);
+            
+            sx += x;
+            sy += y;
+            sxy += x * y;
+        }
+
+        // Covarianza = E(XY) - E(X)*E(Y)
+        return sxy/n - sx/n * sy/n;
+    }
+
+    /**
+    * Obtiene el coeficiente de correlacion de Pearson resultante de los dos conjuntos de valores indicados.
+    * @param _valoresX primer conjunto de valores sobre las que se calculará el coeficiente de correlacion de Pearson, todos son números válidos
+    * @param _valoresY segundo conjunto de celdas sobre las que se calculará el coeficiente de correlacion de Pearson, todos son números válidos
+    * @return coeficiente de correlacion de Pearson resultante de los dos conjuntos de valores _valoresX y _valoresY
+    * Pre: Tanto _valoresX como _valoresY tienen el mismo número de elemento
+    */
+    public static double correlacionPearson(String[] _valoresX, String[] _valoresY) {
+        double sx = 0;
+        double sy = 0;
+        double sxx = 0;
+        double syy = 0;
+        double sxy = 0;
+        int n = _valoresX.length;
+        
+        for(int i = 0; i < n; ++i) {
+            double x = Double.parseDouble(_valoresX[i]);
+            double y = Double.parseDouble(_valoresY[i]);
             
             sx += x;
             sy += y;
@@ -229,13 +254,13 @@ public class ControladorHoja {
             sxy += x * y;
         }
     
-        // Covarianza
-        double cov = sxy / n - sx * sy / n / n;
-        // Desviación estandard de X
-        double sigmax = Math.sqrt(sxx / n -  sx * sx / n / n);
-        // Desviación estandard de Y
-        double sigmay = Math.sqrt(syy / n -  sy * sy / n / n);
+        // Covarianza = E(XY) - E(X)*E(Y)
+        double cov = sxy/n - sx/n * sy/n;
+        // Desviación estandard de X = sqrt(E(X^2) - E(X)^2)
+        double sigmaX = Math.sqrt(sxx/n - sx/n * sx/n);
+        // Desviación estandard de Y = sqrt(E(Y^2) - E(Y)^2)
+        double sigmaY = Math.sqrt(syy/n - sy/n * sy/n);
     
-        return cov / (sigmax * sigmay);
+        return cov / (sigmaX * sigmaY);
       }
 }

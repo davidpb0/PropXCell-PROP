@@ -4,7 +4,7 @@ import java.util.Objects;
 /*
  * Posicion
  *
- * v0.0.1
+ * v1.0.0
  *
  * Daniel Gallardo Peña
  */
@@ -15,12 +15,12 @@ public class Posicion {
 
     /**
      * Constructora de posicion
-     * @param columna un entero que representa la columna
-     * @param fila un entero que representa la fila
+     * @param columna un entero que representa la columna, siempre es >=1
+     * @param fila un entero que representa la fila, siempre es >= 1
      */
-    public Posicion(int fila, int columna) {
-        this.fila = fila;
-        this.columna = columna;
+    public Posicion(int _fila, int _columna) {
+        this.fila = _fila;
+        this.columna = _columna;
     }
 
     /**
@@ -39,19 +39,27 @@ public class Posicion {
         return columna;
     }
 
+    /**
+     * Reimplementación de la igualdad para los objetos de tipo Posicion.
+     * Dos objetos Posicion son iguales si tienen el mismo numero de fila y de columna.
+     * @param _o objeto a comparar con el objeto actual
+     */
     @Override
-    public boolean equals(Object o){
-        if (this == o)
+    public boolean equals(Object _o){
+        if (this == _o)
             return true;
-        if (o == null || getClass() != o.getClass())
+        if (_o == null || getClass() != _o.getClass())
             return false;
-        Posicion that = (Posicion) o;
+        Posicion that = (Posicion) _o;
         return fila == that.fila && columna == that.columna;
     }
 
     @Override
+    /**
+     * Reimplementacion de la funcion que calcula el hashcode de los objetos de tipo Posicion.
+     * @return entero con el hash code de el objeto actual 
+     */
     public int hashCode() {
         return Objects.hash(fila, columna);
     }
-
 }

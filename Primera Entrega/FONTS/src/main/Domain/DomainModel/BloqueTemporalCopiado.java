@@ -2,7 +2,7 @@ package main.Domain.DomainModel;
 /*
  * ClassName DomainModel.BloqueTemporalCopiado
  *
- * Version info 0.1
+ * Version info 1.0.0
  *
  * Author Daniel Gallardo Peña
  */
@@ -31,7 +31,7 @@ public class BloqueTemporalCopiado {
 
         for (int iterFila = filaIni; iterFila <= filaFin; ++iterFila) {
             for (int iterColum = columIni; iterColum <= columFin; ++iterColum) {
-                bloqueCopiado[iterFila - filaIni][iterColum - columIni] = new Celda(hoja.getCelda(iterFila, iterColum));
+                bloqueCopiado[iterFila - filaIni][iterColum - columIni] = new Celda(hoja.getCelda(new Posicion(iterFila, iterColum)));
             }     
         }
     }
@@ -54,8 +54,8 @@ public class BloqueTemporalCopiado {
     
     /**
      * Devuelve la celda de la posición indicada
-     * @param _f indica la fila relativa dentro del bloque temporal copiado (1 <= _f <= numFilas)
-     * @param _c indica la columna relativa dentro del bloque temporal copiado (1 <= _c <= numCols)
+     * @param _f indica la fila relativa dentro del bloque temporal copiado (1 <= _f <= numero de filas)
+     * @param _c indica la columna relativa dentro del bloque temporal copiado (1 <= _c <= numero de columnas)
      * @return la celda con Posicion(f, c)
      */
     public Celda getCelda(int _f, int _c) {
@@ -63,13 +63,14 @@ public class BloqueTemporalCopiado {
     }
 
     /**
-     * Setea el atributo cortar
-     * @param _cortar nuevo valor del atributo
+     * Setea el atributo cortar para indicar que el bloque se esta copiando con la funcionalidad de Cortar
+     * @param _cortar cierto si el bloque se ha copiado con la funcionalidad de Cortar, sino falso
      */
     public void setCortar(Boolean _cortar) { this.cortar = _cortar;}
 
     /**
-     * @return el atributo cortar del bloque
+     * Indica si el bloque se ha copiado con la funcionalidad de Cortar
+     * @return si el bloque se ha copiado mediante la funcionalidad de Cortar devuelve cierto, sino falso
      */
     public Boolean getCortar() { return this.cortar;}
 }
