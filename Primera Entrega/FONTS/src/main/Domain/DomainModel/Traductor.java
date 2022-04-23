@@ -105,6 +105,7 @@ public class Traductor {
     }
 
     /**
+     * Pre: _formula es de tipo "=func1aria(args)", "=funcNaria(arg1, arg2)", "=$AA11", o "01/01/01"
      * @param _formula contenido introducido por el usuario
      * @return tipo de contenido especificado por la fórmula
      */
@@ -134,20 +135,17 @@ public class Traductor {
             else if (_formula.indexOf("=reemplazarPal(") == 0) return "#REEMPPAL";
             else if (_formula.indexOf("=reemplazarLet(") == 0) return "#REEMPLET";
             else return "#ERRORFUNC";
-        } else if (_formula.charAt(0) == '$' && _formula.length() <= 5) { // Como mucho $AA11
+        } else if (_formula.charAt(1) == '$' && _formula.length() <= 6) { // Como mucho =$AA11
             return "#REFERENCIA";
         } else if (_formula.charAt(2) == '/' && _formula.charAt(5) == '/') {
-            try {
-                Date fecha = getTraductor().StringDate(_formula);
-                return "#FECHA";
-            } catch (ParseException pe) {
-                return "#ERRORFECHA";
-            }
+            Date fecha = getTraductor().StringDate(_formula);
+            return "#FECHA";
         }
         return "#VALUE";
     }
 
     /**
+     * Pre: _c es un string desde "A" hasta "ZZ"
      * Retorna el número de columna que corresponde a su valor alfabético
      * @param _c columna(alfabético)
      * @return identificador de la columna que corresponde a su valor alfabético
@@ -165,6 +163,7 @@ public class Traductor {
     }
 
     /**
+     * Pre: _pos es una posición que existe desde "$A1" hasta "$ZZ99", _idH es el id de una hoja que existe
      * Retorna la celda asociada a los parámetros de entrada
      * @param _pos posición de la celda en la hoja
      * @param _idH hoja en la que se encuentra la celda
@@ -176,7 +175,7 @@ public class Traductor {
         String s = _pos;
         if (_pos.startsWith("$")) s = _pos.substring(1);
         int j = 0;
-        while (j < s.length() && s.charAt(j) <= 'Z') ++j;
+        while (j < s.length() && s.charAt(j) >= 'A' && s.charAt(j) <= 'Z') ++j;
         String columna = s.substring(0, j - 1);
         String fila = s.substring(j);
         Posicion p = new Posicion(getTraductor().StringInt(fila), traduceColumna(columna));
@@ -186,14 +185,16 @@ public class Traductor {
     }
 
     /**
+     * Pre: _funcion es un String de tipo "=func1aria(arg)", _idH corresponde al id de una hoja que existe
      * Retorna los argumentos de una función introducida por el usuario
      * @param _funcion la expresión introducida por el usuario
      * @return un array de String con cada valor que especifica el argumento
      */
-    public String[] getArgumentos(String _funcion, int _idH) {
+    public String[] getArgumentosFuncion1aria(String _funcion, int _idH) {
         Hoja h = Documento.getDocumento().getHoja(_idH);
         String f = _funcion;
-        if (_funcion.startsWith("=")) f = _funcion.substring(_funcion.indexOf('('), _funcion.lastIndexOf(')'));
+        if (_funcion.startsWith("=")) f = f.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')') - 1);
+
         String[] args = f.split(",");
         List<String> ret = null;
 
@@ -221,7 +222,42 @@ public class Traductor {
         return (String[]) ret.toArray();
     }
 
-    /*public Posicion getPosReferencia(String _ref){
+    /**
+     * Pre: _funcion es un String de tipo "=funcNaria(arg1, arg2)", _idH corresponde al id de una hoja que existe
+     * @param _funcion introducida por el usuario.
+     * @param _idH id de la hoja actual.
+     * @return un vector que contiene 2 vectores de Strings, uno con los argumentos antes de la coma y el otro
+     * con los argumentos después de la coma.
+     */
+    public String[][] getArgumentosFuncionNaria(String _funcion, int _idH) {
+        String[][] ret = new String[2][];
+        String f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')') - 1);
+        String[] args = f.split(",");
+        if (args.length != 2) {} //EXCEPCION
 
-    }*/
+        for (int i = 0; i < 2; ++i) {
+            if (args[i].contains(":")) { //$A1:$B1
+                String[] s = args[i].split(":");
+                Celda principioC = traduceCelda(s[0], _idH);
+                Celda finalC = traduceCelda(s[1], _idH);
+                ArrayList<Celda> celdas = Documento.getDocumento().getHoja(_idH).getColumnaFila(s[0], s[1]);
+
+                String[] argsI = new String[celdas.size()];
+                int j = 0;
+                for (Celda c : celdas) {
+                    argsI[j] = c.getValor();
+                    ++j;
+                }
+                ret[i] = argsI;
+
+            } else if (args[i].startsWith("$") && args[i].length() <= 5) { //$AA11
+                ret[i] = new String[]{traduceCelda(args[i], _idH).getValor()};
+
+            } else { // Es un número
+                ret[i] = new String[]{args[i]};
+            }
+        }
+
+        return ret;
+    }
 }
