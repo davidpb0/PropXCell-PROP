@@ -86,7 +86,10 @@ public class DriverControladorBloque {
                     optionSelected = Integer.parseInt(palabras[0]);
                 } catch (NumberFormatException ignored) {}
 
-                if (optionSelected > 1 && !constructor) System.out.println("Primero hay que llamar a la constructora.");
+                if (optionSelected > 1 && !constructor) {
+                    System.out.println("Primero hay que llamar a la constructora.");
+                    optionSelected = -1;
+                }
                 else {
                     switch (optionSelected) {
                         case 0:
@@ -94,25 +97,19 @@ public class DriverControladorBloque {
                             break;
 
                         case 1:
-                            System.out.println("Test de la constructora de ControladorBloque:");
-                            cb = new ControladorBloque();
-                            System.out.println("Se ha creado el ControladorBloque correctamente.");
+
                             break;
 
                         case 2:
-                            System.out.println("Test de copiar():");
-                            cb.copiar();
-                            System.out.println("Ahora el booleano Cortar vale "+ false);
+                            if (nParamValido(0)) driver.copiarTest();
                             break;
 
                         case 3:
-                            System.out.println("Test de cortar():");
-                            cb.cortar();
-                            System.out.println("Ahora el booleano Cortar vale "+ true);
+                            if (nParamValido(0)) driver.cortarTest();
                             break;
 
                         case 4:
-                            cb.pegar(hoja.getId(), 1, 1);
+                            if (nParamValido(3)) driver.pegarTest();
                             break;
 
                         default:
@@ -124,5 +121,36 @@ public class DriverControladorBloque {
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    public static Boolean nParamValido(int n) {
+        if (palabras.length != n + 1) {
+            System.out.println("El numero de parametros introducidos no es valido");
+            return false;
+        }
+        return true;
+    }
+
+    private void constructorTest() {
+        System.out.println("Test de la constructora de ControladorBloque:");
+        cb = new ControladorBloque();
+        constructor = true;
+        System.out.println("Se ha creado el ControladorBloque correctamente.");
+    }
+
+    private void copiarTest() {
+        System.out.println("Test de copiar():");
+        cb.copiar();
+        System.out.println("Ahora el booleano Cortar vale "+ false);
+    }
+
+    private void cortarTest() {
+        System.out.println("Test de cortar():");
+        cb.cortar();
+        System.out.println("Ahora el booleano Cortar vale "+ true);
+    }
+
+    private void pegarTest() {
+        cb.pegar(hoja.getId(), 1, 1);
     }
 }

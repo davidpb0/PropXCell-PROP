@@ -234,7 +234,7 @@ public class Traductor {
         String[] args = f.split(",");
         if (args.length < 2) {} //EXCEPCION
 
-        for (int i = 0; i < 2; ++i) {
+        for (int i = 0; i < args.length; ++i) {
             if (args[i].contains(":")) { //$A1:$B1
                 String[] s = args[i].split(":");
                 Celda principioC = traduceCelda(s[0], _idH);
