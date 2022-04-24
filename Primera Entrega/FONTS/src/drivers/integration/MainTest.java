@@ -107,7 +107,7 @@ public class MainTest {
                             }
                             cd.anadirHoja(f, c);
                             System.out.println("Hoja añadida con " + f + " filas y " + c + " columnas.");
-                            ch.asignaHoja(cd.getNumHojas() - 1);
+                            ch.asignaHoja(cd.getNumHojas());
                             System.out.println("Ahora la nueva hoja es la seleccionada.");
                             hojaSeleccionada = true;
                             break;

@@ -1,4 +1,4 @@
-package test;
+
 
 import main.Domain.DomainModel.Celda;
 import main.Domain.DomainModel.Hoja;
@@ -804,8 +804,6 @@ public class HojaTest {
 
         when(celda.getReferenciantes()).thenReturn(new LinkedList<>());
         doNothing().when(celda).setReferenciantes(isA(LinkedList.class));
-        doNothing().when(celda).setPosicion(isA(Posicion.class));
-
 
         boolean b = hoja.cambiarPosicionCelda(p3, p2);
 
@@ -893,11 +891,8 @@ public class HojaTest {
 
         hoja.setCeldas(allcelds);
 
-        //Cambio de comportamiento de las funciones de celda utilizadas mediante mock
-        when(celda.getReferenciantes()).thenReturn(new LinkedList<>());
         when(celda.getReferenciantes()).thenReturn(new LinkedList<>());
         doNothing().when(celda).setReferenciantes(isA(LinkedList.class));
-        doNothing().when(celda).setPosicion(isA(Posicion.class));
 
 
         //Se desea cambiar la celda c3 a la posicion 2
@@ -967,7 +962,7 @@ public class HojaTest {
         hoja = new Hoja(2, 2);
 
 
-        allcelds = new HashMap<>(4);
+        /*allcelds = new HashMap<>(4);
 
         PosicionStub p1 = new PosicionStub(1, 1);
         PosicionStub p2 = new PosicionStub(1, 2);
@@ -984,17 +979,17 @@ public class HojaTest {
         allcelds.put(p3, c3);
         allcelds.put(p4, c4);
 
-        hoja.setCeldas(allcelds);
+        hoja.setCeldas(allcelds);*/
 
-        String s1 = "A1";
+    /*    String s1 = "A1";
         String s2 = "A2";
 
-        when(traductor.traduceCelda(isA(String.class), isA(Integer.class))).thenReturn(c1);
+        //when(traductor.traduceCelda(isA(String.class), isA(Integer.class))).thenReturn(c1);
 
         ArrayList<Celda> cls = hoja.getColumnaFila(s1, s2);
 
         assertEquals(3, cls.size());
-
+*/
 
     }
 
@@ -1061,6 +1056,10 @@ public class HojaTest {
         public void setContentStub(String _s){
             contenido = _s;
 
+        }
+        @Override
+        public void setPosicion(Posicion p){
+            pos = (PosicionStub) p;
         }
 
     }

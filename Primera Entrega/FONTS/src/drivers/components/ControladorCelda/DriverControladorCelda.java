@@ -274,7 +274,11 @@ public class DriverControladorCelda {
     }
 
     private void escribirContenidoFTruncamientoTest(){
-        cc.escribirContenido(palabras[1]);
+        try {
+            cc.escribirContenido(palabras[1]);
+        } catch (Exception e) {
+            System.out.println("Tienes que pasar dos numero como parametros");
+        }
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "un numero valido");
         else{

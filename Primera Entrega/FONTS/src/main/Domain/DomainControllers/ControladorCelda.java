@@ -80,17 +80,26 @@ public class ControladorCelda {
               arg1 = aux[0];
               arg2 = aux[1];
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg1.length != 1 || arg2.length != 1) {
-                  this.celdaRef.setValor("#ERROR_N_ARG");
-                  break;
+              try {
+                  if (arg1.length != 1 || arg2.length != 1) {
+                      this.celdaRef.setValor("#ERROR_N_ARG");
+                      break;
+                  }
+              } catch (NullPointerException e) {
               }
               //Se comprueba que los argumentos sean numeros
               if (!arg1[0].matches("[+-]?\\d*(\\.\\d+)?") && !arg2[0].matches("[+-]?\\d*(\\.\\d+)?")) {
                   this.celdaRef.setValor("#ERROR_NO_NUM");
                   break;
               }
-              String s1 = truncarValor(Double.parseDouble(arg1[0]), Integer.parseInt(arg2[0]));
-              this.celdaRef.setValor(s1);
+              try {
+
+                  String s1 = truncarValor(Double.parseDouble(arg1[0]), Integer.parseInt(arg2[0]));
+                  this.celdaRef.setValor(s1);
+              } catch (NumberFormatException e) {
+                  this.celdaRef.setValor("#ERROR_ARGS");
+
+              }
               break;
 
           case "#APROX": // =aprox()
@@ -197,8 +206,13 @@ public class ControladorCelda {
                   this.celdaRef.setValor("#ERROR_NO_NUM");
                   break;
               }
-              String s6 = convertirValorDH(Integer.parseInt(arg[0]));
-              this.celdaRef.setValor(s6);
+              try {
+
+                  String s6 = convertirValorDH(Integer.parseInt(arg[0]));
+                  this.celdaRef.setValor(s6);
+              } catch (NumberFormatException e) {
+                  this.celdaRef.setValor("#ERROR_NUM");
+              }
               break;
 
           case "#VHB": // =convertirHB()
@@ -827,7 +841,11 @@ public class ControladorCelda {
         int dy = Integer.parseInt(dp[0]);
 
         if(dy >= 0 && y >= 0 && (mt > 0 && mt < 12)) {
-            return dias.get(LocalDate.of(y, m, dy).getDayOfWeek().getValue());
+            try {
+                return dias.get(LocalDate.of(y, m, dy).getDayOfWeek().getValue());
+            } catch (Exception e) {
+                return "#FECHA_NO_VALIDA";
+            }
         } return "#ERROR";
 
     }
