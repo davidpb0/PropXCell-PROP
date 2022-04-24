@@ -36,6 +36,12 @@ public class ControladorHoja {
     }
 
     /**
+     * Devuelve el nombre de la hoja del controlador.
+     * @return el nombre de la hoja actual.
+     */
+    public String getNombreHoja() { return hojaRef.getNombre(); }
+
+    /**
      * Devuelve el id de la hoja actual.
      * @return el id de la hoja actual.
      */
