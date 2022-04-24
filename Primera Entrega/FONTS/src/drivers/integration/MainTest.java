@@ -28,6 +28,11 @@ public class MainTest {
         System.out.println("\t4: Añadir una hoja.");
         System.out.println("\t5: Renombrar la hoja actual.");
         System.out.println("\t6: Eliminar la hoja actual.");
+        System.out.println("\t7: Consultar el número de filas y columnas de la hoja actual.");
+        System.out.println("\t8: Añadir n filas a partir de una fila en concreto en la hoja actual.");
+        System.out.println("\t9: Añadir n columnas a partir de una columna en concreto en la hoja actual.");
+        System.out.println("\t10: Eliminar filas a partir de una fila en concreto en la hoja actual.");
+        System.out.println("\t11: Eliminar columnas a partir de una columna en concreto en la hoja actual.");
         System.out.println("\t0: Salir del programa.");
         System.out.print("Escoge una opción: ");
     }
@@ -79,14 +84,15 @@ public class MainTest {
                             try {
                                 idh = Integer.parseInt(br.readLine());
                             } catch (NumberFormatException e) {
-                                System.out.println("El ID de la hoja introducido es incorrecto, debe ser un número entero mayor o igual que 0.");
+                                System.out.println("El ID de la hoja introducido es incorrecto, debe ser un número entero mayor o igual que 1.");
                                 break;
                             }
-                            if (idh >= cd.getNumHojas()) System.out.println("Error: la hoja no existe.");
+                            if (idh > cd.getNumHojas()) System.out.println("Error: la hoja no existe.");
                             else {
                                 ch.asignaHoja(idh);
                                 hojaSeleccionada = true;
-                                System.out.println("Hoja con id " + idh + " seleccionada correctamente.");
+                                System.out.println("Hoja con id " + idh + " y nombre " + cd.getDocumento().getHoja(idh).getNombre() +
+                                        " seleccionada correctamente.");
                             }
                             break;
 
@@ -129,7 +135,8 @@ public class MainTest {
                                 System.out.println("Actualmente no hay ninguna hoja seleccionada.");
                                 break;
                             } else {
-                                System.out.println("Se va a eliminar la hoja actual(hoja " + ch.getIdHoja() + "), ¿quieres continuar? (1: Continuar - 2: Cancelar)");
+                                System.out.println("Se va a eliminar la hoja actual(hoja " + ch.getIdHoja() +
+                                        ", llamada " + ch.getNombreHoja() + "), ¿quieres continuar? (1: Continuar - 2: Cancelar)");
                                 int i = -1;
                                 try {
                                      i = Integer.parseInt(br.readLine());
@@ -141,10 +148,143 @@ public class MainTest {
                                 if (i == 1) {
                                     cd.eliminarHoja(ch.getIdHoja());
                                     System.out.println("Hoja eliminada correctamente, hay que volver a seleccionar una hoja para continuar.");
+                                    if (cd.getNumHojas() == 0) hojaSeleccionada = false;
                                 } else System.out.println("Cancelando...");
 
                             }
                             break;
+
+                        case 7:
+                            if (!hojaSeleccionada) {
+                                System.out.println("Actualmente no hay ninguna hoja seleccionada.");
+                                break;
+                            } else {
+                                System.out.println("La hoja (" + ch.getIdHoja() + ", " + ch.getNombreHoja() + ") tiene " +
+                                        cd.getDocumento().getHoja(ch.getIdHoja()).getFilas() + " filas y " +
+                                        cd.getDocumento().getHoja(ch.getIdHoja()).getColumnas() + " columnas.");
+                            }
+                            break;
+
+                        case 8:
+                            if (!hojaSeleccionada) {
+                                System.out.println("Actualmente no hay ninguna hoja seleccionada.");
+                                break;
+                            } else {
+                                System.out.print("Ingresa el número de filas a añadir: ");
+                                int i = -1;
+                                try {
+                                    i = Integer.parseInt(br.readLine());
+                                } catch (NumberFormatException e) {
+                                    System.out.println("El valor introducido es incorrecto.");
+                                    break;
+                                }
+                                System.out.print("Ingresa a partir de qué fila añadirlas(actualmente hay " +
+                                        cd.getDocumento().getHoja(ch.getIdHoja()).getFilas() + " filas): ");
+                                int j = -1;
+                                try {
+                                    j = Integer.parseInt(br.readLine());
+                                } catch (NumberFormatException e) {
+                                    System.out.println("El valor introducido es incorrecto.");
+                                    break;
+                                }
+
+                                ch.addFilas(j, i);
+                                System.out.println("Se han añadido " + i + " filas a la hoja (" + ch.getIdHoja() + ", " + ch.getNombreHoja() +
+                                        ") a partir de la fila " + j + ", ahora tiene " + cd.getDocumento().getHoja(ch.getIdHoja()).getFilas() +
+                                        " filas en total.");
+                            }
+                            break;
+
+                        case 9:
+                            if (!hojaSeleccionada) {
+                                System.out.println("Actualmente no hay ninguna hoja seleccionada.");
+                                break;
+                            } else {
+                                System.out.print("Ingresa el número de columnas a añadir: ");
+                                int i = -1;
+                                try {
+                                    i = Integer.parseInt(br.readLine());
+                                } catch (NumberFormatException e) {
+                                    System.out.println("El valor introducido es incorrecto.");
+                                    break;
+                                }
+                                System.out.print("Ingresa a partir de qué columna añadirlas(actualmente hay " +
+                                        cd.getDocumento().getHoja(ch.getIdHoja()).getColumnas() + " columnas): ");
+                                int j = -1;
+                                try {
+                                    j = Integer.parseInt(br.readLine());
+                                } catch (NumberFormatException e) {
+                                    System.out.println("El valor introducido es incorrecto.");
+                                    break;
+                                }
+
+                                ch.addColumnas(j, i);
+                                System.out.println("Se han añadido " + i + " columnas a la hoja (" + ch.getIdHoja() + ", " + ch.getNombreHoja() +
+                                        ") a partir de la columna " + j + ", ahora tiene " + cd.getDocumento().getHoja(ch.getIdHoja()).getColumnas() +
+                                        " columnas en total.");
+                            }
+                            break;
+
+                        case 10:
+                            if (!hojaSeleccionada) {
+                                System.out.println("Actualmente no hay ninguna hoja seleccionada.");
+                                break;
+                            } else {
+                                System.out.print("Ingresa el número de filas a eliminar: ");
+                                int i = -1;
+                                try {
+                                    i = Integer.parseInt(br.readLine());
+                                } catch (NumberFormatException e) {
+                                    System.out.println("El valor introducido es incorrecto.");
+                                    break;
+                                }
+                                System.out.print("Ingresa a partir de qué fila eliminarlas(actualmente hay " +
+                                        cd.getDocumento().getHoja(ch.getIdHoja()).getFilas() + " filas): ");
+                                int j = -1;
+                                try {
+                                    j = Integer.parseInt(br.readLine());
+                                } catch (NumberFormatException e) {
+                                    System.out.println("El valor introducido es incorrecto.");
+                                    break;
+                                }
+
+                                ch.eliminarFilas(j, i);
+                                System.out.println("Se han eliminado " + i + " filas a la hoja (" + ch.getIdHoja() + ", " + ch.getNombreHoja() +
+                                        ") a partir de la fila " + j + ", ahora tiene " + cd.getDocumento().getHoja(ch.getIdHoja()).getFilas() +
+                                        " filas en total.");
+                            }
+                            break;
+
+                        case 11:
+                            if (!hojaSeleccionada) {
+                                System.out.println("Actualmente no hay ninguna hoja seleccionada.");
+                                break;
+                            } else {
+                                System.out.print("Ingresa el número de columnas a eliminar: ");
+                                int i = -1;
+                                try {
+                                    i = Integer.parseInt(br.readLine());
+                                } catch (NumberFormatException e) {
+                                    System.out.println("El valor introducido es incorrecto.");
+                                    break;
+                                }
+                                System.out.print("Ingresa a partir de qué columna eliminarlas(actualmente hay " +
+                                        cd.getDocumento().getHoja(ch.getIdHoja()).getColumnas() + " columnas): ");
+                                int j = -1;
+                                try {
+                                    j = Integer.parseInt(br.readLine());
+                                } catch (NumberFormatException e) {
+                                    System.out.println("El valor introducido es incorrecto.");
+                                    break;
+                                }
+
+                                ch.eliminarColumnas(j, i);
+                                System.out.println("Se han eliminado " + i + " columnas a la hoja (" + ch.getIdHoja() + ", " + ch.getNombreHoja() +
+                                        ") a partir de la columna " + j + ", ahora tiene " + cd.getDocumento().getHoja(ch.getIdHoja()).getColumnas() +
+                                        " columnas en total.");
+                            }
+                            break;
+
 
                         case 0:
                             salir = true;

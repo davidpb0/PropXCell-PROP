@@ -8,6 +8,7 @@ package main.Domain.DomainControllers;
  */
 
 import main.Domain.DomainModel.Documento;
+import main.Domain.DomainModel.Hoja;
 
 public class ControladorDocumento {
     private Documento documento_ref;
@@ -77,8 +78,15 @@ public class ControladorDocumento {
      * @param _idH id de la hoja en el documento.
      * @param _nuevoNombre nuevo nombre para la hoja.
      */
-    public void asignaNombreHoja(int _idH, String _nuevoNombre) {
-        documento_ref.getHoja(_idH).asignaNombre(_nuevoNombre);
+    public boolean asignaNombreHoja(int _idH, String _nuevoNombre) {
+        Hoja h = documento_ref.getHoja(_idH);
+        if(h != null) {
+            h.asignaNombre(_nuevoNombre);
+            return true;
+        } else {
+            System.out.print("La hoja seleccionada no existe");
+            return false;
+        }
     }
 
     /**
