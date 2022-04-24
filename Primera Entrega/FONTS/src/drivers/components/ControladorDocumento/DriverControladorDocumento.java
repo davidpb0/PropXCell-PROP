@@ -160,6 +160,11 @@ public class DriverControladorDocumento {
 
     private static void AddHoja () throws IOException {
         System.out.println("--Añadir Hoja--");
+        if (doc == null) {
+            System.out.print("No hay ningún documento abierto.");
+            System.in.read();
+            return;
+        }
         System.out.print("Filas: ");
         int filas = read();
         System.out.print("Columnas: ");
@@ -176,10 +181,20 @@ public class DriverControladorDocumento {
 
     private static void DelHoja () throws IOException {
         System.out.println("--Eliminar Hoja--");
+        if (doc == null) {
+            System.out.print("No hay ningún documento abierto.");
+            System.in.read();
+            return;
+        }
         System.out.print("ID hoja: ");
         int id = read();
         if (id == -1) {
             System.out.print("Ninguna hoja seleccionada.");
+            System.in.read();
+            return;
+        }
+        if(doc.getHoja(id) == null) {
+            System.out.print("La hoja seleccionada no existe!");
             System.in.read();
             return;
         }
@@ -190,6 +205,11 @@ public class DriverControladorDocumento {
 
     private static void ChangeNameHoja () throws IOException {
         System.out.println("--Cambiar Nombre Hoja--");
+        if (doc == null) {
+            System.out.print("No hay ningún documento abierto.");
+            System.in.read();
+            return;
+        }
         System.out.print("ID hoja: ");
         int id = read();
         if (id == -1) {
@@ -199,8 +219,9 @@ public class DriverControladorDocumento {
         }
         System.out.print("Nombre: ");
         String name = br.readLine();
-        cd.asignaNombreHoja(id, name);
-        System.out.print("Nombre " + name + " asignado a Hoja" + id + "!");
+        if(cd.asignaNombreHoja(id, name)) {
+            System.out.print("Nombre " + name + " asignado a Hoja" + id + "!");
+        }
         System.in.read();
     }
 }
