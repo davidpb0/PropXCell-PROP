@@ -263,7 +263,9 @@ public class Hoja implements Serializable {
      */
     public boolean cambiarPosicionCelda(Posicion p, Celda c){
         //Si contiene la posicion -> cambia la posicion
-        if (this.celdas.containsKey(p) && this.celdas.containsValue(c)) {
+        Boolean b1 = this.celdas.containsKey(p);
+        Boolean b2 = this.celdas.containsValue(c);
+        if (b1 && b2) {
             c.setReferenciantes(this.celdas.get(p).getReferenciantes());
             this.celdas.replace(p, c);
             c.setPosicion(p);

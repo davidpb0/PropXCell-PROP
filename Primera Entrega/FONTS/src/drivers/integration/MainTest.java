@@ -1,6 +1,13 @@
 package drivers.integration;
 
-import main.Domain.DomainControllers.*;
+import main.Domain.DomainControllers.ControladorBloque;
+import main.Domain.DomainControllers.ControladorCelda;
+import main.Domain.DomainControllers.ControladorDocumento;
+import main.Domain.DomainControllers.ControladorHoja;
+import main.Domain.DomainModel.Celda;
+import main.Domain.DomainModel.Documento;
+import main.Domain.DomainModel.Posicion;
+import main.Domain.DomainModel.Traductor;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -27,12 +34,16 @@ public class MainTest {
         System.out.println("\t3: Seleccionar hoja.");
         System.out.println("\t4: Añadir una hoja.");
         System.out.println("\t5: Renombrar la hoja actual.");
-        System.out.println("\t6: Eliminar la hoja actual.");
-        System.out.println("\t7: Consultar el número de filas y columnas de la hoja actual.");
-        System.out.println("\t8: Añadir n filas a partir de una fila en concreto en la hoja actual.");
-        System.out.println("\t9: Añadir n columnas a partir de una columna en concreto en la hoja actual.");
-        System.out.println("\t10: Eliminar filas a partir de una fila en concreto en la hoja actual.");
-        System.out.println("\t11: Eliminar columnas a partir de una columna en concreto en la hoja actual.");
+        System.out.println("\t6: (NO IMPLEMENTADO)Ordenar.");
+        System.out.println("\t7: (NO IMPLEMENTADO)Buscar.");
+        System.out.println("\t8: (NO IMPLEMENTADO)Reemplazar.");
+        System.out.println("\t9: Eliminar la hoja actual.");
+        System.out.println("\t10: Consultar el número de filas y columnas de la hoja actual.");
+        System.out.println("\t11: Añadir n filas a partir de una fila en concreto en la hoja actual.");
+        System.out.println("\t12: Añadir n columnas a partir de una columna en concreto en la hoja actual.");
+        System.out.println("\t13: Eliminar filas a partir de una fila en concreto en la hoja actual.");
+        System.out.println("\t14: Eliminar columnas a partir de una columna en concreto en la hoja actual.");
+        System.out.println("\t15: Asignar valor a una celda.");
         System.out.println("\t0: Salir del programa.");
         System.out.print("Escoge una opción: ");
     }
@@ -131,6 +142,18 @@ public class MainTest {
                             break;
 
                         case 6:
+                            System.out.println("Ordenar: Funcionalidad no implementada.");
+                            break;
+
+                        case 7:
+                            System.out.println("Buscar: Funcionalidad no implementada.");
+                            break;
+
+                        case 8:
+                            System.out.println("Reemplazar: Funcionalidad no implementada.");
+                            break;
+
+                        case 9:
                             if (!hojaSeleccionada) {
                                 System.out.println("Actualmente no hay ninguna hoja seleccionada.");
                                 break;
@@ -154,7 +177,7 @@ public class MainTest {
                             }
                             break;
 
-                        case 7:
+                        case 10:
                             if (!hojaSeleccionada) {
                                 System.out.println("Actualmente no hay ninguna hoja seleccionada.");
                                 break;
@@ -165,7 +188,7 @@ public class MainTest {
                             }
                             break;
 
-                        case 8:
+                        case 11:
                             if (!hojaSeleccionada) {
                                 System.out.println("Actualmente no hay ninguna hoja seleccionada.");
                                 break;
@@ -195,7 +218,7 @@ public class MainTest {
                             }
                             break;
 
-                        case 9:
+                        case 12:
                             if (!hojaSeleccionada) {
                                 System.out.println("Actualmente no hay ninguna hoja seleccionada.");
                                 break;
@@ -225,7 +248,7 @@ public class MainTest {
                             }
                             break;
 
-                        case 10:
+                        case 13:
                             if (!hojaSeleccionada) {
                                 System.out.println("Actualmente no hay ninguna hoja seleccionada.");
                                 break;
@@ -255,7 +278,7 @@ public class MainTest {
                             }
                             break;
 
-                        case 11:
+                        case 14:
                             if (!hojaSeleccionada) {
                                 System.out.println("Actualmente no hay ninguna hoja seleccionada.");
                                 break;
@@ -282,6 +305,88 @@ public class MainTest {
                                 System.out.println("Se han eliminado " + i + " columnas a la hoja (" + ch.getIdHoja() + ", " + ch.getNombreHoja() +
                                         ") a partir de la columna " + j + ", ahora tiene " + cd.getDocumento().getHoja(ch.getIdHoja()).getColumnas() +
                                         " columnas en total.");
+                            }
+                            break;
+
+                        case 15:
+                            if (!hojaSeleccionada) {
+                                System.out.println("Actualmente no hay ninguna hoja seleccionada.");
+                                break;
+                            } else {
+                                System.out.print("Selecciona una celda. Puedes especificar su posición usando A1 o 1 1: ");
+                                String pos = br.readLine();
+                                String[] s = pos.split(" ");
+                                Celda celda;
+                                if (s.length == 1) { // El usuario ha introducido A1
+                                    celda = Traductor.getTraductor().traduceCelda(s[0], ch.getIdHoja());
+                                } else { // El usuario ha introducido 1 1
+                                    celda = Documento.getDocumento().getHoja(ch.getIdHoja()).getCelda(
+                                            new Posicion(Traductor.getTraductor().StringInt(s[0]), Traductor.getTraductor().StringInt(s[1])));
+                                }
+                                cc.asignaCeldaPosicion(Traductor.getTraductor().IntString(ch.getIdHoja()),
+                                        Traductor.getTraductor().IntString(celda.getPosicion().getFila()),
+                                        Traductor.getTraductor().IntString(celda.getPosicion().getColumna()));
+                                System.out.println("1: Valor - 2: Referencia - 3: Valor a través de función");
+                                System.out.print("Celda correctamente seleccionada. Su valor actual es " + celda.getValor() +
+                                        ". Selecciona el tipo de valor a introducir: ");
+                                String tip = br.readLine();
+                                int tipo = -1;
+                                try {
+                                    tipo = Integer.parseInt(tip);
+                                } catch (NumberFormatException e) {
+                                    System.out.println("El valor introducido es incorrecto.");
+                                }
+
+                                switch (tipo) {
+                                    case -1:
+                                        break;
+
+                                    case 1:
+                                        System.out.print("Introduce el valor(Decimal -> 123.4; Entero -> 123; Fecha -> 01/02/2003): ");
+                                        try {
+                                            cc.escribirContenido(br.readLine());
+                                        } catch (Exception e) {
+                                            System.out.println("Ha habido un error inesperado.");
+                                        }
+                                        break;
+
+                                    case 2:
+                                        System.out.print("Introduce la referencia(estilo $A1): ");
+                                        try {
+                                            cc.escribirContenido(br.readLine());
+                                        } catch (Exception e) {
+                                            System.out.println("Ha habido un error inesperado.");
+                                        }
+                                        break;
+
+                                    case 3:
+                                        System.out.println("\t=valorAbsoluto(double a)");
+                                        System.out.println("\t=truncarValor(double v, int op)");
+                                        System.out.println("\t=aproximarValor(double v)");
+                                        System.out.println("\t=convertirValorDB(int dec)");
+                                        System.out.println("\t=convertirValorBD(int _b)");
+                                        System.out.println("\t=convertirValorDH(int _dec)");
+                                        System.out.println("\t=convertirValorHD(String _h)");
+                                        System.out.println("\t=convertirValorBH(int _b)");
+                                        System.out.println("\t=convertirValorHB(String _h)");
+                                        System.out.println("\t=0obtenerMes(String _fecha)");
+                                        System.out.println("\t=obtenerAño(String _fecha)");
+                                        System.out.println("\t=obtenerDia(String _fecha)");
+                                        System.out.println("\t=obtenerNombreDia(String _fecha)");
+                                        System.out.println("\t=longitudPalabra(String _palabra)");
+                                        System.out.println("\t=contarLetra(String _palabra, String _letra)");
+                                        System.out.println("\t=reemplazarPalabra(String _txt, int _pos, int _long,  String _ntxt)");
+                                        System.out.println("\t=reemplazarCaracter(String _txt, String _cr, String _nc)");
+                                        System.out.println("\t=esFechaValida(String _txt)");
+                                        System.out.println("Introduce la función con sus argumentos: ");
+                                        try {
+                                            cc.escribirContenido(br.readLine());
+                                        } catch (Exception e) {
+                                            System.out.println("Ha habido un error inesperado.");
+                                        }
+                                        break;
+                                }
+
                             }
                             break;
 

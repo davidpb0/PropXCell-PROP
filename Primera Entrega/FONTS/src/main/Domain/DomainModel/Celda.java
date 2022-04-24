@@ -154,4 +154,13 @@ public class Celda {
         this.referenciantes.remove(_ref);
     }
 
+    @Override
+    public boolean equals(Object _o){
+        if (this == _o)
+            return true;
+        if (_o == null || getClass() != _o.getClass())
+            return false;
+        Celda that = (Celda) _o;
+        return this.posicion.getFila() == that.posicion.getFila() && this.posicion.getColumna() == that.posicion.getColumna();
+    }
 }

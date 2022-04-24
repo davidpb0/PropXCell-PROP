@@ -2,74 +2,28 @@ package drivers.components.ControladorBloque;
 
 import main.Domain.DomainControllers.ControladorBloque;
 import main.Domain.DomainModel.*;
-import org.junit.After;
-import org.junit.Before;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
-import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.when;
 
 public class DriverControladorBloque {
     private static BufferedReader br;
     private static String[] palabras;
     private static boolean constructor = false;
+    private static boolean bloqueDefinido = false;
     private static Documento d;
     private static Hoja h;
-    private static Celda c;
-    private static Posicion p;
-
-    @InjectMocks
     private static ControladorBloque cb = null;
-
-    @Mock
-    private static BloqueTemporalCopiado bloqueTemporalCopiado;
-    @Mock
-    private Documento documento;
-    @Mock
-    private static Hoja hoja;
-    @Mock
-    private static Celda celda;
-    @Mock
-    private static Posicion posicion;
-
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.openMocks(this);
-    }
-
-    @After
-    public void tearDown() {}
-
-    private static void testPegar() {
-        when(hoja.getCelda(isA(Posicion.class))).thenReturn(celda = new Celda(posicion, "hola"));
-        for (int f = 1; f <= 3; ++f) {
-            for (int c = 1; c <= 3; ++c) {
-                posicion = new Posicion(f, c);
-                Celda cell = hoja.getCelda(posicion);
-                System.out.println(cell.getContenido() + ' ');
-            }
-            System.out.println("\n");
-        }
-        if (bloqueTemporalCopiado.getCortar()) {
-            bloqueTemporalCopiado = null;
-            System.out.println("Al haber pegado un contenido cortado, el bloque temporal copiado se ha borrado.");
-        }
-    }
 
     private static void opciones() {
         System.out.println("Funciones disponibles para la clase ControladorBloque:");
         System.out.println("\t1: ControladorBloque()");
         System.out.println("\t2: Copiar()");
         System.out.println("\t3: Cortar()");
-        System.out.println("\t4: Pegar(int _numHoja, int _filaInicio, int _columnaInicio)");
+        System.out.println("\t4: Pegar(int _filaInicio, int _columnaInicio)");
         System.out.println("\t5: SetBloqueSeleccionado(int _idH, int _filaInicial, int _columnaInicial, int _filaFinal, int _columnaFinal)");
         System.out.println("\t0: Salir");
-        System.out.println("Escoge una opción: ");
+        System.out.print("Escoge una opción: ");
     }
 
     public static void main(String[] args) {
@@ -78,7 +32,7 @@ public class DriverControladorBloque {
             boolean salir = false;
 
             DriverControladorBloque driver = new DriverControladorBloque();
-
+            System.out.println("Este driver setea el valor de cada celda en i*j, siendo i su fila y j su columna.");
             while(!salir){
                 opciones();
                 String line = br.readLine();
@@ -113,11 +67,15 @@ public class DriverControladorBloque {
                             break;
 
                         case 4:
-                            if (nParamValido(3)) driver.pegarTest();
+                            if (nParamValido(2)) driver.pegarTest(palabras[1], palabras[2]);
+                            break;
+
+                        case 5:
+                            if (nParamValido(4)) driver.setBloqueSeleccionadoTest(palabras[1], palabras[2], palabras[3], palabras[4]);
                             break;
 
                         default:
-                            System.out.println("La opción escogida es incorrecta, debe ser un número entre 0 y 4.");
+                            System.out.println("La opción escogida es incorrecta, debe ser un número entre 0 y 5.");
                             break;
                     }
                 }
@@ -142,21 +100,77 @@ public class DriverControladorBloque {
         System.out.println("Se ha creado el ControladorBloque correctamente.");
 
         d = Documento.getDocumento();
+        Documento.getDocumento().inicializaDocumentoDefault("doc");
+        h = Documento.getDocumento().getHoja(1);
+        for (int i = 1; i <= 50; ++i) {
+            for (int j = 1; j <= 50; ++j) {
+                h.getCelda(new Posicion(i, j)).setValor(String.valueOf(i*j));
+                h.getCelda(new Posicion(i, j)).setContenido(String.valueOf(i*j));
+            }
+        }
     }
 
     private void copiarTest() {
-        System.out.println("Test de copiar():");
-        cb.copiar();
-        System.out.println("Ahora el booleano Cortar vale "+ false);
+        if (!bloqueDefinido) System.out.println("Primero hay que definir un bloque.");
+        else {
+            System.out.println("Test de copiar():");
+            cb.copiar();
+            System.out.println("Bloque copiado correctamente, ahora el booleano Cortar vale "+ false);
+            escribeBloque();
+        }
     }
 
     private void cortarTest() {
-        System.out.println("Test de cortar():");
-        cb.cortar();
-        System.out.println("Ahora el booleano Cortar vale "+ true);
+        if (!bloqueDefinido) System.out.println("Primero hay que definir un bloque.");
+        else {
+            System.out.println("Test de cortar():");
+            cb.cortar();
+            System.out.println("Ahora el booleano Cortar vale "+ true);
+            escribeBloque();
+        }
     }
 
-    private void pegarTest() {
-        cb.pegar(hoja.getId(), 1, 1);
+    private void pegarTest(String _fI, String _cI) {
+        if (!bloqueDefinido) System.out.println("Primero hay que definir un bloque.");
+        else {
+            int f = Traductor.getTraductor().StringInt(_fI);
+            int c = Traductor.getTraductor().StringInt(_cI);
+            cb.pegar(h.getId(), f, c);
+            System.out.println("El bloque se ha pegado correctamente. El contenido de la hoja a partir de las celdas pegadas es: ");
+            int tamanoF = BloqueSeleccionado.getBloque().getCeldaFinal().getPosicion().getFila() - BloqueSeleccionado.getBloque().getCeldaInicial().getPosicion().getFila();
+            int tamanoC = BloqueSeleccionado.getBloque().getCeldaFinal().getPosicion().getColumna() - BloqueSeleccionado.getBloque().getCeldaInicial().getPosicion().getColumna();
+            for (int i = f; i <= tamanoF + 3; ++i) {
+                for (int j = c; j <= tamanoC + 3; ++j) {
+                    System.out.print(h.getCelda(new Posicion(i, j)).getValor() + " ");
+                }
+                System.out.println("");
+            }
+        }
+    }
+
+    private void setBloqueSeleccionadoTest(String _filaInicial, String _columnaInicial, String _filaFinal, String _columnaFinal) {
+        int _fI = Traductor.getTraductor().StringInt(_filaInicial);
+        int _cI = Traductor.getTraductor().StringInt(_columnaInicial);
+        int _fF = Traductor.getTraductor().StringInt(_filaFinal);
+        int _cF = Traductor.getTraductor().StringInt(_columnaFinal);
+        Celda inicialC = h.getCelda(new Posicion(_fI, _cI));
+        Celda finalC = h.getCelda(new Posicion(_fF, _cF));
+        BloqueSeleccionado.getBloque().setCelda(inicialC, finalC, h);
+        escribeBloque();
+        bloqueDefinido = true;
+    }
+
+    private void escribeBloque() {
+        int fI = BloqueSeleccionado.getBloque().getCeldaInicial().getPosicion().getFila();
+        int cI = BloqueSeleccionado.getBloque().getCeldaInicial().getPosicion().getColumna();
+        int fF = BloqueSeleccionado.getBloque().getCeldaFinal().getPosicion().getFila();
+        int cF = BloqueSeleccionado.getBloque().getCeldaFinal().getPosicion().getColumna();
+        System.out.println("Ahora el bloque seleccionado contiene las celdas:");
+        for (int i = fI; i <= fF; ++i) {
+            for (int j = cI; j <= cF; ++j) {
+                System.out.print(h.getCelda(new Posicion(i, j)).getValor() + " ");
+            }
+            System.out.println("");
+        }
     }
 }

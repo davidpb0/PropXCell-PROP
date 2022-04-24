@@ -47,7 +47,8 @@ public class ControladorBloque {
         for (int f = 1; f <= bloqueCopiado.getTamanoFilas(); ++f) {
             for (int c = 1; c <= bloqueCopiado.getTamanoColumnas(); ++c) {
                 Celda cell = bloqueCopiado.getCelda(f, c);
-                h.cambiarPosicionCelda(new Posicion(_filaInicio + f - 1, _columnaInicio + c - 1), cell);
+                Boolean asd = h.cambiarPosicionCelda(new Posicion(_filaInicio + f - 1, _columnaInicio + c - 1), cell);
+                System.out.println(asd);
             }
         }
         if (bloqueCopiado.getCortar()) {
