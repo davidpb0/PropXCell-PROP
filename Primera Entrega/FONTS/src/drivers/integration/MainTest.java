@@ -369,7 +369,7 @@ public class MainTest {
                                         System.out.println("\t=convertirValorHD(String _h)");
                                         System.out.println("\t=convertirValorBH(int _b)");
                                         System.out.println("\t=convertirValorHB(String _h)");
-                                        System.out.println("\t=0obtenerMes(String _fecha)");
+                                        System.out.println("\t=obtenerMes(String _fecha)");
                                         System.out.println("\t=obtenerAño(String _fecha)");
                                         System.out.println("\t=obtenerDia(String _fecha)");
                                         System.out.println("\t=obtenerNombreDia(String _fecha)");
@@ -378,7 +378,7 @@ public class MainTest {
                                         System.out.println("\t=reemplazarPalabra(String _txt, int _pos, int _long,  String _ntxt)");
                                         System.out.println("\t=reemplazarCaracter(String _txt, String _cr, String _nc)");
                                         System.out.println("\t=esFechaValida(String _txt)");
-                                        System.out.println("Introduce la función con sus argumentos: ");
+                                        System.out.print("Introduce la función con sus argumentos: ");
                                         try {
                                             cc.escribirContenido(br.readLine());
                                         } catch (Exception e) {
@@ -386,6 +386,8 @@ public class MainTest {
                                         }
                                         break;
                                 }
+
+                                System.out.println("El valor de la celda ahora es " + cc.getCeldaRef().getValor() + ".");
 
                             }
                             break;
