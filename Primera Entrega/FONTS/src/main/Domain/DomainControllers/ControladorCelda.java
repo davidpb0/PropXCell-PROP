@@ -57,7 +57,6 @@ public class ControladorCelda {
       ArrayList<String> argu = new ArrayList<>();
       String[] arg1;
       String[] arg2;
-      String[][]aux;
       switch (type) {
           case "#ABS": // =abs()
               //Se cogen los argumentos necesarios para realizar la operacion
@@ -471,7 +470,7 @@ public class ControladorCelda {
               break;
 
           case "#MEDIANA": // =mediana()
-
+              //Se cogen los argumentos necesarios para realizar la operacion
               argm = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
 
               for(int i = 0; i < argm.size(); ++i){
@@ -506,6 +505,7 @@ public class ControladorCelda {
 
           case "#VAR": // =varianza()
 
+              //Se cogen los argumentos necesarios para realizar la operacion
               argm = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
 
               for(int i = 0; i < argm.size(); ++i){
@@ -553,29 +553,27 @@ public class ControladorCelda {
 
               //Se comprueba que los argumentos sean numeros
               b = false;
-              for (String v : arg1) {
-                  if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
+              int k = 0;
+              while (k < arg1.length){
+                  String v = arg1[k];
+                  String v2 = arg2[k];
+                  if (!v.matches("[+-]?\\d*(\\.\\d+)?") || !v2.matches("[+-]?\\d*(\\.\\d+)?")) {
                       this.celdaRef.setValor("#ERROR_NO_NUM");
                       b = true;
                       break;
                   }
+                  ++k;
+
               }
               if (b) break;
-              for (String v : arg2) {
-                  if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
-                      this.celdaRef.setValor("#ERROR_NO_NUM");
-                      b = true;
-                      break;
-                  }
-              }
-              if (b) break;
+
               m = ControladorHoja.covarianza(arg1, arg2);
               this.celdaRef.setValor(String.valueOf(m));
               break;
 
           case "#DESV":// =desviacion()
 
-
+              //Se cogen los argumentos necesarios para realizar la operacion
               argm = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
 
               for(int i = 0; i < argm.size(); ++i){
@@ -620,25 +618,20 @@ public class ControladorCelda {
                   this.celdaRef.setValor("#ERROR_N_ARG");
                   break;
               }
+
               b = false;
-
+              k = 0;
               //Se comprueba que los argumentos sean numeros
-              for (String v : arg1) {
-                  if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
+              while (k < arg1.length){
+                  String v = arg1[k];
+                  String v2 = arg2[k];
+                  if (!v.matches("[+-]?\\d*(\\.\\d+)?") || !v2.matches("[+-]?\\d*(\\.\\d+)?")) {
                       this.celdaRef.setValor("#ERROR_NO_NUM");
                       b = true;
                       break;
                   }
-              }
-              if (b) break;
+                  ++k;
 
-              //Se comprueba que los argumentos sean numeros
-              for (String v : arg2) {
-                  if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
-                      this.celdaRef.setValor("#ERROR_NO_NUM");
-                      b = true;
-                      break;
-                  }
               }
               if (b) break;
 

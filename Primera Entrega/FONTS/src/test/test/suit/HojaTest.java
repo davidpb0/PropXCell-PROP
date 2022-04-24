@@ -954,42 +954,20 @@ public class HojaTest {
      * - Valores estudiados: Se estudia el caso en el que se da dos posiciones de manera que se selecciona una columna
      * de arriba a abajo
      * - Operativa: En este test de cambiarPosicionCelda se definen una Hoja con la constructora con parametros.
-     * El objetivo es comprobar se consigue un conjunto de celdas correcto.
-     * Para ello comprobaremos que el ArrayList que devuelve la función es el correcto.
+     * El objetivo es comprobar que se consigue un conjunto de celdas correcto.
+     * Para ello comprobaremos que el ArrayList que devuelve la función tenga el tamaño de celdas correcto.
      */
     @Test
     public void cogerColumnaArribaAbajo(){
-        hoja = new Hoja(2, 2);
+        hoja = new Hoja(50, 50);
+        hoja.añadeNombreIdHojaDefault(1);
 
-
-        /*allcelds = new HashMap<>(4);
-
-        PosicionStub p1 = new PosicionStub(1, 1);
-        PosicionStub p2 = new PosicionStub(1, 2);
-        PosicionStub p3 = new PosicionStub(2, 1);
-        PosicionStub p4 = new PosicionStub(2, 2);
-
-        CeldaStub c1 = new CeldaStub(p1);
-        CeldaStub c2 = new CeldaStub(p2);
-        CeldaStub c3 = new CeldaStub(p3);
-        CeldaStub c4 = new CeldaStub(p4);
-
-        allcelds.put(p1, c1);
-        allcelds.put(p2, c2);
-        allcelds.put(p3, c3);
-        allcelds.put(p4, c4);
-
-        hoja.setCeldas(allcelds);*/
-
-    /*    String s1 = "A1";
-        String s2 = "A2";
-
-        //when(traductor.traduceCelda(isA(String.class), isA(Integer.class))).thenReturn(c1);
+        String s1 = "$A1";
+        String s2 = "$A3";
 
         ArrayList<Celda> cls = hoja.getColumnaFila(s1, s2);
 
         assertEquals(3, cls.size());
-*/
 
     }
 
@@ -1001,20 +979,71 @@ public class HojaTest {
      * de izquierda a derecha
      * - Operativa: En este test de cambiarPosicionCelda se definen una Hoja con la constructora con parametros.
      * El objetivo es comprobar se consigue un conjunto de celdas correcto.
-     * Para ello comprobaremos que el ArrayList que devuelve la función es el correcto.
+     * Para ello comprobaremos que el ArrayList que devuelve la función tenga el tamaño de celdas correcto.
      */
-   /* @Test
+   @Test
     public void cogerFilaIzquierdaDerecha(){
-        Hoja h = new Hoja(3, 3);
-        String p1 = "A1";
-        String p2 = "C3";
+        hoja = new Hoja(50, 50);
+        hoja.añadeNombreIdHojaDefault(1);
 
-        ArrayList<Celda> cls = h.getColumnaFila(p1, p2);
+        String p1 = "$A1";
+        String p2 = "$C1";
+
+        ArrayList<Celda> cls = hoja.getColumnaFila(p1, p2);
 
         assertEquals(3, cls.size());
 
 
-    }*/
+    }
+
+    /**
+     * Objeto de la prueba: Testear la funcion getColumnaFila
+     * - Stubs: No se utilizan stubs para este test
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     * - Valores estudiados: Se estudia el caso en el que se da dos posiciones de manera que se selecciona una fila
+     * de derecha a izquierda
+     * - Operativa: En este test de cambiarPosicionCelda se definen una Hoja con la constructora con parametros.
+     * El objetivo es comprobar se consigue un conjunto de celdas correcto.
+     * Para ello comprobaremos que el ArrayList que devuelve la función tenga el tamaño de celdas correcto.
+     */
+    @Test
+    public void cogerFilaDerechaIzquierda(){
+        hoja = new Hoja(50, 50);
+        hoja.añadeNombreIdHojaDefault(1);
+
+        String p1 = "$C1";
+        String p2 = "$A1";
+
+        ArrayList<Celda> cls = hoja.getColumnaFila(p1, p2);
+
+        assertEquals(3, cls.size());
+
+
+    }
+    /**
+     * Objeto de la prueba: Testear la funcion getColumnaFila
+     * - Stubs: No se utilizan stubs para este test
+     * - Ficheros de datos necesarios: No se necesitan ficheros para este test.
+     * - Valores estudiados: Se estudia el caso en el que se da dos posiciones de manera que se selecciona una fila
+     * de derecha a izquierda
+     * - Operativa: En este test de cambiarPosicionCelda se definen una Hoja con la constructora con parametros.
+     * El objetivo es comprobar se consigue un conjunto de celdas correcto.
+     * Para ello comprobaremos que el ArrayList que devuelve la función tenga el tamaño de celdas correcto.
+     */
+    @Test
+    public void cogerColumnasAbajoArriba(){
+        hoja = new Hoja(50, 50);
+        hoja.añadeNombreIdHojaDefault(1);
+
+        String p1 = "$A3";
+        String p2 = "$A1";
+
+        ArrayList<Celda> cls = hoja.getColumnaFila(p1, p2);
+
+        assertEquals(3, cls.size());
+
+
+    }
 
     //Stub de Posicion que sustituye la clase Posicion asi como los metodos necesarios para el test
     private static class PosicionStub extends Posicion{
@@ -1043,9 +1072,6 @@ public class HojaTest {
             return pos;
         }
 
-       /* public String getContenidoStub() {
-            return contenido;
-        }*/
 
         @Override
         public void setReferenciantes(LinkedList<Celda> _refs){
