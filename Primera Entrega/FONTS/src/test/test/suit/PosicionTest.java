@@ -1,5 +1,6 @@
-import main.Domain.DomainModel.Posicion;
 
+package test.suit;
+import main.Domain.DomainModel.Posicion;
 import org.junit.Before;
 import org.junit.Test;
 

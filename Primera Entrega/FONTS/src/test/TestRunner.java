@@ -2,6 +2,7 @@ import org.junit.runners.Suite;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.RunWith;
+import test.suit.JUnitTestSuite;
 
 
 @RunWith(Suite.class)

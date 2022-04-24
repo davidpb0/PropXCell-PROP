@@ -1,3 +1,4 @@
+package test.suit;
 
 
 import org.junit.runner.RunWith;
@@ -16,4 +17,6 @@ import org.junit.runners.Suite.SuiteClasses;
         TraductorTest.class
 })
 
-public class JUnitTestSuite{}
+public class JUnitTestSuite{
+
+}

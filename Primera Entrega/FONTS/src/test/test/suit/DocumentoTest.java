@@ -1,3 +1,5 @@
+package test.suit;
+
 import main.Domain.DomainModel.Documento;
 import main.Domain.DomainModel.Hoja;
 import org.junit.After;

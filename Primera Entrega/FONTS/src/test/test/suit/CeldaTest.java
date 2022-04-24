@@ -1,4 +1,4 @@
-
+package test.suit;
 import main.Domain.DomainModel.Celda;
 import main.Domain.DomainModel.Posicion;
 import org.junit.After;
