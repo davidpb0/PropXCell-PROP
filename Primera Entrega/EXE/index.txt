@@ -1,0 +1,4 @@
+## Elementos del directorio
+
+### out:
+En este directorio se encuentran los ejecutables compilados con el Makefile en /FONTS/src/

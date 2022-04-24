@@ -1,0 +1,13 @@
+## Elementos del directorio
+
+### ControladorBloque
+Este controlador engloba las funcionalidades que puede ejecutar un bloque seleccionado.
+
+### ControladorCelda
+Este controlador engloba las funcionalidades que puede ejecutar una celda por sí misma.
+
+### ControladorDocumento
+Este controlador engloba las funcionalidades que puede ejecutar el documento.
+
+### ControladorHoja
+Este controlador engloba las funcionalidades que puede ejecutar una hoja.

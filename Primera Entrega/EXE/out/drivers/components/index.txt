@@ -1,0 +1,10 @@
+## Elementos del directorio
+
+### ControladorBloque:
+En este directorio se encuentra el ejecutable del driver del controlador de bloque.
+
+### ControladorCelda:
+En este directorio se encuentra el ejecutable del driver del controlador de celda.
+
+### ControladorDocumento:
+En este directorio se encuentra el ejecutable del driver del controlador de documento.

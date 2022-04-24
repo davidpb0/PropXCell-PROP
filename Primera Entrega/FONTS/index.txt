@@ -1,0 +1,4 @@
+## Elementos del directorio
+
+### src:
+Este directorio contiene todo el codigo fuente hehco por el equipo.

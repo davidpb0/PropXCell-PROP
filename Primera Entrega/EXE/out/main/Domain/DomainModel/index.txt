@@ -1,0 +1,23 @@
+## Elementos del directorio
+
+### BloqueSeleccionado:
+Esta clase contiene una celda inicial y una celda final, que son las celdas que definen el bloque con forma de
+rectangulo. Tambien contiene su hoja para saber donde se ubican las celdas.
+
+### BloqueTemporalCopiado:
+Esta clase se guarda una matriz de celdas para usarse como portapapeles y poder pegarse donde se quiera(dentro del
+software).
+
+### Celda
+Esta clase es la unidad atomica de informacion y es capaz de guardar valores, resultados de funciones y referencias
+a otras celdas.
+
+### Hoja
+Esta clase contiene una agrupacion de celdas y se encarga de su organizacion.
+
+### Posicion
+Esta clase sirve como herramienta para ordenar las celdas dentro de cada hoja.
+
+### Traductor
+Esta clase sirve como extractora de argumentos de funciones, conversor, y traductor de posiciones a celdas y de
+pares de enteros a posiciones, entre otras funcionalidades.

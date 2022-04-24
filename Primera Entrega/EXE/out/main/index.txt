@@ -1,0 +1,4 @@
+## Elementos del directorio
+
+### Domain
+Este directorio contiene los ejecutables de las clases de dominio, separados por controladores y clases de dominio.

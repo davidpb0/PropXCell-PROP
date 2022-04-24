@@ -1,0 +1,5 @@
+## Elementos del directorio
+
+### ControladorCeldaTest:
+Este directorio contiene el test unitario que hicimos en un primer momento, pero que acabamos abandonando al darnos
+cuenta de que no hacia falta.

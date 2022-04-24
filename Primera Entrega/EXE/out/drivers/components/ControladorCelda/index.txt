@@ -1,0 +1,4 @@
+## Elementos del directorio
+
+### DriverControladorCelda
+Ejecutable del driver del controlador de celda. Prueba todas las funciones asociadas a dicho controlador.

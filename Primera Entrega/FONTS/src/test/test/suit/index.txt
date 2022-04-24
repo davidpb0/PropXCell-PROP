@@ -1,0 +1,25 @@
+## Elementos del directorio
+
+### BloqueSeleccionadoTest:
+Tests unitarios de la clase BloqueSelccionado. Contiene un test para cada funcion de la clase.
+
+### BloqueTemporalCopiadoTest:
+Tests unitarios de la clase BloqueTemporalCopiado. Contiene un test para cada funcion de la clase.
+
+### CeldaTest:
+Tests unitarios de la clase Celda. Contiene un test para cada funcion de la clase.
+
+### DocumentoTest:
+Tests unitarios de la clase Documento. Contiene un test para cada funcion de la clase.
+
+### HojaTest:
+Tests unitarios de la clase Hoja. Contiene un test para cada funcion de la clase.
+
+### JUnitTestSuite:
+Clase que contiene todas las clases con tests unitarios, necesaria para ejecutar los tests.
+
+### PosicionTest:
+Tests unitarios de la clase Posicion. Contiene un test para cada funcion de la clase.
+
+### TraductorTest:
+Tests unitarios de la clase Traductor. Contiene un test para cada funcion de la clase.

@@ -1,0 +1,5 @@
+## Elementos del directorio
+
+### ControladorCeldaTest
+Este test unitario lo hicimos en un primer momento antes de tener claro que para las funcionalidades asociadas
+con casos de uso habia que hacer drivers, por lo que decidimos moverlo aqui.

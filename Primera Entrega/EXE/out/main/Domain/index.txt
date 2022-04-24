@@ -1,0 +1,8 @@
+## Elementos del directorio
+
+### DomainControllers
+Esta carpeta contiene los controladores de la capa de dominio. Cada controlador está asociado a una clase
+y agrupa los casos de uso de dicha clase.
+
+### DomainModel
+Esta carpeta contiene las clases de la capa de dominio, donde toda la lógica de negocio tiene lugar.

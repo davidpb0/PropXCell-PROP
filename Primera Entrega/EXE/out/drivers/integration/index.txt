@@ -1,0 +1,5 @@
+## Elementos del directorio
+
+### MainTest
+Ejecutable del driver de integracion. Prueba las funcionalidades del programa(no las prueba todas, aunque están
+implementadas).

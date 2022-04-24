@@ -1,0 +1,5 @@
+## Elementos del directorio
+
+### DriverControladorBloque
+Ejecutable del driver del controlador de bloque. Prueba todas las funcionalidades asociadas con
+el controlador de bloque.
