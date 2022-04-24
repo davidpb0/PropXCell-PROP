@@ -15,15 +15,23 @@ JUnit:
 Main:
 		java -cp $(EJECUTABLES) drivers.integration.MainTest
 
-ControladorBloqueDriverInteractivo:
+ControladorBloqueDriver:
 		java -cp $(EJECUTABLES) drivers.components.ControladorBloque.DriverControladorBloque
+
+ControladorCeldaDriver:
+		java -cp $(EJECUTABLES) drivers.components.ControladorCelda.ControladorCeldaDriver
+
+ControladorDocumentoDriver:
+		java -cp $(EJECUTABLES) drivers.components.ControladorDocumento.ControladorDocumentoDriver
 
 help:
 		@echo "Opciones:"
 		@echo "build: Compila el código entero."
 		@echo "JUnit: Ejecuta los tests de JUnit."
 		@echo "Main: Se ejecuta el Driver principal de manera interactiva."
-		@echo "ControladorBloqueDriverInteractivo: Se ejecuta el Driver del ControladorBloque de manera interactiva."
+		@echo "ControladorBloqueDriver: Se ejecuta el Driver del ControladorBloque."
+		@echo "ControladorCeldaDriver: Se ejecuta el Driver del ControladorCelda."
+		@echo "ControladorDocumentoDriver: Se ejecuta el Driver del ControladorDocumento."
 		@echo "clean: Borra todos los ejecutables de /EXE/out/."
 
 clean:
