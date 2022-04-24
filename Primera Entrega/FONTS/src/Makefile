@@ -1,7 +1,7 @@
 CLASES = ./main/Domain/DomainModel/*.java ./main/Domain/DomainControllers/*.java
 DRIVERS_INTEGRATION = ./drivers/integration/*.java
 DRIVERS_COMPONENTS = ./drivers/components/*/*.java
-JUNIT_TESTS = ./test/*.java
+JUNIT_TESTS = ./test/*/*.java
 EJECUTABLES = ../../EXE/out/
 LIB = ../../lib/junit-4.12.jar:../../lib/byte-buddy-1.12.9.jar:../../lib/byte-buddy-agent-1.12.9.jar:../../lib/mockito-core-4.5.0.jar:../../lib/objenesis-3.2.jar
 

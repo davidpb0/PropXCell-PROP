@@ -104,7 +104,7 @@ public class ControladorHoja {
             }
         }
 
-        hojaRef.setFilas(numColums + _num);
+        hojaRef.setColumnas(numColums + _num);
     }
 
     /**
@@ -162,7 +162,7 @@ public class ControladorHoja {
             }
         }
 
-        hojaRef.setFilas(numColums - _num);
+        hojaRef.setColumnas(numColums - _num);
     }
 
     /**

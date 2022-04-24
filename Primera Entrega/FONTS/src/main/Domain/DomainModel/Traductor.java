@@ -231,7 +231,7 @@ public class Traductor {
         String[][] ret = new String[4][];
         String f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')'));
         String[] args = f.split(",");
-        if (args.length < 2) {} //EXCEPCION
+        if (args.length < 2) return null;
 
         for (int i = 0; i < args.length; ++i) {
             if (args[i].contains(":")) { //$A1:$B1
