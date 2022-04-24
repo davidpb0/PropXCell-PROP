@@ -227,8 +227,8 @@ public class Traductor {
      * @param _idH id de la hoja actual
      * @return un vector que contiene hasta 4 vectores de Strings, cada uno con los argumentos entre las comas
      */
-    public String[][] getArgumentosFuncionNaria(String _funcion, int _idH) {
-        String[][] ret = new String[4][];
+    public ArrayList<String[]> getArgumentosFuncionNaria(String _funcion, int _idH) {
+        ArrayList<String[]>ret = new ArrayList<>();
         String f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')'));
         String[] args = f.split(",");
         if (args.length < 2) {} //EXCEPCION
@@ -246,13 +246,14 @@ public class Traductor {
                     argsI[j] = c.getValor();
                     ++j;
                 }
-                ret[i] = argsI;
+                ret.add(argsI);
 
             } else if (args[i].startsWith("$") && args[i].length() <= 5) { //$AA11
-                ret[i] = new String[]{traduceCelda(args[i], _idH).getValor()};
+                ret.add(new String[]{traduceCelda(args[i], _idH).getValor()});
 
             } else { // Es un número
-                ret[i] = new String[]{args[i]};
+                String[] s = {args[i]};
+                ret.add(s);
             }
         }
 
