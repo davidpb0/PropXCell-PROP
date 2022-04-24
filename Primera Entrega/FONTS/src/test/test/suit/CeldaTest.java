@@ -342,10 +342,10 @@ public class CeldaTest {
         c3.addReferenciante(c4);
         c4.addReferenciante(c1);
 
-        System.out.println("Refs C1:" + c1.getReferenciantes());
-        System.out.println("Refs C2:" + c2.getReferenciantes());
-        System.out.println("Refs C3:" + c3.getReferenciantes());
-        System.out.println("Refs C4:" + c4.getReferenciantes());
+        // System.out.println("Refs C1:" + c1.getReferenciantes());
+        // System.out.println("Refs C2:" + c2.getReferenciantes());
+        // System.out.println("Refs C3:" + c3.getReferenciantes());
+        // System.out.println("Refs C4:" + c4.getReferenciantes());
 
         Assert.assertEquals(new LinkedList<Celda>(), c4.getReferenciantes());
     }
@@ -371,10 +371,10 @@ public class CeldaTest {
         c2.addReferenciante(c3);
         c3.addReferenciante(c4);
 
-        System.out.println("Refs C1:" + c1.getReferenciantes());
-        System.out.println("Refs C2:" + c2.getReferenciantes());
-        System.out.println("Refs C3:" + c3.getReferenciantes());
-        System.out.println("Refs C4:" + c4.getReferenciantes());
+        // System.out.println("Refs C1:" + c1.getReferenciantes());
+        // System.out.println("Refs C2:" + c2.getReferenciantes());
+        // System.out.println("Refs C3:" + c3.getReferenciantes());
+        // System.out.println("Refs C4:" + c4.getReferenciantes());
 
         Assert.assertEquals(new LinkedList<Celda>(), c3.getReferenciantes());
     }
@@ -480,10 +480,10 @@ public class CeldaTest {
         lista.add(c4);
         c3.setReferenciantes(lista);
 
-        System.out.println("Refs C1:" + c1.getReferenciantes());
-        System.out.println("Refs C2:" + c2.getReferenciantes());
-        System.out.println("Refs C3:" + c3.getReferenciantes());
-        System.out.println("Refs C4:" + c4.getReferenciantes());
+        // System.out.println("Refs C1:" + c1.getReferenciantes());
+        // System.out.println("Refs C2:" + c2.getReferenciantes());
+        // System.out.println("Refs C3:" + c3.getReferenciantes());
+        // System.out.println("Refs C4:" + c4.getReferenciantes());
 
         Assert.assertEquals(new LinkedList<Celda>(), c3.getReferenciantes());
     }
@@ -511,10 +511,10 @@ public class CeldaTest {
         lista.add(c1);
         c4.setReferenciantes(lista);
 
-        System.out.println("Refs C1:" + c1.getReferenciantes());
-        System.out.println("Refs C2:" + c2.getReferenciantes());
-        System.out.println("Refs C3:" + c3.getReferenciantes());
-        System.out.println("Refs C4:" + c4.getReferenciantes());
+        // System.out.println("Refs C1:" + c1.getReferenciantes());
+        // System.out.println("Refs C2:" + c2.getReferenciantes());
+        // System.out.println("Refs C3:" + c3.getReferenciantes());
+        // System.out.println("Refs C4:" + c4.getReferenciantes());
 
         Assert.assertEquals(new LinkedList<Celda>(), c4.getReferenciantes());
     }

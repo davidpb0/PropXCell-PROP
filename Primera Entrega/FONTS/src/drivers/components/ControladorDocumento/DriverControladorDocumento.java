@@ -30,9 +30,10 @@ public class DriverControladorDocumento {
         System.out.println("5: Cerrar Documento");
         System.out.println("6: Crear Documento");
         System.out.println("7: Eliminar Documento");
-        System.out.println("8: Añadir Hoja");
-        System.out.println("9: Eliminar Hoja");
-        System.out.println("10: Cambiar Nombre Hoja");
+        System.out.println("8: Cambiar Nombre Documento");
+        System.out.println("9: Añadir Hoja");
+        System.out.println("10: Eliminar Hoja");
+        System.out.println("11: Cambiar Nombre Hoja");
 
         System.out.println("0: Salir");
         System.out.print("Escoja una opción entre las mostradas: ");
@@ -90,12 +91,15 @@ public class DriverControladorDocumento {
                         System.in.read();
                         break;
                     case 8:
-                        AddHoja();
+                        CambiarNombreDocumento();
                         break;
                     case 9:
-                        DelHoja();
+                        AddHoja();
                         break;
                     case 10:
+                        DelHoja();
+                        break;
+                    case 11:
                         ChangeNameHoja();
                         break;
                 }
@@ -223,5 +227,20 @@ public class DriverControladorDocumento {
             System.out.print("Nombre " + name + " asignado a Hoja" + id + "!");
         }
         System.in.read();
+    }
+
+    private static void CambiarNombreDocumento () throws IOException {
+        System.out.println("--Cambiar Nombre Documento--");
+        if (doc == null) {
+            System.out.print("No hay ningún documento abierto.");
+            System.in.read();
+            return;
+        }
+        System.out.print("Nombre: ");
+        String name = br.readLine();
+        cd.renombrarDocumento(name);
+        System.out.print("Nombre " + name + " asignado al Documento!");
+        System.in.read();
+
     }
 }
