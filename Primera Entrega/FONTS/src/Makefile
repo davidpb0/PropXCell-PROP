@@ -1,19 +1,13 @@
 CLASES = ./main/Domain/DomainModel/*.java ./main/Domain/DomainControllers/*.java
 DRIVERS_INTEGRATION = ./drivers/integration/*.java
 DRIVERS_COMPONENTS = ./drivers/components/*/*.java
-JUNIT_TESTS = ./test/*/*.java
+JUNIT_TESTS = ./test/*/*/*.java
 EJECUTABLES = ../../EXE/out/
 LIB = ../../lib/junit-4.12.jar:../../lib/byte-buddy-1.12.9.jar:../../lib/byte-buddy-agent-1.12.9.jar:../../lib/mockito-core-4.5.0.jar:../../lib/objenesis-3.2.jar
 
-prueba:
-		javac -Xlint:unchecked -target 11 -cp $(LIB) -d $(EJECUTABLES) $(CLASES) $(DRIVERS_COMPONENTS)
-		java -cp $(EJECUTABLES) drivers.components.ControladorBloque.DriverControladorBloque
-
 build:
-		javac -Xlint:unchecked -target 11 -cp $(LIB) -d $(EJECUTABLES) $(CLASES) $(DRIVERS_COMPONENTS)
-		javac -Xlint:unchecked -target 11 -cp $(LIB) $(CLASES) -d $(EJECUTABLES) $(JUNIT_TESTS)
-    	#javac -Xlint:unchecked -target 11 -cp $(CLASES) -d $(EJECUTABLES) -g $(DRIVERS_COMPONENTS)
-    	#javac -Xlint:unchecked -target 11 -cp $(CLASES) -d $(EJECUTABLES) -g $(DRIVERS_INTEGRATION)
+		javac -target 11 -cp $(LIB) -d $(EJECUTABLES) $(CLASES) $(DRIVERS_COMPONENTS) $(DRIVERS_INTEGRATION)
+		javac -target 11 -cp $(LIB) $(CLASES) -d $(EJECUTABLES) $(JUNIT_TESTS)
 
 JUnit:
 		java -cp $(LIB):$(EJECUTABLES) org.junit.runner.JUnitCore TestRunner
