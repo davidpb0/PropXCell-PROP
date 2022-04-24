@@ -1,8 +1,8 @@
 package main.Domain.DomainControllers;
 /*
- * Traductor
+ * Controlador Documento
  *
- * 0.0.1
+ * v0.0.2
  *
  * Joaquim Torra Garcia
  */
@@ -20,22 +20,24 @@ public class ControladorDocumento {
         if (documento_ref.getNumHojas() == 0) documento_ref.inicializaDocumento("Documento sin título", 50, 50);
     }
 
+    public Documento getDocumento() {
+        return documento_ref;
+    }
+
     /**
      * Cierra el documento actual.
      */
     public void cerrarDocumento() {
         documento_ref = null;
-        // Literalmente no sé qué más poner xd
     }
 
     /**
-     * Crea un documento nuevo.
+     * Cierra el documento actual y abre uno nuevo.
      */
     public void crearDocumento() {
         cerrarDocumento();
         documento_ref = Documento.getDocumento();
         if (documento_ref.getNumHojas() == 0) documento_ref.inicializaDocumento("Documento sin título", 50, 50);
-        // No sé cómo hacer que presentación abra un documento nuevo xd
     }
 
     /**
@@ -43,18 +45,20 @@ public class ControladorDocumento {
      */
     public void eliminarDocumento() {
         documento_ref.eliminaDocumento();
-        // No creo que esto sea suficiente pero weno
+        documento_ref = null;
     }
 
     /**
-     * Añade una hoja vacy le pone el id que toca a continuación.
+     * Añade una hoja vacía le pone el id que toca a continuación.
      */
     public void anadirHoja() {
         documento_ref.añadeHojaDf();
     }
 
     /**
-     * Añade una hoja y le pone el id que toca a continuación.
+     * Añade una hoja con filas y columnas especificadas.
+     * @param _nFilas número de filas de la hoja a añadir.
+     * @param _nColumnas número de columnas de la hoja a añadir.
      */
     public void anadirHoja(int _nFilas, int _nColumnas) {
         documento_ref.añadeHoja(_nFilas, _nColumnas);
@@ -62,7 +66,7 @@ public class ControladorDocumento {
 
     /**
      * Elimina la hoja con id _idH
-     * @param _idH identificador de la hoja a eliminar.
+     * @param _idH id de la hoja a eliminar.
      */
     public void eliminarHoja(int _idH) {
         documento_ref.eliminaHoja(_idH);
@@ -70,7 +74,7 @@ public class ControladorDocumento {
 
     /**
      * Cambia el nombre de la hoja _idH por _nuevoNombre.
-     * @param _idH identificador de la hoja en el documento.
+     * @param _idH id de la hoja en el documento.
      * @param _nuevoNombre nuevo nombre para la hoja.
      */
     public void asignaNombreHoja(int _idH, String _nuevoNombre) {
