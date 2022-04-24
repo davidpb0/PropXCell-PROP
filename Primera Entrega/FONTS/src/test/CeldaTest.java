@@ -9,8 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import javax.lang.model.type.ArrayType;
-import java.sql.Array;
 import java.util.LinkedList;
 
 public class CeldaTest {
@@ -35,7 +33,12 @@ public class CeldaTest {
         p2 = new StubPosicion(1, 2);
         c1 = new Celda(p1);
         c2 = new Celda(p2);
+    }
 
+    public void cleanRefs() {
+        LinkedList<Celda> listaVacia = new LinkedList<>();
+        c1.setReferenciantes(listaVacia);
+        c2.setReferenciantes(listaVacia);
     }
 
     @After
@@ -151,6 +154,7 @@ public class CeldaTest {
      */
     @Test
     public void AddReferenciante () {
+        cleanRefs();
         c1.addReferenciante(c2);
 
         LinkedList<Celda> cs = new LinkedList<>();
@@ -170,6 +174,7 @@ public class CeldaTest {
      */
     @Test
     public void ValorEnReferencia () {
+        cleanRefs();
         String val = "valor_c1";
         c1.setValor(val);
         // C2 referencia a C1, el valor de c2 deberia ser el valor de c1
@@ -190,6 +195,7 @@ public class CeldaTest {
      */
     @Test
     public void CambioValorEnReferencia () {
+        cleanRefs();
         String val1 = "valor1_c1";
         String val2 = "valor2_c1";
 
@@ -214,6 +220,7 @@ public class CeldaTest {
      */
     @Test
     public void DobleReferencia () {
+        cleanRefs();
         Celda c3 = new Celda(new StubPosicion(1,3));
 
         String val = "valor_c1";
@@ -237,6 +244,7 @@ public class CeldaTest {
      */
     @Test
     public void DobleReferenciaDesordenada () {
+        cleanRefs();
         Celda c3 = new Celda(new Posicion(1,3));
 
         String val = "valor_c1";
@@ -261,6 +269,7 @@ public class CeldaTest {
      */
     @Test
     public void CambioValorDobleRefDesordenada () {
+        cleanRefs();
         Celda c3 = new Celda(new Posicion(1,3));
 
         String val = "valor_c1";
@@ -286,12 +295,13 @@ public class CeldaTest {
      */
     @Test
     public void AutoReferencia () {
+        cleanRefs();
         c1.addReferenciante(c1);
         Assert.assertEquals(new LinkedList<Celda>(), c1.getReferenciantes());
     }
 
     /**
-     * Objeto de la prueba: Testear el comportamiento en Referencia circular
+     * Objeto de la prueba: Testear el comportamiento en Referencia Circular Directa
      * - Stubs: ninguno
      * - FDs: ninguno
      * - Valores estudiados: se estudia el comportamiento ante una Referencia Circular Directa, en concreto, que la
@@ -302,6 +312,7 @@ public class CeldaTest {
      */
     @Test
     public void ReferenciaCircular () {
+        cleanRefs();
         c1.addReferenciante(c2);
         c2.addReferenciante(c1);
 
@@ -309,6 +320,63 @@ public class CeldaTest {
         // de C2 será vacia.
 
         Assert.assertEquals(new LinkedList<Celda>(), c2.getReferenciantes());
+    }
+
+    /**
+     * Objeto de la prueba: Testear el comportamiento en Referencia Circular Múltiple
+     * - Stubs: StubPosición
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia que se borre correctamente una celda de la lista de referenciantes
+     * - Operativa: se definen 4 celdas distintas. La segunda referencia a la primera. La tercera a la segunda.
+     *              La cuarta a la tercera. Y la primera a la cuarta.
+     *
+     */
+    @Test
+    public void ReferenciaCircularMultiple () {
+        cleanRefs();
+        Celda c3 = new Celda(new StubPosicion(1, 3));
+        Celda c4 = new Celda(new StubPosicion(1, 4));
+
+        c1.addReferenciante(c2);
+        c2.addReferenciante(c3);
+        c3.addReferenciante(c4);
+        c4.addReferenciante(c1);
+
+        System.out.println("Refs C1:" + c1.getReferenciantes());
+        System.out.println("Refs C2:" + c2.getReferenciantes());
+        System.out.println("Refs C3:" + c3.getReferenciantes());
+        System.out.println("Refs C4:" + c4.getReferenciantes());
+
+        Assert.assertEquals(new LinkedList<Celda>(), c4.getReferenciantes());
+    }
+
+    /**
+     * Objeto de la prueba: Testear el comportamiento en Referencia Circular Múltiple
+     * - Stubs: StubPosición
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia que se borre correctamente una celda de la lista de referenciantes
+     * - Operativa: se definen 4 celdas distintas. La primera referencia a la cuarta. La segunda a la primera.
+     *              La tercera a la segunda. Y la cuarta a la tercera.
+     *
+     */
+    @Test
+    public void ReferenciaCircularMultipleDesordenada () {
+        cleanRefs();
+        Celda c3 = new Celda(new StubPosicion(1, 3));
+        Celda c4 = new Celda(new StubPosicion(1, 4));
+
+        // C3 deberia quedar sin ningun referenciante, ya que es la última referencia en ser creada
+        c4.addReferenciante(c1);
+        c1.addReferenciante(c2);
+        c2.addReferenciante(c3);
+        c3.addReferenciante(c4);
+
+        System.out.println("Refs C1:" + c1.getReferenciantes());
+        System.out.println("Refs C2:" + c2.getReferenciantes());
+        System.out.println("Refs C3:" + c3.getReferenciantes());
+        System.out.println("Refs C4:" + c4.getReferenciantes());
+
+        Assert.assertEquals(new LinkedList<Celda>(), c3.getReferenciantes());
     }
 
     /**
@@ -322,6 +390,7 @@ public class CeldaTest {
      */
     @Test
     public void BorrarReferenciante () {
+        cleanRefs();
         c1.addReferenciante(c2);
         c1.borrarReferenciante(c2);
 
@@ -339,6 +408,7 @@ public class CeldaTest {
      */
     @Test
     public void SetReferenciantes () {
+        cleanRefs();
         LinkedList<Celda> lista = new LinkedList<>();
         lista.add(c2);
         c1.setReferenciantes(lista);
@@ -357,6 +427,7 @@ public class CeldaTest {
      */
     @Test
     public void SetAutoReferencia () {
+        cleanRefs();
         LinkedList<Celda> lista = new LinkedList<>();
         lista.add(c1);
         c1.setReferenciantes(lista);
@@ -375,6 +446,7 @@ public class CeldaTest {
      */
     @Test
     public void SetReferenciaCircular () {
+        cleanRefs();
         c1.addReferenciante(c2);
         LinkedList<Celda> lista = new LinkedList<>();
         lista.add(c1);
@@ -384,6 +456,67 @@ public class CeldaTest {
         // de C2 será vacia.
 
         Assert.assertEquals(new LinkedList<Celda>(), c2.getReferenciantes());
+    }
+
+    /**
+     * Objeto de la prueba: Testear el comportamiento en Referencia Circular Múltiple
+     * - Stubs: StubPosición
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia que se borre correctamente una celda de la lista de referenciantes con la función Set
+     * - Operativa: se definen 4 celdas distintas y una lista de celdas. La primera referencia a la cuarta. La segunda
+     *              a la primera. La tercera a la segunda. Se añade la cuarta a la lista y se asigna como lista de referenciantes de la tercera.
+     *
+     */
+    @Test
+    public void SetReferenciaCircularMultiple () {
+        cleanRefs();
+        Celda c3 = new Celda(new StubPosicion(1, 3));
+        Celda c4 = new Celda(new StubPosicion(1, 4));
+
+        c4.addReferenciante(c1);
+        c1.addReferenciante(c2);
+        c2.addReferenciante(c3);
+        LinkedList<Celda> lista = new LinkedList<>();
+        lista.add(c4);
+        c3.setReferenciantes(lista);
+
+        System.out.println("Refs C1:" + c1.getReferenciantes());
+        System.out.println("Refs C2:" + c2.getReferenciantes());
+        System.out.println("Refs C3:" + c3.getReferenciantes());
+        System.out.println("Refs C4:" + c4.getReferenciantes());
+
+        Assert.assertEquals(new LinkedList<Celda>(), c3.getReferenciantes());
+    }
+
+    /**
+     * Objeto de la prueba: Testear el comportamiento en Referencia Circular Múltiple
+     * - Stubs: StubPosición
+     * - FDs: ninguno
+     * - Valores estudiados: se estudia que se borre correctamente una celda de la lista de referenciantes con la función Set
+     * - Operativa: se definen 4 celdas distintas y una lista de celdas. La segunda referencia a la primera.
+     *              La tercera a la segunda. La cuarta a la tercera. Se añade la primera a la lista, y se asigna esa lista
+     *              como referenciantes de la cuarta.
+     *
+     */
+    @Test
+    public void SetReferenciaCircularMultipleDesordenada () {
+        cleanRefs();
+        Celda c3 = new Celda(new StubPosicion(1, 3));
+        Celda c4 = new Celda(new StubPosicion(1, 4));
+
+        c1.addReferenciante(c2);
+        c2.addReferenciante(c3);
+        c3.addReferenciante(c4);
+        LinkedList<Celda> lista = new LinkedList<>();
+        lista.add(c1);
+        c4.setReferenciantes(lista);
+
+        System.out.println("Refs C1:" + c1.getReferenciantes());
+        System.out.println("Refs C2:" + c2.getReferenciantes());
+        System.out.println("Refs C3:" + c3.getReferenciantes());
+        System.out.println("Refs C4:" + c4.getReferenciantes());
+
+        Assert.assertEquals(new LinkedList<Celda>(), c4.getReferenciantes());
     }
 
     /** ==========================

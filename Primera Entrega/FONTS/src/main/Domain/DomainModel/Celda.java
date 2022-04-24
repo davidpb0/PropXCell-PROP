@@ -3,7 +3,7 @@ package main.Domain.DomainModel;
 /*
  * Celda
  *
- * v0.0.6
+ * v0.1.0
  *
  * Joaquim Torra Garcia
  */
@@ -61,8 +61,24 @@ public class Celda {
      */
     public void setValor(String _valor) {
         for (Celda c : this.referenciantes) {
-            c.setValor(_valor);
+            c.setValorRef(_valor, this);
         } 
+        this.valor = _valor;
+    }
+
+    /**
+     * Asigna el nuevo valor que la celda debe mostrar, que proviene de una referencia y lo envía a todas las celdas referenciantes.
+     * Evita los bucles de referencias.
+     * @param _valor el valor de la referencia a mostrar
+     * @param _ref la celda que manda la referencia
+     */
+    protected void setValorRef(String _valor, Celda _ref) {
+        if(_ref == this) {
+            this.referenciantes.pop();
+        }
+        for (Celda c : this.referenciantes) {
+            c.setValorRef(_valor, _ref);
+        }
         this.valor = _valor;
     }
 
@@ -102,6 +118,10 @@ public class Celda {
         return this.referenciantes;
     }
 
+    /**
+     * Asigna una lista de referenciantes a la celda
+     * @param refs lista de referenciantes a asignar
+     */
     public void setReferenciantes(LinkedList<Celda> refs) {
         for(Celda ref : refs) {
            if(ref == this || ref.getReferenciantes().contains(this)) {
@@ -123,7 +143,7 @@ public class Celda {
             return;
         }
         referenciantes.add(_ref);
-        _ref.setValor(this.valor);
+        _ref.setValorRef(this.valor, this);
     }
 
     /**
