@@ -85,6 +85,11 @@ public class DriverControladorDocumento {
                         System.in.read();
                         break;
                     case 7:
+                        if (doc == null) {
+                            System.out.print("No hay ningún documento abierto.");
+                            System.in.read();
+                            break;
+                        }
                         cd.eliminarDocumento();
                         doc = cd.getDocumento();
                         System.out.print("Documento eliminado.");
@@ -105,7 +110,6 @@ public class DriverControladorDocumento {
                 }
                 System.out.println();
                 ops();
-                System.out.print("Escoja una opción entre las mostradas: ");
                 op = read();
             }
             System.out.println("...terminando programa...");
@@ -156,6 +160,11 @@ public class DriverControladorDocumento {
             return;
         }
         Hoja h = doc.getHoja(id);
+        if(h == null) {
+            System.out.print("La hoja seleccionada no existe!");
+            System.in.read();
+            return;
+        }
         System.out.println("Objeto: " + h);
         System.out.println("Nombre: " + h.getNombre());
         System.out.print("Dimensiones: " + h.getFilas() + "x" + h.getColumnas());
