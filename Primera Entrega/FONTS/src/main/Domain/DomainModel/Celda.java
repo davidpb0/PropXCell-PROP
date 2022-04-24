@@ -125,7 +125,7 @@ public class Celda {
     public void setReferenciantes(LinkedList<Celda> refs) {
         for(Celda ref : refs) {
            if(ref == this || ref.getReferenciantes().contains(this)) {
-               System.out.println("!!! AUTO REFERENCIA o REFERENCIA CIRCULAR NO PERMITIDAS !!!");
+               // System.out.println("!!! AUTO REFERENCIA o REFERENCIA CIRCULAR NO PERMITIDAS !!!");
                return;
            }
         }
@@ -139,7 +139,7 @@ public class Celda {
      */
     public void addReferenciante(Celda _ref) {
         if(_ref == this || _ref.getReferenciantes().contains(this)) {
-            System.out.println("!!! AUTO REFERENCIA o REFERENCIA CIRCULAR NO PERMITIDAS !!!");
+            // System.out.println("!!! AUTO REFERENCIA o REFERENCIA CIRCULAR NO PERMITIDAS !!!");
             return;
         }
         referenciantes.add(_ref);

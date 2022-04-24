@@ -57,6 +57,15 @@ public class Documento implements Serializable {
     }
 
 
+    /**
+     * Le asigna un nombre a documento
+     * @param _nombre nombre a asignar
+     */
+    public void setNombre(String _nombre){
+        this.nombre = _nombre;
+    }
+
+
 
     /**
      * Inicializa el documento con una Hoja con los valores fila y columnas por defecto

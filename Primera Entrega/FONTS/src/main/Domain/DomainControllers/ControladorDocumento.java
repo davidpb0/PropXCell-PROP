@@ -96,4 +96,8 @@ public class ControladorDocumento {
     public int getNumHojas() {
         return documento_ref.getNumHojas();
     }
+
+    public void renombrarDocumento(String _nuevoNombre) {
+        documento_ref.setNombre(_nuevoNombre);
+    }
 }
