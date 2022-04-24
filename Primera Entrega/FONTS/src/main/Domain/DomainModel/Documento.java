@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class Documento implements Serializable {
 
     private static Documento instanceOfThisClass;
-    private String nombre;
+    private String nombre = "";
     private int numHojas;
     private String fechaCreacion;
     private HashMap<Integer, Hoja> hojasContenidas = new HashMap<Integer, Hoja>();

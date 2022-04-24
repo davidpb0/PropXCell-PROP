@@ -134,11 +134,8 @@ public class Traductor {
             else if (_formula.indexOf("=reemplazarPal(") == 0) return "#REEMPPAL";
             else if (_formula.indexOf("=reemplazarLet(") == 0) return "#REEMPLET";
             else return "#ERRORFUNC";
-        } else if (_formula.charAt(1) == '$' && _formula.length() <= 6) { // Como mucho =$AA11
+        } else if (_formula.charAt(0) == '=' && _formula.charAt(1) == '$' && _formula.length() <= 6) { // Como mucho =$AA11
             return "#REFERENCIA";
-        } else if (_formula.charAt(2) == '/' && _formula.charAt(5) == '/') {
-            Date fecha = getTraductor().StringDate(_formula);
-            return "#FECHA";
         }
         return "#VALUE";
     }
@@ -152,7 +149,8 @@ public class Traductor {
     public int traduceColumna(String _c) {
         int ret = 0;
         if (_c.length() == 1) {
-            ret = getTraductor().StringInt(_c) - 16;
+            int cr = _c.charAt(0);
+            ret = cr - 64;
         } else {
             for (int i = 0; i < _c.length(); ++i) {
                 ret += 26 * i + getTraductor().traduceColumna(Character.toString(_c.charAt(i)));
@@ -170,12 +168,15 @@ public class Traductor {
      */
     public Celda traduceCelda(String _pos, int _idH) {
         Celda c;
+        Documento d = Documento.getDocumento();
+        if(d.getNombre().isEmpty()) d.inicializaDocumentoDefault("Doc1");
         Hoja h = Documento.getDocumento().getHoja(_idH);
         String s = _pos;
-        if (_pos.startsWith("$")) s = _pos.substring(1);
+        if (_pos.startsWith("=$")) s = _pos.substring(2);
+        else if (_pos.startsWith("$")) s = _pos.substring(1);
         int j = 0;
         while (j < s.length() && s.charAt(j) >= 'A' && s.charAt(j) <= 'Z') ++j;
-        String columna = s.substring(0, j - 1);
+        String columna = s.substring(0, j);
         String fila = s.substring(j);
         Posicion p = new Posicion(getTraductor().StringInt(fila), traduceColumna(columna));
         c = h.getCelda(p);
@@ -192,12 +193,12 @@ public class Traductor {
     public String[] getArgumentosFuncion1aria(String _funcion, int _idH) {
         Hoja h = Documento.getDocumento().getHoja(_idH);
         String f = _funcion;
-        if (_funcion.startsWith("=")) f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')'));
+        if (_funcion.startsWith("=") && _funcion.charAt(1) != '$') f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')'));
         else System.err.println("Argumento erróneo, el string proporcionado tiene que ser de tipo =func(arg). String actual: " + _funcion);
         ArrayList<String> ret = new ArrayList<>();
 
 
-        if (f.startsWith("$") && f.length() <= 5) { // Como mucho $AA11
+        if (f.startsWith("=$") && f.length() <= 6) { // Como mucho $AA11
             Celda c = getTraductor().traduceCelda(f.substring(1, f.length() - 1), _idH);
             try {
                 ret.add(c.getValor());
@@ -231,7 +232,7 @@ public class Traductor {
         ArrayList<String[]>ret = new ArrayList<>();
         String f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')'));
         String[] args = f.split(",");
-        if (args.length < 2) return null;
+        //if (args.length < 2) return null;
 
         for (int i = 0; i < args.length; ++i) {
             if (args[i].contains(":")) { //$A1:$B1
@@ -249,6 +250,7 @@ public class Traductor {
                 ret.add(argsI);
 
             } else if (args[i].startsWith("$") && args[i].length() <= 5) { //$AA11
+                System.out.println("He entrado");
                 ret.add(new String[]{traduceCelda(args[i], _idH).getValor()});
 
             } else { // Es un número

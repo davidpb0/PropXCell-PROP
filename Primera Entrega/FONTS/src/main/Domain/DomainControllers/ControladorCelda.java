@@ -5,6 +5,7 @@ import main.Domain.DomainModel.*;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static main.Domain.DomainModel.Documento.getDocumento;
@@ -52,6 +53,8 @@ public class ControladorCelda {
 
       String type = Traductor.getTraductor().detecta(_content);
       String[] arg;
+      ArrayList<String[]> argm = new ArrayList<>();
+      ArrayList<String> argu = new ArrayList<>();
       String[] arg1;
       String[] arg2;
       String[][]aux;
@@ -76,9 +79,9 @@ public class ControladorCelda {
 
           case "#TRUNC": // =trunc()
               //Se cogen los argumentos necesarios para realizar la operacion
-              aux = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
-              arg1 = aux[0];
-              arg2 = aux[1];
+              argm = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
+              arg1 = argm.get(0);
+              arg2 = argm.get(1);
               //Se comprueba que el numero de argumentos sea el correcto
               try {
                   if (arg1.length != 1 || arg2.length != 1) {
@@ -363,9 +366,9 @@ public class ControladorCelda {
           case "#CLETRA": // =contarletra()
 
               //Se cogen los argumentos necesarios para realizar la operacion
-              aux = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
-              arg1 = aux[0];
-              arg2 = aux[1];
+              argm = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
+              arg1 = argm.get(0);
+              arg2 = argm.get(1);
               //Se comprueba que el numero de argumentos sea el correcto
               if (arg1.length != 1 || arg2.length != 1) {
                   this.celdaRef.setValor("#ERROR_N_ARG");
@@ -381,11 +384,11 @@ public class ControladorCelda {
           case "#REEMPPAL": // =reemplazarPal()
 
               //Se cogen los argumentos necesarios para realizar la operacion
-              aux = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
-              arg1 = aux[0];
-              arg2 = aux[1];
-              String[] arg3 = aux[2];
-              String[] arg4 = aux[3];
+              argm = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
+              arg1 = argm.get(0);
+              arg2 = argm.get(1);
+              String[] arg3 = argm.get(2);
+              String[] arg4 = argm.get(3);
 
               //Se comprueba que el numero de argumentos sea el correcto
               if (arg1.length != 1 || arg2.length != 1 || arg3.length != 1 || arg4.length != 1) {
@@ -402,10 +405,10 @@ public class ControladorCelda {
           case "#REEMPLET": // =reemplazarLet()
 
               //Se cogen los argumentos necesarios para realizar la operacion
-              aux = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
-              arg1 = aux[0];
-              arg2 = aux[1];
-              arg3 = aux[2];
+              argm = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
+              arg1 = argm.get(0);
+              arg2 = argm.get(1);
+              arg3 = argm.get(2);
               System.out.println(arg1[0]);
               System.out.println(arg2[0]);
               System.out.println(arg3[0]);
@@ -424,26 +427,37 @@ public class ControladorCelda {
           case "#REFERENCIA": // $C1 (por ejemplo)
               //Se coge la celda referenciantes, para añadirle la referenciada
               Celda reft = Traductor.getTraductor().traduceCelda(_content, this.hojaAct.getId());
+              System.out.println("V= " + reft.getValor() + "Pos: " + reft.getPosicion().getFila() + " " + reft.getPosicion().getColumna());
               reft.addReferenciante(this.celdaRef);
               //Se coge el valor de la celda referenciante
-              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
-              this.celdaRef.setValor(arg[0]);
+              //arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
+              this.celdaRef.setValor(reft.getValor());
               break;
 
           case "#MEDIA": // =media()
 
               //Se cogen los argumentos necesarios para realizar la operacion
-              aux = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
+              argm = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
+              System.out.println(argm);
+
+              for(int i = 0; i < argm.size(); ++i){
+                    String[] a = argm.get(i);
+                    if(a.length > 1){
+                        for(String v : a) argu.add(v);
+                    }
+                    else argu.add(a[0]);
+
+              }
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (aux[0].length == 0) {
+              if (argu.size() == 0) {
                   this.celdaRef.setValor("#ERROR_N_ARG");
                   break;
               }
 
               //Se comprueba que los argumentos sean numeros
               b = false;
-              for (String v : aux[0]) {
+              for (String v : argu) {
                   if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
                       this.celdaRef.setValor("#ERROR_NO_NUM");
                       b = true;
@@ -452,24 +466,31 @@ public class ControladorCelda {
               }
               if (b) break;
 
-              double m = ControladorHoja.media(aux[0]);
+              double m = ControladorHoja.media(argu.toArray(new String[0]));
               this.celdaRef.setValor(String.valueOf(m));
               break;
 
           case "#MEDIANA": // =mediana()
 
-              //Se cogen los argumentos necesarios para realizar la operacion
-              aux = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
+              argm = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
+
+              for(int i = 0; i < argm.size(); ++i){
+                  String[] a = argm.get(i);
+                  if(a.length > 1){
+                      for(String v : a) argu.add(v);
+                  }
+                  else argu.add(a[0]);
+              }
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (aux[0].length == 0) {
+              if (argu.size() == 0) {
                   this.celdaRef.setValor("#ERROR_N_ARG");
                   break;
               }
 
               //Se comprueba que los argumentos sean numeros
               b = false;
-              for (String v : aux[0]) {
+              for (String v : argu) {
                   if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
                       this.celdaRef.setValor("#ERROR_NO_NUM");
                       b = true;
@@ -478,33 +499,41 @@ public class ControladorCelda {
               }
               if (b) break;
 
-              m = ControladorHoja.mediana(aux[0]);
+
+              m = ControladorHoja.mediana(argu.toArray(new String[0]));
               this.celdaRef.setValor(String.valueOf(m));
               break;
 
           case "#VAR": // =varianza()
 
-              //Se cogen los argumentos necesarios para realizar la operacion
-              aux = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
+              argm = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
+
+              for(int i = 0; i < argm.size(); ++i){
+                  String[] a = argm.get(i);
+                  if(a.length > 1){
+                      for(String v : a) argu.add(v);
+                  }
+                  else argu.add(a[0]);
+              }
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (aux[0].length == 0) {
+              if (argu.size() == 0) {
                   this.celdaRef.setValor("#ERROR_N_ARG");
                   break;
               }
 
               //Se comprueba que los argumentos sean numeros
               b = false;
-              for (String v : aux[0]) {
+              for (String v : argu) {
                   if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
                       this.celdaRef.setValor("#ERROR_NO_NUM");
                       b = true;
                       break;
                   }
               }
-              if (b) break;
+              if (b) break;;
 
-              m = ControladorHoja.varianza(aux[0]);
+              m = ControladorHoja.varianza(argu.toArray(new String[0]));
               this.celdaRef.setValor(String.valueOf(m));
 
               break;
@@ -512,12 +541,12 @@ public class ControladorCelda {
           case "#COV":// =covarianza()
 
               //Se cogen los argumentos necesarios para realizar la operacion
-              aux = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
-              arg1 = aux[0];
-              arg2 = aux[1];
+              argm = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
+              arg1 = argm.get(0);
+              arg2 = argm.get(1);
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg1.length == arg2.length) {
+              if (arg1.length != arg2.length) {
                   this.celdaRef.setValor("#ERROR_N_ARG");
                   break;
               }
@@ -546,39 +575,48 @@ public class ControladorCelda {
 
           case "#DESV":// =desviacion()
 
-              //Se cogen los argumentos necesarios para realizar la operacion
-              arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
+
+              argm = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
+
+              for(int i = 0; i < argm.size(); ++i){
+                  String[] a = argm.get(i);
+                  if(a.length > 1){
+                      for(String v : a) argu.add(v);
+                  }
+                  else argu.add(a[0]);
+
+              }
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg.length == 0) {
+              if (argu.size() == 0) {
                   this.celdaRef.setValor("#ERROR_N_ARG");
                   break;
               }
 
               //Se comprueba que los argumentos sean numeros
               b = false;
-              for (String v : arg) {
+              for (String v : argu) {
                   if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
                       this.celdaRef.setValor("#ERROR_NO_NUM");
                       b = true;
                       break;
                   }
               }
-              if (b) break;
+              if (b) break;;
 
-              m = ControladorHoja.desvEstandar(arg);
+              m = ControladorHoja.desvEstandar(argu.toArray(new String[0]));
               this.celdaRef.setValor(String.valueOf(m));
               break;
 
           case "#COEFP": // =pearson()
 
               //Se cogen los argumentos necesarios para realizar la operacion
-              aux = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
-              arg1 = aux[0];
-              arg2 = aux[1];
+              argm = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
+              arg1 = argm.get(0);
+              arg2 = argm.get(1);
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg1.length == arg2.length) {
+              if (arg1.length != arg2.length) {
                   this.celdaRef.setValor("#ERROR_N_ARG");
                   break;
               }
