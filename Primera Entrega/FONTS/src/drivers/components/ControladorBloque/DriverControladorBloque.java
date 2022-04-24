@@ -18,6 +18,10 @@ public class DriverControladorBloque {
     private static BufferedReader br;
     private static String[] palabras;
     private static boolean constructor = false;
+    private static Documento d;
+    private static Hoja h;
+    private static Celda c;
+    private static Posicion p;
 
     @InjectMocks
     private static ControladorBloque cb = null;
@@ -64,7 +68,7 @@ public class DriverControladorBloque {
         System.out.println("\t3: Cortar()");
         System.out.println("\t4: Pegar(int _numHoja, int _filaInicio, int _columnaInicio)");
         System.out.println("\t5: SetBloqueSeleccionado(int _idH, int _filaInicial, int _columnaInicial, int _filaFinal, int _columnaFinal)");
-        System.out.println("\t0: Salir\n");
+        System.out.println("\t0: Salir");
         System.out.println("Escoge una opción: ");
     }
 
@@ -97,7 +101,7 @@ public class DriverControladorBloque {
                             break;
 
                         case 1:
-
+                            if (nParamValido(0)) driver.constructorTest();
                             break;
 
                         case 2:
@@ -136,6 +140,8 @@ public class DriverControladorBloque {
         cb = new ControladorBloque();
         constructor = true;
         System.out.println("Se ha creado el ControladorBloque correctamente.");
+
+        d = Documento.getDocumento();
     }
 
     private void copiarTest() {

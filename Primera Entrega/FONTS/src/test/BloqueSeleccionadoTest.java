@@ -1,5 +1,3 @@
-package test;
-
 import main.Domain.DomainModel.BloqueSeleccionado;
 import main.Domain.DomainModel.Celda;
 import main.Domain.DomainModel.Hoja;

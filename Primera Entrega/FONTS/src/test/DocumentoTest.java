@@ -1,9 +1,3 @@
-package test;
-
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.when;
-
 import main.Domain.DomainModel.Documento;
 import main.Domain.DomainModel.Hoja;
 import org.junit.After;
@@ -16,6 +10,10 @@ import org.mockito.MockitoAnnotations;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.when;
 
 
 public class DocumentoTest {

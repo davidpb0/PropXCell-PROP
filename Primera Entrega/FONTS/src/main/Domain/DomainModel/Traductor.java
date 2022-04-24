@@ -223,10 +223,9 @@ public class Traductor {
 
     /**
      * Pre: _funcion es un String de tipo "=funcNaria(arg1, arg2)", _idH corresponde al id de una hoja que existe
-     * @param _funcion introducida por el usuario.
-     * @param _idH id de la hoja actual.
-     * @return un vector que contiene 2 vectores de Strings, uno con los argumentos antes de la coma y el otro
-     * con los argumentos después de la coma.
+     * @param _funcion introducida por el usuario
+     * @param _idH id de la hoja actual
+     * @return un vector que contiene hasta 4 vectores de Strings, cada uno con los argumentos entre las comas
      */
     public String[][] getArgumentosFuncionNaria(String _funcion, int _idH) {
         String[][] ret = new String[4][];

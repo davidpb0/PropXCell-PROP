@@ -1,5 +1,3 @@
-package test;
-
 import main.Domain.DomainModel.Posicion;
 
 import org.junit.Before;

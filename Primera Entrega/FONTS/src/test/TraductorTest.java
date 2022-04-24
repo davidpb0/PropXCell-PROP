@@ -1,5 +1,3 @@
-package test;
-
 import main.Domain.DomainModel.*;
 import org.junit.After;
 import org.junit.Before;
