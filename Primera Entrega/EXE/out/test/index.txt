@@ -1,8 +1,0 @@
-## Elementos del directorio
-
-### old:
-Este directorio contiene un test unitario que hicimos en un primer momento, y nos dimos cuenta de que habia que
-sustituirlo por un driver.
-
-### suit:
-Este directorio contiene los ejecutables de los tests unitarios que hemos hecho.
