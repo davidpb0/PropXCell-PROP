@@ -75,7 +75,7 @@ public class MainTest {
                             ch = new ControladorHoja();
                             ch.asignaHoja(1);
                             hojaSeleccionada = true;
-                            cc = new ControladorCelda();
+                            cc = ControladorCelda.getControladorCelda();
                             cb = new ControladorBloque();
                             System.out.println("Documento creado correctamente.");
                             break;

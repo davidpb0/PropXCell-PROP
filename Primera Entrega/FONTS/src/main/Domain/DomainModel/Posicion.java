@@ -1,4 +1,5 @@
 package main.Domain.DomainModel;
+import java.io.Serializable;
 import java.util.Objects;
 
 /*
@@ -9,7 +10,7 @@ import java.util.Objects;
  * Daniel Gallardo Peña
  */
 
-public class Posicion {
+public class Posicion implements Serializable {
     private final int fila;
     private final int columna;
 

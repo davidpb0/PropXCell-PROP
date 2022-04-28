@@ -1,4 +1,4 @@
-package test.old.ControladorCeldaTest;
+package old.ControladorCeldaTest;
 
 import main.Domain.DomainControllers.ControladorCelda;
 import main.Domain.DomainModel.Documento;
@@ -13,7 +13,7 @@ public class ControladorCeldaTest {
         Documento d = Documento.getDocumento();
         d.inicializaDocumento("Doc1", 2, 2);
 
-        ControladorCelda cc = new ControladorCelda();
+        ControladorCelda cc = ControladorCelda.getControladorCelda();
        // cc.asignaCeldaPosicion(1, 1, 2);
         cc.truncarValor(5.5678945, 3);
         String s = d.getHoja(1).getCelda(new Posicion(1,2)).getValor();
@@ -42,8 +42,7 @@ public class ControladorCeldaTest {
         Documento d = Documento.getDocumento();
         d.inicializaDocumento("Doc1", 2, 2);
 
-        ControladorCelda cc = new ControladorCelda();
-        //cc.asignaCeldaPosicion(1, 1, 1);
+        ControladorCelda cc = ControladorCelda.getControladorCelda();
         cc.valorAbsoluto(-55);
 
         //cc.asignaCeldaPosicion(1, 1, 2);
@@ -67,8 +66,7 @@ public class ControladorCeldaTest {
         Documento d = Documento.getDocumento();
         d.inicializaDocumento("Doc1", 2, 2);
 
-        ControladorCelda cc = new ControladorCelda();
-        //cc.asignaCeldaPosicion(1, 1, 1);
+        ControladorCelda cc = ControladorCelda.getControladorCelda();
         cc.aproximarValor(25.578);
 
        // cc.asignaCeldaPosicion(1, 1, 2);
@@ -91,7 +89,7 @@ public class ControladorCeldaTest {
         Documento d = Documento.getDocumento();
         d.inicializaDocumento("Doc1", 2, 2);
 
-        ControladorCelda cc = new ControladorCelda();
+        ControladorCelda cc = ControladorCelda.getControladorCelda();
         //cc.asignaCeldaPosicion(1, 1, 1);
         cc.convertirValorDB(2);
 
@@ -111,7 +109,7 @@ public class ControladorCeldaTest {
         Documento d = Documento.getDocumento();
         d.inicializaDocumento("Doc1", 2, 2);
 
-        ControladorCelda cc = new ControladorCelda();
+        ControladorCelda cc = ControladorCelda.getControladorCelda();
         //cc.asignaCeldaPosicion(1, 1, 1);
         cc.convertirValorDH(2);
 
@@ -135,8 +133,8 @@ public class ControladorCeldaTest {
         Documento d = Documento.getDocumento();
         d.inicializaDocumento("Doc1", 2, 2);
 
-        ControladorCelda cc = new ControladorCelda();
-       // cc.asignaCeldaPosicion(1, 1, 1);
+        ControladorCelda cc = ControladorCelda.getControladorCelda();
+        // cc.asignaCeldaPosicion(1, 1, 1);
         cc.obtenerMes("24/05/2031");
 
         //cc.asignaCeldaPosicion(1, 1, 2);
@@ -155,7 +153,7 @@ public class ControladorCeldaTest {
         Documento d = Documento.getDocumento();
         d.inicializaDocumento("Doc1", 2, 2);
 
-        ControladorCelda cc = new ControladorCelda();
+        ControladorCelda cc = ControladorCelda.getControladorCelda();
         //cc.asignaCeldaPosicion(1, 1, 1);
         cc.obtenerAño("24/05/2031");
 
@@ -176,8 +174,8 @@ public class ControladorCeldaTest {
         Documento d = Documento.getDocumento();
         d.inicializaDocumento("Doc1", 2, 2);
 
-        ControladorCelda cc = new ControladorCelda();
-       // cc.asignaCeldaPosicion(1, 1, 1);
+        ControladorCelda cc = ControladorCelda.getControladorCelda();
+        // cc.asignaCeldaPosicion(1, 1, 1);
         cc.obtenerNombreDia("17/04/2022");
 
         //cc.asignaCeldaPosicion(1, 1, 2);
@@ -197,8 +195,8 @@ public class ControladorCeldaTest {
         Documento d = Documento.getDocumento();
         d.inicializaDocumento("Doc1", 2, 2);
 
-        ControladorCelda cc = new ControladorCelda();
-       // cc.asignaCeldaPosicion(1, 1, 1);
+        ControladorCelda cc = ControladorCelda.getControladorCelda();
+        // cc.asignaCeldaPosicion(1, 1, 1);
         cc.longitudPalabra("Hola");
 
        // cc.asignaCeldaPosicion(1, 1, 2);

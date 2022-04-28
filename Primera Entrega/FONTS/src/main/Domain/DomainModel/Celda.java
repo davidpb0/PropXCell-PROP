@@ -9,9 +9,10 @@ package main.Domain.DomainModel;
  */
 
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class Celda {
+public class Celda implements Serializable {
     private String valor = "";
     private String contenido = "";
     private Posicion posicion;

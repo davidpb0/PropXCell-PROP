@@ -20,11 +20,18 @@ import static main.Domain.DomainModel.Documento.getDocumento;
 */
 
 public class ControladorCelda {
+   private static ControladorCelda instanceOfThisClass;
    private Celda celdaRef;
    private Hoja hojaAct;
 
 
-   public ControladorCelda(){}
+   private ControladorCelda(){}
+
+
+    public static ControladorCelda getControladorCelda(){
+       if (instanceOfThisClass == null) instanceOfThisClass = new ControladorCelda();
+       return instanceOfThisClass;
+    }
 
    /** Pre: Tiene que haber un documento inicializado
     * Se guarda una celda de la hoja, fila y columna que le pasa presentación
