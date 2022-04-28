@@ -95,7 +95,7 @@ public class DriverControladorBloque {
 
     private void constructorTest() {
         System.out.println("Test de la constructora de ControladorBloque:");
-        cb = new ControladorBloque();
+        cb = ControladorBloque.getControldorBloque();
         constructor = true;
         System.out.println("Se ha creado el ControladorBloque correctamente.");
 
