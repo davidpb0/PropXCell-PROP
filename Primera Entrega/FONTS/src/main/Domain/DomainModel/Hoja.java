@@ -31,7 +31,9 @@ public class Hoja implements Serializable {
         for (int i = 1; i <= f; ++i){
             for (int j = 1; j <= c; ++j){
                 Posicion p = new Posicion(i, j);
-                _h.celdas.put(p, new Celda(p));
+                Celda cel = new Celda(p);
+                cel.setHoja(this);
+                _h.celdas.put(p, cel);
             }
         }
     }
@@ -205,7 +207,9 @@ public class Hoja implements Serializable {
     public boolean addCeldaVacia(Posicion _p){
 
         if (!this.celdas.containsKey(_p)){
-            this.celdas.put(_p, new Celda(_p));
+            Celda cel = new Celda(_p);
+            cel.setHoja(this);
+            this.celdas.put(_p, cel);
             return true;
         }
         return false;

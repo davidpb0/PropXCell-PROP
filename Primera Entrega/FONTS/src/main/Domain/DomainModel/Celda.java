@@ -3,7 +3,7 @@ package main.Domain.DomainModel;
 /*
  * Celda
  *
- * v0.1.0
+ * v0.1.1
  *
  * Joaquim Torra Garcia
  */
@@ -17,6 +17,7 @@ public class Celda implements Serializable {
     private String contenido = "";
     private Posicion posicion;
     private final LinkedList<Celda> referenciantes = new LinkedList<>();
+    private Hoja hoja;
 
 
     /**
@@ -155,6 +156,17 @@ public class Celda implements Serializable {
         this.referenciantes.remove(_ref);
     }
 
+    public Hoja getHoja() {
+        return this.hoja;
+    }
+
+    /**
+     * @param _hoja objeto hoja en la que existe esta celda
+     */
+    public void setHoja (Hoja _hoja) {
+       this.hoja = _hoja;
+    }
+
     @Override
     public boolean equals(Object _o){
         if (this == _o)
@@ -162,6 +174,6 @@ public class Celda implements Serializable {
         if (_o == null || getClass() != _o.getClass())
             return false;
         Celda that = (Celda) _o;
-        return this.posicion.getFila() == that.posicion.getFila() && this.posicion.getColumna() == that.posicion.getColumna();
+        return this.posicion.getFila() == that.getPosicion().getFila() && this.posicion.getColumna() == that.getPosicion().getColumna() && this.hoja == that.getHoja();
     }
 }
