@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="main.Presentation.vistas.PCrearDoc.CrearDocumento">
+  <grid id="27dc6" binding="principal" layout-manager="GridLayoutManager" row-count="9" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="800" height="500"/>
+    </constraints>
+    <properties>
+      <autoscrolls value="true"/>
+      <background color="-1"/>
+      <doubleBuffered value="false"/>
+      <enabled value="false"/>
+      <focusable value="false"/>
+      <maximumSize width="800" height="500"/>
+      <minimumSize width="800" height="500"/>
+      <preferredSize width="800" height="500"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="820d7" binding="panelizq" layout-manager="GridLayoutManager" row-count="9" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="0" row-span="9" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-16763490"/>
+          <font size="16" style="1"/>
+          <foreground color="-1"/>
+          <maximumSize width="250" height="500"/>
+          <minimumSize width="250" height="500"/>
+          <preferredSize width="250" height="500"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="3cb73" class="javax.swing.JButton" binding="eliminarDocumentoButton" default-binding="true">
+            <constraints>
+              <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-16755278"/>
+              <borderPainted value="false"/>
+              <contentAreaFilled value="true"/>
+              <defaultCapable value="false"/>
+              <focusPainted value="false"/>
+              <font name="JetBrains Mono" size="16" style="1"/>
+              <foreground color="-1"/>
+              <icon value="main/Presentation/imagenes/icons8-acuerdo-eliminar-32.png"/>
+              <text value="Eliminar Documento"/>
+            </properties>
+          </component>
+          <component id="d32f7" class="javax.swing.JButton" binding="BotonCrearDoc">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-16755278"/>
+              <borderPainted value="false"/>
+              <contentAreaFilled value="true"/>
+              <focusPainted value="false"/>
+              <font name="JetBrains Mono" size="16" style="1"/>
+              <foreground color="-1"/>
+              <icon value="main/Presentation/imagenes/icons8-documento-32.png"/>
+              <text value="Crear Documento"/>
+            </properties>
+          </component>
+          <component id="9f0dd" class="javax.swing.JButton" binding="btCargarDoc">
+            <constraints>
+              <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-16755278"/>
+              <borderPainted value="false"/>
+              <defaultCapable value="false"/>
+              <focusPainted value="false"/>
+              <font name="JetBrains Mono" size="16" style="1"/>
+              <foreground color="-1"/>
+              <icon value="main/Presentation/imagenes/icons8-load-from-file-32.png"/>
+              <text value="Cargar Documento"/>
+            </properties>
+          </component>
+          <component id="e01ab" class="javax.swing.JButton" binding="BotonHome">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <alignmentX value="0.0"/>
+              <background color="-16755278"/>
+              <borderPainted value="false"/>
+              <contentAreaFilled value="true"/>
+              <defaultCapable value="false"/>
+              <enabled value="true"/>
+              <focusPainted value="false"/>
+              <font name="JetBrains Mono" size="16" style="1"/>
+              <foreground color="-1"/>
+              <hideActionText value="false"/>
+              <icon value="main/Presentation/imagenes/icons8-casa-32.png"/>
+              <label value="Principal"/>
+              <requestFocusEnabled value="false"/>
+              <rolloverEnabled value="false"/>
+              <text value="Principal"/>
+              <verifyInputWhenFocusTarget value="false"/>
+              <verticalTextPosition value="0"/>
+            </properties>
+          </component>
+          <component id="d4fdd" class="javax.swing.JLabel" binding="titulo">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="JetBrains Mono" size="22" style="1"/>
+              <foreground color="-1"/>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="0"/>
+              <opaque value="false"/>
+              <text value="Hoja de Cálculo"/>
+            </properties>
+          </component>
+          <vspacer id="c1029">
+            <constraints>
+              <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                <preferred-size width="-1" height="250"/>
+              </grid>
+            </constraints>
+          </vspacer>
+          <vspacer id="bed5c">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                <preferred-size width="-1" height="100"/>
+              </grid>
+            </constraints>
+          </vspacer>
+          <vspacer id="a2796">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                <minimum-size width="-1" height="10"/>
+                <preferred-size width="-1" height="10"/>
+                <maximum-size width="-1" height="10"/>
+              </grid>
+            </constraints>
+          </vspacer>
+          <component id="b3fb6" class="javax.swing.JSeparator">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <alignmentX value="1.0"/>
+              <foreground color="-1"/>
+              <inheritsPopupMenu value="false"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <component id="2a198" class="javax.swing.JButton" binding="btclose">
+        <constraints>
+          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <borderPainted value="false"/>
+          <contentAreaFilled value="false"/>
+          <defaultCapable value="false"/>
+          <focusPainted value="false"/>
+          <hideActionText value="false"/>
+          <horizontalAlignment value="4"/>
+          <icon value="main/Presentation/imagenes/icons8-eliminar-32.png"/>
+          <opaque value="false"/>
+          <requestFocusEnabled value="false"/>
+          <rolloverEnabled value="false"/>
+          <selected value="false"/>
+          <text value=""/>
+          <verifyInputWhenFocusTarget value="false"/>
+        </properties>
+      </component>
+      <vspacer id="b8a">
+        <constraints>
+          <grid row="3" column="4" row-span="6" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <component id="d60a2" class="javax.swing.JTextField" binding="a50TextField" default-binding="true">
+        <constraints>
+          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="50"/>
+        </properties>
+      </component>
+      <component id="124ac" class="javax.swing.JTextField" binding="a50TextField1" default-binding="true">
+        <constraints>
+          <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="50"/>
+        </properties>
+      </component>
+      <component id="ab5fd" class="javax.swing.JLabel" binding="lbColumnas">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="JetBrains Mono" size="16" style="1"/>
+          <foreground color="-16777216"/>
+          <text value="Columnas"/>
+        </properties>
+      </component>
+      <vspacer id="cd921">
+        <constraints>
+          <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <component id="bc561" class="javax.swing.JLabel" binding="lbFilas">
+        <constraints>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Lucida Sans Typewriter" size="16" style="1"/>
+          <foreground color="-16777216"/>
+          <text value="Filas"/>
+        </properties>
+      </component>
+      <vspacer id="c1818">
+        <constraints>
+          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <hspacer id="3991e">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <hspacer id="4850">
+        <constraints>
+          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </hspacer>
+      <component id="aac20" class="javax.swing.JButton" binding="button1" default-binding="true">
+        <constraints>
+          <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <label value="Crear"/>
+          <text value="Crear"/>
+        </properties>
+      </component>
+      <vspacer id="32f6">
+        <constraints>
+          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+    </children>
+  </grid>
+</form>
