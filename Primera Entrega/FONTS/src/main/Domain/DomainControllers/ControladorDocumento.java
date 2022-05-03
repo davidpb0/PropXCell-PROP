@@ -9,6 +9,7 @@ package main.Domain.DomainControllers;
 
 import main.Domain.DomainModel.Documento;
 import main.Domain.DomainModel.Hoja;
+import main.Persistence.PersistenceControllers.ControladorDocumentoPersistencia;
 
 public class ControladorDocumento {
     private Documento documento_ref;
@@ -100,4 +101,18 @@ public class ControladorDocumento {
     public void renombrarDocumento(String _nuevoNombre) {
         documento_ref.setNombre(_nuevoNombre);
     }
+
+    public void guardarDocumento(){
+        ControladorDocumentoPersistencia cdp = ControladorDocumentoPersistencia.getCtrlDocPers();
+
+        cdp.almacenaDocumento(this.documento_ref);
+        this.documento_ref = null;
+    }
+
+    public void recuperaDocumento(){
+        ControladorDocumentoPersistencia cdp = ControladorDocumentoPersistencia.getCtrlDocPers();
+
+        this.documento_ref = cdp.cargaDocumento();
+    }
+
 }
