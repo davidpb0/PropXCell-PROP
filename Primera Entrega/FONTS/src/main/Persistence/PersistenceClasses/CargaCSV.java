@@ -10,8 +10,12 @@ package main.Persistence.PersistenceClasses;
 import main.Domain.DomainModel.Celda;
 import main.Domain.DomainModel.Posicion;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.io.*;
 
 public class CargaCSV {
     private HashMap<Posicion, Celda> datos;
@@ -71,5 +75,29 @@ public class CargaCSV {
     public static boolean existeArchivo(String _ubicacionArchivo) {
         File archivo = new File(_ubicacionArchivo);
         return archivo.exists() && archivo.isFile();
+    }
+
+    /**
+     * Lee un archivo en formato CSV
+     */
+    public ArrayList<String> leeCSV() {
+        ArrayList<String> ret = new ArrayList<>();
+        try {
+            //comprobar si existe el archivo con la funcion de abajo, sino excepción
+            BufferedReader br = new BufferedReader(new FileReader(ubicacion));
+            String fila = br.readLine();
+            while (fila != null) {
+                ret.add(fila);
+                fila = br.readLine();
+            }
+            br.close();
+
+            return ret;
+        } catch (IOException e) {
+            System.err.println("Error al leer el archivo.");
+            e.printStackTrace();
+        }
+
+        return ret;
     }
 }

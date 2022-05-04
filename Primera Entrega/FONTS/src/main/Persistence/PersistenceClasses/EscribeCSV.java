@@ -13,6 +13,7 @@ import main.Domain.DomainModel.Hoja;
 import main.Domain.DomainModel.Posicion;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class EscribeCSV {
@@ -60,5 +61,25 @@ public class EscribeCSV {
         }
 
         w.close();
+    }
+
+    /**
+     * Guarda en un archivo CSV las entradas del parámetro contenido
+     * @param contenido contiene un string por línea para guardar en el CSV
+     * @param _nombreCSV nombre del archivo a crear
+     */
+    public void guardaCSV(ArrayList<String> contenido, String _nombreCSV) {
+        try {
+            File CSV = new File(ubicacion + "/" + _nombreCSV + ".csv");
+            FileOutputStream fos = new FileOutputStream(CSV);
+            OutputStreamWriter osw = new OutputStreamWriter(fos);
+            Writer w = new BufferedWriter(osw);
+
+            for (String cont : contenido) w.write(cont + "\n");
+            w.close();
+        } catch (IOException e) {
+            System.err.println("Error al escribir el fichero.");
+            e.printStackTrace();
+        }
     }
 }
