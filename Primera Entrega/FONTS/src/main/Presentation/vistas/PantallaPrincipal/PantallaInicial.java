@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class PantallaPrincipal1 extends JFrame{
+public class PantallaInicial extends JFrame{
     private JPanel principal;
     private JPanel panelizq;
     private JButton eliminarDocumentoButton;
@@ -18,10 +18,9 @@ public class PantallaPrincipal1 extends JFrame{
     private JButton btclose;
     private JTextPane descripción;
 
-    public PantallaPrincipal1() {
+    public PantallaInicial() {
         add(principal);
         setResizable(false);
-        setUndecorated(true);
         //setVisible(true);
         setSize(800, 500);
         setLocationRelativeTo(null);
@@ -47,7 +46,7 @@ public class PantallaPrincipal1 extends JFrame{
     }
 
     public static void main(String[] args){
-        PantallaPrincipal1 p = new PantallaPrincipal1();
+        PantallaInicial p = new PantallaInicial();
         p.setVisible(true);
 
     }

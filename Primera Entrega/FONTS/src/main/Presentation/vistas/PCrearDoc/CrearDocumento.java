@@ -1,6 +1,6 @@
 package main.Presentation.vistas.PCrearDoc;
 
-import main.Presentation.vistas.PantallaPrincipal.PantallaPrincipal1;
+import main.Presentation.vistas.PantallaPrincipal.PantallaInicial;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -42,7 +42,7 @@ public class CrearDocumento extends JFrame{
         BotonHome.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PantallaPrincipal1 pp = new PantallaPrincipal1();
+                PantallaInicial pp = new PantallaInicial();
                 pp.setVisible(true);
                 setVisible(false);
             }
