@@ -1,4 +1,4 @@
-package main.Presentation.vistas.PantallaPrincipal;
+package main.Presentation.vistas.PantallaInicial;
 
 import main.Presentation.vistas.PCrearDoc.CrearDocumento;
 

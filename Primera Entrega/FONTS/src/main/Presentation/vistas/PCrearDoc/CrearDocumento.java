@@ -1,6 +1,6 @@
 package main.Presentation.vistas.PCrearDoc;
 
-import main.Presentation.vistas.PantallaPrincipal.PantallaInicial;
+import main.Presentation.vistas.PantallaInicial.PantallaInicial;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
