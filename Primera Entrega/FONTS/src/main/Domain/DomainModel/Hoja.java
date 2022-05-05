@@ -2,7 +2,7 @@ package main.Domain.DomainModel;
 /*
  * ClassName DomainModel.Hoja
  *
- * Version info 0.0.6
+ * Version info 0.1.1
  *
  * Author David Perez Barroso
  */
@@ -328,6 +328,36 @@ public class Hoja implements Serializable {
         }
 
         return agrup;
+    }
+
+
+    /**
+     * Transforma todo el contenido de la hoja en un ArrayList de Strings con los valores de las celdas de una
+     * misma fila separados por ";" y separacion de filas con un espacio en blanco
+     * @param _h Hoja a transformar en CSV
+     * @return Devuelve un ArrayList de String con todos los valores de las celdas de las Hojas
+     */
+    public ArrayList<String> transformaCSV(Hoja _h){
+        ArrayList<String> csv = new ArrayList<>();
+
+        HashMap<Posicion, Celda> m = _h.getCeldas();
+
+        int f = _h.getFilas();
+        int c = _h.getColumnas();
+        String aux = "";
+
+        for(int i = 1; i <= f; ++i){
+            aux= "";
+            for(int j = 1; j <= c; ++j) {
+                if (j == c) aux += m.get(new Posicion(i, j)).getValor()+ " ";
+                else {
+                    aux += m.get(new Posicion(i, j)).getValor() + ";";
+                }
+            }
+            csv.add(aux);
+        }
+
+        return csv;
     }
 
 
