@@ -16,9 +16,9 @@ public class ControladorDocumento {
     /**
      * Creadora por defecto, setea el valor de documento_ref con el documento abierto.
      */
-    public ControladorDocumento() {
+    public ControladorDocumento(int _f, int _c) {
         documento_ref = Documento.getDocumento();
-        if (documento_ref.getNumHojas() == 0) documento_ref.inicializaDocumento("Documento sin título", 50, 50);
+        if (documento_ref.getNumHojas() == 0) documento_ref.inicializaDocumento("Documento sin título", _f, _c);
     }
 
     public Documento getDocumento() {

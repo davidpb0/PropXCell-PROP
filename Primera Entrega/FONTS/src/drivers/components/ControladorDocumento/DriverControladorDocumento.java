@@ -16,7 +16,7 @@ public class DriverControladorDocumento {
     private static ControladorDocumento cd = null;
 
     private static void initCD () {
-        cd = new ControladorDocumento();
+        cd = new ControladorDocumento(50, 50);
         doc = cd.getDocumento();
         System.out.println("ControladorDocumento inicializado correctamente!");
     }
