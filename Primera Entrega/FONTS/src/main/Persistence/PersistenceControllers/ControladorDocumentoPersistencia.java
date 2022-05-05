@@ -14,6 +14,7 @@ import main.Domain.DomainModel.Documento;
 
 public class ControladorDocumentoPersistencia {
 
+
         private static ControladorDocumentoPersistencia instanceOfThisClass;
 
         private ControladorDocumentoPersistencia(){}
@@ -23,10 +24,10 @@ public class ControladorDocumentoPersistencia {
             return instanceOfThisClass;
         }
 
-        public void almacenaDocumento(Documento _d){
+        public void almacenaDocumento(Documento _d, String _path){
             try{
                 ObjectOutputStream escribiendoDoc =
-                        new ObjectOutputStream(new FileOutputStream("D:/david/FIB/PROP/DataSer/documento"));
+                        new ObjectOutputStream(new FileOutputStream(_path));
                 escribiendoDoc.writeObject(_d);
                 escribiendoDoc.close();
 
@@ -37,10 +38,10 @@ public class ControladorDocumentoPersistencia {
             }
         }
 
-        public Documento cargaDocumento(){
+        public Documento cargaDocumento(String _path){
             try {
                 ObjectInputStream recuperandoDoc =
-                        new ObjectInputStream(new FileInputStream("D:/david/FIB/PROP/DataSer/documento"));
+                        new ObjectInputStream(new FileInputStream(_path));
                 return (Documento) recuperandoDoc.readObject();
 
             } catch (Exception e) {

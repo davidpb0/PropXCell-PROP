@@ -3,8 +3,18 @@ package main.Presentation;
 import main.Domain.DomainControllers.ControladorDocumento;
 import main.Presentation.vistas.PantallaInicial.PantallaInicial;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+
+/*
+ * ClassName PantallaInicialController
+ *
+ * Version info 0.0.2
+ *
+ * Author David Perez Barroso
+ */
 
 public class PantallaInicialController implements ActionListener {
 
@@ -16,6 +26,7 @@ public class PantallaInicialController implements ActionListener {
         this.pi.crearButton.addActionListener(this);
         this.pi.BotonCrearDoc.addActionListener(this);
         this.pi.BotonHome.addActionListener(this);
+        this.pi.btCargarDoc.addActionListener(this);
     }
 
     public void iniciar(){
@@ -48,6 +59,21 @@ public class PantallaInicialController implements ActionListener {
         else if (e.getSource() == pi.BotonHome){
             pi.descripción.setVisible(true);
             pi.panelCrearDoc.setVisible(false);
+
+        }
+
+        else if (e.getSource() == pi.btCargarDoc){
+            JFileChooser jf = new JFileChooser();
+            jf.showOpenDialog(pi);
+            File doc = jf.getSelectedFile();
+            if (doc != null){
+                System.out.println(doc.getAbsolutePath());
+                this.cd = new ControladorDocumento(20, 20);
+                cd.cargaDocumento(doc.getAbsolutePath());
+
+            }
+
+           // System.out.println(cd.getDocumento().getHoja(1).getFilas());
 
         }
 
