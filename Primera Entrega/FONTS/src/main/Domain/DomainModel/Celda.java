@@ -51,6 +51,15 @@ public class Celda implements Serializable {
     }
 
     /**
+     * Copia el contenido y el valor de una celda pasada por parámetro
+     * @param c celda a copiar
+     */
+    public void copiarCelda(Celda c) {
+        this.contenido = c.getContenido();
+        this.valor = c.getValor();
+    }
+
+    /**
      * @return el valor que muestra la celda, ya sea el contenido o el resultado de la función establecida en el contenido
      */
     public String getValor() {

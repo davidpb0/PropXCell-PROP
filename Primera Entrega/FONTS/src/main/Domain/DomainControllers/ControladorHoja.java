@@ -1,21 +1,24 @@
 package main.Domain.DomainControllers;
 
-import main.Domain.DomainModel.Documento;
-import main.Domain.DomainModel.Hoja;
-import main.Domain.DomainModel.Posicion;
+import main.Domain.DomainModel.*;
 
-import java.util.Arrays;
+import java.util.*;
 
-/*ClassName ControladorHoja
+/* ControladorHoja
  *
- * Version info 1.0.0
+ * v1.0.0
  *
- * Author Daniel Gallardo Peña
+ * Joaquim Torra Garcia
  */
 
 public class ControladorHoja {
     
-    private Hoja hojaRef;
+    private static Hoja hojaRef;
+
+    public enum Criterio {
+        ASCENDENTE,
+        DESCENDENTE
+    }
 
     public ControladorHoja() {}
 
@@ -24,7 +27,7 @@ public class ControladorHoja {
     * @param _idh identificador de la hoja que siempre corresponderá a una hoja existente
     */
     public void asignaHoja(int _idh) {
-        this.hojaRef = Documento.getDocumento().getHoja(_idh);
+        hojaRef = Documento.getDocumento().getHoja(_idh);
     }
 
     /**
@@ -34,6 +37,8 @@ public class ControladorHoja {
     public void renombraHoja(String _nuevoNombre) {
         hojaRef.asignaNombre(_nuevoNombre);
     }
+
+    public static Hoja getHojaRef () { return hojaRef; }
 
     /**
      * Devuelve el nombre de la hoja del controlador.
@@ -284,5 +289,33 @@ public class ControladorHoja {
         double sigmaY = Math.sqrt(syy/n - sy/n * sy/n);
     
         return cov / (sigmaX * sigmaY);
+      }
+
+      public static void ordenar(Criterio criterio, BloqueSeleccionado bloque) {
+        List<Celda> celdas =  new ArrayList<>();
+
+        int filaIni = bloque.getCeldaInicial().getPosicion().getFila();
+        int filaFin = bloque.getCeldaInicial().getPosicion().getFila();
+        int colIni = bloque.getCeldaInicial().getPosicion().getFila();
+        int colFin = bloque.getCeldaInicial().getPosicion().getFila();
+
+          for (int i = filaIni; i < filaFin; i++) {
+              for (int j = colIni; j < colFin; j++) {
+                  celdas.add( hojaRef.getCelda(new Posicion(i, j)) );
+              }
+          }
+
+          celdas.sort((o1, o2) -> {
+              if (criterio == Criterio.ASCENDENTE)
+                  return o2.getValor().compareTo(o1.getValor());
+              else
+                  return o1.getValor().compareTo(o2.getValor());
+          });
+
+          for (int i = filaIni; i < filaFin; i++) {
+              for (int j = colIni; j < colFin; j++) {
+                  hojaRef.getCelda(new Posicion(i, j)).copiarCelda(celdas.get(i + j * colFin));
+              }
+          }
       }
 }
