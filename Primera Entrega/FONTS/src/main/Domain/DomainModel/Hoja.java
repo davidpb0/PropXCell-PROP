@@ -13,6 +13,8 @@ import java.util.HashMap;
 
 public class Hoja implements Serializable {
 
+    private static final long serialVersionUID = 42L;
+
     private int id;
     private String nombre;
     private int filas;

@@ -5,7 +5,7 @@ import main.Domain.DomainModel.Documento;
     /*
      * ClassName ControladorDocumentoPersistencia
      *
-     * Version info 0.0.1
+     * Version info 0.0.2
      *
      * Author David Perez Barroso
      */
@@ -42,7 +42,10 @@ public class ControladorDocumentoPersistencia {
             try {
                 ObjectInputStream recuperandoDoc =
                         new ObjectInputStream(new FileInputStream(_path));
-                return (Documento) recuperandoDoc.readObject();
+                Documento d = (Documento) recuperandoDoc.readObject();
+                recuperandoDoc.close();
+                return d;
+
 
             } catch (Exception e) {
                 e.printStackTrace();

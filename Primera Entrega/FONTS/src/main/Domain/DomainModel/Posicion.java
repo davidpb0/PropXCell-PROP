@@ -11,6 +11,8 @@ import java.util.Objects;
  */
 
 public class Posicion implements Serializable {
+
+    private static final long serialVersionUID = 44L;
     private final int fila;
     private final int columna;
 

@@ -17,6 +17,9 @@ import java.util.HashMap;
 //Clase serializable y Singleton
 public class Documento implements Serializable {
 
+    private static final long serialVersionUID = 41L;
+
+
     private static Documento instanceOfThisClass;
     private String nombre = "";
     private int numHojas;

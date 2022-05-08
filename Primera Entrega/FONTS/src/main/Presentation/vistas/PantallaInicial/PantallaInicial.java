@@ -1,14 +1,12 @@
 package main.Presentation.vistas.PantallaInicial;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
 public class PantallaInicial extends JFrame{
     public JPanel principal;
     public JPanel panelizq;
-    public JButton eliminarDocumentoButton;
+    public JButton bteliminarDoc;
     public JButton BotonCrearDoc;
     public JButton btCargarDoc;
     public JButton BotonHome;

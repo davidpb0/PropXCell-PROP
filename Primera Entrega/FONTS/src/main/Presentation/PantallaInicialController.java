@@ -11,7 +11,7 @@ import java.io.File;
 /*
  * ClassName PantallaInicialController
  *
- * Version info 0.0.2
+ * Version info 0.0.3
  *
  * Author David Perez Barroso
  */
@@ -27,6 +27,7 @@ public class PantallaInicialController implements ActionListener {
         this.pi.BotonCrearDoc.addActionListener(this);
         this.pi.BotonHome.addActionListener(this);
         this.pi.btCargarDoc.addActionListener(this);
+        this.pi.bteliminarDoc.addActionListener(this);
     }
 
     public void iniciar(){
@@ -62,20 +63,39 @@ public class PantallaInicialController implements ActionListener {
 
         }
 
-        else if (e.getSource() == pi.btCargarDoc){
+        else if (e.getSource() == pi.btCargarDoc) {
             JFileChooser jf = new JFileChooser();
             jf.showOpenDialog(pi);
             File doc = jf.getSelectedFile();
-            if (doc != null){
+            if (doc != null) {
                 System.out.println(doc.getAbsolutePath());
+                System.out.println(doc.getName());
                 this.cd = new ControladorDocumento(20, 20);
                 cd.cargaDocumento(doc.getAbsolutePath());
 
             }
+        }
+
+        else if (e.getSource() == pi.bteliminarDoc){
+                JFileChooser jfl = new JFileChooser();
+                jfl.showOpenDialog(pi);
+                File docbr = jfl.getSelectedFile();
+
+                if (docbr != null){
+                   File fl = new File(docbr.getAbsolutePath());
+
+                   int result = JOptionPane.showConfirmDialog(pi, "¿Está seguro que desea eliminar el archivo seleccionado?");
+                   if (result == 0 && fl.exists() && fl.delete()){
+                       JOptionPane.showMessageDialog(pi, "Archivo borrado correctamente");
+                   }
+                   else JOptionPane.showMessageDialog(pi, "El archivo no se ha borrado");
+                }
+
+        }
 
            // System.out.println(cd.getDocumento().getHoja(1).getFilas());
 
-        }
+
 
     }
 
