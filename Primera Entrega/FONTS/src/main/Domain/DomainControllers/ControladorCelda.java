@@ -14,7 +14,7 @@ import static main.Domain.DomainModel.Documento.getDocumento;
 /*
 * ClassName ControladorCelda
 *
-* Version info 1.0.0
+* Version info 1.0.1
 *
 * Author David Pérez Barroso
 */
@@ -47,9 +47,44 @@ public class ControladorCelda {
       this.celdaRef = h.getCelda(new Posicion(Integer.parseInt(_f), Integer.parseInt(_c)));
    }
 
+    /**
+     * Devuelve la celda contenida en el controlador
+     * @return La celda contenida del controlador
+     */
     public Celda getCeldaRef(){
        return this.celdaRef;
     }
+
+
+    /**
+     * Comprueba que los parametros del string introducido son numeros, en caso de no ser asi, devuelve false y añade
+     * al valor de la celda referenciada por el controlador un codigo de error
+     * @param arg String a comprobar
+     * @return Devuelve true si todos los caracteres son numeros, devuelve false de lo contrario
+     */
+    private boolean numCorrecto(String arg){
+        if (!arg.matches("[+-]?\\d*(\\.\\d+)?")) {
+            this.celdaRef.setValor("#ERROR_NO_NUM");
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Comprueba que el vector de string pasado tenga tamaño 1, de no ser asi añade al valor de la celda referenciada
+     * por el controlador un codigo de error
+      * @param arg vector de string a comprobar
+     * @return True si tiene tamaño 1, false de lo contrario
+     */
+    private boolean numArgCorrecto(String[] arg){
+        if (arg.length != 1) {
+            this.celdaRef.setValor("#ERROR_N_ARG");
+            return false;
+        }
+        return true;
+    }
+
+
     /**
      * Escribe el contenido que le pasan en la celda, si es una funcion, llama a la funcion correspondiente y ademas
      * escribe su valor en la celda
@@ -70,15 +105,11 @@ public class ControladorCelda {
               arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg.length != 1) {
-                  this.celdaRef.setValor("#ERROR_N_ARG");
-                  break;
-              }
+              if (!numArgCorrecto(arg)) break;
+
               //Se comprueba que los argumentos sean numeros
-              if (!arg[0].matches("[+-]?\\d*(\\.\\d+)?")) {
-                  this.celdaRef.setValor("#ERROR_NO_NUM");
-                  break;
-              }
+              if (!numCorrecto(arg[0])) break;
+
               String s = valorAbsoluto(Double.parseDouble(arg[0]));
               this.celdaRef.setValor(s);
               break;
@@ -90,21 +121,18 @@ public class ControladorCelda {
               arg2 = argm.get(1);
               //Se comprueba que el numero de argumentos sea el correcto
               try {
-                  if (arg1.length != 1 || arg2.length != 1) {
-                      this.celdaRef.setValor("#ERROR_N_ARG");
-                      break;
-                  }
+                  if (!numArgCorrecto(arg1) || !numArgCorrecto(arg2)) break;
+
               } catch (NullPointerException e) {
               }
+
               //Se comprueba que los argumentos sean numeros
-              if (!arg1[0].matches("[+-]?\\d*(\\.\\d+)?") && !arg2[0].matches("[+-]?\\d*(\\.\\d+)?")) {
-                  this.celdaRef.setValor("#ERROR_NO_NUM");
-                  break;
-              }
+              if (!numCorrecto(arg1[0]) && !numCorrecto(arg2[0])) break;
               try {
 
                   String s1 = truncarValor(Double.parseDouble(arg1[0]), Integer.parseInt(arg2[0]));
                   this.celdaRef.setValor(s1);
+
               } catch (NumberFormatException e) {
                   this.celdaRef.setValor("#ERROR_ARGS");
 
@@ -116,15 +144,11 @@ public class ControladorCelda {
               arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg.length != 1) {
-                  this.celdaRef.setValor("#ERROR_N_ARG");
-                  break;
-              }
+              if (!numArgCorrecto(arg)) break;
+
               //Se comprueba que los argumentos sean numeros
-              if (!arg[0].matches("[+-]?\\d*(\\.\\d+)?")) {
-                  this.celdaRef.setValor("#ERROR_NO_NUM");
-                  break;
-              }
+              if (!numCorrecto(arg[0])) break;
+
               String s2 = aproximarValor(Double.parseDouble(arg[0]));
               this.celdaRef.setValor(s2);
               break;
@@ -134,15 +158,11 @@ public class ControladorCelda {
               arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg.length != 1) {
-                  this.celdaRef.setValor("#ERROR_N_ARG");
-                  break;
-              }
+              if (!numArgCorrecto(arg)) break;
+
               //Se comprueba que los argumentos sean numeros
-              if (!arg[0].matches("[+-]?\\d*(\\.\\d+)?")) {
-                  this.celdaRef.setValor("#ERROR_NO_NUM");
-                  break;
-              }
+              if (!numCorrecto(arg[0])) break;
+
               String s3 = convertirValorDB(Integer.parseInt(arg[0]));
               this.celdaRef.setValor(s3);
               break;
@@ -152,16 +172,10 @@ public class ControladorCelda {
               arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg.length != 1) {
-                  this.celdaRef.setValor("#ERROR_N_ARG");
-                  break;
-              }
+              if (!numArgCorrecto(arg)) break;
 
               //Se comprueba que los argumentos sean numeros
-              if (!arg[0].matches("[+-]?\\d*(\\.\\d+)?")) {
-                  this.celdaRef.setValor("#ERROR_NO_NUM");
-                  break;
-              }
+              if (!numCorrecto(arg[0])) break;
 
               //Se comprueba que los argumentos sean '1' i '0'
               boolean b = false;
@@ -185,10 +199,8 @@ public class ControladorCelda {
               arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg.length != 1) {
-                  this.celdaRef.setValor("#ERROR_N_ARG");
-                  break;
-              }
+              if (!numArgCorrecto(arg)) break;
+
               String s5 = convertirValorHD(arg[0]);
 
               //Devuelve -1 si el argumento no es un numero hexadecimal valido
@@ -205,16 +217,11 @@ public class ControladorCelda {
               arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg.length != 1) {
-                  this.celdaRef.setValor("#ERROR_N_ARG");
-                  break;
-              }
+              if (!numArgCorrecto(arg)) break;
 
               //Se comprueba que los argumentos sean numeros
-              if (!arg[0].matches("[+-]?\\d*(\\.\\d+)?")) {
-                  this.celdaRef.setValor("#ERROR_NO_NUM");
-                  break;
-              }
+              if (!numCorrecto(arg[0])) break;
+
               try {
 
                   String s6 = convertirValorDH(Integer.parseInt(arg[0]));
@@ -229,10 +236,8 @@ public class ControladorCelda {
               arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg.length != 1) {
-                  this.celdaRef.setValor("#ERROR_N_ARG");
-                  break;
-              }
+              if (!numArgCorrecto(arg)) break;
+
               String s7 = convertirValorHB(arg[0]);
 
               //Devuelve -1 si el argumento no es un numero hexadecimal valido
@@ -249,16 +254,10 @@ public class ControladorCelda {
               arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg.length != 1) {
-                  this.celdaRef.setValor("#ERROR_N_ARG");
-                  break;
-              }
+              if (!numArgCorrecto(arg)) break;
 
               //Se comprueba que los argumentos sean numeros
-              if (!arg[0].matches("[+-]?\\d*(\\.\\d+)?")) {
-                  this.celdaRef.setValor("#ERROR_NO_NUM");
-                  break;
-              }
+              if (!numCorrecto(arg[0])) break;
 
               //Se comprueba que los argumentos sean '1' i '0'
               b = false;
@@ -281,10 +280,7 @@ public class ControladorCelda {
               arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg.length != 1) {
-                  this.celdaRef.setValor("#ERROR_N_ARG");
-                  break;
-              }
+              if (!numArgCorrecto(arg)) break;
 
               //Se comprueba que sea una fecha valida
               if (!esFechaValida(arg[0])) {
@@ -301,10 +297,7 @@ public class ControladorCelda {
               arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg.length != 1) {
-                  this.celdaRef.setValor("#ERROR_N_ARG");
-                  break;
-              }
+              if (!numArgCorrecto(arg)) break;
 
               //Se comprueba que sea una fecha valida
               if (!esFechaValida(arg[0])) {
@@ -321,10 +314,7 @@ public class ControladorCelda {
               arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg.length != 1) {
-                  this.celdaRef.setValor("#ERROR_N_ARG");
-                  break;
-              }
+              if (!numArgCorrecto(arg)) break;
 
               //Se comprueba que sea una fecha valida
               if (!esFechaValida(arg[0])) {
@@ -341,10 +331,7 @@ public class ControladorCelda {
               arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg.length != 1) {
-                  this.celdaRef.setValor("#ERROR_N_ARG");
-                  break;
-              }
+              if (!numArgCorrecto(arg)) break;
 
               //Se comprueba que sea una fecha valida
               if (!esFechaValida(arg[0])) {
@@ -361,10 +348,8 @@ public class ControladorCelda {
               arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg.length != 1) {
-                  this.celdaRef.setValor("#ERROR_N_ARG");
-                  break;
-              }
+              if (!numArgCorrecto(arg)) break;
+
               String s13 = longitudPalabra(arg[0]);
               this.celdaRef.setValor(s13);
               break;
@@ -376,10 +361,7 @@ public class ControladorCelda {
               arg1 = argm.get(0);
               arg2 = argm.get(1);
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg1.length != 1 || arg2.length != 1) {
-                  this.celdaRef.setValor("#ERROR_N_ARG");
-                  break;
-              }
+              if (!numArgCorrecto(arg1) || !numArgCorrecto(arg2)) break;
               String s14 = contarLetra(arg1[0], arg2[0]);
 
               //Si devuelve -1 ha habido un fallo al introducir los argumentos
@@ -397,10 +379,7 @@ public class ControladorCelda {
               String[] arg4 = argm.get(3);
 
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg1.length != 1 || arg2.length != 1 || arg3.length != 1 || arg4.length != 1) {
-                  this.celdaRef.setValor("#ERROR_N_ARG");
-                  break;
-              }
+              if (!numArgCorrecto(arg1) || !numArgCorrecto(arg2) || !numArgCorrecto(arg3) || !numArgCorrecto(arg4)) break;
               String s15 = reemplazarPalabra(arg1[0], Integer.parseInt(arg2[0]), Integer.parseInt(arg3[0]), arg4[0]);
 
               //Si devuelve -1 ha habido un fallo al introducir los argumentos
@@ -415,14 +394,9 @@ public class ControladorCelda {
               arg1 = argm.get(0);
               arg2 = argm.get(1);
               arg3 = argm.get(2);
-              System.out.println(arg1[0]);
-              System.out.println(arg2[0]);
-              System.out.println(arg3[0]);
+
               //Se comprueba que el numero de argumentos sea el correcto
-              if (arg1.length != 1 || arg2.length != 1 || arg3.length != 1) {
-                  this.celdaRef.setValor("#ERROR_N_ARG");
-                  break;
-              }
+              if (!numArgCorrecto(arg1) || !numArgCorrecto(arg2) || !numArgCorrecto(arg3)) break;
               String s16 = reemplazarCaracter(arg1[0], arg2[0], arg3[0]);
 
               //Si devuelve -1 ha habido un fallo al introducir los argumentos
@@ -433,10 +407,9 @@ public class ControladorCelda {
           case "#REFERENCIA": // $C1 (por ejemplo)
               //Se coge la celda referenciantes, para añadirle la referenciada
               Celda reft = Traductor.getTraductor().traduceCelda(_content, this.hojaAct.getId());
-              System.out.println("V= " + reft.getValor() + "Pos: " + reft.getPosicion().getFila() + " " + reft.getPosicion().getColumna());
               reft.addReferenciante(this.celdaRef);
+
               //Se coge el valor de la celda referenciante
-              //arg = Traductor.getTraductor().getArgumentosFuncion1aria(_content, hojaAct.getId());
               this.celdaRef.setValor(reft.getValor());
               break;
 
@@ -444,7 +417,6 @@ public class ControladorCelda {
 
               //Se cogen los argumentos necesarios para realizar la operacion
               argm = Traductor.getTraductor().getArgumentosFuncionNaria(_content, hojaAct.getId());
-              System.out.println(argm);
 
               for(int i = 0; i < argm.size(); ++i){
                     String[] a = argm.get(i);
@@ -464,8 +436,7 @@ public class ControladorCelda {
               //Se comprueba que los argumentos sean numeros
               b = false;
               for (String v : argu) {
-                  if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
-                      this.celdaRef.setValor("#ERROR_NO_NUM");
+                  if (!numCorrecto(v)) {
                       b = true;
                       break;
                   }
@@ -497,8 +468,7 @@ public class ControladorCelda {
               //Se comprueba que los argumentos sean numeros
               b = false;
               for (String v : argu) {
-                  if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
-                      this.celdaRef.setValor("#ERROR_NO_NUM");
+                  if (!numCorrecto(v)) {
                       b = true;
                       break;
                   }
@@ -532,8 +502,7 @@ public class ControladorCelda {
               //Se comprueba que los argumentos sean numeros
               b = false;
               for (String v : argu) {
-                  if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
-                      this.celdaRef.setValor("#ERROR_NO_NUM");
+                  if (!numCorrecto(v)) {
                       b = true;
                       break;
                   }
@@ -564,8 +533,7 @@ public class ControladorCelda {
               while (k < arg1.length){
                   String v = arg1[k];
                   String v2 = arg2[k];
-                  if (!v.matches("[+-]?\\d*(\\.\\d+)?") || !v2.matches("[+-]?\\d*(\\.\\d+)?")) {
-                      this.celdaRef.setValor("#ERROR_NO_NUM");
+                  if (!numCorrecto(v) || !numCorrecto(v2)) {
                       b = true;
                       break;
                   }
@@ -601,8 +569,7 @@ public class ControladorCelda {
               //Se comprueba que los argumentos sean numeros
               b = false;
               for (String v : argu) {
-                  if (!v.matches("[+-]?\\d*(\\.\\d+)?")) {
-                      this.celdaRef.setValor("#ERROR_NO_NUM");
+                  if (!numCorrecto(v)) {
                       b = true;
                       break;
                   }
@@ -632,8 +599,7 @@ public class ControladorCelda {
               while (k < arg1.length){
                   String v = arg1[k];
                   String v2 = arg2[k];
-                  if (!v.matches("[+-]?\\d*(\\.\\d+)?") || !v2.matches("[+-]?\\d*(\\.\\d+)?")) {
-                      this.celdaRef.setValor("#ERROR_NO_NUM");
+                  if (!numCorrecto(v) || !numCorrecto(v2)) {
                       b = true;
                       break;
                   }
@@ -662,13 +628,13 @@ public class ControladorCelda {
        String dp[] = _fecha.split("/");
 
        if(dp.length != 3) return false;
-       if(!dp[0].matches("[+-]?\\d*(\\.\\d+)?") || dp[0].length() > 2
+       if(!numCorrecto(dp[0]) || dp[0].length() > 2
                || Integer.parseInt(dp[0]) <= 0 ) return false;
 
-       if(!dp[1].matches("[+-]?\\d*(\\.\\d+)?") || dp[1].length() > 2
+       if(!numCorrecto(dp[1]) || dp[1].length() > 2
                || Integer.parseInt(dp[1]) <= 0) return false;
 
-       if(!dp[2].matches("[+-]?\\d*(\\.\\d+)?") || dp[2].length() > 4
+       if(!numCorrecto(dp[2]) || dp[2].length() > 4
                || Integer.parseInt(dp[2]) <= 0) return false;
 
        return true;
