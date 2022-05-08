@@ -13,6 +13,9 @@ import java.io.Serializable;
 import java.util.LinkedList;
 
 public class Celda implements Serializable {
+
+    private static final long serialVersionUID = 43L;
+
     private String valor = "";
     private String contenido = "";
     private Posicion posicion;

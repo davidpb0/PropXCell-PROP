@@ -291,30 +291,29 @@ public class ControladorHoja {
         return cov / (sigmaX * sigmaY);
       }
 
-      public static void ordenar(Criterio criterio, BloqueSeleccionado bloque) {
-        List<Celda> celdas =  new ArrayList<>();
+      public static void ordenar(boolean descendente, BloqueSeleccionado bloque) {
+        ArrayList<Celda> celdas = new ArrayList<>();
 
         int filaIni = bloque.getCeldaInicial().getPosicion().getFila();
-        int filaFin = bloque.getCeldaInicial().getPosicion().getFila();
-        int colIni = bloque.getCeldaInicial().getPosicion().getFila();
-        int colFin = bloque.getCeldaInicial().getPosicion().getFila();
+        int filaFin = bloque.getCeldaFinal().getPosicion().getFila();
+        int colIni = bloque.getCeldaInicial().getPosicion().getColumna();
+        int colFin = bloque.getCeldaFinal().getPosicion().getColumna();
 
-          for (int i = filaIni; i < filaFin; i++) {
-              for (int j = colIni; j < colFin; j++) {
-                  celdas.add( hojaRef.getCelda(new Posicion(i, j)) );
+          for (int i = filaIni; i <=filaFin; i++) {
+              for (int j = colIni; j <=colFin; j++) {
+                  celdas.add(new Celda(bloque.getHoja().getCelda(new Posicion(i, j))));
               }
           }
 
-          celdas.sort((o1, o2) -> {
-              if (criterio == Criterio.ASCENDENTE)
-                  return o2.getValor().compareTo(o1.getValor());
-              else
-                  return o1.getValor().compareTo(o2.getValor());
-          });
+          if (descendente)
+              celdas.sort(Comparator.comparing(Celda::getValor));
+          else
+            celdas.sort(Comparator.comparing(Celda::getValor));
 
-          for (int i = filaIni; i < filaFin; i++) {
-              for (int j = colIni; j < colFin; j++) {
-                  hojaRef.getCelda(new Posicion(i, j)).copiarCelda(celdas.get(i + j * colFin));
+          for (int i = filaIni; i <=filaFin; i++) {
+              for (int j = colIni; j <=colFin; j++) {
+                  bloque.getHoja().getCelda(new Posicion(i, j)).copiarCelda(celdas.get(0));
+                  celdas.remove(0);
               }
           }
       }
