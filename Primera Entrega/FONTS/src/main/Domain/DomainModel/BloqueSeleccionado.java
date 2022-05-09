@@ -8,7 +8,7 @@ package main.Domain.DomainModel;
  */
 
 public class BloqueSeleccionado {
-    private static BloqueSeleccionado unico_bloque; // Única instancia
+    private static BloqueSeleccionado instanceOfThisClass; // Única instancia
 
     private Celda celdaInicial;
     private Celda celdaFinal;
@@ -17,8 +17,8 @@ public class BloqueSeleccionado {
     private BloqueSeleccionado() {}
 
     public static BloqueSeleccionado getBloque() {
-        if (unico_bloque == null) unico_bloque = new BloqueSeleccionado();
-        return unico_bloque;
+        if (instanceOfThisClass == null) instanceOfThisClass = new BloqueSeleccionado();
+        return instanceOfThisClass;
     }
 
     /**

@@ -14,15 +14,15 @@ import java.util.Date;
 
 public class Traductor {
 
-    private static Traductor traductor;
+    private static Traductor instanceOfThisClass;
 
     /**
      * Método para acceder al traductor
      * @return la instancia singleton del traductor
      */
     public static Traductor getTraductor() {
-        if (traductor == null) traductor = new Traductor();
-        return traductor;
+        if (instanceOfThisClass == null) instanceOfThisClass = new Traductor();
+        return instanceOfThisClass;
     }
 
     /**
@@ -234,9 +234,9 @@ public class Traductor {
         String[] args = f.split(",");
         //if (args.length < 2) return null;
 
-        for (int i = 0; i < args.length; ++i) {
-            if (args[i].contains(":")) { //$A1:$B1
-                String[] s = args[i].split(":");
+        for (String arg : args) {
+            if (arg.contains(":")) { //$A1:$B1
+                String[] s = arg.split(":");
                 Celda principioC = traduceCelda(s[0], _idH);
                 Celda finalC = traduceCelda(s[1], _idH);
                 ArrayList<Celda> celdas = Documento.getDocumento().getHoja(_idH).getColumnaFila(s[0], s[1]);
@@ -249,12 +249,12 @@ public class Traductor {
                 }
                 ret.add(argsI);
 
-            } else if (args[i].startsWith("$") && args[i].length() <= 5) { //$AA11
+            } else if (arg.startsWith("$") && arg.length() <= 5) { //$AA11
                 System.out.println("He entrado");
-                ret.add(new String[]{traduceCelda(args[i], _idH).getValor()});
+                ret.add(new String[]{traduceCelda(arg, _idH).getValor()});
 
             } else { // Es un número
-                String[] s = {args[i]};
+                String[] s = {arg};
                 ret.add(s);
             }
         }
