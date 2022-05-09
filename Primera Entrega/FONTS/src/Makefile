@@ -1,4 +1,4 @@
-CLASES = ./main/Domain/DomainModel/*.java ./main/Domain/DomainControllers/*.java
+CLASES = ./main/Domain/DomainModel/*.java ./main/Domain/DomainControllers/*.java ./main/Persistence/PersistenceClasses/*.java ./main/Persistence/PersistenceControllers/*.java ./main/Presentation/*.java ./main/Presentation/*/*/*.java
 DRIVERS_INTEGRATION = ./drivers/integration/*.java
 DRIVERS_COMPONENTS = ./drivers/components/*/*.java
 JUNIT_TESTS = ./test/*/*/*.java
@@ -13,6 +13,9 @@ JUnit:
 		java -cp $(LIB):$(EJECUTABLES) org.junit.runner.JUnitCore TestRunner
 
 Main:
+		java -cp $(LIB):$(EJECUTABLES) main.presentation.MainProgram
+
+MainTest:
 		java -cp $(EJECUTABLES) drivers.integration.MainTest
 
 ControladorBloqueDriver:
@@ -28,7 +31,8 @@ help:
 		@echo "Opciones:"
 		@echo "build: Compila el código entero."
 		@echo "JUnit: Ejecuta los tests de JUnit."
-		@echo "Main: Se ejecuta el Driver principal de manera interactiva."
+		@echo "Main: Se ejecuta el método principal del programa."
+		@echo "MainTest: Se ejecuta el Driver de integración de manera interactiva."
 		@echo "ControladorBloqueDriver: Se ejecuta el Driver del ControladorBloque."
 		@echo "ControladorCeldaDriver: Se ejecuta el Driver del ControladorCelda."
 		@echo "ControladorDocumentoDriver: Se ejecuta el Driver del ControladorDocumento."
