@@ -180,7 +180,7 @@ public class DriverControladorCelda {
                         case 27:
                             if (nParamValido(1)) driver.escribirContenidoNoFuncTest();
                             break;
-                        case 28:
+                       /* case 28:
                             if (nParamValido(2)) driver.truncarValorTest();
                             break;
                         case 29:
@@ -230,7 +230,7 @@ public class DriverControladorCelda {
                             break;
                         case 44:
                             if (nParamValido(3)) driver.reemplazarCaracterTest();
-                            break;
+                            break;*/
                         case 45:
                             if (nParamValido(1)) driver.esFechaValidaTest();
                             break;
@@ -537,7 +537,7 @@ public class DriverControladorCelda {
 
     }
 
-    private void truncarValorTest(){
+  /*  private void truncarValorTest(){
         try {
             String s = cc.truncarValor(Double.parseDouble(palabras[1]), Integer.parseInt(palabras[2]));
             if (cc.getCeldaRef().getValor() == "#ERROR")
@@ -694,7 +694,7 @@ public class DriverControladorCelda {
             System.out.println("Se ha ejecutado el test correctamente");
             System.out.println("La palabra ahora es: " + s);
         }
-    }
+    }*/
 
     private void esFechaValidaTest(){
         String s = String.valueOf(cc.esFechaValida(palabras[1]));

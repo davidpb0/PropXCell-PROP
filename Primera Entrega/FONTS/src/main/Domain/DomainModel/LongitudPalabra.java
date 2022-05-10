@@ -1,0 +1,32 @@
+package main.Domain.DomainModel;
+
+
+/*
+ * ClassName LongitudPalabra
+ *
+ * Version info 1.0.0
+ *
+ * Author David Pérez Barroso
+ */
+public class LongitudPalabra extends Funcion{
+
+    private String palabra;
+
+    /**
+     * Constructora de la clase
+     * @param _p palabra a almacenar
+     */
+    public LongitudPalabra(String _p){
+        this.palabra = _p;
+
+    }
+
+
+    /**
+     * Mide la longitud de la palabra almacenada
+     * @return Devuelve un String con la longitud de la palabra
+     */
+    public String execute() {
+        return String.valueOf(this.palabra.length());
+    }
+}
