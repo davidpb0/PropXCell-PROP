@@ -1,6 +1,6 @@
 package main.Domain.DomainControllers;
 /*
- * ClassName DomainControllers.ControladorBloque
+ * ClassName DomainControllers.ControladorDominio
  *
  * Version info 0.0.1
  *
