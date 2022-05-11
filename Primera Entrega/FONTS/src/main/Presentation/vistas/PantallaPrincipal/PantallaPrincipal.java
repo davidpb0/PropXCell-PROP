@@ -3,15 +3,43 @@ package main.Presentation.vistas.PantallaPrincipal;
 import javax.swing.*;
 import java.awt.*;
 
+/*
+ * Vista Principal
+ *
+ * v0.0.1
+ *
+ * Joaquim Torra Garcia
+ */
+
 public class PantallaPrincipal extends JFrame {
     private JPanel principal;
     private JTextField nombre_docTextField;
     private JMenuBar barraH;
     private JMenu archivo, editar, insertar, ayuda;
+    private JPanel Window_Header;
+    private JPanel Activity;
+    private JPanel Act_Header;
+    private JPanel Act_Main;
+    private JPanel Header_Opts;
+    private JButton button1;
+    private JButton button2;
+    private JButton button3;
+    private JButton button4;
+    private JButton button5;
+    private JButton button6;
+    private JButton button7;
+    private JButton button8;
+    private JButton button9;
+    private JButton button10;
+    private JFormattedTextField contenidoFormattedTextField;
+    private JTabbedPane tabbedPane1;
 
     public PantallaPrincipal() {
+
+        setTitle("Document - PROPxCEL");
         add(principal);
-        setResizable(false);
+        setResizable(true);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight());
         configuraHerramientas();
     }
