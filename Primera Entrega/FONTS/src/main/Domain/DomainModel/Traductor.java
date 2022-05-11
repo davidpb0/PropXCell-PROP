@@ -250,7 +250,6 @@ public class Traductor {
                 ret.add(argsI);
 
             } else if (arg.startsWith("$") && arg.length() <= 5) { //$AA11
-                System.out.println("He entrado");
                 ret.add(new String[]{traduceCelda(arg, _idH).getValor()});
 
             } else { // Es un número
