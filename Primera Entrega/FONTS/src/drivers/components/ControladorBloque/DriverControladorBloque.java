@@ -1,6 +1,7 @@
 package drivers.components.ControladorBloque;
 
 import main.Domain.DomainControllers.ControladorBloque;
+import main.Domain.DomainControllers.ControladorHoja;
 import main.Domain.DomainModel.*;
 
 import java.io.BufferedReader;
@@ -101,7 +102,7 @@ public class DriverControladorBloque {
 
         d = Documento.getDocumento();
         Documento.getDocumento().inicializaDocumentoDefault("doc");
-        h = Documento.getDocumento().getHoja(1);
+        h = ControladorHoja.getControladorHoja().getHojaRef();
         for (int i = 1; i <= 50; ++i) {
             for (int j = 1; j <= 50; ++j) {
                 h.getCelda(new Posicion(i, j)).setValor(String.valueOf(i*j));
@@ -135,7 +136,7 @@ public class DriverControladorBloque {
         else {
             int f = Traductor.getTraductor().StringInt(_fI);
             int c = Traductor.getTraductor().StringInt(_cI);
-            cb.pegar(h.getId(), f, c);
+            cb.pegar(h, f, c);
             System.out.println("El bloque se ha pegado correctamente. El contenido de la hoja a partir de las celdas pegadas es: ");
             int tamanoF = BloqueSeleccionado.getBloque().getCeldaFinal().getPosicion().getFila() - BloqueSeleccionado.getBloque().getCeldaInicial().getPosicion().getFila();
             int tamanoC = BloqueSeleccionado.getBloque().getCeldaFinal().getPosicion().getColumna() - BloqueSeleccionado.getBloque().getCeldaInicial().getPosicion().getColumna();

@@ -34,6 +34,7 @@ public class ReemplazarCaracter extends Funcion{
      * @return Devuelve un string con -1 si no contiene la letra a remplazar, de lo contrario devuelve la palabra con
      * la letra reemplazada
      */
+    @Override
     public String execute() {
         if(!this.txt.contains(this.cr)) return "-1";
         return this.txt.replace(this.cr, this.nc);

@@ -26,6 +26,7 @@ public class ConvertirValorDH extends Funcion{
      * Covierte el valor almacenado en base decimal a base hexadecimal
      * @return Devuelve un String con el valor en hexadecimal
      */
+    @Override
     public String execute() {
         return Integer.toHexString(this.decimal);
     }

@@ -30,6 +30,7 @@ public class TruncarValor extends Funcion{
      * Trunca el valor contenido por la clase tantos numeros como el parametro op almacenado indica.
      * @return Devuelve un string con el valor almacenado truncado
      */
+    @Override
     public String execute() {
 
         String str = String.valueOf(Math.abs(this.valor));

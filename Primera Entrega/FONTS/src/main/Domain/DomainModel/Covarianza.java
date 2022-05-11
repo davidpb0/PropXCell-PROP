@@ -1,5 +1,12 @@
 package main.Domain.DomainModel;
 
+/*
+ * ClassName Covarianza
+ *
+ * Version info 1.0.0
+ *
+ * Author David Pérez Barroso
+ */
 public class Covarianza extends Funcion{
 
     private String[] valoresX;

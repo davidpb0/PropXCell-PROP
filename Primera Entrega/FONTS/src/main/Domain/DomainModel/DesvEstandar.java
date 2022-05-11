@@ -2,6 +2,14 @@ package main.Domain.DomainModel;
 
 import main.Domain.DomainControllers.ControladorHoja;
 
+/*
+ * ClassName DesvEstandar
+ *
+ * Version info 1.0.0
+ *
+ * Author David Pérez Barroso
+ */
+
 public class DesvEstandar extends Funcion{
 
     private String[] valores;

@@ -33,6 +33,8 @@ public class DriverControladorDocumento {
         System.out.println("9: Añadir Hoja");
         System.out.println("10: Eliminar Hoja");
         System.out.println("11: Cambiar Nombre Hoja");
+        System.out.println("12: Guardar Doc");
+        System.out.println("13: Carga Doc");
 
         System.out.println("0: Salir");
         System.out.print("Escoja una opción entre las mostradas: ");
@@ -106,6 +108,15 @@ public class DriverControladorDocumento {
                     case 11:
                         ChangeNameHoja();
                         break;
+                    case 12:
+                        //cd.getDocumento().setNombre("Prueba");
+                        //cd.guardarDocumento("D:\\david\\FIB\\PROP\\DataSer\\");
+                        break;
+                    case 13:
+                        //cd.cargaDocumento("D:\\david\\FIB\\PROP\\DataSer\\");
+                        System.out.println(cd.getDocumento().getNombre());
+                        break;
+
                 }
                 System.out.println();
                 ops();
@@ -232,7 +243,7 @@ public class DriverControladorDocumento {
         System.out.print("Nombre: ");
         String name = br.readLine();
         try {
-            if(cd.asignaNombreHoja(id, name)) {
+            if(cd.asignaNombreHoja(name)) {
                 System.out.print("Nombre " + name + " asignado a Hoja" + id + "!");
             }
         } catch (Exception e) {

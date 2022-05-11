@@ -26,6 +26,7 @@ public class LongitudPalabra extends Funcion{
      * Mide la longitud de la palabra almacenada
      * @return Devuelve un String con la longitud de la palabra
      */
+    @Override
     public String execute() {
         return String.valueOf(this.palabra.length());
     }

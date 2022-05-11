@@ -25,6 +25,7 @@ public class ConvertirValorHB extends Funcion{
      * Covierte el valor almacenado en base hexadecimal a base binaria
      * @return Devuelve un String con el valor en binario, -1 si hay un error en el formato del numero
      */
+    @Override
     public String execute() {
         try {
             int decConv = Integer.parseInt(this.hexa, 16);

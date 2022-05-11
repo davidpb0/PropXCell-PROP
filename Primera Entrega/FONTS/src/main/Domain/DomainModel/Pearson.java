@@ -1,5 +1,13 @@
 package main.Domain.DomainModel;
 
+
+/*
+ * ClassName Pearson
+ *
+ * Version info 1.0.0
+ *
+ * Author David Pérez Barroso
+ */
 public class Pearson extends Funcion{
 
     private String[] valoresX;

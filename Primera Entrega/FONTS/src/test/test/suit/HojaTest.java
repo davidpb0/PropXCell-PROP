@@ -958,7 +958,7 @@ public class HojaTest {
      * Para ello comprobaremos que el ArrayList que devuelve la función tenga el tamaño de celdas correcto.
      */
     @Test
-    public void cogerColumnaArribaAbajo(){
+    public void cogerColumnaArribaAbajo() throws Exception {
         hoja = new Hoja(50, 50);
         hoja.añadeNombreIdHojaDefault(1);
 
@@ -982,7 +982,7 @@ public class HojaTest {
      * Para ello comprobaremos que el ArrayList que devuelve la función tenga el tamaño de celdas correcto.
      */
    @Test
-    public void cogerFilaIzquierdaDerecha(){
+    public void cogerFilaIzquierdaDerecha() throws Exception {
         hoja = new Hoja(50, 50);
         hoja.añadeNombreIdHojaDefault(1);
 
@@ -1007,7 +1007,7 @@ public class HojaTest {
      * Para ello comprobaremos que el ArrayList que devuelve la función tenga el tamaño de celdas correcto.
      */
     @Test
-    public void cogerFilaDerechaIzquierda(){
+    public void cogerFilaDerechaIzquierda() throws Exception {
         hoja = new Hoja(50, 50);
         hoja.añadeNombreIdHojaDefault(1);
 
@@ -1031,7 +1031,7 @@ public class HojaTest {
      * Para ello comprobaremos que el ArrayList que devuelve la función tenga el tamaño de celdas correcto.
      */
     @Test
-    public void cogerColumnasAbajoArriba(){
+    public void cogerColumnasAbajoArriba() throws Exception {
         hoja = new Hoja(50, 50);
         hoja.añadeNombreIdHojaDefault(1);
 

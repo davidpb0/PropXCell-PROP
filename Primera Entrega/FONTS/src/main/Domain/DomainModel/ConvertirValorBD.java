@@ -26,6 +26,7 @@ public class ConvertirValorBD extends Funcion{
      * Covierte el valor en base binaria almacenado a base decimal
      * @return Devuelve un String con el valor en decimal
      */
+    @Override
     public String execute() {
         int dec = Integer.parseInt(String.valueOf(this.binario), 2);
         return (String.valueOf(dec));

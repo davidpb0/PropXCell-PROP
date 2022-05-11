@@ -1,28 +1,18 @@
 package drivers.components.ControladorCelda;
 
-import main.Domain.DomainControllers.ControladorCelda;
+import main.Domain.DomainControllers.ControladorHoja;
 import main.Domain.DomainModel.*;
-import org.junit.Before;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
-
-import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
 
 public class DriverControladorCelda {
     private static BufferedReader br;
     private static String[] palabras;
     private static int constructor = 0;
 
-    private static ControladorCelda cc = null;
+    private static ControladorHoja cc = null;
 
 
 
@@ -258,7 +248,7 @@ public class DriverControladorCelda {
     }
 
     private void constructorTest() {
-            cc = ControladorCelda.getControladorCelda();
+            cc = ControladorHoja.getControladorHoja();
             constructor = 1;
             System.out.println("Se ha construido correctamente el ControladorCelda");
     }
@@ -266,7 +256,8 @@ public class DriverControladorCelda {
     private void asignaCeldaPosicionTest(){
         Documento d = Documento.getDocumento();
         d.inicializaDocumentoDefault("Doc1");
-        cc.asignaCeldaPosicion(String.valueOf(1),palabras[1],palabras[2]);
+        cc.asignaHoja(1);
+        cc.asignaCelda(palabras[1],palabras[2]);
         constructor = 2;
         System.out.println("Se ha asignado la celda " + palabras[1] + " " + palabras[2] + " de la hoja " +
                 1 + " correctamente.");
@@ -288,7 +279,7 @@ public class DriverControladorCelda {
         }
     }
 
-    private void escribirContenidoFAproximarValor(){
+    private void escribirContenidoFAproximarValor() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "un numero valido");
@@ -299,7 +290,7 @@ public class DriverControladorCelda {
         }
     }
 
-    private void escribirContenidoFValorAbsolutoTest(){
+    private void escribirContenidoFValorAbsolutoTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "un numero valido");
@@ -309,7 +300,7 @@ public class DriverControladorCelda {
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
-    private void escribirContenidoFConversionDecBinTest(){
+    private void escribirContenidoFConversionDecBinTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "un numero valido");
@@ -320,7 +311,7 @@ public class DriverControladorCelda {
         }
     }
 
-    private void escribirContenidoFConversionBinDecTest(){
+    private void escribirContenidoFConversionBinDecTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "un numero binario valido");
@@ -331,7 +322,7 @@ public class DriverControladorCelda {
         }
     }
 
-    private void escribirContenidoFConversionHexDecTest(){
+    private void escribirContenidoFConversionHexDecTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "un numero hexadecimal valido");
@@ -342,7 +333,7 @@ public class DriverControladorCelda {
         }
     }
 
-    private void escribirContenidoFConversionDecHexTest(){
+    private void escribirContenidoFConversionDecHexTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "un numero valido");
@@ -353,7 +344,7 @@ public class DriverControladorCelda {
         }
     }
 
-    private void escribirContenidoFConversionHexBinTest(){
+    private void escribirContenidoFConversionHexBinTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "un numero hexadecimal valido");
@@ -363,7 +354,7 @@ public class DriverControladorCelda {
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
-    private void escribirContenidoFConversionBinHexTest(){
+    private void escribirContenidoFConversionBinHexTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "un numero binario valido");
@@ -374,7 +365,7 @@ public class DriverControladorCelda {
         }
     }
 
-    private void escribirContenidoFMesTest(){
+    private void escribirContenidoFMesTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "una fecha valida");
@@ -385,7 +376,7 @@ public class DriverControladorCelda {
         }
     }
 
-    private void escribirContenidoFAñoTest(){
+    private void escribirContenidoFAñoTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "una fecha valida");
@@ -395,7 +386,7 @@ public class DriverControladorCelda {
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
-    private void escribirContenidoFDiaTest(){
+    private void escribirContenidoFDiaTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "una fecha valida");
@@ -405,7 +396,7 @@ public class DriverControladorCelda {
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
-    private void escribirContenidoFNombreDiaTest(){
+    private void escribirContenidoFNombreDiaTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "una fecha valida");
@@ -415,7 +406,7 @@ public class DriverControladorCelda {
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
-    private void escribirContenidoFLongitudTest(){
+    private void escribirContenidoFLongitudTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         System.out.println("Se ha ejecutado el test correctamente");
         System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
@@ -423,7 +414,7 @@ public class DriverControladorCelda {
 
     }
 
-    private void escribirContenidoFContarLetraTest(){
+    private void escribirContenidoFContarLetraTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "una letra contenida en la palabra");
@@ -434,7 +425,7 @@ public class DriverControladorCelda {
         }
     }
 
-    private void escribirContenidoFReemplazarCaracterTest(){
+    private void escribirContenidoFReemplazarCaracterTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que el caracter " +
                 "introducido para substituir existe en la palabra");
@@ -444,7 +435,7 @@ public class DriverControladorCelda {
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
-    private void escribirContenidoFReemplazarPalabraTest(){
+    private void escribirContenidoFReemplazarPalabraTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "correctamente posicion y longitud, estas no deberian ser negativas o mayores que el texto ");
@@ -455,7 +446,7 @@ public class DriverControladorCelda {
         }
     }
 
-    private void escribirContenidoFMediaTest(){
+    private void escribirContenidoFMediaTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "numeros correctos");
@@ -466,7 +457,7 @@ public class DriverControladorCelda {
         }
     }
 
-    private void escribirContenidoFMedianaTest(){
+    private void escribirContenidoFMedianaTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "numeros correctos");
@@ -476,7 +467,7 @@ public class DriverControladorCelda {
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
-    private void escribirContenidoFVarianzaTest(){
+    private void escribirContenidoFVarianzaTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "numeros correctos");
@@ -486,28 +477,7 @@ public class DriverControladorCelda {
             System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
         }
     }
-    private void escribirContenidoFCovarianzaTest(){
-        cc.escribirContenido(palabras[1]);
-        if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
-                "numeros correctos");
-        else{
-            System.out.println("Se ha ejecutado el test correctamente");
-            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
-            System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
-        }
-    }
-
-    private void escribirContenidoFDesvStdTest(){
-        cc.escribirContenido(palabras[1]);
-        if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
-                "numeros correctos");
-        else{
-            System.out.println("Se ha ejecutado el test correctamente");
-            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
-            System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
-        }
-    }
-    private void escribirContenidoFCoefPearsonTest(){
+    private void escribirContenidoFCovarianzaTest() throws Exception {
         cc.escribirContenido(palabras[1]);
         if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
                 "numeros correctos");
@@ -518,7 +488,28 @@ public class DriverControladorCelda {
         }
     }
 
-    private void escribirContenidoReferenciaTest(){
+    private void escribirContenidoFDesvStdTest() throws Exception {
+        cc.escribirContenido(palabras[1]);
+        if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
+                "numeros correctos");
+        else{
+            System.out.println("Se ha ejecutado el test correctamente");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
+            System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
+        }
+    }
+    private void escribirContenidoFCoefPearsonTest() throws Exception {
+        cc.escribirContenido(palabras[1]);
+        if(cc.getCeldaRef().getValor() == "#ERROR") System.out.println("Ha habido un error: Revisa que has introducido " +
+                "numeros correctos");
+        else{
+            System.out.println("Se ha ejecutado el test correctamente");
+            System.out.println("El contenido de la celda ahora es " + cc.getCeldaRef().getContenido());
+            System.out.println("El valor de la celda ahora es: " + cc.getCeldaRef().getValor());
+        }
+    }
+
+    private void escribirContenidoReferenciaTest() throws Exception {
 
         cc.escribirContenido(palabras[1]);
 
@@ -528,7 +519,7 @@ public class DriverControladorCelda {
 
     }
 
-    private void escribirContenidoNoFuncTest(){
+    private void escribirContenidoNoFuncTest() throws Exception {
         cc.escribirContenido(palabras[1]);
 
         System.out.println("Se ha ejecutado el test correctamente");

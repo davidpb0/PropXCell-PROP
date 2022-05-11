@@ -25,6 +25,7 @@ public class ConvertirValorDB extends Funcion{
      * Covierte el valor en base decimal almacenado a base binaria
      * @return Devuelve un String con el valor en binario
      */
+    @Override
     public String execute() {
         return Integer.toBinaryString(this.decimal);
     }

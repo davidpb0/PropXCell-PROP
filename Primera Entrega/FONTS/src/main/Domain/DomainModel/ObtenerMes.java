@@ -27,6 +27,7 @@ public class ObtenerMes extends Funcion{
      * Obtiene el mes de la fecha almacenada
      * @return Devuelve un String con el mes, #ERROR si falla algun parametro del argumento
      */
+    @Override
     public String execute() {
         String months[] = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
                 "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};

@@ -28,6 +28,7 @@ public class ObtenerAño extends Funcion{
      * Obtiene el año de la fecha almacenada
      * @return Devuelve un String con el año, #ERROR si falla algun parametro del argumento
      */
+    @Override
     public String execute() {
 
         String dp[] = this.fecha.split("/");

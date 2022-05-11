@@ -36,6 +36,7 @@ public class ReemplazarPalabra extends Funcion{
      * @return Devuelve un string con -1 si hay algun error en los argumentos (_pos o _long), de lo contrario
      * devuelve la palabra con el trozo reemplazado
      */
+    @Override
     public String execute() {
         if(this.pos > this.txt.length()) return "-1";
 

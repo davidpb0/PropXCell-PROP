@@ -2,6 +2,14 @@ package main.Domain.DomainModel;
 
 import java.util.Arrays;
 
+
+/*
+ * ClassName Mediana
+ *
+ * Version info 1.0.0
+ *
+ * Author David Pérez Barroso
+ */
 public class Mediana extends Funcion{
 
     private String[] valores;

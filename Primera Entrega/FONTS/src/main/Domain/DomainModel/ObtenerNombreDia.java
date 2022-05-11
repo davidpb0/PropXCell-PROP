@@ -31,6 +31,7 @@ public class ObtenerNombreDia extends Funcion{
      * Obtiene el nombre del dia en castellano de la fecha almacenada
      * @return Devuelve un String con el nombre del dia, #ERROR si falla algun parametro del argumento
      */
+    @Override
     public String execute() {
         /*Dado que DayOfWeek nos devuelve el dia en ingles, utilizaremos estas dos estructuras de datos para
         traducirlos al castellano*/

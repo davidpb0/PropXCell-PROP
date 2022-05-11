@@ -1,7 +1,6 @@
 package drivers.integration;
 
 import main.Domain.DomainControllers.ControladorBloque;
-import main.Domain.DomainControllers.ControladorCelda;
 import main.Domain.DomainControllers.ControladorDocumento;
 import main.Domain.DomainControllers.ControladorHoja;
 import main.Domain.DomainModel.Celda;
@@ -15,7 +14,7 @@ import java.io.InputStreamReader;
 public class MainTest {
     private static ControladorDocumento cd = null;
     private static ControladorHoja ch = null;
-    private static ControladorCelda cc = null;
+    //private static ControladorCelda cc = null;
     private static ControladorBloque cb = null;
     private static BufferedReader br = null;
     private static String[] inputs;
@@ -75,7 +74,7 @@ public class MainTest {
                             ch = ControladorHoja.getControladorHoja();
                             ch.asignaHoja(1);
                             hojaSeleccionada = true;
-                            cc = ControladorCelda.getControladorCelda();
+                            //cc = ControladorCelda.getControladorCelda();
                             cb = ControladorBloque.getControldorBloque();
                             System.out.println("Documento creado correctamente.");
                             break;
@@ -83,7 +82,6 @@ public class MainTest {
                         case 2:
                             cd = null;
                             ch = null;
-                            cc = null;
                             cb = null;
                             System.out.println("Documento cerrado correctamente.");
                             break;
@@ -323,8 +321,7 @@ public class MainTest {
                                     celda = Documento.getDocumento().getHoja(ch.getIdHoja()).getCelda(
                                             new Posicion(Traductor.getTraductor().StringInt(s[0]), Traductor.getTraductor().StringInt(s[1])));
                                 }
-                                cc.asignaCeldaPosicion(Traductor.getTraductor().IntString(ch.getIdHoja()),
-                                        Traductor.getTraductor().IntString(celda.getPosicion().getFila()),
+                                ch.asignaCelda(Traductor.getTraductor().IntString(celda.getPosicion().getFila()),
                                         Traductor.getTraductor().IntString(celda.getPosicion().getColumna()));
                                 System.out.println("1: Valor - 2: Referencia - 3: Valor a través de función");
                                 System.out.print("Celda correctamente seleccionada. Su valor actual es " + celda.getValor() +
@@ -344,7 +341,7 @@ public class MainTest {
                                     case 1:
                                         System.out.print("Introduce el valor(Decimal -> 123.4; Entero -> 123; Fecha -> 01/02/2003): ");
                                         try {
-                                            cc.escribirContenido(br.readLine());
+                                            ch.escribirContenido(br.readLine());
                                         } catch (Exception e) {
                                             System.out.println("Ha habido un error inesperado.");
                                         }
@@ -353,7 +350,7 @@ public class MainTest {
                                     case 2:
                                         System.out.print("Introduce la referencia(estilo $A1): ");
                                         try {
-                                            cc.escribirContenido(br.readLine());
+                                            ch.escribirContenido(br.readLine());
                                         } catch (Exception e) {
                                             System.out.println("Ha habido un error inesperado.");
                                         }
@@ -380,14 +377,14 @@ public class MainTest {
                                         System.out.println("\t=esFechaValida(String _txt)");
                                         System.out.print("Introduce la función con sus argumentos: ");
                                         try {
-                                            cc.escribirContenido(br.readLine());
+                                            ch.escribirContenido(br.readLine());
                                         } catch (Exception e) {
                                             System.out.println("Ha habido un error inesperado.");
                                         }
                                         break;
                                 }
 
-                                System.out.println("El valor de la celda ahora es " + cc.getCeldaRef().getValor() + ".");
+                                System.out.println("El valor de la celda ahora es " + ch.getCeldaRef().getValor() + ".");
 
                             }
                             break;

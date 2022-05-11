@@ -25,6 +25,7 @@ public class ConvertirValorBH extends Funcion{
      * Covierte el valor almacenado en base binaria a base hexadecimal
      * @return Devuelve un String con el valor en hexadecimal
      */
+    @Override
     public String execute() {
         int dec = Integer.parseInt(String.valueOf(this.binario), 2);
         return Integer.toHexString(dec);

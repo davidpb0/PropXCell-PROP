@@ -1,5 +1,13 @@
 package main.Domain.DomainModel;
 
+
+/*
+ * ClassName Varianza
+ *
+ * Version info 1.0.0
+ *
+ * Author David Pérez Barroso
+ */
 public class Varianza extends Funcion{
 
 

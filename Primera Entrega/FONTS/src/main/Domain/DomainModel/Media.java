@@ -1,5 +1,13 @@
 package main.Domain.DomainModel;
 
+
+/*
+ * ClassName Media
+ *
+ * Version info 1.0.0
+ *
+ * Author David Pérez Barroso
+ */
 public class Media extends Funcion{
 
     private String[] valores;

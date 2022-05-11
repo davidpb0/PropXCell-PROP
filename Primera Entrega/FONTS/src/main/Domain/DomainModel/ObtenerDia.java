@@ -26,6 +26,7 @@ public class ObtenerDia extends Funcion{
      * Obtiene el dia en forma numerica de la fecha almacenada
      * @return Devuelve un String con el dia, #ERROR si falla algun parametro del argumento
      */
+    @Override
     public String execute() {
         String dp[] = this.fecha.split("/");
         String d = dp[0];

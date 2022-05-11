@@ -26,6 +26,7 @@ public class ConvertirValorHD extends Funcion{
      * Covierte el valor almacenado en base hexadecimal a base decimal
      * @return Devuelve un String con el valor en decimal, -1 si hay un error en el formato del numero
      */
+    @Override
     public String execute() {
         try {
             int dec = Integer.parseInt(this.hexa, 16);

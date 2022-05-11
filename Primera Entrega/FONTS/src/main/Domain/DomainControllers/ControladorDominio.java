@@ -9,13 +9,11 @@ package main.Domain.DomainControllers;
 
 public class ControladorDominio {
     private final ControladorBloque contBloque;
-    private final ControladorCelda contCelda;
     private final ControladorDocumento contDocumento;
     private final ControladorHoja contHoja;
 
     public ControladorDominio() {
         contBloque = ControladorBloque.getControldorBloque();
-        contCelda = ControladorCelda.getControladorCelda();
         contDocumento = ControladorDocumento.getControladorDocumento();
         contHoja = ControladorHoja.getControladorHoja();
     }
@@ -24,9 +22,6 @@ public class ControladorDominio {
         return contBloque;
     }
 
-    public ControladorCelda getControladorCelda() {
-        return contCelda;
-    }
 
     public ControladorDocumento getControladorDocumento() {
         return contDocumento;

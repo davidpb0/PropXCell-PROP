@@ -10,6 +10,7 @@ package main.Domain.DomainControllers;
 import main.Domain.DomainModel.Documento;
 import main.Domain.DomainModel.Hoja;
 
+
 public class ControladorDocumento {
     private static ControladorDocumento instanceOfThisClass;
     private Documento documento_ref;
@@ -78,11 +79,10 @@ public class ControladorDocumento {
 
     /**
      * Cambia el nombre de la hoja _idH por _nuevoNombre.
-     * @param _idH id de la hoja en el documento.
      * @param _nuevoNombre nuevo nombre para la hoja.
      */
-    public boolean asignaNombreHoja(int _idH, String _nuevoNombre) throws Exception {
-        Hoja h = documento_ref.getHoja(_idH);
+    public boolean asignaNombreHoja(String _nuevoNombre) throws Exception {
+        Hoja h = ControladorHoja.getControladorHoja().getHojaRef();
         if(h != null) {
             h.asignaNombre(_nuevoNombre);
             return true;
@@ -102,4 +102,6 @@ public class ControladorDocumento {
     public void renombrarDocumento(String _nuevoNombre) {
         documento_ref.setNombre(_nuevoNombre);
     }
+
+
 }
