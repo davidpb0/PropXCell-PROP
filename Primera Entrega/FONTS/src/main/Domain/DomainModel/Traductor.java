@@ -35,15 +35,12 @@ public class Traductor {
      * Convierte un string a un número entero, si su sintaxis es correcta.
      * @param _s el parámetro a convertir a entero.
      */
-    public int StringInt(String _s) {
+    public int StringInt(String _s) throws Exception {
         try {
             return Integer.parseInt(_s);
         } catch (NumberFormatException e) {
-            System.err.println("String no convertible a int: el valor del String es " + _s);
-            e.printStackTrace();
+            throw new Exception("String no convertible a int: el valor del String es " + _s);
         }
-
-        return -1;
     }
 
     /**
@@ -51,15 +48,12 @@ public class Traductor {
      * Convierte un string a una float, si su sintaxis es correcta.
      * @param _s el parámetro a convertir a float.
      */
-    public float StringFloat(String _s) {
+    public float StringFloat(String _s) throws Exception {
         try {
             return Float.parseFloat(_s);
         } catch (NumberFormatException e) {
-            System.err.println("String no convertible a float: el valor del String es " + _s);
-            e.printStackTrace();
+            throw new Exception("String no convertible a float: el valor del String es " + _s);
         }
-
-        return -1f;
     }
 
     /**
@@ -67,16 +61,13 @@ public class Traductor {
      * Convierte un string a una fecha, si su sintaxis es correcta.
      * @param _s el parámetro a convertir a fecha.
      */
-    public Date StringDate(String _s) {
+    public Date StringDate(String _s) throws Exception {
         try {
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
             return formatoFecha.parse(_s);
         } catch (ParseException pe) {
-            System.err.println("String no convertible a date: el valor del String es " + _s);
-            pe.printStackTrace();
+            throw new Exception("String no convertible a date: el valor del String es " + _s);
         }
-
-        return null;
     }
 
     /**
@@ -166,7 +157,7 @@ public class Traductor {
      * @param _idH hoja en la que se encuentra la celda
      * @return la celda identificada por los parámetros de entrada
      */
-    public Celda traduceCelda(String _pos, int _idH) {
+    public Celda traduceCelda(String _pos, int _idH) throws Exception {
         Celda c;
         Documento d = Documento.getDocumento();
         if(d.getNombre().isEmpty()) d.inicializaDocumentoDefault("Doc1");
@@ -190,11 +181,11 @@ public class Traductor {
      * @param _funcion la expresión introducida por el usuario
      * @return un array de String con cada valor que especifica el argumento
      */
-    public String[] getArgumentosFuncion1aria(String _funcion, int _idH) {
+    public String[] getArgumentosFuncion1aria(String _funcion, int _idH) throws Exception {
         Hoja h = Documento.getDocumento().getHoja(_idH);
         String f = _funcion;
         if (_funcion.startsWith("=") && _funcion.charAt(1) != '$') f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')'));
-        else System.err.println("Argumento erróneo, el string proporcionado tiene que ser de tipo =func(arg). String actual: " + _funcion);
+        else throw new Exception("Argumento erróneo, el string proporcionado tiene que ser de tipo =func(arg). String actual: " + _funcion);
         ArrayList<String> ret = new ArrayList<>();
 
 
@@ -203,7 +194,7 @@ public class Traductor {
             try {
                 ret.add(c.getValor());
             } catch (NullPointerException np) {
-                System.err.println("Intento de acceso a celda inexistente o vacía.");
+                throw new Exception("Intento de acceso a celda inexistente o vacía.");
             }
         } else if (f.contains(":")) { // $A1:$B2
             String from = f.split(":")[0];
@@ -228,7 +219,7 @@ public class Traductor {
      * @param _idH id de la hoja actual
      * @return un vector que contiene hasta 4 vectores de Strings, cada uno con los argumentos entre las comas
      */
-    public ArrayList<String[]> getArgumentosFuncionNaria(String _funcion, int _idH) {
+    public ArrayList<String[]> getArgumentosFuncionNaria(String _funcion, int _idH) throws Exception {
         ArrayList<String[]>ret = new ArrayList<>();
         String f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')'));
         String[] args = f.split(",");

@@ -28,7 +28,7 @@ public class EscribeCSV {
      * Guarda en un archivo CSV las entradas del parámetro contenido
      * @param _nombreCSV nombre del archivo a crear
      */
-    public void guardaCSV(String _nombreCSV) {
+    public void guardaCSV(String _nombreCSV) throws Exception {
         try {
             File CSV = new File(this.ubicacion + "/" + _nombreCSV + ".csv");
             FileOutputStream fos = new FileOutputStream(CSV);
@@ -38,8 +38,7 @@ public class EscribeCSV {
             for (String cont : this.contenido) w.write(cont + "\n");
             w.close();
         } catch (IOException e) {
-            System.err.println("Error al escribir el fichero.");
-            e.printStackTrace();
+            throw new Exception("Error al escribir el fichero.");
         }
     }
 }

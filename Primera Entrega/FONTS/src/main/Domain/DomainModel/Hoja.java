@@ -290,7 +290,7 @@ public class Hoja implements Serializable {
      * @param _cel2 ultima posicion de la fila o columna que se desea
      * @return ArrayList<Celda> con las celdas de la columna o fila delimitada por los parametros de entrada
      */
-    public ArrayList<Celda> getColumnaFila(String _cel1, String _cel2){
+    public ArrayList<Celda> getColumnaFila(String _cel1, String _cel2) throws Exception {
         ArrayList<Celda> agrup = new ArrayList<>();
 
         Celda celd1 = Traductor.getTraductor().traduceCelda(_cel1, this.id);

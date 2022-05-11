@@ -3,10 +3,7 @@ package main.Domain.DomainControllers;
 
 import main.Domain.DomainModel.*;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static main.Domain.DomainModel.Documento.getDocumento;
 
@@ -90,7 +87,7 @@ public class ControladorCelda {
      * escribe su valor en la celda
      * @param _content contenido a escribir en la celda
      */
-  public void escribirContenido(String _content) {
+  public void escribirContenido(String _content) throws Exception {
       this.celdaRef.setContenido(_content);
 
       String type = Traductor.getTraductor().detecta(_content);

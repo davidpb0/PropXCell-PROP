@@ -53,7 +53,7 @@ public class TraductorTest {
      *      a entero es correcta
      */
     @Test
-    public void testStringInt() {
+    public void testStringInt() throws Exception {
         String s = "123";
         assertEquals(traductor.StringInt(s), 123);
     }
@@ -70,7 +70,7 @@ public class TraductorTest {
      *      a float es correcta
      */
     @Test
-    public void testStringFloat() {
+    public void testStringFloat() throws Exception {
         String s = "123.4";
         assertEquals(traductor.StringFloat(s), 123.4f, 0.0f);
     }
@@ -177,10 +177,10 @@ public class TraductorTest {
      * Operativa: Se comprueba que la función a estudiar traduce "A" a 1
      */
     @Test
-    public void testTraduceColumna() {
+    public void testTraduceColumna() throws Exception {
         when(traductor.StringInt(isA(String.class))).thenReturn(1);
         String col = "A";
-        assertEquals(traductor.getTraductor().traduceColumna(col), 1);
+        assertEquals(Traductor.getTraductor().traduceColumna(col), 1);
     }
 
     /**
@@ -194,7 +194,7 @@ public class TraductorTest {
      * Operativa: Se comprueba que la función a estudiar traduce la posición "A1" a (1, 1)
      */
     @Test
-    public void testTraduceCelda() {
+    public void testTraduceCelda() throws Exception {
         when(documento.getHoja(isA(Integer.class))).thenReturn(new HojaStub());
         when(new Posicion(isA(Integer.class), isA(Integer.class))).thenReturn(new PosicionStub(1, 1));
         when(hoja.getCelda(isA(PosicionStub.class))).thenReturn(new CeldaStub(new PosicionStub(1, 1)));
@@ -214,7 +214,7 @@ public class TraductorTest {
      * Operativa: Se comprueba que la función a estudiar obtiene "$A1" de "=abs($A1)"
      */
     @Test
-    public void testGetArgumentosFuncion1aria() {
+    public void testGetArgumentosFuncion1aria() throws Exception {
         when(documento.getHoja(isA(Integer.class))).thenReturn(new HojaStub());
         when(traductor.traduceCelda(isA(String.class), isA(Integer.class))).thenReturn(new CeldaStub(new PosicionStub(1, 1)));
         when(celda.getValor()).thenReturn("hola");
@@ -235,7 +235,7 @@ public class TraductorTest {
      * Operativa: Se comprueba que la función a estudiar obtiene {{"20"}, {"10"}} de "=media(20, 10)"
      */
     @Test
-    public void testGetArgumentosFuncionNaria() {
+    public void testGetArgumentosFuncionNaria() throws Exception {
         when(documento.getHoja(isA(Integer.class))).thenReturn(new HojaStub());
         when(traductor.traduceCelda(isA(String.class), isA(Integer.class))).thenReturn(new CeldaStub(new PosicionStub(1, 1)));
         when(celda.getValor()).thenReturn("hola");

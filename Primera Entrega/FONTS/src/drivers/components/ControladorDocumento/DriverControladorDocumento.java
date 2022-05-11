@@ -231,8 +231,12 @@ public class DriverControladorDocumento {
         }
         System.out.print("Nombre: ");
         String name = br.readLine();
-        if(cd.asignaNombreHoja(id, name)) {
-            System.out.print("Nombre " + name + " asignado a Hoja" + id + "!");
+        try {
+            if(cd.asignaNombreHoja(id, name)) {
+                System.out.print("Nombre " + name + " asignado a Hoja" + id + "!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         System.in.read();
     }

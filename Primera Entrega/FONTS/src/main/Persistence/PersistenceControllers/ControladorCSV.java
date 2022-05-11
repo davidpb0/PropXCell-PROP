@@ -44,7 +44,7 @@ public class ControladorCSV {
     /**
      * invoca la operación leeCSV() de CargaCSV, y destruye el objeto a continuación
      */
-    public ArrayList<String> cargaCSV() {
+    public ArrayList<String> cargaCSV() throws Exception {
         ArrayList<String> ret = cargacsvRef.leeCSV();
         this.cargacsvRef = null;
         return ret;
@@ -54,7 +54,7 @@ public class ControladorCSV {
      * invoca la operación guardaCSV() de EscribeCSV, y destruye el objeto a continuación
      * @param _nombreCSV nombre del archivo CSV a guardar
      */
-    public void escribeCSV(String _nombreCSV) {
+    public void escribeCSV(String _nombreCSV) throws Exception {
         escribecsvRef.guardaCSV(_nombreCSV);
         this.escribecsvRef = null;
     }

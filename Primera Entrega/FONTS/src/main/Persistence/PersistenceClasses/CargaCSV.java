@@ -41,7 +41,7 @@ public class CargaCSV {
     /**
      * Lee un archivo en formato CSV
      */
-    public ArrayList<String> leeCSV() {
+    public ArrayList<String> leeCSV() throws Exception {
         ArrayList<String> ret = new ArrayList<>();
         try {
             //comprobar si existe el archivo con la funcion de abajo, sino excepción
@@ -55,10 +55,7 @@ public class CargaCSV {
 
             return ret;
         } catch (IOException e) {
-            System.err.println("Error al leer el archivo.");
-            e.printStackTrace();
+            throw new Exception("Error al leer el archivo.");
         }
-
-        return ret;
     }
 }

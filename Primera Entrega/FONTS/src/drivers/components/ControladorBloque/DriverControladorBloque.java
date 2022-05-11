@@ -130,7 +130,7 @@ public class DriverControladorBloque {
         }
     }
 
-    private void pegarTest(String _fI, String _cI) {
+    private void pegarTest(String _fI, String _cI) throws Exception {
         if (!bloqueDefinido) System.out.println("Primero hay que definir un bloque.");
         else {
             int f = Traductor.getTraductor().StringInt(_fI);
@@ -148,7 +148,7 @@ public class DriverControladorBloque {
         }
     }
 
-    private void setBloqueSeleccionadoTest(String _filaInicial, String _columnaInicial, String _filaFinal, String _columnaFinal) {
+    private void setBloqueSeleccionadoTest(String _filaInicial, String _columnaInicial, String _filaFinal, String _columnaFinal) throws Exception {
         int _fI = Traductor.getTraductor().StringInt(_filaInicial);
         int _cI = Traductor.getTraductor().StringInt(_columnaInicial);
         int _fF = Traductor.getTraductor().StringInt(_filaFinal);
