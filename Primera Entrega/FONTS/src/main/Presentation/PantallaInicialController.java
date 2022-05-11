@@ -40,7 +40,7 @@ public class PantallaInicialController implements ActionListener {
         if (e.getSource() == pi.crearButton) {
             int f = Integer.parseInt(pi.tfFilas.getText());
             int c = Integer.parseInt(pi.tfColumnas.getText());
-            this.cd = new ControladorDocumento(f, c);
+            this.cd = ControladorDocumento.getControladorDocumento();
             //pasar a la siguiente vista
 
 
@@ -70,8 +70,8 @@ public class PantallaInicialController implements ActionListener {
             if (doc != null) {
                 System.out.println(doc.getAbsolutePath());
                 System.out.println(doc.getName());
-                this.cd = new ControladorDocumento(20, 20);
-                cd.cargaDocumento(doc.getAbsolutePath());
+                this.cd = ControladorDocumento.getControladorDocumento();
+                //cd.cargaDocumento(doc.getAbsolutePath());
 
             }
         }

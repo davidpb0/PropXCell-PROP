@@ -11,14 +11,20 @@ import main.Domain.DomainModel.Documento;
 import main.Domain.DomainModel.Hoja;
 
 public class ControladorDocumento {
+    private static ControladorDocumento instanceOfThisClass;
     private Documento documento_ref;
 
     /**
      * Creadora por defecto, setea el valor de documento_ref con el documento abierto.
      */
-    public ControladorDocumento(int _f, int _c) {
+    private ControladorDocumento(int _f, int _c) {
         documento_ref = Documento.getDocumento();
         if (documento_ref.getNumHojas() == 0) documento_ref.inicializaDocumento("Documento sin título", _f, _c);
+    }
+
+    public static ControladorDocumento getControladorDocumento() {
+        if (instanceOfThisClass == null) instanceOfThisClass = new ControladorDocumento(50, 50);
+        return instanceOfThisClass;
     }
 
     public Documento getDocumento() {

@@ -7,7 +7,6 @@ import main.Domain.DomainModel.Hoja;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.stream.StreamSupport;
 
 public class DriverControladorDocumento {
 
@@ -16,7 +15,7 @@ public class DriverControladorDocumento {
     private static ControladorDocumento cd = null;
 
     private static void initCD () {
-        cd = new ControladorDocumento(50, 50);
+        cd = ControladorDocumento.getControladorDocumento();
         doc = cd.getDocumento();
         System.out.println("ControladorDocumento inicializado correctamente!");
     }

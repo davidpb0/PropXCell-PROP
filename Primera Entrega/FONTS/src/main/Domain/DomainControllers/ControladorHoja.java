@@ -12,15 +12,21 @@ import java.util.*;
  */
 
 public class ControladorHoja {
-    
-    private static Hoja hojaRef;
+
+    private static ControladorHoja instanceOfThisClass;
+    private Hoja hojaRef;
 
     public enum Criterio {
         ASCENDENTE,
         DESCENDENTE
     }
 
-    public ControladorHoja() {}
+    private ControladorHoja() {}
+
+    public static ControladorHoja getControladorHoja() {
+        if (instanceOfThisClass == null) instanceOfThisClass = new ControladorHoja();
+        return instanceOfThisClass;
+    }
 
     /**
     * Se guarda la hoja que le pasa presentación.
@@ -38,7 +44,7 @@ public class ControladorHoja {
         hojaRef.asignaNombre(_nuevoNombre);
     }
 
-    public static Hoja getHojaRef () { return hojaRef; }
+    public Hoja getHojaRef() { return this.hojaRef; }
 
     /**
      * Devuelve el nombre de la hoja del controlador.

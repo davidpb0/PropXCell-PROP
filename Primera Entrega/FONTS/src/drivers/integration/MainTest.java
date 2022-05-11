@@ -71,8 +71,8 @@ public class MainTest {
                 else {
                     switch (caso) {
                         case 1:
-                            cd = new ControladorDocumento(50, 50);
-                            ch = new ControladorHoja();
+                            cd = ControladorDocumento.getControladorDocumento();
+                            ch = ControladorHoja.getControladorHoja();
                             ch.asignaHoja(1);
                             hojaSeleccionada = true;
                             cc = ControladorCelda.getControladorCelda();
