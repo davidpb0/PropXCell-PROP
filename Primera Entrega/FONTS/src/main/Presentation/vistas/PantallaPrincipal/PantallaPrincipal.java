@@ -15,7 +15,7 @@ public class PantallaPrincipal extends JFrame {
     private JPanel principal;
     private JTextField nombre_docTextField;
     private JMenuBar barraH;
-    private JMenu archivo, editar, insertar, ayuda;
+    private JMenu archivo, editar, insertar, eliminar, ayuda;
     private JPanel Window_Header;
     private JPanel Activity;
     private JPanel Act_Header;
@@ -91,6 +91,25 @@ public class PantallaPrincipal extends JFrame {
                 this.insertar.add(j);
             }
         }
+        String[] eliminarOpciones = {"Filas", "Columnas"};
+        for (String s : eliminarOpciones) {
+            if (s.equals("Filas") || s.equals("Columnas")) {
+                JMenu submenu = new JMenu(s);
+                JMenuItem m = new JMenuItem("Eliminar " + s + "...");
+                submenu.add(m);
+                m = new JMenuItem("Eliminar " + s.substring(0, s.length() - 1) + " posterior...");
+                submenu.add(m);
+                m = new JMenuItem("Eliminar " + s.substring(0, s.length() - 1) + " anterior...");
+                submenu.add(m);
+                m = new JMenuItem("Eliminar " + s.substring(0, s.length() - 1) + " actual...");
+                submenu.add(m);
+                this.eliminar.add(submenu);
+            }
+            else {
+                JMenuItem j = new JMenuItem(s);
+                this.eliminar.add(j);
+            }
+        }
         String[] ayudaOpciones = {"Manual de Usuario", "Separador", "Lista de Funciones", "Atajos de Teclado"};
         for (String s : ayudaOpciones) {
             if (s.equals("Separador")) this.ayuda.addSeparator();
@@ -104,6 +123,7 @@ public class PantallaPrincipal extends JFrame {
         barraH.add(this.archivo);
         barraH.add(this.editar);
         barraH.add(this.insertar);
+        barraH.add(this.eliminar);
         barraH.add(this.ayuda);
     }
 
