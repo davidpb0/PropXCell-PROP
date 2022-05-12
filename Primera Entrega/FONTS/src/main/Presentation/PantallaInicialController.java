@@ -5,6 +5,7 @@ import main.Presentation.vistas.PantallaInicial.PantallaInicial;
 import main.Presentation.vistas.PantallaPrincipal.PantallaPrincipal;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -12,7 +13,7 @@ import java.io.File;
 /*
  * ClassName PantallaInicialController
  *
- * Version info 0.0.3
+ * Version info 0.0.4
  *
  * Author David Perez Barroso
  */
@@ -39,6 +40,10 @@ public class PantallaInicialController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        FileNameExtensionFilter filtro =
+                new FileNameExtensionFilter("Archivos prop, csv, pdf (.prop, .csv, .pdf)", "prop", "csv", "pdf");
+
         if (e.getSource() == pi.crearButton) {
             int f = Integer.parseInt(pi.tfFilas.getText());
             int c = Integer.parseInt(pi.tfColumnas.getText());
@@ -73,8 +78,12 @@ public class PantallaInicialController implements ActionListener {
 
         else if (e.getSource() == pi.btCargarDoc) {
             JFileChooser jf = new JFileChooser();
+
+            jf.setFileFilter(filtro);
+
             jf.showOpenDialog(pi);
             File doc = jf.getSelectedFile();
+
             if (doc != null) {
                 System.out.println(doc.getAbsolutePath());
                 System.out.println(doc.getName());
@@ -86,6 +95,9 @@ public class PantallaInicialController implements ActionListener {
 
         else if (e.getSource() == pi.bteliminarDoc){
                 JFileChooser jfl = new JFileChooser();
+
+                jfl.setFileFilter(filtro);
+
                 jfl.showOpenDialog(pi);
                 File docbr = jfl.getSelectedFile();
 
