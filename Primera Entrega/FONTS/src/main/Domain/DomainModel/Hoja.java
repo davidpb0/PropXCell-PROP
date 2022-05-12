@@ -239,6 +239,7 @@ public class Hoja implements Serializable {
             Celda c = this.celdas.get(_pant);
             c.setReferenciantes(this.celdas.get(_pdp).getReferenciantes());
             this.celdas.replace(_pdp, c);
+            this.celdas.replace(_pant, new Celda(_pant));
             c.setPosicion(_pdp);
             //Comprobamos que ha cambiado a la posicon deseada
             if (c.getPosicion() == _pdp) return true;
@@ -259,10 +260,17 @@ public class Hoja implements Serializable {
         //Si contiene la posicion -> cambia la posicion
         Boolean b1 = this.celdas.containsKey(p);
         Boolean b2 = this.celdas.containsValue(c);
+
         if (b1 && b2) {
+            Posicion pant = c.getPosicion();
+
             c.setReferenciantes(this.celdas.get(p).getReferenciantes());
+
             this.celdas.replace(p, c);
+            this.celdas.replace(pant, new Celda(pant));
+
             c.setPosicion(p);
+
             //Comprobamos que ha cambiado a la posicon deseada
             if (c.getPosicion() == p) return true;
             return false;
