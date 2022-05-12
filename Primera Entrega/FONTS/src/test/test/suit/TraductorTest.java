@@ -163,7 +163,7 @@ public class TraductorTest {
         String[] codigos = {"#ABS", "#TRUNC", "#APROX", "#VDB", "#VBD", "#VHD", "#VDH", "#VHB", "#VBH", "#MES", "#AÑO", "#DIAS", "#NDIA", "#LONG", "#MEDIA", "#MEDIANA", "#VAR", "#COV", "#DESV", "#COEFP", "#CLETRA", "#REEMPPAL", "#REEMPLET", "#ERRORFUNC", "#REFERENCIA", "#FECHA", "#ERRORFECHA"};
         Random random = new Random();
         int funcRandom = random.nextInt(funcs.length);
-        assertEquals(traductor.getTraductor().detecta(funcs[funcRandom]), codigos[funcRandom]);
+        assertEquals(Traductor.detecta(funcs[funcRandom]), codigos[funcRandom]);
     }
 
     /**
@@ -180,7 +180,7 @@ public class TraductorTest {
     public void testTraduceColumna() throws Exception {
         when(traductor.StringInt(isA(String.class))).thenReturn(1);
         String col = "A";
-        assertEquals(Traductor.getTraductor().traduceColumna(col), 1);
+        assertEquals(Traductor.traduceColumna(col), 1);
     }
 
     /**
@@ -199,7 +199,7 @@ public class TraductorTest {
         when(new Posicion(isA(Integer.class), isA(Integer.class))).thenReturn(new PosicionStub(1, 1));
         when(hoja.getCelda(isA(PosicionStub.class))).thenReturn(new CeldaStub(new PosicionStub(1, 1)));
 
-        CeldaStub c = (CeldaStub) traductor.getTraductor().traduceCelda("A1", 1);
+        CeldaStub c = (CeldaStub) Traductor.traduceCelda("A1", 1);
         assertEquals(c, new CeldaStub(new PosicionStub(1, 1), "1"));
     }
 

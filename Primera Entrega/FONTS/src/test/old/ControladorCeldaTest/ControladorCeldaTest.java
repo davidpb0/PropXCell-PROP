@@ -1,11 +1,5 @@
 package old.ControladorCeldaTest;
 
-import main.Domain.DomainControllers.ControladorCelda;
-import main.Domain.DomainModel.Documento;
-import main.Domain.DomainModel.Posicion;
-import org.junit.Assert;
-import org.junit.Test;
-
 public class ControladorCeldaTest {
 
    /* @Test

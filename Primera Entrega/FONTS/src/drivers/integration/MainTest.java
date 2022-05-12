@@ -316,13 +316,13 @@ public class MainTest {
                                 String[] s = pos.split(" ");
                                 Celda celda;
                                 if (s.length == 1) { // El usuario ha introducido A1
-                                    celda = Traductor.getTraductor().traduceCelda(s[0], ch.getIdHoja());
+                                    celda = Traductor.traduceCelda(s[0], ch.getIdHoja());
                                 } else { // El usuario ha introducido 1 1
                                     celda = Documento.getDocumento().getHoja(ch.getIdHoja()).getCelda(
-                                            new Posicion(Traductor.getTraductor().StringInt(s[0]), Traductor.getTraductor().StringInt(s[1])));
+                                            new Posicion(Traductor.StringInt(s[0]), Traductor.StringInt(s[1])));
                                 }
-                                ch.asignaCelda(Traductor.getTraductor().IntString(celda.getPosicion().getFila()),
-                                        Traductor.getTraductor().IntString(celda.getPosicion().getColumna()));
+                                ch.asignaCelda(Traductor.IntString(celda.getPosicion().getFila()),
+                                        Traductor.IntString(celda.getPosicion().getColumna()));
                                 System.out.println("1: Valor - 2: Referencia - 3: Valor a través de función");
                                 System.out.print("Celda correctamente seleccionada. Su valor actual es " + celda.getValor() +
                                         ". Selecciona el tipo de valor a introducir: ");

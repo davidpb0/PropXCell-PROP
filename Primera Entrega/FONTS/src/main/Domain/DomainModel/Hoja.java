@@ -21,29 +21,6 @@ public class Hoja implements Serializable {
     private int columnas;
     private HashMap<Posicion, Celda> celdas;
 
-
-    /**
-     * Funcion privada que inicializa la estructura de datos de hoja
-     * @param _h hoja a inicializar
-     */
-    private void inicializaHoja(Hoja _h){
-        int f = _h.getFilas();
-        int c = _h.getColumnas();
-
-        for (int i = 1; i <= f; ++i){
-            for (int j = 1; j <= c; ++j){
-                Posicion p = new Posicion(i, j);
-                Celda cel = new Celda(p);
-                cel.setHoja(this);
-                _h.celdas.put(p, cel);
-            }
-        }
-    }
-
-    public void setCeldas(HashMap<Posicion, Celda> celdas) {
-        this.celdas = celdas;
-    }
-
     /**
      * Creadora con los valores por defecto
      */
@@ -67,6 +44,27 @@ public class Hoja implements Serializable {
 
     }
 
+    /**
+     * Funcion privada que inicializa la estructura de datos de hoja
+     * @param _h hoja a inicializar
+     */
+    private void inicializaHoja(Hoja _h){
+        int f = _h.getFilas();
+        int c = _h.getColumnas();
+
+        for (int i = 1; i <= f; ++i){
+            for (int j = 1; j <= c; ++j){
+                Posicion p = new Posicion(i, j);
+                Celda cel = new Celda(p);
+                cel.setHoja(this);
+                _h.celdas.put(p, cel);
+            }
+        }
+    }
+
+    public void setCeldas(HashMap<Posicion, Celda> celdas) {
+        this.celdas = celdas;
+    }
 
     /**
      * Asigna un numero de filas a la hoja
@@ -166,15 +164,6 @@ public class Hoja implements Serializable {
         return this.nombre;
     }
 
-
-    /**
-     * Devuelve todas las celdas de la hoja
-     * @return un HashMap de las celdas con sus posiciones
-     */
-    public HashMap<Posicion, Celda> getCeldas(){
-        return this.celdas;
-    }
-
     /**
      * Devuelve la celda en la fila y columna pedidas
      * @param _p posicion donde se encuebntra la celda
@@ -188,7 +177,6 @@ public class Hoja implements Serializable {
 
         return cl;
     }
-
 
     /**
      * Comprueba si existe en la hoja la posicion dada
@@ -293,10 +281,10 @@ public class Hoja implements Serializable {
     public ArrayList<Celda> getColumnaFila(String _cel1, String _cel2) throws Exception {
         ArrayList<Celda> agrup = new ArrayList<>();
 
-        Celda celd1 = Traductor.getTraductor().traduceCelda(_cel1, this.id);
+        Celda celd1 = Traductor.traduceCelda(_cel1, this.id);
         Posicion pos1 = celd1.getPosicion();
 
-        Celda celd2 = Traductor.getTraductor().traduceCelda(_cel2, this.id);
+        Celda celd2 = Traductor.traduceCelda(_cel2, this.id);
         Posicion pos2 = celd2.getPosicion();
 
         if (celdas.containsKey(pos1) && celdas.containsKey(pos2)) {
@@ -336,24 +324,21 @@ public class Hoja implements Serializable {
     /**
      * Transforma todo el contenido de la hoja en un ArrayList de Strings con los valores de las celdas de una
      * misma fila separados por ";" y separacion de filas con un espacio en blanco
-     * @param _h Hoja a transformar en CSV
      * @return Devuelve un ArrayList de String con todos los valores de las celdas de las Hojas
      */
-    public ArrayList<String> transformaCSV(Hoja _h){
+    public ArrayList<String> transformaCSV(){
         ArrayList<String> csv = new ArrayList<>();
 
-        HashMap<Posicion, Celda> m = _h.getCeldas();
-
-        int f = _h.getFilas();
-        int c = _h.getColumnas();
+        int f = this.filas;
+        int c = this.columnas;
         String aux = "";
 
         for(int i = 1; i <= f; ++i){
             aux= "";
             for(int j = 1; j <= c; ++j) {
-                if (j == c) aux += m.get(new Posicion(i, j)).getValor()+ " ";
+                if (j == c) aux += this.celdas.get(new Posicion(i, j)).getValor()+ " ";
                 else {
-                    aux += m.get(new Posicion(i, j)).getValor() + ";";
+                    aux += this.celdas.get(new Posicion(i, j)).getValor() + ";";
                 }
             }
             csv.add(aux);
