@@ -3,13 +3,14 @@ package main.Domain.DomainModel;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
 /*
  * ClassName DomainModel.Documento
  *
- * Version info 0.0.3
+ * Version info 1.0.1
  *
  * Author David Pérez Barroso
  */
@@ -182,5 +183,20 @@ public class Documento implements Serializable {
         this.numHojas = 0;
         this.fechaCreacion = null;
         this.hojasContenidas = null;
+    }
+
+
+    /**
+     * Transforma en csv todas las hojas del documento
+     * @return Devuelve un ArrayList con ArrayList de strings que representan los csv de las hojas.
+     */
+    public ArrayList<ArrayList<String>> convierteCSV(){
+
+        ArrayList<ArrayList<String>> doccsv = new ArrayList<>();
+
+        this.hojasContenidas.forEach((K,V)-> doccsv.add(V.transformaCSV()));
+
+        return doccsv;
+
     }
 }
