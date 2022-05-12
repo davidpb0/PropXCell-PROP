@@ -134,8 +134,8 @@ public class DriverControladorBloque {
     private void pegarTest(String _fI, String _cI) throws Exception {
         if (!bloqueDefinido) System.out.println("Primero hay que definir un bloque.");
         else {
-            int f = Traductor.getTraductor().StringInt(_fI);
-            int c = Traductor.getTraductor().StringInt(_cI);
+            int f = Traductor.StringInt(_fI);
+            int c = Traductor.StringInt(_cI);
             cb.pegar(h, f, c);
             System.out.println("El bloque se ha pegado correctamente. El contenido de la hoja a partir de las celdas pegadas es: ");
             int tamanoF = BloqueSeleccionado.getBloque().getCeldaFinal().getPosicion().getFila() - BloqueSeleccionado.getBloque().getCeldaInicial().getPosicion().getFila();
@@ -150,10 +150,10 @@ public class DriverControladorBloque {
     }
 
     private void setBloqueSeleccionadoTest(String _filaInicial, String _columnaInicial, String _filaFinal, String _columnaFinal) throws Exception {
-        int _fI = Traductor.getTraductor().StringInt(_filaInicial);
-        int _cI = Traductor.getTraductor().StringInt(_columnaInicial);
-        int _fF = Traductor.getTraductor().StringInt(_filaFinal);
-        int _cF = Traductor.getTraductor().StringInt(_columnaFinal);
+        int _fI = Traductor.StringInt(_filaInicial);
+        int _cI = Traductor.StringInt(_columnaInicial);
+        int _fF = Traductor.StringInt(_filaFinal);
+        int _cF = Traductor.StringInt(_columnaFinal);
         Celda inicialC = h.getCelda(new Posicion(_fI, _cI));
         Celda finalC = h.getCelda(new Posicion(_fF, _cF));
         BloqueSeleccionado.getBloque().setCelda(inicialC, finalC, h);

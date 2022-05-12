@@ -2,7 +2,7 @@ package main.Domain.DomainModel;
 /*
  * ClassName DomainModel.Traductor
  *
- * Version info 0.0.4
+ * Version info 1.0
  *
  * Author Iván Risueño Martín
  */
@@ -14,28 +14,12 @@ import java.util.Date;
 
 public class Traductor {
 
-    private static Traductor instanceOfThisClass;
-
-    /**
-     * Método para acceder al traductor
-     * @return la instancia singleton del traductor
-     */
-    public static Traductor getTraductor() {
-        if (instanceOfThisClass == null) instanceOfThisClass = new Traductor();
-        return instanceOfThisClass;
-    }
-
-    /**
-     * Creadora por defecto.
-     */
-    private Traductor() {}
-
     /**
      * @return el string convertido a número entero.
      * Convierte un string a un número entero, si su sintaxis es correcta.
      * @param _s el parámetro a convertir a entero.
      */
-    public int StringInt(String _s) throws Exception {
+    public static int StringInt(String _s) throws Exception {
         try {
             return Integer.parseInt(_s);
         } catch (NumberFormatException e) {
@@ -48,7 +32,7 @@ public class Traductor {
      * Convierte un string a una float, si su sintaxis es correcta.
      * @param _s el parámetro a convertir a float.
      */
-    public float StringFloat(String _s) throws Exception {
+    public static float StringFloat(String _s) throws Exception {
         try {
             return Float.parseFloat(_s);
         } catch (NumberFormatException e) {
@@ -61,7 +45,7 @@ public class Traductor {
      * Convierte un string a una fecha, si su sintaxis es correcta.
      * @param _s el parámetro a convertir a fecha.
      */
-    public Date StringDate(String _s) throws Exception {
+    public static Date StringDate(String _s) throws Exception {
         try {
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
             return formatoFecha.parse(_s);
@@ -75,21 +59,21 @@ public class Traductor {
      * Convierte un entero a String.
      * @param _entero el entero a convertir a String.
      */
-    public String IntString(Integer _entero) { return String.valueOf(_entero); }
+    public static String IntString(Integer _entero) { return String.valueOf(_entero); }
 
     /**
      * @return el float convertido a String.
      * Convierte un float a String.
      * @param _float el float a convertir a String.
      */
-    public String FloatString(Float _float) { return String.valueOf(_float); }
+    public static String FloatString(Float _float) { return String.valueOf(_float); }
 
     /**
      * @return la fecha convertido a String.
      * Convierte una fecha a String en formato dd/MM/aaaa.
      * @param _fecha la fecha a convertir a String.
      */
-    public String DateString(Date _fecha) {
+    public static String DateString(Date _fecha) {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         return formatoFecha.format(_fecha);
     }
@@ -99,7 +83,7 @@ public class Traductor {
      * @param _formula contenido introducido por el usuario
      * @return tipo de contenido especificado por la fórmula
      */
-    public String detecta(String _formula) {
+    public static String detecta(String _formula) {
         if (_formula.charAt(0) == '=' && _formula.indexOf(')') == _formula.length() - 1) {
             if (_formula.indexOf("=abs(") == 0) return "#ABS";
             else if (_formula.indexOf("=trunc(") == 0) return "#TRUNC";
@@ -137,14 +121,14 @@ public class Traductor {
      * @param _c columna(alfabético)
      * @return identificador de la columna que corresponde a su valor alfabético
      */
-    public int traduceColumna(String _c) {
+    public static int traduceColumna(String _c) {
         int ret = 0;
         if (_c.length() == 1) {
             int cr = _c.charAt(0);
             ret = cr - 64;
         } else {
             for (int i = 0; i < _c.length(); ++i) {
-                ret += 26 * i + getTraductor().traduceColumna(Character.toString(_c.charAt(i)));
+                ret += 26 * i + traduceColumna(Character.toString(_c.charAt(i)));
             }
         }
         return ret;
@@ -157,7 +141,7 @@ public class Traductor {
      * @param _idH hoja en la que se encuentra la celda
      * @return la celda identificada por los parámetros de entrada
      */
-    public Celda traduceCelda(String _pos, int _idH) throws Exception {
+    public static Celda traduceCelda(String _pos, int _idH) throws Exception {
         Celda c;
         Documento d = Documento.getDocumento();
         if(d.getNombre().isEmpty()) d.inicializaDocumentoDefault("Doc1");
@@ -169,7 +153,7 @@ public class Traductor {
         while (j < s.length() && s.charAt(j) >= 'A' && s.charAt(j) <= 'Z') ++j;
         String columna = s.substring(0, j);
         String fila = s.substring(j);
-        Posicion p = new Posicion(getTraductor().StringInt(fila), traduceColumna(columna));
+        Posicion p = new Posicion(StringInt(fila), traduceColumna(columna));
         c = h.getCelda(p);
 
         return c;
@@ -181,7 +165,7 @@ public class Traductor {
      * @param _funcion la expresión introducida por el usuario
      * @return un array de String con cada valor que especifica el argumento
      */
-    public String[] getArgumentosFuncion1aria(String _funcion, int _idH) throws Exception {
+    public static String[] getArgumentosFuncion1aria(String _funcion, int _idH) throws Exception {
         Hoja h = Documento.getDocumento().getHoja(_idH);
         String f = _funcion;
         if (_funcion.startsWith("=") && _funcion.charAt(1) != '$') f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')'));
@@ -190,7 +174,7 @@ public class Traductor {
 
 
         if (f.startsWith("=$") && f.length() <= 6) { // Como mucho $AA11
-            Celda c = getTraductor().traduceCelda(f.substring(1, f.length() - 1), _idH);
+            Celda c = traduceCelda(f.substring(1, f.length() - 1), _idH);
             try {
                 ret.add(c.getValor());
             } catch (NullPointerException np) {
@@ -219,7 +203,7 @@ public class Traductor {
      * @param _idH id de la hoja actual
      * @return un vector que contiene hasta 4 vectores de Strings, cada uno con los argumentos entre las comas
      */
-    public ArrayList<String[]> getArgumentosFuncionNaria(String _funcion, int _idH) throws Exception {
+    public static ArrayList<String[]> getArgumentosFuncionNaria(String _funcion, int _idH) throws Exception {
         ArrayList<String[]>ret = new ArrayList<>();
         String f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')'));
         String[] args = f.split(",");
