@@ -71,7 +71,7 @@ public class HojaTest {
 
         int f = hoja.getFilas();
         int c = hoja.getColumnas();
-        int s = hoja.getCeldas().size();
+        int s = hoja.getColumnas() * hoja.getFilas();
 
         String s1 = f + " " + c + " " + s;
 
@@ -95,7 +95,7 @@ public class HojaTest {
 
         int f = hoja.getFilas();
         int c = hoja.getColumnas();
-        int s = hoja.getCeldas().size();
+        int s = hoja.getColumnas() * hoja.getFilas();
 
         String s1 = f + " " + c + " " + s;
 
@@ -472,8 +472,7 @@ public class HojaTest {
 
         hoja.setCeldas(allcelds);
 
-        int clds = hoja.getCeldas().size();
-        HashMap<Posicion, Celda> m = hoja.getCeldas();
+        int clds = hoja.getColumnas() * hoja.getFilas();
 
         assertEquals(4, clds);
 
@@ -493,7 +492,7 @@ public class HojaTest {
     public void getCeldasVacio(){
         hoja = new Hoja(0, 0);
 
-        int clds = hoja.getCeldas().size();
+        int clds = hoja.getColumnas() * hoja.getFilas();
 
         assertEquals(0, clds);
 
@@ -519,7 +518,7 @@ public class HojaTest {
 
       PosicionStub posicion = new PosicionStub(2,2);
 
-      assertSame(celda, hoja.getCeldas().get(posicion));
+      assertSame(celda, hoja.getCelda(posicion));
 
     }
 
