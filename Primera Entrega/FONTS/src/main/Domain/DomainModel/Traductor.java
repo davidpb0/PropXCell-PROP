@@ -85,7 +85,11 @@ public class Traductor {
      */
     public static String detecta(String _formula) {
         if (_formula.charAt(0) == '=' && _formula.indexOf(')') == _formula.length() - 1) {
-            if (_formula.indexOf("=abs(") == 0) return "#ABS";
+            if (_formula.indexOf("=suma(") == 0) return "#SUMA";
+            else if (_formula.indexOf("=resta(") == 0) return "#RESTA";
+            else if (_formula.indexOf("=mult(") == 0) return "#MULT";
+            else if (_formula.indexOf("=div(") == 0) return "#DIV";
+            else if (_formula.indexOf("=abs(") == 0) return "#ABS";
             else if (_formula.indexOf("=trunc(") == 0) return "#TRUNC";
             else if (_formula.indexOf("=aprox(") == 0) return "#APROX";
             else if (_formula.indexOf("=convertirDB(") == 0) return "#VDB";
