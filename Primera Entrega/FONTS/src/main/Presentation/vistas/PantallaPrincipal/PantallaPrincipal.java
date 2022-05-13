@@ -39,7 +39,20 @@ public class PantallaPrincipal extends JFrame {
     private Dimension MIN_SIZE = new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.6), (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.6));
 
     public PantallaPrincipal() {
+        setTitle("Document - PROPxCEL");
+        add(principal);
+        setResizable(true);
+        setMinimumSize(MIN_SIZE);
+        setSize(MIN_SIZE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        for (int i = 1; i <= 3; i++) {
+            creaHoja(50, 50, "Hoja " + i);
+        }
+        configuraHerramientas();
+    }
 
+    public PantallaPrincipal(int hojas, int filas, int columnas) {
         setTitle("Document - PROPxCEL");
         add(principal);
         setResizable(true);
@@ -48,6 +61,17 @@ public class PantallaPrincipal extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         configuraHerramientas();
+        for (int i = 1; i <= hojas; i++) {
+            creaHoja(filas, columnas, "Hoja " + i);
+        }
+    }
+
+    public void creaHoja(int filas, int columnas, String nombre) {
+        JPanel panel = new JPanel();
+        panel.add(new Tabla(filas, columnas));
+        Tabla t = new Tabla(filas, columnas);
+        t.setName(nombre);
+        tabbedPane1.add(t);
     }
 
     public void configuraHerramientas() {

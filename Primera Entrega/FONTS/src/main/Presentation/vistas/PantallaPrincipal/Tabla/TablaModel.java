@@ -3,7 +3,6 @@ package main.Presentation.vistas.PantallaPrincipal.Tabla;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -16,7 +15,8 @@ import java.util.List;
 
 public class TablaModel extends AbstractTableModel {
 
-    List<List<String>> data = new ArrayList<>();
+    List<List<String>> valores = new ArrayList<>();
+    List<List<String>> contenidos = new ArrayList<>();
 
     public TablaModel(int rows, int cols) {
         for (int i = 0; i < rows; i++) {
@@ -24,18 +24,19 @@ public class TablaModel extends AbstractTableModel {
             for (int j = 0; j < cols; j++) {
                 l.add("");
             }
-            data.add(l);
+            valores.add(l);
+            contenidos.add(l);
         }
     }
 
     @Override
     public int getRowCount() {
-        return data.size();
+        return valores.size();
     }
 
     @Override
     public int getColumnCount() {
-        return data.get(0).size() + 1;
+        return valores.get(0).size() + 1;
     }
 
     @Override
@@ -44,7 +45,7 @@ public class TablaModel extends AbstractTableModel {
             return (rowIndex + 1) + "";
         }
         else
-            return data.get(rowIndex).get(columnIndex-1).toString();
+            return valores.get(rowIndex).get(columnIndex-1).toString();
     }
 
     @Override
@@ -67,7 +68,7 @@ public class TablaModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        data.get(rowIndex).set(columnIndex-1, aValue.toString());
+        valores.get(rowIndex).set(columnIndex-1, aValue.toString());
         fireTableCellUpdated(rowIndex, columnIndex);
     }
 }

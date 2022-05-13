@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.beans.PropertyChangeListener;
 
 /*
  * Tabla - Vista
@@ -26,7 +27,6 @@ public class Tabla extends JPanel implements TableModelListener {
 
     public Tabla(int rows, int cols) {
         super(new GridLayout(1,0));
-        System.out.println("here");
         init(rows, cols);
     }
 
@@ -35,6 +35,7 @@ public class Tabla extends JPanel implements TableModelListener {
 
         table.getTableHeader().setReorderingAllowed(false);
         table.setColumnSelectionAllowed(true);
+
         TableColumn column = null;
         column = table.getColumnModel().getColumn(0);
         column.setPreferredWidth(25);

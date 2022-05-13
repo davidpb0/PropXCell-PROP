@@ -14,11 +14,14 @@ import java.awt.*;
 
 public class CeldaRenderer extends DefaultTableCellRenderer {
     Color bg, fg;
+    boolean isBold;
+
     public CeldaRenderer(Color bg, Color fg) {
         super();
         this.bg = bg;
         this.fg = fg;
     }
+
     public Component getTableCellRendererComponent(JTable table, Object
             value, boolean isSelected, boolean hasFocus, int row, int column)
     {
