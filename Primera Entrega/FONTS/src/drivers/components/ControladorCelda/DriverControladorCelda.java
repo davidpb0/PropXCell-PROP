@@ -248,7 +248,7 @@ public class DriverControladorCelda {
     }
 
     private void constructorTest() {
-            cc = ControladorHoja.getControladorHoja();
+            cc = new ControladorHoja();
             constructor = 1;
             System.out.println("Se ha construido correctamente el ControladorCelda");
     }

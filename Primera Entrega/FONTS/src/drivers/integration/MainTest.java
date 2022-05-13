@@ -70,12 +70,12 @@ public class MainTest {
                 else {
                     switch (caso) {
                         case 1:
-                            cd = ControladorDocumento.getControladorDocumento();
-                            ch = ControladorHoja.getControladorHoja();
+                            cd = new ControladorDocumento();
+                            ch = new ControladorHoja();
                             ch.asignaHoja(1);
                             hojaSeleccionada = true;
                             //cc = ControladorCelda.getControladorCelda();
-                            cb = ControladorBloque.getControldorBloque();
+                            cb = new ControladorBloque();
                             System.out.println("Documento creado correctamente.");
                             break;
 

@@ -12,18 +12,12 @@ import main.Domain.DomainModel.Hoja;
 
 
 public class ControladorDocumento {
-    private static ControladorDocumento instanceOfThisClass;
     private Documento documento_ref;
 
     /**
-     * Creadora por defecto, setea el valor de documento_ref con el documento abierto.
+     * Creadora por defecto.
      */
-    private ControladorDocumento() {}
-
-    public static ControladorDocumento getControladorDocumento() {
-        if (instanceOfThisClass == null) instanceOfThisClass = new ControladorDocumento();
-        return instanceOfThisClass;
-    }
+    public ControladorDocumento() {}
 
     public Documento getDocumento() {
         return documento_ref;
@@ -82,7 +76,7 @@ public class ControladorDocumento {
      * @param _nuevoNombre nuevo nombre para la hoja.
      */
     public boolean asignaNombreHoja(String _nuevoNombre) throws Exception {
-        Hoja h = ControladorHoja.getControladorHoja().getHojaRef();
+        Hoja h = ControladorDominio.getControladorDominio().getControladorHoja().getHojaRef();
         if(h != null) {
             h.asignaNombre(_nuevoNombre);
             return true;

@@ -8,14 +8,20 @@ package main.Domain.DomainControllers;
  */
 
 public class ControladorDominio {
+    private static ControladorDominio instanceOfThisClass;
     private final ControladorBloque contBloque;
     private final ControladorDocumento contDocumento;
     private final ControladorHoja contHoja;
 
-    public ControladorDominio() {
-        contBloque = ControladorBloque.getControldorBloque();
-        contDocumento = ControladorDocumento.getControladorDocumento();
-        contHoja = ControladorHoja.getControladorHoja();
+    private ControladorDominio() {
+        contBloque = new ControladorBloque();
+        contDocumento = new ControladorDocumento();
+        contHoja = new ControladorHoja();
+    }
+
+    public static ControladorDominio getControladorDominio() {
+        if (instanceOfThisClass == null) instanceOfThisClass = new ControladorDominio();
+        return instanceOfThisClass;
     }
 
     public ControladorBloque getControladorBloque() {

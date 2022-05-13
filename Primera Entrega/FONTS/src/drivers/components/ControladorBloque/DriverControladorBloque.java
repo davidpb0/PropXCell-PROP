@@ -1,7 +1,6 @@
 package drivers.components.ControladorBloque;
 
 import main.Domain.DomainControllers.ControladorBloque;
-import main.Domain.DomainControllers.ControladorHoja;
 import main.Domain.DomainModel.*;
 
 import java.io.BufferedReader;
@@ -96,13 +95,13 @@ public class DriverControladorBloque {
 
     private void constructorTest() {
         System.out.println("Test de la constructora de ControladorBloque:");
-        cb = ControladorBloque.getControldorBloque();
+        cb = new ControladorBloque();
         constructor = true;
         System.out.println("Se ha creado el ControladorBloque correctamente.");
 
         d = Documento.getDocumento();
         Documento.getDocumento().inicializaDocumentoDefault("doc");
-        h = ControladorHoja.getControladorHoja().getHojaRef();
+        h = d.getHoja(0);
         for (int i = 1; i <= 50; ++i) {
             for (int j = 1; j <= 50; ++j) {
                 h.getCelda(new Posicion(i, j)).setValor(String.valueOf(i*j));

@@ -11,20 +11,15 @@ import main.Domain.DomainModel.*;
 
 public class ControladorBloque {
 
-    private static ControladorBloque instanceOfThisClass;
     private BloqueTemporalCopiado bloqueCopiado;
 
     /**
      * Constructora básica para el ControladorBloque
      */
-    private ControladorBloque() {
+    public ControladorBloque() {
         bloqueCopiado = null;
     }
 
-    public static ControladorBloque getControldorBloque() {
-        if (instanceOfThisClass == null) instanceOfThisClass = new ControladorBloque();
-        return instanceOfThisClass;
-    }
     /**
      * Da de alta un BloqueTemporalCopiado para copiarlo a otro lugar del documento
      */

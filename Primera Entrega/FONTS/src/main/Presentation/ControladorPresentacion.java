@@ -12,7 +12,7 @@ public class ControladorPresentacion {
     private final ControladorDominio contDominio;
 
     public ControladorPresentacion() {
-        this.contDominio = new ControladorDominio();
+        this.contDominio = ControladorDominio.getControladorDominio();
     }
 
     public ControladorDominio getControladorDominio() {

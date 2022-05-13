@@ -14,7 +14,6 @@ import java.util.Comparator;
 
 public class ControladorHoja {
 
-    private static ControladorHoja instanceOfThisClass;
     private Hoja hojaAct;
     private Celda celdaRef;
 
@@ -23,19 +22,14 @@ public class ControladorHoja {
         DESCENDENTE
     }
 
-    private ControladorHoja() {}
-
-    public static ControladorHoja getControladorHoja() {
-        if (instanceOfThisClass == null) instanceOfThisClass = new ControladorHoja();
-        return instanceOfThisClass;
-    }
+    public ControladorHoja() {}
 
     /**
     * Se guarda la hoja que le pasa presentación.
     * @param _idh identificador de la hoja que siempre corresponderá a una hoja existente
     */
     public void asignaHoja(int _idh) {
-        hojaAct = Documento.getDocumento().getHoja(_idh);
+        hojaAct = ControladorDominio.getControladorDominio().getControladorDocumento().getDocumento().getHoja(_idh);
     }
 
 
@@ -208,19 +202,18 @@ public class ControladorHoja {
     /**
      * Ordena un bloque de manera ascendente o descendente
      * @param descendente parametro que indica si es ascendente (false) o descendente (true)
-     * @param bloque bloque a ordenar
      */
-    public static void ordenar(boolean descendente, BloqueSeleccionado bloque) {
+    public static void ordenar(boolean descendente) {
         ArrayList<Celda> celdas = new ArrayList<>();
 
-        int filaIni = bloque.getCeldaInicial().getPosicion().getFila();
-        int filaFin = bloque.getCeldaFinal().getPosicion().getFila();
-        int colIni = bloque.getCeldaInicial().getPosicion().getColumna();
-        int colFin = bloque.getCeldaFinal().getPosicion().getColumna();
+        int filaIni = BloqueSeleccionado.getBloque().getCeldaInicial().getPosicion().getFila();
+        int filaFin = BloqueSeleccionado.getBloque().getCeldaFinal().getPosicion().getFila();
+        int colIni = BloqueSeleccionado.getBloque().getCeldaInicial().getPosicion().getColumna();
+        int colFin = BloqueSeleccionado.getBloque().getCeldaFinal().getPosicion().getColumna();
 
           for (int i = filaIni; i <=filaFin; i++) {
               for (int j = colIni; j <=colFin; j++) {
-                  celdas.add(new Celda(bloque.getHoja().getCelda(new Posicion(i, j))));
+                  celdas.add(new Celda(BloqueSeleccionado.getBloque().getHoja().getCelda(new Posicion(i, j))));
               }
           }
 
@@ -231,7 +224,7 @@ public class ControladorHoja {
 
           for (int i = filaIni; i <=filaFin; i++) {
               for (int j = colIni; j <=colFin; j++) {
-                  bloque.getHoja().getCelda(new Posicion(i, j)).copiarCelda(celdas.get(0));
+                  BloqueSeleccionado.getBloque().getHoja().getCelda(new Posicion(i, j)).copiarCelda(celdas.get(0));
                   celdas.remove(0);
               }
           }
