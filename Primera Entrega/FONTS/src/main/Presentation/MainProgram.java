@@ -5,13 +5,9 @@ import main.Presentation.vistas.PantallaInicial.PantallaInicial;
 public class MainProgram {
 
     public static void main(String[] args) {
-        PantallaInicial vista = new PantallaInicial();
+        ControladorPresentacion cp = new ControladorPresentacion();
 
-        PantallaInicialController pic = new PantallaInicialController(vista);
-        pic.iniciar();
-        vista.setVisible(true);
-
-
+        cp.iniciaPInicial();
 
     }
 }
