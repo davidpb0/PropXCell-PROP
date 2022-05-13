@@ -1,5 +1,7 @@
 package main.Presentation.vistas.PantallaPrincipal;
 
+import main.Presentation.vistas.PantallaPrincipal.Tabla.Tabla;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -34,13 +36,17 @@ public class PantallaPrincipal extends JFrame {
     private JFormattedTextField contenidoFormattedTextField;
     private JTabbedPane tabbedPane1;
 
+    private Dimension MIN_SIZE = new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.6), (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.6));
+
     public PantallaPrincipal() {
 
         setTitle("Document - PROPxCEL");
         add(principal);
         setResizable(true);
+        setMinimumSize(MIN_SIZE);
+        setSize(MIN_SIZE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         configuraHerramientas();
     }
 
