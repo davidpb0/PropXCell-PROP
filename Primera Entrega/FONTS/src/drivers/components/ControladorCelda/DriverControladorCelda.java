@@ -1,5 +1,7 @@
 package drivers.components.ControladorCelda;
 
+import main.Domain.DomainControllers.ControladorDocumento;
+import main.Domain.DomainControllers.ControladorDominio;
 import main.Domain.DomainControllers.ControladorHoja;
 import main.Domain.DomainModel.*;
 
@@ -254,8 +256,9 @@ public class DriverControladorCelda {
     }
 
     private void asignaCeldaPosicionTest(){
-        Documento d = Documento.getDocumento();
-        d.inicializaDocumentoDefault("Doc1");
+        ControladorDominio cdd = ControladorDominio.getControladorDominio();
+        ControladorDocumento cd = cdd.getControladorDocumento();
+        cd.crearDocumento();
         cc.asignaHoja(1);
         cc.asignaCelda(palabras[1],palabras[2]);
         constructor = 2;

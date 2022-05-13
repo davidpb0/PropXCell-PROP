@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 /* ControladorHoja
  *
- * v1.0.1
+ * v1.0.2
  *
  * David Pérez Barroso
  */
@@ -834,6 +834,133 @@ public class ControladorHoja {
                 Pearson cp = new Pearson(arg1, arg2);
 
                 this.celdaRef.setValor(cp.execute());
+                break;
+            case "#SUMA": // =suma()
+                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+
+                for(int i = 0; i < argm.size(); ++i){
+                    String[] a = argm.get(i);
+                    if(a.length > 1){
+                        for(String v : a) argu.add(v);
+                    }
+                    else argu.add(a[0]);
+                }
+
+                //Se comprueba que el numero de argumentos sea el correcto
+                if (argu.size() == 0) {
+                    this.celdaRef.setValor("#ERROR_N_ARG");
+                    break;
+                }
+
+                //Se comprueba que los argumentos sean numeros
+                b = false;
+                for (String v : argu) {
+                    if (!numCorrecto(v)) {
+                        b = true;
+                        break;
+                    }
+                }
+                if (b) break;
+
+                Suma sm = new Suma(argu.toArray(new String[0]));
+
+                this.celdaRef.setValor(sm.execute());
+                break;
+
+            case "#RESTA": // =resta()
+                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+
+                for(int i = 0; i < argm.size(); ++i){
+                    String[] a = argm.get(i);
+                    if(a.length > 1){
+                        for(String v : a) argu.add(v);
+                    }
+                    else argu.add(a[0]);
+                }
+
+                //Se comprueba que el numero de argumentos sea el correcto
+                if (argu.size() == 0) {
+                    this.celdaRef.setValor("#ERROR_N_ARG");
+                    break;
+                }
+
+                //Se comprueba que los argumentos sean numeros
+                b = false;
+                for (String v : argu) {
+                    if (!numCorrecto(v)) {
+                        b = true;
+                        break;
+                    }
+                }
+                if (b) break;
+
+                Resta rs = new Resta(argu.toArray(new String[0]));
+
+                this.celdaRef.setValor(rs.execute());
+                break;
+
+            case "#MULT": // =mult()
+                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+
+                for(int i = 0; i < argm.size(); ++i){
+                    String[] a = argm.get(i);
+                    if(a.length > 1){
+                        for(String v : a) argu.add(v);
+                    }
+                    else argu.add(a[0]);
+                }
+
+                //Se comprueba que el numero de argumentos sea el correcto
+                if (argu.size() == 0) {
+                    this.celdaRef.setValor("#ERROR_N_ARG");
+                    break;
+                }
+
+                //Se comprueba que los argumentos sean numeros
+                b = false;
+                for (String v : argu) {
+                    if (!numCorrecto(v)) {
+                        b = true;
+                        break;
+                    }
+                }
+                if (b) break;
+
+                Multiplicacion mm = new Multiplicacion(argu.toArray(new String[0]));
+
+                this.celdaRef.setValor(mm.execute());
+                break;
+
+            case "#DIV": // =div()
+                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+
+                for(int i = 0; i < argm.size(); ++i){
+                    String[] a = argm.get(i);
+                    if(a.length > 1){
+                        for(String v : a) argu.add(v);
+                    }
+                    else argu.add(a[0]);
+                }
+
+                //Se comprueba que el numero de argumentos sea el correcto
+                if (argu.size() == 0) {
+                    this.celdaRef.setValor("#ERROR_N_ARG");
+                    break;
+                }
+
+                //Se comprueba que los argumentos sean numeros
+                b = false;
+                for (String v : argu) {
+                    if (!numCorrecto(v)) {
+                        b = true;
+                        break;
+                    }
+                }
+                if (b) break;
+
+                Division dv = new Division(argu.toArray(new String[0]));
+
+                this.celdaRef.setValor(dv.execute());
                 break;
 
             default: //caso en el que no se escribe una funcion
