@@ -10,19 +10,14 @@ import java.util.ArrayList;
  * Author Iván Risueño Martín
  */
 public class ControladorCSV {
-    private static ControladorCSV instanceOfThisClass;
+
     private EscribeCSV escribecsvRef;
     private CargaCSV cargacsvRef;
 
     /**
      * Constructora básica para el ControladorCSV
      */
-    private ControladorCSV() {}
-
-    public ControladorCSV getControladorCSV() {
-        if (instanceOfThisClass == null) instanceOfThisClass = new ControladorCSV();
-        return instanceOfThisClass;
-    }
+    public ControladorCSV() {}
 
     /**
      *

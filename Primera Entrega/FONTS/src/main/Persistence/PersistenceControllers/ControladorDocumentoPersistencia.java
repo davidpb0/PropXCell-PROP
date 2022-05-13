@@ -1,6 +1,8 @@
 package main.Persistence.PersistenceControllers;
-import java.io.*;
+
 import main.Domain.DomainModel.Documento;
+
+import java.io.*;
 
     /*
      * ClassName ControladorDocumentoPersistencia
@@ -14,31 +16,21 @@ import main.Domain.DomainModel.Documento;
 
 public class ControladorDocumentoPersistencia {
 
+        public ControladorDocumentoPersistencia(){}
 
-        private static ControladorDocumentoPersistencia instanceOfThisClass;
-
-        private ControladorDocumentoPersistencia(){}
-
-        public static ControladorDocumentoPersistencia getCtrlDocPers(){
-            if (instanceOfThisClass == null) instanceOfThisClass = new ControladorDocumentoPersistencia();
-            return instanceOfThisClass;
-        }
-
-        public void almacenaDocumento(Documento _d, String _path){
-            try{
+        public void almacenaDocumento(Documento _d, String _path) throws Exception {
+            try {
                 ObjectOutputStream escribiendoDoc =
                         new ObjectOutputStream(new FileOutputStream(_path));
                 escribiendoDoc.writeObject(_d);
                 escribiendoDoc.close();
 
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                throw new Exception("Error al escribir el Documento.");
             }
         }
 
-        public Documento cargaDocumento(String _path){
+        public Documento cargaDocumento(String _path) throws Exception {
             try {
                 ObjectInputStream recuperandoDoc =
                         new ObjectInputStream(new FileInputStream(_path));
@@ -48,9 +40,8 @@ public class ControladorDocumentoPersistencia {
 
 
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new Exception("Error al cargar el Documento.");
             }
-            return null;
         }
 }
 
