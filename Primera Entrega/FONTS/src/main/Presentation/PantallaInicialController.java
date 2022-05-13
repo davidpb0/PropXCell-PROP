@@ -1,6 +1,7 @@
 package main.Presentation;
 
 import main.Domain.DomainControllers.ControladorDocumento;
+import main.Domain.DomainControllers.ControladorDominio;
 import main.Presentation.vistas.PantallaInicial.PantallaInicial;
 import main.Presentation.vistas.PantallaPrincipal.PantallaPrincipal;
 
@@ -47,12 +48,13 @@ public class PantallaInicialController implements ActionListener {
         if (e.getSource() == pi.crearButton) {
             int f = Integer.parseInt(pi.tfFilas.getText());
             int c = Integer.parseInt(pi.tfColumnas.getText());
-            this.cd = new ControladorDocumento();
+            this.cd = ControladorDominio.getControladorDominio().getControladorDocumento();
             this.cd.crearDocumento();
             //pasar a la siguiente vista
 
             pi.setVisible(false);
-            pp = new PantallaPrincipal();
+            pp = new PantallaPrincipal(1, Integer.parseInt(pi.tfFilas.getText()),
+                    Integer.parseInt(pi.tfColumnas.getText()));
             pp.setVisible(true);
 
 
@@ -87,7 +89,7 @@ public class PantallaInicialController implements ActionListener {
             if (doc != null) {
                 System.out.println(doc.getAbsolutePath());
                 System.out.println(doc.getName());
-                this.cd = new ControladorDocumento();
+                this.cd = ControladorDominio.getControladorDominio().getControladorDocumento();
                // cd.cargaDocumento(doc.getAbsolutePath());
 
             }
