@@ -1,19 +1,27 @@
 package main.Presentation.vistas.PantallaPrincipal;
 
+import main.Domain.DomainControllers.ControladorDominio;
 import main.Presentation.vistas.PantallaPrincipal.Tabla.Tabla;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /*
  * Vista Principal
  *
- * v0.0.1
+ * v0.0.3
  *
  * Joaquim Torra Garcia
  */
 
 public class PantallaPrincipal extends JFrame {
+    private ControladorDominio cd;
+
     private JPanel principal;
     private JTextField nombre_docTextField;
     private JMenuBar barraH;
@@ -36,23 +44,22 @@ public class PantallaPrincipal extends JFrame {
     private JFormattedTextField contenidoFormattedTextField;
     private JTabbedPane tabbedPane1;
 
+    private ArrayList<Tabla> tablas = new ArrayList<>();
+
     private Dimension MIN_SIZE = new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.6), (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.6));
 
-    public PantallaPrincipal() {
-        setTitle("Document - PROPxCEL");
-        add(principal);
-        setResizable(true);
-        setMinimumSize(MIN_SIZE);
-        setSize(MIN_SIZE);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        for (int i = 1; i <= 3; i++) {
-            creaHoja(50, 50, "Hoja " + i);
-        }
-        configuraHerramientas();
+    public PantallaPrincipal(ControladorDominio _cd) {
+        this.cd = _cd;
+        //cd.getControladorDocumento().crearDocumento();
+        init(1, 50, 50);
     }
 
-    public PantallaPrincipal(int hojas, int filas, int columnas) {
+    public PantallaPrincipal(int hojas, int filas, int columnas, ControladorDominio _cd) {
+        this.cd = _cd;
+        init(hojas, filas, columnas);
+    }
+
+    private void init(int hojas, int filas, int columnas) {
         setTitle("Document - PROPxCEL");
         add(principal);
         setResizable(true);
@@ -62,16 +69,23 @@ public class PantallaPrincipal extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         configuraHerramientas();
         for (int i = 1; i <= hojas; i++) {
-            creaHoja(filas, columnas, "Hoja " + i);
+            creaHoja(filas, columnas, "Hoja " + i, i-1);
         }
+        contenidoFormattedTextField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tablas.get(tabbedPane1.getSelectedIndex()).changeContent(e.getActionCommand());
+            }
+        });
     }
 
-    public void creaHoja(int filas, int columnas, String nombre) {
+    public void creaHoja(int filas, int columnas, String nombre, int idx) {
         JPanel panel = new JPanel();
-        panel.add(new Tabla(filas, columnas));
-        Tabla t = new Tabla(filas, columnas);
-        t.setName(nombre);
-        tabbedPane1.add(t);
+        panel.add(new Tabla(filas, columnas, contenidoFormattedTextField, cd, idx));
+        tablas.add(new Tabla(filas, columnas, contenidoFormattedTextField, cd, idx));
+        tablas.get(idx).setName(nombre);
+
+        tabbedPane1.addTab(nombre, null, tablas.get(idx), nombre);
     }
 
     public void configuraHerramientas() {
@@ -158,7 +172,7 @@ public class PantallaPrincipal extends JFrame {
     }
 
     public static void main(String[] args){
-        PantallaPrincipal p = new PantallaPrincipal();
+        PantallaPrincipal p = new PantallaPrincipal(new ControladorDominio());
         p.setVisible(true);
     }
 }
