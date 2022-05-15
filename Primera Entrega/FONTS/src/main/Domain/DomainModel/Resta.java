@@ -1,6 +1,6 @@
 package main.Domain.DomainModel;
 /*
- * ClassName Mediana
+ * ClassName Resta
  *
  * Version info 1.0.0
  *
