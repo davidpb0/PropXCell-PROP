@@ -1,9 +1,6 @@
 package main.Presentation.vistas.PantallaPrincipal.Tabla;
 
 import main.Domain.DomainControllers.ControladorDominio;
-import main.Domain.DomainModel.Celda;
-import main.Domain.DomainModel.Hoja;
-import main.Domain.DomainModel.Posicion;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -163,7 +160,7 @@ public class Tabla extends JPanel implements TableModelListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Create and set up the content pane.
-        Tabla newContentPane = new Tabla(25, 25, new JTextField(), new ControladorDominio(), 0);
+        Tabla newContentPane = new Tabla(25, 25, new JTextField(), ControladorDominio.getControladorDominio(), 0);
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
 

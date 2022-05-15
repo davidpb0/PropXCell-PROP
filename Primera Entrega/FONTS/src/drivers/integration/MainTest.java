@@ -316,7 +316,7 @@ public class MainTest {
                                 String[] s = pos.split(" ");
                                 Celda celda;
                                 if (s.length == 1) { // El usuario ha introducido A1
-                                    celda = Traductor.traduceCelda(s[0], ch.getIdHoja());
+                                    celda = Traductor.traduceCelda(s[0]);
                                 } else { // El usuario ha introducido 1 1
                                     celda = Documento.getDocumento().getHoja(ch.getIdHoja()).getCelda(
                                             new Posicion(Traductor.StringInt(s[0]), Traductor.StringInt(s[1])));

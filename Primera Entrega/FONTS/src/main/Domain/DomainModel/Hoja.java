@@ -289,10 +289,10 @@ public class Hoja implements Serializable {
     public ArrayList<Celda> getColumnaFila(String _cel1, String _cel2) throws Exception {
         ArrayList<Celda> agrup = new ArrayList<>();
 
-        Celda celd1 = Traductor.traduceCelda(_cel1, this.id);
+        Celda celd1 = Traductor.traduceCelda(_cel1);
         Posicion pos1 = celd1.getPosicion();
 
-        Celda celd2 = Traductor.traduceCelda(_cel2, this.id);
+        Celda celd2 = Traductor.traduceCelda(_cel2);
         Posicion pos2 = celd2.getPosicion();
 
         if (celdas.containsKey(pos1) && celdas.containsKey(pos2)) {

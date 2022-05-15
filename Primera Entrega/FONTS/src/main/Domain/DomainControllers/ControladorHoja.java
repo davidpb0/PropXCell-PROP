@@ -277,7 +277,7 @@ public class ControladorHoja {
         switch (type) {
             case "#ABS": // =abs()
                 //Se cogen los argumentos necesarios para realizar la operacion
-                arg = Traductor.getArgumentosFuncion1aria(_content, hojaAct.getId());
+                arg = Traductor.getArgumentosFuncion1aria(_content);
 
                 //Se comprueba que el numero de argumentos sea el correcto
                 if (!numArgCorrecto(arg)) break;
@@ -294,7 +294,7 @@ public class ControladorHoja {
 
             case "#TRUNC": // =trunc()
                 //Se cogen los argumentos necesarios para realizar la operacion
-                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+                argm = Traductor.getArgumentosFuncionNaria(_content);
                 arg1 = argm.get(0);
                 arg2 = argm.get(1);
                 //Se comprueba que el numero de argumentos sea el correcto
@@ -322,7 +322,7 @@ public class ControladorHoja {
             case "#APROX": // =aprox()
 
                 //Se cogen los argumentos necesarios para realizar la operacion
-                arg = Traductor.getArgumentosFuncion1aria(_content, hojaAct.getId());
+                arg = Traductor.getArgumentosFuncion1aria(_content);
 
                 //Se comprueba que el numero de argumentos sea el correcto
                 if (!numArgCorrecto(arg)) break;
@@ -337,7 +337,7 @@ public class ControladorHoja {
 
             case "#VDB": // =convertirDB()
                 //Se cogen los argumentos necesarios para realizar la operacion
-                arg = Traductor.getArgumentosFuncion1aria(_content, hojaAct.getId());
+                arg = Traductor.getArgumentosFuncion1aria(_content);
 
                 //Se comprueba que el numero de argumentos sea el correcto
                 if (!numArgCorrecto(arg)) break;
@@ -353,7 +353,7 @@ public class ControladorHoja {
 
             case "#VBD": // =convertirValorBD()
                 //Se cogen los argumentos necesarios para realizar la operacion
-                arg = Traductor.getArgumentosFuncion1aria(_content, hojaAct.getId());
+                arg = Traductor.getArgumentosFuncion1aria(_content);
 
                 //Se comprueba que el numero de argumentos sea el correcto
                 if (!numArgCorrecto(arg)) break;
@@ -383,7 +383,7 @@ public class ControladorHoja {
 
             case "#VHD": // =convertirHD()
                 //Se cogen los argumentos necesarios para realizar la operacion
-                arg = Traductor.getArgumentosFuncion1aria(_content, hojaAct.getId());
+                arg = Traductor.getArgumentosFuncion1aria(_content);
 
                 //Se comprueba que el numero de argumentos sea el correcto
                 if (!numArgCorrecto(arg)) break;
@@ -402,7 +402,7 @@ public class ControladorHoja {
             case "#VDH": // =convertirDH()
 
                 //Se cogen los argumentos necesarios para realizar la operacion
-                arg = Traductor.getArgumentosFuncion1aria(_content, hojaAct.getId());
+                arg = Traductor.getArgumentosFuncion1aria(_content);
 
                 //Se comprueba que el numero de argumentos sea el correcto
                 if (!numArgCorrecto(arg)) break;
@@ -424,7 +424,7 @@ public class ControladorHoja {
 
             case "#VHB": // =convertirHB()
                 //Se cogen los argumentos necesarios para realizar la operacion
-                arg = Traductor.getArgumentosFuncion1aria(_content, hojaAct.getId());
+                arg = Traductor.getArgumentosFuncion1aria(_content);
 
                 //Se comprueba que el numero de argumentos sea el correcto
                 if (!numArgCorrecto(arg)) break;
@@ -443,7 +443,7 @@ public class ControladorHoja {
             case "#VBH": // =convertirBH()
 
                 //Se cogen los argumentos necesarios para realizar la operacion
-                arg = Traductor.getArgumentosFuncion1aria(_content, hojaAct.getId());
+                arg = Traductor.getArgumentosFuncion1aria(_content);
 
                 //Se comprueba que el numero de argumentos sea el correcto
                 if (!numArgCorrecto(arg)) break;
@@ -472,7 +472,7 @@ public class ControladorHoja {
             case "#MES": // =mes()
 
                 //Se cogen los argumentos necesarios para realizar la operacion
-                arg = Traductor.getArgumentosFuncion1aria(_content, hojaAct.getId());
+                arg = Traductor.getArgumentosFuncion1aria(_content);
 
                 //Se comprueba que el numero de argumentos sea el correcto
                 if (!numArgCorrecto(arg)) break;
@@ -493,7 +493,7 @@ public class ControladorHoja {
             case "#AÑO": // =año()
 
                 //Se cogen los argumentos necesarios para realizar la operacion
-                arg = Traductor.getArgumentosFuncion1aria(_content, hojaAct.getId());
+                arg = Traductor.getArgumentosFuncion1aria(_content);
 
                 //Se comprueba que el numero de argumentos sea el correcto
                 if (!numArgCorrecto(arg)) break;
@@ -513,7 +513,7 @@ public class ControladorHoja {
             case "#DIAS": // =diasemana()
 
                 //Se cogen los argumentos necesarios para realizar la operacion
-                arg = Traductor.getArgumentosFuncion1aria(_content, hojaAct.getId());
+                arg = Traductor.getArgumentosFuncion1aria(_content);
 
                 //Se comprueba que el numero de argumentos sea el correcto
                 if (!numArgCorrecto(arg)) break;
@@ -533,7 +533,7 @@ public class ControladorHoja {
             case "#NDIA": // =nombredia()
 
                 //Se cogen los argumentos necesarios para realizar la operacion
-                arg = Traductor.getArgumentosFuncion1aria(_content, hojaAct.getId());
+                arg = Traductor.getArgumentosFuncion1aria(_content);
 
                 //Se comprueba que el numero de argumentos sea el correcto
                 if (!numArgCorrecto(arg)) break;
@@ -553,7 +553,7 @@ public class ControladorHoja {
             case "#LONG": // =longitud()
 
                 //Se cogen los argumentos necesarios para realizar la operacion
-                arg = Traductor.getArgumentosFuncion1aria(_content, hojaAct.getId());
+                arg = Traductor.getArgumentosFuncion1aria(_content);
 
                 //Se comprueba que el numero de argumentos sea el correcto
                 if (!numArgCorrecto(arg)) break;
@@ -567,7 +567,7 @@ public class ControladorHoja {
             case "#CLETRA": // =contarletra()
 
                 //Se cogen los argumentos necesarios para realizar la operacion
-                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+                argm = Traductor.getArgumentosFuncionNaria(_content);
                 arg1 = argm.get(0);
                 arg2 = argm.get(1);
                 //Se comprueba que el numero de argumentos sea el correcto
@@ -584,7 +584,7 @@ public class ControladorHoja {
             case "#REEMPPAL": // =reemplazarPal()
 
                 //Se cogen los argumentos necesarios para realizar la operacion
-                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+                argm = Traductor.getArgumentosFuncionNaria(_content);
                 arg1 = argm.get(0);
                 arg2 = argm.get(1);
                 String[] arg3 = argm.get(2);
@@ -607,7 +607,7 @@ public class ControladorHoja {
             case "#REEMPLET": // =reemplazarLet()
 
                 //Se cogen los argumentos necesarios para realizar la operacion
-                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+                argm = Traductor.getArgumentosFuncionNaria(_content);
                 arg1 = argm.get(0);
                 arg2 = argm.get(1);
                 arg3 = argm.get(2);
@@ -626,7 +626,7 @@ public class ControladorHoja {
 
             case "#REFERENCIA": // $C1 (por ejemplo)
                 //Se coge la celda referenciantes, para añadirle la referenciada
-                Celda reft = Traductor.traduceCelda(_content, this.hojaAct.getId());
+                Celda reft = Traductor.traduceCelda(_content);
                 reft.addReferenciante(this.celdaRef);
 
                 //Se coge el valor de la celda referenciante
@@ -636,7 +636,7 @@ public class ControladorHoja {
             case "#MEDIA": // =media()
 
                 //Se cogen los argumentos necesarios para realizar la operacion
-                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+                argm = Traductor.getArgumentosFuncionNaria(_content);
 
                 for(int i = 0; i < argm.size(); ++i){
                     String[] a = argm.get(i);
@@ -669,7 +669,7 @@ public class ControladorHoja {
 
             case "#MEDIANA": // =mediana()
                 //Se cogen los argumentos necesarios para realizar la operacion
-                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+                argm = Traductor.getArgumentosFuncionNaria(_content);
 
                 for(int i = 0; i < argm.size(); ++i){
                     String[] a = argm.get(i);
@@ -703,7 +703,7 @@ public class ControladorHoja {
             case "#VAR": // =varianza()
 
                 //Se cogen los argumentos necesarios para realizar la operacion
-                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+                argm = Traductor.getArgumentosFuncionNaria(_content);
 
                 for(int i = 0; i < argm.size(); ++i){
                     String[] a = argm.get(i);
@@ -738,7 +738,7 @@ public class ControladorHoja {
             case "#COV":// =covarianza()
 
                 //Se cogen los argumentos necesarios para realizar la operacion
-                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+                argm = Traductor.getArgumentosFuncionNaria(_content);
                 arg1 = argm.get(0);
                 arg2 = argm.get(1);
 
@@ -771,7 +771,7 @@ public class ControladorHoja {
             case "#DESV":// =desviacion()
 
                 //Se cogen los argumentos necesarios para realizar la operacion
-                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+                argm = Traductor.getArgumentosFuncionNaria(_content);
 
                 for(int i = 0; i < argm.size(); ++i){
                     String[] a = argm.get(i);
@@ -806,7 +806,7 @@ public class ControladorHoja {
             case "#COEFP": // =pearson()
 
                 //Se cogen los argumentos necesarios para realizar la operacion
-                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+                argm = Traductor.getArgumentosFuncionNaria(_content);
                 arg1 = argm.get(0);
                 arg2 = argm.get(1);
 
@@ -836,7 +836,7 @@ public class ControladorHoja {
                 this.celdaRef.setValor(cp.execute());
                 break;
             case "#SUMA": // =suma()
-                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+                argm = Traductor.getArgumentosFuncionNaria(_content);
 
                 for(int i = 0; i < argm.size(); ++i){
                     String[] a = argm.get(i);
@@ -868,7 +868,7 @@ public class ControladorHoja {
                 break;
 
             case "#RESTA": // =resta()
-                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+                argm = Traductor.getArgumentosFuncionNaria(_content);
 
                 for(int i = 0; i < argm.size(); ++i){
                     String[] a = argm.get(i);
@@ -900,7 +900,7 @@ public class ControladorHoja {
                 break;
 
             case "#MULT": // =mult()
-                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+                argm = Traductor.getArgumentosFuncionNaria(_content);
 
                 for(int i = 0; i < argm.size(); ++i){
                     String[] a = argm.get(i);
@@ -932,7 +932,7 @@ public class ControladorHoja {
                 break;
 
             case "#DIV": // =div()
-                argm = Traductor.getArgumentosFuncionNaria(_content, hojaAct.getId());
+                argm = Traductor.getArgumentosFuncionNaria(_content);
 
                 for(int i = 0; i < argm.size(); ++i){
                     String[] a = argm.get(i);

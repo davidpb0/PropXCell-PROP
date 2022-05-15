@@ -199,7 +199,7 @@ public class TraductorTest {
         when(new Posicion(isA(Integer.class), isA(Integer.class))).thenReturn(new PosicionStub(1, 1));
         when(hoja.getCelda(isA(PosicionStub.class))).thenReturn(new CeldaStub(new PosicionStub(1, 1)));
 
-        CeldaStub c = (CeldaStub) Traductor.traduceCelda("A1", 1);
+        CeldaStub c = (CeldaStub) Traductor.traduceCelda("A1");
         assertEquals(c, new CeldaStub(new PosicionStub(1, 1), "1"));
     }
 
@@ -216,11 +216,11 @@ public class TraductorTest {
     @Test
     public void testGetArgumentosFuncion1aria() throws Exception {
         when(documento.getHoja(isA(Integer.class))).thenReturn(new HojaStub());
-        when(traductor.traduceCelda(isA(String.class), isA(Integer.class))).thenReturn(new CeldaStub(new PosicionStub(1, 1)));
+        when(traductor.traduceCelda(isA(String.class))).thenReturn(new CeldaStub(new PosicionStub(1, 1)));
         when(celda.getValor()).thenReturn("hola");
         when(hoja.getColumnaFila(isA(String.class), isA(String.class))).thenReturn(new ArrayList<>());
 
-        String[] res = traductor.getArgumentosFuncion1aria("=abs($A1)", 1);
+        String[] res = traductor.getArgumentosFuncion1aria("=abs($A1)");
         assertArrayEquals(res, new String[]{"$A1"});
     }
 
@@ -237,11 +237,11 @@ public class TraductorTest {
     @Test
     public void testGetArgumentosFuncionNaria() throws Exception {
         when(documento.getHoja(isA(Integer.class))).thenReturn(new HojaStub());
-        when(traductor.traduceCelda(isA(String.class), isA(Integer.class))).thenReturn(new CeldaStub(new PosicionStub(1, 1)));
+        when(traductor.traduceCelda(isA(String.class))).thenReturn(new CeldaStub(new PosicionStub(1, 1)));
         when(celda.getValor()).thenReturn("hola");
         when(hoja.getColumnaFila(isA(String.class), isA(String.class))).thenReturn(new ArrayList<>());
 
-        ArrayList<String[]> res = traductor.getArgumentosFuncionNaria("=media(20, 10)", 1);
+        ArrayList<String[]> res = traductor.getArgumentosFuncionNaria("=media(20, 10)");
         ArrayList<String[]> res2 = new ArrayList<>();
         res2.add(new String[]{"20"});
         res2.add(new String[]{"10"});

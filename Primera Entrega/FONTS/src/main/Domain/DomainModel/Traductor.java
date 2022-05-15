@@ -7,6 +7,8 @@ package main.Domain.DomainModel;
  * Author Iván Risueño Martín
  */
 
+import main.Domain.DomainControllers.ControladorDominio;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -142,14 +144,13 @@ public class Traductor {
      * Pre: _pos es una posición que existe desde "$A1" hasta "$ZZ99", _idH es el id de una hoja que existe
      * Retorna la celda asociada a los parámetros de entrada
      * @param _pos posición de la celda en la hoja
-     * @param _idH hoja en la que se encuentra la celda
      * @return la celda identificada por los parámetros de entrada
      */
-    public static Celda traduceCelda(String _pos, int _idH) throws Exception {
+    public static Celda traduceCelda(String _pos) throws Exception {
         Celda c;
         Documento d = Documento.getDocumento();
         if(d.getNombre().isEmpty()) d.inicializaDocumentoDefault("Doc1");
-        Hoja h = Documento.getDocumento().getHoja(_idH);
+        Hoja h = ControladorDominio.getControladorDominio().getControladorHoja().getHojaRef();
         String s = _pos;
         if (_pos.startsWith("=$")) s = _pos.substring(2);
         else if (_pos.startsWith("$")) s = _pos.substring(1);
@@ -169,8 +170,8 @@ public class Traductor {
      * @param _funcion la expresión introducida por el usuario
      * @return un array de String con cada valor que especifica el argumento
      */
-    public static String[] getArgumentosFuncion1aria(String _funcion, int _idH) throws Exception {
-        Hoja h = Documento.getDocumento().getHoja(_idH);
+    public static String[] getArgumentosFuncion1aria(String _funcion) throws Exception {
+        Hoja h = ControladorDominio.getControladorDominio().getControladorHoja().getHojaRef();
         String f = _funcion;
         if (_funcion.startsWith("=") && _funcion.charAt(1) != '$') f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')'));
         else throw new Exception("Argumento erróneo, el string proporcionado tiene que ser de tipo =func(arg). String actual: " + _funcion);
@@ -178,7 +179,7 @@ public class Traductor {
 
 
         if (f.startsWith("=$") && f.length() <= 6) { // Como mucho $AA11
-            Celda c = traduceCelda(f.substring(1, f.length() - 1), _idH);
+            Celda c = traduceCelda(f.substring(1, f.length() - 1));
             try {
                 ret.add(c.getValor());
             } catch (NullPointerException np) {
@@ -204,10 +205,9 @@ public class Traductor {
     /**
      * Pre: _funcion es un String de tipo "=funcNaria(arg1, arg2)", _idH corresponde al id de una hoja que existe
      * @param _funcion introducida por el usuario
-     * @param _idH id de la hoja actual
      * @return un vector que contiene hasta 4 vectores de Strings, cada uno con los argumentos entre las comas
      */
-    public static ArrayList<String[]> getArgumentosFuncionNaria(String _funcion, int _idH) throws Exception {
+    public static ArrayList<String[]> getArgumentosFuncionNaria(String _funcion) throws Exception {
         ArrayList<String[]>ret = new ArrayList<>();
         String f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')'));
         String[] args = f.split(",");
@@ -216,9 +216,9 @@ public class Traductor {
         for (String arg : args) {
             if (arg.contains(":")) { //$A1:$B1
                 String[] s = arg.split(":");
-                Celda principioC = traduceCelda(s[0], _idH);
-                Celda finalC = traduceCelda(s[1], _idH);
-                ArrayList<Celda> celdas = Documento.getDocumento().getHoja(_idH).getColumnaFila(s[0], s[1]);
+                Celda principioC = traduceCelda(s[0]);
+                Celda finalC = traduceCelda(s[1]);
+                ArrayList<Celda> celdas = ControladorDominio.getControladorDominio().getControladorHoja().getHojaRef().getColumnaFila(s[0], s[1]);
 
                 String[] argsI = new String[celdas.size()];
                 int j = 0;
@@ -229,7 +229,7 @@ public class Traductor {
                 ret.add(argsI);
 
             } else if (arg.startsWith("$") && arg.length() <= 5) { //$AA11
-                ret.add(new String[]{traduceCelda(arg, _idH).getValor()});
+                ret.add(new String[]{traduceCelda(arg).getValor()});
 
             } else { // Es un número
                 String[] s = {arg};
