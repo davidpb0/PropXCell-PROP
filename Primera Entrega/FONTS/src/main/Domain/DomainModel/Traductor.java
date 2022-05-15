@@ -86,7 +86,7 @@ public class Traductor {
      * @return tipo de contenido especificado por la fórmula
      */
     public static String detecta(String _formula) {
-        if (_formula.charAt(0) == '=' && _formula.indexOf(')') == _formula.length() - 1) {
+        if (_formula.length() != 0 && _formula.charAt(0) == '=' && _formula.indexOf(')') == _formula.length() - 1) {
             if (_formula.indexOf("=suma(") == 0) return "#SUMA";
             else if (_formula.indexOf("=resta(") == 0) return "#RESTA";
             else if (_formula.indexOf("=mult(") == 0) return "#MULT";
@@ -115,7 +115,7 @@ public class Traductor {
             else if (_formula.indexOf("=reemplazarPal(") == 0) return "#REEMPPAL";
             else if (_formula.indexOf("=reemplazarLet(") == 0) return "#REEMPLET";
             else return "#ERRORFUNC";
-        } else if (_formula.charAt(0) == '=' && _formula.charAt(1) == '$' && _formula.length() <= 6) { // Como mucho =$AA11
+        } else if (_formula.length() != 0 && _formula.charAt(0) == '=' && _formula.charAt(1) == '$' && _formula.length() <= 6) { // Como mucho =$AA11
             return "#REFERENCIA";
         }
         return "#VALUE";
