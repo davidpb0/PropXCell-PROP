@@ -71,7 +71,7 @@ public class PantallaInicial extends JFrame {
                 //pasar a la siguiente vista
 
                 setVisible(false);
-                PantallaPrincipal pp = cp.getPantallaPrincipal(1, f, c);
+                PantallaPrincipal pp = cp.getPantallaPrincipal();
                 pp.setVisible(true);
 
                 //Esto es para probar que se crea correctamente
