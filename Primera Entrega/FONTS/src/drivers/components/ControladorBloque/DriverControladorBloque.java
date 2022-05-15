@@ -135,7 +135,7 @@ public class DriverControladorBloque {
         else {
             int f = Traductor.StringInt(_fI);
             int c = Traductor.StringInt(_cI);
-            cb.pegar(h, f, c);
+            cb.pegar(f, c);
             System.out.println("El bloque se ha pegado correctamente. El contenido de la hoja a partir de las celdas pegadas es: ");
             int tamanoF = BloqueSeleccionado.getBloque().getCeldaFinal().getPosicion().getFila() - BloqueSeleccionado.getBloque().getCeldaInicial().getPosicion().getFila();
             int tamanoC = BloqueSeleccionado.getBloque().getCeldaFinal().getPosicion().getColumna() - BloqueSeleccionado.getBloque().getCeldaInicial().getPosicion().getColumna();
@@ -155,7 +155,7 @@ public class DriverControladorBloque {
         int _cF = Traductor.StringInt(_columnaFinal);
         Celda inicialC = h.getCelda(new Posicion(_fI, _cI));
         Celda finalC = h.getCelda(new Posicion(_fF, _cF));
-        BloqueSeleccionado.getBloque().setCelda(inicialC, finalC, h);
+        BloqueSeleccionado.getBloque().setCelda(inicialC, finalC);
         escribeBloque();
         bloqueDefinido = true;
     }

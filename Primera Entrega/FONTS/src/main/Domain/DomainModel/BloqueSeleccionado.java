@@ -7,6 +7,8 @@ package main.Domain.DomainModel;
  * Author Iván Risueño Martín
  */
 
+import main.Domain.DomainControllers.ControladorDominio;
+
 public class BloqueSeleccionado {
     private static BloqueSeleccionado instanceOfThisClass; // Única instancia
 
@@ -26,10 +28,10 @@ public class BloqueSeleccionado {
      * @param _inicial la celda a utilizar como la superior izquierda.
      *        _final la celda a utilizar como la inferior derecha.
      */
-    public void setCelda(Celda _inicial, Celda _final, Hoja _hoja) {
+    public void setCelda(Celda _inicial, Celda _final) {
         this.celdaInicial = _inicial;
         this.celdaFinal = _final;
-        this.hoja = _hoja;
+        this.hoja = ControladorDominio.getControladorDominio().getControladorHoja().getHojaRef();
     }
 
     /**

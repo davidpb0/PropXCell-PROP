@@ -30,7 +30,7 @@ public class BloqueSeleccionadoTest {
         HojaStub h = new HojaStub();
         CeldaStub c = new CeldaStub("hola");
         CeldaStub d = new CeldaStub("irrelevante");
-        b.setCelda(c, d, h);
+        b.setCelda(c, d);
 
         assertEquals(b.getCeldaInicial().getContenido(), new CeldaStub("hola"));
     }
@@ -54,7 +54,7 @@ public class BloqueSeleccionadoTest {
         BloqueSeleccionado b = BloqueSeleccionado.getBloque();
         HojaStub h = new HojaStub();
         CeldaStub c = new CeldaStub("hola");
-        b.setCelda(c, null, h);
+        b.setCelda(c, null);
 
         assertEquals(b.getCeldaInicial().getContenido(), c.getContenido());
     }
@@ -78,7 +78,7 @@ public class BloqueSeleccionadoTest {
         BloqueSeleccionado b = BloqueSeleccionado.getBloque();
         HojaStub h = new HojaStub();
         CeldaStub c = new CeldaStub("hola");
-        b.setCelda(null, c, h);
+        b.setCelda(null, c);
 
         assertEquals(b.getCeldaFinal().getContenido(), c.getContenido());
     }
@@ -99,7 +99,7 @@ public class BloqueSeleccionadoTest {
     public void testGetHoja() {
         BloqueSeleccionado b = BloqueSeleccionado.getBloque();
         HojaStub h = new HojaStub();
-        b.setCelda(null, null, h);
+        b.setCelda(null, null);
 
         assertEquals(b.getHoja(), h);
     }
