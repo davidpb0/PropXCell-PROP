@@ -1,9 +1,13 @@
 package main.Presentation.vistas.PantallaPrincipal;
 
 import main.Domain.DomainControllers.ControladorDominio;
+import main.Domain.DomainModel.Documento;
 import main.Presentation.vistas.PantallaPrincipal.Tabla.Tabla;
+import main.Presentation.vistas.PantallaPrincipal.Tabla.TablaListener;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +18,7 @@ import java.util.ArrayList;
 /*
  * Vista Principal
  *
- * v0.0.3
+ * v0.0.4
  *
  * Joaquim Torra Garcia
  */
@@ -24,6 +28,7 @@ public class PantallaPrincipal extends JFrame {
 
     private JPanel principal;
     private JTextField nombre_docTextField;
+    private JLabel fechaCreacion;
     private JMenuBar barraH;
     private JMenu archivo, editar, insertar, eliminar, ayuda;
     private JPanel Window_Header;
@@ -51,16 +56,17 @@ public class PantallaPrincipal extends JFrame {
     public PantallaPrincipal(ControladorDominio _cd) {
         this.cd = _cd;
         //cd.getControladorDocumento().crearDocumento();
-        init(1, 50, 50);
+        cd.getControladorDocumento().crearDocumento();
+        Documento doc = cd.getControladorDocumento().getDocumento();
+        init(doc);
     }
 
-    public PantallaPrincipal(int hojas, int filas, int columnas, ControladorDominio _cd) {
-        this.cd = _cd;
-        init(hojas, filas, columnas);
-    }
-
-    private void init(int hojas, int filas, int columnas) {
-        setTitle("Document - PROPxCEL");
+    private void init(Documento doc) {
+        int hojas = doc.getNumHojas();
+        int filas = doc.getHoja(1).getFilas();
+        int columnas = doc.getHoja(1).getColumnas();
+        setTitle(doc.getNombre() + " - PROPxCEL");
+        fechaCreacion.setText("Fecha de creación: " + doc.getFecha());
         add(principal);
         setResizable(true);
         setMinimumSize(MIN_SIZE);
@@ -71,10 +77,31 @@ public class PantallaPrincipal extends JFrame {
         for (int i = 1; i <= hojas; i++) {
             creaHoja(filas, columnas, "Hoja " + i, i-1);
         }
+        cd.getControladorHoja().asignaHoja(1);
+
+        nombre_docTextField.setText(doc.getNombre());
+        nombre_docTextField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doc.setNombre(nombre_docTextField.getText());
+                setTitle(doc.getNombre() + " - PROPxCEL");
+            }
+        });
+
         contenidoFormattedTextField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                tablas.get(tabbedPane1.getSelectedIndex()).changeContent(e.getActionCommand());
+
+                //tablas.get(tabbedPane1.getSelectedIndex()).getTl().run();
+                //tablas.get(tabbedPane1.getSelectedIndex()).getTl().externalEditting(e.getActionCommand());
+                //tablas.get(tabbedPane1.getSelectedIndex()).changeContent(e.getActionCommand());
+            }
+        });
+
+        tabbedPane1.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                cd.getControladorHoja().asignaHoja(tabbedPane1.getSelectedIndex()+1);
             }
         });
     }
@@ -172,7 +199,7 @@ public class PantallaPrincipal extends JFrame {
     }
 
     public static void main(String[] args){
-        PantallaPrincipal p = new PantallaPrincipal(new ControladorDominio());
+        PantallaPrincipal p = new PantallaPrincipal(ControladorDominio.getControladorDominio());
         p.setVisible(true);
     }
 }

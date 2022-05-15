@@ -1,6 +1,9 @@
 package main.Presentation.vistas.PantallaPrincipal.Tabla;
 
 import main.Domain.DomainControllers.ControladorDominio;
+import main.Domain.DomainModel.Celda;
+import main.Domain.DomainModel.Hoja;
+import main.Domain.DomainModel.Posicion;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -10,11 +13,12 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 /*
  * Tabla - Vista
  *
- * v0.0.3
+ * v0.0.4
  *
  * Joaquim Torra Garcia
  */
@@ -24,9 +28,16 @@ public class Tabla extends JPanel implements TableModelListener {
     JTable table;
     JTextField fxField;
     ControladorDominio cd;
+    TableModel model;
 
-    int selectedRow;
-    int selectedColumn;
+    private TablaListener tl;
+
+    int selectedRowStart;
+    int selectedRowEnd;
+    int selectedColumnStart;
+    int selectedColumnEnd;
+
+    private String currentContent;
 
     public Tabla(JTextField fxField, ControladorDominio _cd, int _idH) {
         super(new GridLayout(1,0));
@@ -48,10 +59,10 @@ public class Tabla extends JPanel implements TableModelListener {
         table = new JTable(new TablaModel(rows, cols));
 
         table.getTableHeader().setReorderingAllowed(false);
-        table.setColumnSelectionAllowed(true);
 
-        TableColumn column = null;
-        column = table.getColumnModel().getColumn(0);
+        table.setDefaultEditor(Object.class, CeldaEditor.make(currentContent));
+
+        TableColumn column = table.getColumnModel().getColumn(0);
         column.setPreferredWidth(25);
         column.setResizable(false);
         column.setCellRenderer(new CeldaRenderer(new Color(240, 240, 240), Color.BLACK));
@@ -60,54 +71,85 @@ public class Tabla extends JPanel implements TableModelListener {
             column.setPreferredWidth(100); //third column is bigger
         }
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        model = table.getModel();
         table.getModel().addTableModelListener(this);
 
         ListSelectionModel cellSelectionModel = table.getSelectionModel();
-        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        cellSelectionModel.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        table.setColumnSelectionAllowed(true);
+
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                selectedRow = table.getSelectedRow();
-                selectedColumn = table.getSelectedColumn();
-                // Aqui el setText tendira que setear el contenido de la celda, y no el valor
-                fxField.setText(table.getValueAt(selectedRow, selectedColumn).toString());
-                //System.out.println(table.getModel().getColumnName(selectedColumn) + selectedRow);
+                selectedRowStart = table.getSelectedRow();
+                selectedRowEnd = table.getSelectionModel().getMaxSelectionIndex();
+                selectedColumnStart = table.getSelectedColumn();
+                selectedColumnEnd = table.getColumnModel().getSelectionModel().getMaxSelectionIndex();
+                cd.getControladorHoja().asignaCelda((selectedRowEnd+1)+"", selectedColumnEnd+"");
+                fxFieldDisplay();
+            }
+        });
+        table.getColumnModel().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                selectedRowStart = table.getSelectedRow();
+                selectedRowEnd = table.getSelectionModel().getMaxSelectionIndex();
+                selectedColumnStart = table.getSelectedColumn();
+                selectedColumnEnd = table.getColumnModel().getSelectionModel().getMaxSelectionIndex();
+                cd.getControladorHoja().asignaCelda((selectedRowEnd+1)+"", selectedColumnEnd+"");
+                fxFieldDisplay();
+            }
+        });
+
+        tl = new TablaListener(table, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = selectedRowEnd;
+                int col = selectedColumnEnd;
+                String columnName = model.getColumnName(col);
+
+                if (e.getActionCommand().equals("startEditting")) {
+                    System.out.println(currentContent);
+                    return;
+                }
+
+                Object data = model.getValueAt(row, col);
+                currentContent = data.toString();
+                fxField.setText(currentContent);
+                if (data.toString().length() == 0) {
+                    return;
+                }
+                try {
+                    cd.getControladorHoja().escribirContenido(data.toString());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                String val = cd.getControladorHoja().getCeldaRef().getValor();
+                table.getModel().setValueAt(val, selectedRowEnd, selectedColumnEnd);
+                System.out.println(columnName + (row+1) + " : " + data + " |val: " + val);
             }
         });
 
         //Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);
-
         scrollPane.setSize(getSize());
-
         //Add the scroll pane to this panel.
         add(scrollPane);
 
 
     }
 
+    private void fxFieldDisplay() {
+        if (selectedRowEnd < 0 || selectedColumnEnd <= 0) return;
+        currentContent = cd.getControladorHoja().getCeldaRef().getContenido();
+        fxField.setText(currentContent);
+    }
+
     public void tableChanged(TableModelEvent e) {
-        int row = e.getLastRow();
-        int col = e.getColumn();
-        TableModel model = (TableModel)e.getSource();
-        String columnName = model.getColumnName(col);
-        Object data = model.getValueAt(row, col);
-
-        // Aqui pasaria el nuevo valor en "data" a dominio
-
-        /*cd.getControladorHoja().asignaHoja(idH+1);
-        try {
-            cd.getControladorHoja().escribirContenido(data.toString());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }*/
-        // ^ Se entiende el intento :/ ^
-
-        System.out.println(columnName + row + " : " + data);
     }
 
     public void changeContent(String cont) {
-        table.getModel().setValueAt(cont, table.getSelectedRow(), table.getSelectedColumn());
+        table.getModel().setValueAt(cont, selectedRowEnd, selectedColumnEnd);
     }
 
     /**
@@ -138,5 +180,9 @@ public class Tabla extends JPanel implements TableModelListener {
                 createAndShowGUI();
             }
         });
+    }
+
+    public TablaListener getTl() {
+        return tl;
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 /*
  * Tabla - Model
  *
- * v0.0.3
+ * v0.0.4
  *
  * Joaquim Torra Garcia
  */
@@ -17,18 +17,13 @@ public class TablaModel extends AbstractTableModel {
 
     List<List<String>> valores = new ArrayList<>();
 
-    List<List<String>> contenidos = new ArrayList<>();
-
     public TablaModel(int rows, int cols) {
         for (int i = 0; i < rows; i++) {
             List<String> v = new ArrayList<>();
-            List<String> c = new ArrayList<>();
             for (int j = 0; j < cols; j++) {
                 v.add("");
-                c.add("");
             }
             valores.add(v);
-            contenidos.add(c);
         }
     }
 
@@ -48,7 +43,7 @@ public class TablaModel extends AbstractTableModel {
             return (rowIndex + 1) + "";
         }
         else
-            return valores.get(rowIndex).get(columnIndex-1).toString();
+            return valores.get(rowIndex).get(columnIndex-1);
     }
 
     @Override
