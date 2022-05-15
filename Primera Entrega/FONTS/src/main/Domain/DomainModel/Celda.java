@@ -89,6 +89,7 @@ public class Celda implements Serializable {
     public void setValorRef(String _valor, Celda _ref) {
         if(_ref == this) {
             this.referenciantes.pop();
+            this.setValor("#ERR:BUCLE");
         }
         for (Celda c : this.referenciantes) {
             c.setValorRef(_valor, _ref);

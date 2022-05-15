@@ -1,6 +1,7 @@
 package main.Presentation.vistas.PantallaPrincipal.Tabla;
 
 import main.Domain.DomainControllers.ControladorDominio;
+import main.Domain.DomainModel.Celda;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -11,6 +12,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 /*
  * Tabla - Vista
@@ -106,24 +108,19 @@ public class Tabla extends JPanel implements TableModelListener {
                 String columnName = model.getColumnName(col);
 
                 if (e.getActionCommand().equals("startEditting")) {
-                    System.out.println(currentContent);
+                    //System.out.println(currentContent);
                     return;
                 }
 
                 Object data = model.getValueAt(row, col);
                 currentContent = data.toString();
                 fxField.setText(currentContent);
-                if (data.toString().length() == 0) {
-                    return;
-                }
                 try {
                     cd.getControladorHoja().escribirContenido(data.toString());
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-                String val = cd.getControladorHoja().getCeldaRef().getValor();
-                table.getModel().setValueAt(val, selectedRowEnd, selectedColumnEnd);
-                System.out.println(columnName + (row+1) + " : " + data + " |val: " + val);
+                reloadValue(cd.getControladorHoja().getCeldaRef());
             }
         });
 
@@ -132,8 +129,15 @@ public class Tabla extends JPanel implements TableModelListener {
         scrollPane.setSize(getSize());
         //Add the scroll pane to this panel.
         add(scrollPane);
+    }
 
+    private void reloadValue(Celda c) {
+        String val = cd.getControladorHoja().getCeldaRef().getValor();
+        table.getModel().setValueAt(val, c.getPosicion().getFila()-1, c.getPosicion().getColumna());
 
+        for (Celda ref : c.getReferenciantes()) {
+            reloadValue(ref);
+        }
     }
 
     private void fxFieldDisplay() {
