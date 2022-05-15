@@ -2,13 +2,14 @@ package main.Domain.DomainControllers;
 /*
  * Controlador Documento
  *
- * v0.0.2
+ * v0.0.3
  *
  * Joaquim Torra Garcia
  */
 
 import main.Domain.DomainModel.Documento;
 import main.Domain.DomainModel.Hoja;
+import main.Persistence.PersistenceControllers.ControladorDocumentoPersistencia;
 
 
 public class ControladorDocumento {
@@ -97,5 +98,17 @@ public class ControladorDocumento {
         documento_ref.setNombre(_nuevoNombre);
     }
 
+    public void guardarDocumento(String _path) {
+        //ControladorDocumentoPersistencia cdp = ControladorDocumentoPersistencia.getCtrlDocPers();
+
+        //cdp.almacenaDocumento(this.documento_ref, _path + this.documento_ref.getNombre() + ".prop");
+        //this.documento_ref = null; // Esto seria solo si queremos Guardar y Cerrar, no?
+    }
+
+    public void cargaDocumento(String _path) {
+        //ControladorDocumentoPersistencia cdp = ControladorDocumentoPersistencia.getCtrlDocPers();
+
+        //this.documento_ref = cdp.gargaDocumento(_path);
+    }
 
 }
