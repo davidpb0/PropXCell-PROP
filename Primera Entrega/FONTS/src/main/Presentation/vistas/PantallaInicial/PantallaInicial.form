@@ -17,7 +17,7 @@
     </properties>
     <border type="none"/>
     <children>
-      <grid id="820d7" binding="panelizq" layout-manager="GridLayoutManager" row-count="9" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="820d7" binding="panelizq" layout-manager="GridLayoutManager" row-count="11" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="0" row-span="3" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -34,7 +34,7 @@
         <children>
           <component id="3cb73" class="javax.swing.JButton" binding="bteliminarDoc">
             <constraints>
-              <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="9" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <background color="-16755278"/>
@@ -50,7 +50,7 @@
           </component>
           <component id="d32f7" class="javax.swing.JButton" binding="BotonCrearDoc">
             <constraints>
-              <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <background color="-16755278"/>
@@ -65,7 +65,7 @@
           </component>
           <component id="9f0dd" class="javax.swing.JButton" binding="btCargarDoc">
             <constraints>
-              <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <background color="-16755278"/>
@@ -80,7 +80,7 @@
           </component>
           <component id="e01ab" class="javax.swing.JButton" binding="BotonHome">
             <constraints>
-              <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <alignmentX value="0.0"/>
@@ -117,15 +117,15 @@
           </component>
           <vspacer id="c1029">
             <constraints>
-              <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+              <grid row="10" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
                 <preferred-size width="-1" height="250"/>
               </grid>
             </constraints>
           </vspacer>
           <vspacer id="bed5c">
             <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
-                <preferred-size width="-1" height="100"/>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                <preferred-size width="-1" height="50"/>
               </grid>
             </constraints>
           </vspacer>
@@ -148,6 +148,22 @@
               <inheritsPopupMenu value="false"/>
             </properties>
           </component>
+          <component id="775bb" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <icon value="main/Presentation/imagenes/icons8-ms-excel-80.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <vspacer id="8e103">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                <preferred-size width="-1" height="20"/>
+              </grid>
+            </constraints>
+          </vspacer>
         </children>
       </grid>
       <component id="cbb4d" class="javax.swing.JTextPane" binding="descripción">

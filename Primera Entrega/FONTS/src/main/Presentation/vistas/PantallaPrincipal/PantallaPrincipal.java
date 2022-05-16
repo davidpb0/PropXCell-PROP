@@ -54,6 +54,7 @@ public class PantallaPrincipal extends JFrame {
     private Dimension MIN_SIZE = new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.6), (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.6));
 
     public PantallaPrincipal(ControladorDominio _cd) {
+        setIconImage(new ImageIcon(getClass().getResource("/main/Presentation/imagenes/icons8-ms-excel-80.png")).getImage());
         this.cd = _cd;
         //cd.getControladorDocumento().crearDocumento();
         cd.getControladorDocumento().crearDocumento();
