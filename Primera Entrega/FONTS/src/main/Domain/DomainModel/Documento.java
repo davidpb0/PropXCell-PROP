@@ -99,10 +99,10 @@ public class Documento implements Serializable {
      * @param _id identificador de la hoja
      * @return Hoja identificada por _id, null si no existe
      */
-    public Hoja getHoja(int _id){
+    public Hoja getHoja(int _id) throws Exception {
         if(this.hojasContenidas.containsKey(_id))
             return this.hojasContenidas.get(_id);
-        return null;
+        throw new Exception("ERROR: La hoja no existe en el documento.");
     }
 
     /**
