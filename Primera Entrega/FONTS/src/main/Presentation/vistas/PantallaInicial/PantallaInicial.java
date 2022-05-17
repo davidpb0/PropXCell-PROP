@@ -43,7 +43,7 @@ public class PantallaInicial extends JFrame {
 
 
     public PantallaInicial() {
-        setTitle("Hoja de cálculo");
+        setTitle("PropXcel");
 
         setIconImage(new ImageIcon(getClass().getResource("/main/Presentation/imagenes/icons8-ms-excel-80.png")).getImage());
 
@@ -63,7 +63,7 @@ public class PantallaInicial extends JFrame {
         cp = new ControladorPresentacion();
 
         FileNameExtensionFilter filtro =
-                new FileNameExtensionFilter("Archivos prop, csv, pdf (.prop, .csv, .pdf)", "prop", "csv", "pdf");
+                new FileNameExtensionFilter("Archivos prop, csv (.prop, .csv)", "prop", "csv");
 
         ActionListener crear = new ActionListener() {
             @Override

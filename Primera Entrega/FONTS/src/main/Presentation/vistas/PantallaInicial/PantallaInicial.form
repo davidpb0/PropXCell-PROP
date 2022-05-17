@@ -112,7 +112,7 @@
               <horizontalAlignment value="0"/>
               <horizontalTextPosition value="0"/>
               <opaque value="false"/>
-              <text value="Hoja de Cálculo"/>
+              <text value="PropXcel"/>
             </properties>
           </component>
           <vspacer id="c1029">
