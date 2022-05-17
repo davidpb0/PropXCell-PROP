@@ -31,10 +31,10 @@ public class Tabla extends JPanel implements TableModelListener {
 
     private TablaListener tl;
 
-    int selectedRowStart;
-    int selectedRowEnd;
-    int selectedColumnStart;
-    int selectedColumnEnd;
+    private int selectedRowStart;
+    private int selectedRowEnd;
+    private int selectedColumnStart;
+    private int selectedColumnEnd;
 
     private String currentContent;
 
@@ -60,6 +60,7 @@ public class Tabla extends JPanel implements TableModelListener {
         table.getTableHeader().setReorderingAllowed(false);
 
         table.setDefaultEditor(Object.class, CeldaEditor.make(currentContent));
+        table.setRowHeight(20);
 
         TableColumn column = table.getColumnModel().getColumn(0);
         column.setPreferredWidth(25);
@@ -80,47 +81,34 @@ public class Tabla extends JPanel implements TableModelListener {
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                selectedRowStart = table.getSelectedRow();
-                selectedRowEnd = table.getSelectionModel().getMaxSelectionIndex();
-                selectedColumnStart = table.getSelectedColumn();
-                selectedColumnEnd = table.getColumnModel().getSelectionModel().getMaxSelectionIndex();
-                cd.getControladorHoja().asignaCelda((selectedRowEnd+1)+"", selectedColumnEnd+"");
-                fxFieldDisplay();
+                selection();
             }
         });
         table.getColumnModel().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                selectedRowStart = table.getSelectedRow();
-                selectedRowEnd = table.getSelectionModel().getMaxSelectionIndex();
-                selectedColumnStart = table.getSelectedColumn();
-                selectedColumnEnd = table.getColumnModel().getSelectionModel().getMaxSelectionIndex();
-                cd.getControladorHoja().asignaCelda((selectedRowEnd+1)+"", selectedColumnEnd+"");
-                fxFieldDisplay();
+                selection();
             }
         });
 
         tl = new TablaListener(table, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int row = selectedRowEnd;
-                int col = selectedColumnEnd;
-                String columnName = model.getColumnName(col);
+                Object data = model.getValueAt(selectedRowEnd, selectedColumnEnd);
+                enviarContenido(e, data.toString(), selectedRowEnd+1, selectedColumnEnd);
+            }
+        });
 
-                if (e.getActionCommand().equals("startEditting")) {
-                    //System.out.println(currentContent);
-                    return;
+        InputMap inputMap = table.getInputMap(WHEN_FOCUSED);
+        ActionMap actionMap = table.getActionMap();
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "delete");
+        actionMap.put("delete", new AbstractAction() {
+            public void actionPerformed(ActionEvent evt) {
+                for (int i = selectedRowStart+1; i <= selectedRowEnd+1; i++) {
+                   for (int j = selectedColumnStart; j <= selectedColumnEnd; j++) {
+                       enviarContenido(evt, "", i, j);
+                   }
                 }
-
-                Object data = model.getValueAt(row, col);
-                currentContent = data.toString();
-                fxField.setText(currentContent);
-                try {
-                    cd.getControladorHoja().escribirContenido(data.toString());
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                reloadValue(cd.getControladorHoja().getCeldaRef());
             }
         });
 
@@ -129,6 +117,32 @@ public class Tabla extends JPanel implements TableModelListener {
         scrollPane.setSize(getSize());
         //Add the scroll pane to this panel.
         add(scrollPane);
+    }
+
+    public void enviarContenido (ActionEvent e, String text, int row, int col) {
+        if (e.getActionCommand().equals("startEditting")) {
+            //System.out.println(currentContent);
+            return;
+        }
+
+        currentContent = text;
+        fxField.setText(currentContent);
+        try {
+            cd.getControladorHoja().asignaCelda(row+"", col+"");
+            cd.getControladorHoja().escribirContenido(text);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        reloadValue(cd.getControladorHoja().getCeldaRef());
+    }
+
+    private void selection() {
+        selectedRowStart = table.getSelectedRow();
+        selectedRowEnd = table.getSelectionModel().getMaxSelectionIndex();
+        selectedColumnStart = table.getSelectedColumn();
+        selectedColumnEnd = table.getColumnModel().getSelectionModel().getMaxSelectionIndex();
+        cd.getControladorHoja().asignaCelda((selectedRowEnd+1)+"", selectedColumnEnd+"");
+        fxFieldDisplay();
     }
 
     private void reloadValue(Celda c) {
@@ -185,5 +199,21 @@ public class Tabla extends JPanel implements TableModelListener {
 
     public TablaListener getTl() {
         return tl;
+    }
+
+    public int getSelectedRowStart() {
+        return selectedRowStart;
+    }
+
+    public int getSelectedColumnStart() {
+        return selectedColumnStart;
+    }
+
+    public int getSelectedRowEnd() {
+        return selectedRowEnd;
+    }
+
+    public int getSelectedColumnEnd() {
+        return selectedColumnEnd;
     }
 }

@@ -92,10 +92,8 @@ public class PantallaPrincipal extends JFrame {
         contenidoFormattedTextField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                //tablas.get(tabbedPane1.getSelectedIndex()).getTl().run();
-                //tablas.get(tabbedPane1.getSelectedIndex()).getTl().externalEditting(e.getActionCommand());
-                //tablas.get(tabbedPane1.getSelectedIndex()).changeContent(e.getActionCommand());
+                Tabla t = tablas.get(tabbedPane1.getSelectedIndex());
+                t.enviarContenido(e, e.getActionCommand(), t.getSelectedRowEnd()+1, t.getSelectedColumnEnd());
             }
         });
 

@@ -104,6 +104,7 @@ public class TablaListener implements PropertyChangeListener, Runnable {
     }
 
     public void externalEditting(String val) {
+        valorAntiguo = table.getModel().getValueAt(fila, columna);
         valorNuevo = val;
         if (! valorNuevo.equals(valorAntiguo)){
             TablaListener tl = new TablaListener(
