@@ -54,6 +54,7 @@ public class PantallaPrincipal extends JFrame {
     private Dimension MIN_SIZE = new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.6), (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.6));
 
     public PantallaPrincipal(ControladorDominio _cd) {
+        setIconImage(new ImageIcon(getClass().getResource("/main/Presentation/imagenes/icons8-ms-excel-80.png")).getImage());
         this.cd = _cd;
         //cd.getControladorDocumento().crearDocumento();
         cd.getControladorDocumento().crearDocumento();
@@ -91,10 +92,8 @@ public class PantallaPrincipal extends JFrame {
         contenidoFormattedTextField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                //tablas.get(tabbedPane1.getSelectedIndex()).getTl().run();
-                //tablas.get(tabbedPane1.getSelectedIndex()).getTl().externalEditting(e.getActionCommand());
-                //tablas.get(tabbedPane1.getSelectedIndex()).changeContent(e.getActionCommand());
+                Tabla t = tablas.get(tabbedPane1.getSelectedIndex());
+                t.enviarContenido(e, e.getActionCommand(), t.getSelectedRowEnd()+1, t.getSelectedColumnEnd());
             }
         });
 

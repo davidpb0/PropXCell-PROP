@@ -7,6 +7,7 @@ import main.Presentation.vistas.PantallaPrincipal.PantallaPrincipal;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -42,13 +43,16 @@ public class PantallaInicial extends JFrame {
 
 
     public PantallaInicial() {
+        setTitle("Hoja de cálculo");
+
+        setIconImage(new ImageIcon(getClass().getResource("/main/Presentation/imagenes/icons8-ms-excel-80.png")).getImage());
+
         add(principal);
         setResizable(false);
+        setLocationRelativeTo(null);
         setSize(800, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panelCrearDoc.setVisible(false);
-        setTitle("Hoja de cálculo");
-        setLocationRelativeTo(null);
 
     }
 
