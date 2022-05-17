@@ -255,7 +255,7 @@ public class DriverControladorCelda {
             System.out.println("Se ha construido correctamente el ControladorCelda");
     }
 
-    private void asignaCeldaPosicionTest(){
+    private void asignaCeldaPosicionTest() throws Exception {
         ControladorDominio cdd = ControladorDominio.getControladorDominio();
         ControladorDocumento cd = cdd.getControladorDocumento();
         cd.crearDocumento();

@@ -28,7 +28,7 @@ public class ControladorHoja {
     * Se guarda la hoja que le pasa presentación.
     * @param _idh identificador de la hoja que siempre corresponderá a una hoja existente
     */
-    public void asignaHoja(int _idh) {
+    public void asignaHoja(int _idh) throws Exception {
         hojaAct = ControladorDominio.getControladorDominio().getControladorDocumento().getDocumento().getHoja(_idh);
     }
 

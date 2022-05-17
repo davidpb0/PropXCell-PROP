@@ -180,7 +180,7 @@
           <font name="JetBrains Mono" size="12" style="0"/>
           <foreground color="-16777216"/>
           <opaque value="false"/>
-          <text value="Aqui irá una descripción del programa y de las funcionalidades disponibles &#10;Etc&#10;Etc&#10;Etc&#10;Me da palo escribirlo ahora"/>
+          <text value="Bienvenido&#10;&#10;Hoja de cálculo desarrollada por estudiantes de la Facultad de informática de Barcelona.&#10;Realice operaciones, cálculos y distintas funciones para el manejo de sus datos.&#10;&#10;Esta herramienta le permitirá tener un control completo y detallado de sus datos, además dispone de una variedad de funciones con las que poder realizar diferentes cálculos, incluso estadísticos&#10;&#10;Para más información consulte el manual del usuario, allí encontrará en detalle todas las funciones disponibles y cómo ejecutarlas entre otras varias cosas.&#10;&#10;Agradecemos el uso de la aplicación y esperamos que el uso sea de su agrado.&#10;"/>
         </properties>
       </component>
       <grid id="67750" binding="panelCrearDoc" layout-manager="GridLayoutManager" row-count="10" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">

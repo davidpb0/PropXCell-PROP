@@ -15,6 +15,8 @@ public class ControladorPresentacion {
     private final ControladorDominio contDominio;
     private PantallaInicial pIni;
 
+
+
     public ControladorPresentacion() {
         this.contDominio = ControladorDominio.getControladorDominio();
     }
@@ -23,11 +25,15 @@ public class ControladorPresentacion {
         return contDominio;
     }
 
-    public PantallaPrincipal getPantallaPrincipal() {
+
+
+    public PantallaPrincipal getPantallaPrincipal() throws Exception {
+
         return new PantallaPrincipal(this.contDominio);
+
     }
 
-    public void iniciaPInicial() {
+    public void iniciaPInicial(){
         this.pIni = new PantallaInicial();
         pIni.inicializaVista();
         pIni.setVisible(true);

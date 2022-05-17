@@ -155,7 +155,7 @@ public class DriverControladorDocumento {
        System.in.read();
     }
 
-    private static void InfoHoja () throws IOException {
+    private static void InfoHoja () throws Exception {
         System.out.println("--Información Hoja--");
         if (doc == null) {
             System.out.print("No hay ningún documento abierto.");
@@ -202,7 +202,7 @@ public class DriverControladorDocumento {
         System.in.read();
     }
 
-    private static void DelHoja () throws IOException {
+    private static void DelHoja () throws Exception {
         System.out.println("--Eliminar Hoja--");
         if (doc == null) {
             System.out.print("No hay ningún documento abierto.");

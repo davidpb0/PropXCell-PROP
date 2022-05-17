@@ -93,7 +93,7 @@ public class DriverControladorBloque {
         return true;
     }
 
-    private void constructorTest() {
+    private void constructorTest() throws Exception {
         System.out.println("Test de la constructora de ControladorBloque:");
         cb = new ControladorBloque();
         constructor = true;

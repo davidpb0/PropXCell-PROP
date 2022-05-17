@@ -186,7 +186,7 @@ public class DocumentoTest {
      * pediremos una hoja existente y comprobaremos que devuelve una Hoja no nula
      */
     @Test
-    public void getHojaContenidaTest(){
+    public void getHojaContenidaTest() throws Exception {
         d = Documento.getDocumento();
 
         when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
@@ -210,7 +210,7 @@ public class DocumentoTest {
      * pediremos una hoja inexistente y comprobaremos que devuelve una Hoja  nula
      */
     @Test
-    public void getHojaNoContenidaTest(){
+    public void getHojaNoContenidaTest() throws Exception {
         d = Documento.getDocumento();
 
         when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);

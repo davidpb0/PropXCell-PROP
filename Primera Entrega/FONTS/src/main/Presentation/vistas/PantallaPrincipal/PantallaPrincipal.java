@@ -53,7 +53,7 @@ public class PantallaPrincipal extends JFrame {
 
     private Dimension MIN_SIZE = new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.6), (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.6));
 
-    public PantallaPrincipal(ControladorDominio _cd) {
+    public PantallaPrincipal(ControladorDominio _cd) throws Exception {
         setIconImage(new ImageIcon(getClass().getResource("/main/Presentation/imagenes/icons8-ms-excel-80.png")).getImage());
         this.cd = _cd;
         //cd.getControladorDocumento().crearDocumento();
@@ -62,7 +62,7 @@ public class PantallaPrincipal extends JFrame {
         init(doc);
     }
 
-    private void init(Documento doc) {
+    private void init(Documento doc) throws Exception {
         int hojas = doc.getNumHojas();
         int filas = doc.getHoja(1).getFilas();
         int columnas = doc.getHoja(1).getColumnas();
@@ -100,7 +100,11 @@ public class PantallaPrincipal extends JFrame {
         tabbedPane1.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                cd.getControladorHoja().asignaHoja(tabbedPane1.getSelectedIndex()+1);
+                try {
+                    cd.getControladorHoja().asignaHoja(tabbedPane1.getSelectedIndex()+1);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
     }
@@ -197,7 +201,7 @@ public class PantallaPrincipal extends JFrame {
         barraH.add(this.ayuda);
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception {
         PantallaPrincipal p = new PantallaPrincipal(ControladorDominio.getControladorDominio());
         p.setVisible(true);
     }
