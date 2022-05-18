@@ -17,13 +17,13 @@ import java.awt.event.KeyEvent;
 /*
  * Tabla - Vista
  *
- * v0.0.4
+ * v0.0.5
  *
  * Joaquim Torra Garcia
  */
 
 public class Tabla extends JPanel implements TableModelListener {
-    int idH;
+    private final int idH;
     JTable table;
     JTextField fxField;
     ControladorDominio cd;
@@ -194,11 +194,7 @@ public class Tabla extends JPanel implements TableModelListener {
     public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
+        javax.swing.SwingUtilities.invokeLater(Tabla::createAndShowGUI);
     }
 
     public TablaListener getTl() {
@@ -219,5 +215,9 @@ public class Tabla extends JPanel implements TableModelListener {
 
     public int getSelectedColumnEnd() {
         return selectedColumnEnd;
+    }
+
+    public int getIdH() {
+        return idH;
     }
 }

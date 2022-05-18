@@ -2,6 +2,7 @@ package main.Presentation.vistas.PantallaPrincipal;
 
 import main.Domain.DomainControllers.ControladorDominio;
 import main.Domain.DomainModel.Documento;
+import main.Domain.DomainModel.Hoja;
 import main.Presentation.vistas.PantallaPrincipal.ContextMenus.HojasCtxMenu;
 import main.Presentation.vistas.PantallaPrincipal.Tabla.Tabla;
 import main.Presentation.vistas.PantallaPrincipal.Tabla.TablaListener;
@@ -15,17 +16,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.Objects;
 
 /*
  * Vista Principal
  *
- * v0.0.4
+ * v0.0.5
  *
  * Joaquim Torra Garcia
  */
 
 public class PantallaPrincipal extends JFrame {
-    private ControladorDominio cd;
+    private final ControladorDominio cd;
 
     private JPanel principal;
     private JTextField nombre_docTextField;
@@ -50,15 +53,15 @@ public class PantallaPrincipal extends JFrame {
     private JFormattedTextField contenidoFormattedTextField;
     private JTabbedPane tabbedPane1;
 
-    private ArrayList<Tabla> tablas = new ArrayList<>();
+    private final ArrayList<Tabla> tablas = new ArrayList<>();
 
-    private Dimension MIN_SIZE = new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.6), (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.6));
+    private final Dimension MIN_SIZE = new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.6), (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.6));
 
     public PantallaPrincipal(ControladorDominio _cd) throws Exception {
-        setIconImage(new ImageIcon(getClass().getResource("/main/Presentation/imagenes/icons8-ms-excel-80.png")).getImage());
+        setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getResource("/main/Presentation/imagenes/icons8-ms-excel-80.png"))).getImage());
         this.cd = _cd;
         // cd.getControladorDocumento().crearDocumento();
-        // cd.getControladorDocumento().crearDocumento(50, 50);
+        cd.getControladorDocumento().crearDocumento(50, 50);
         Documento doc = cd.getControladorDocumento().getDocumento();
         init(doc);
     }
@@ -109,7 +112,7 @@ public class PantallaPrincipal extends JFrame {
             }
         });
 
-        HojasCtxMenu hojasCtxMenu = new HojasCtxMenu();
+        HojasCtxMenu hojasCtxMenu = new HojasCtxMenu(tabbedPane1, Activity, tablas, contenidoFormattedTextField);
         tabbedPane1.setComponentPopupMenu(hojasCtxMenu);
     }
 
@@ -120,17 +123,13 @@ public class PantallaPrincipal extends JFrame {
     }
 
     public void creaHoja(int filas, int columnas, String nombre, int idx) {
-        JPanel panel = new JPanel();
-        panel.add(new Tabla(filas, columnas, contenidoFormattedTextField, cd, idx));
         tablas.add(new Tabla(filas, columnas, contenidoFormattedTextField, cd, idx));
-        tablas.get(idx).setName(nombre);
-
         tabbedPane1.addTab(nombre, null, tablas.get(idx), nombre);
     }
 
     public void configuraHerramientas() {
-        String[] archivoOpciones = {"Nuevo Documento", "Cargar Documento", "Guardar Documento", "Cerrar Documento", "Separador", "Nueva Hoja", "Eliminar Hoja", "Separador",
-                "Importar/Exportar", "Separador", "Renombrar Documento", "Separador", "Detalles", "Salir"};
+        String[] archivoOpciones = {"Nuevo Documento", "Cargar Documento", "Guardar Documento", "Cerrar Documento", "Separador", "Nueva Hoja", "Eliminar Hoja", "Renombrar Hoja", "Separador",
+                "Importar/Exportar", "Separador", "Separador", "Detalles", "Salir"};
         for (String s : archivoOpciones) {
             if (s.equals("Separador")) this.archivo.addSeparator();
             else if (s.equals("Importar/Exportar")) {
@@ -146,6 +145,75 @@ public class PantallaPrincipal extends JFrame {
             }
             else {
                 JMenuItem j = new JMenuItem(s);
+                j.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String cmd = e.getActionCommand().toLowerCase();
+                        int idx;
+                        switch (cmd) {
+                            case "nueva hoja":
+                                cd.getControladorDocumento().anadirHoja();
+                                idx = cd.getControladorDocumento().getNumHojas();
+                                try {
+                                    cd.getControladorHoja().asignaHoja(idx);
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                }
+                                Hoja h = cd.getControladorHoja().getHojaRef();
+                                creaHoja(h.getFilas(), h.getColumnas(), "Hoja " + idx, idx-1);
+                                tabbedPane1.setSelectedIndex(idx-1);
+                                try {
+                                    cd.getControladorHoja().asignaHoja(idx);
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                }
+                                break;
+                            case "renombrar hoja":
+                                String antiguoNombre = tabbedPane1.getTitleAt(tabbedPane1.getSelectedIndex());
+                                String nuevoNombre = (String) JOptionPane.showInputDialog(
+                                        Activity,
+                                        "Cambiar Nombre:",
+                                        "Renombrar Hoja",
+                                        JOptionPane.PLAIN_MESSAGE,
+                                        null,
+                                        null,
+                                        antiguoNombre
+                                );
+                                try {
+                                    cd.getControladorDocumento().asignaNombreHoja(nuevoNombre);
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                }
+                                tabbedPane1.setTitleAt(tabbedPane1.getSelectedIndex(), cd.getControladorHoja().getNombreHoja());
+                                break;
+                            case "eliminar hoja":
+                                idx = tabbedPane1.getSelectedIndex();
+                                int idH = ((Tabla) tabbedPane1.getComponentAt(tabbedPane1.getSelectedIndex())).getIdH();
+                                if (cd.getControladorDocumento().getNumHojas() <= 1) {
+                                    JOptionPane.showMessageDialog(
+                                            Activity,
+                                            "No puedes eliminar la última hoja",
+                                            "Eliminar Hoja",
+                                            JOptionPane.ERROR_MESSAGE
+                                    );
+                                    return;
+                                }
+                                cd.getControladorDocumento().eliminarHoja(idH+1);
+                                tabbedPane1.remove(idx);
+                                idH = ((Tabla) tabbedPane1.getComponentAt(tabbedPane1.getSelectedIndex())).getIdH();
+                                try {
+                                    cd.getControladorHoja().asignaHoja(idH);
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                }
+                                break;
+
+                            default:
+                                System.out.println(cmd);
+                                break;
+                        }
+                    }
+                });
                 this.archivo.add(j);
             }
         }
@@ -154,6 +222,12 @@ public class PantallaPrincipal extends JFrame {
             if (s.equals("Separador")) this.editar.addSeparator();
             else {
                 JMenuItem j = new JMenuItem(s);
+                j.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String cmd = e.getActionCommand().toLowerCase();
+                    }
+                });
                 this.editar.add(j);
             }
         }
