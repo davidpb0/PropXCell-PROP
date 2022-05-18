@@ -178,8 +178,9 @@ public class Traductor {
         ArrayList<String> ret = new ArrayList<>();
 
 
-        if (f.startsWith("=$") && f.length() <= 6) { // Como mucho $AA11
-            Celda c = traduceCelda(f.substring(1, f.length() - 1));
+        if ((f.startsWith("$") || f.startsWith("=$")) && f.length() <= 6) { // Como mucho $AA11
+            String pos = f.startsWith("=$") ? f.substring(1, f.length() - 1) : f;
+            Celda c = traduceCelda(pos);
             try {
                 ret.add(c.getValor());
             } catch (NullPointerException np) {
