@@ -271,8 +271,10 @@ public class ControladorHoja {
         String[] arg;
         ArrayList<String[]> argm = new ArrayList<>();
         ArrayList<String> argu = new ArrayList<>();
+        String[] arg0;
         String[] arg1;
         String[] arg2;
+        int ij;
 
         switch (type) {
             case "#ABS": // =abs()
@@ -739,8 +741,24 @@ public class ControladorHoja {
 
                 //Se cogen los argumentos necesarios para realizar la operacion
                 argm = Traductor.getArgumentosFuncionNaria(_content);
-                arg1 = argm.get(0);
-                arg2 = argm.get(1);
+                arg0 = new String[argm.size() * argm.get(0).length];
+
+                ij = 0;
+                for (int i = 0; i < argm.size(); ++i) {
+                    for (int j = 0; j < argm.get(i).length; ++j) {
+                        arg0[ij] = argm.get(i)[j];
+                        ++ij;
+                    }
+                }
+
+                arg1 = new String[arg0.length / 2];
+                arg2 = new String[arg0.length / 2];
+
+                for (int i = 0; i < arg0.length; ++i) {
+                    if  (i < arg0.length / 2) arg1[i] = arg0[i];
+                    else arg2[i - arg0.length / 2] = arg0[i];
+                }
+
 
                 //Se comprueba que el numero de argumentos sea el correcto
                 if (arg1.length != arg2.length) {
@@ -807,8 +825,23 @@ public class ControladorHoja {
 
                 //Se cogen los argumentos necesarios para realizar la operacion
                 argm = Traductor.getArgumentosFuncionNaria(_content);
-                arg1 = argm.get(0);
-                arg2 = argm.get(1);
+                arg0 = new String[argm.size() * argm.get(0).length];
+
+                ij = 0;
+                for (int i = 0; i < argm.size(); ++i) {
+                    for (int j = 0; j < argm.get(i).length; ++j) {
+                        arg0[ij] = argm.get(i)[j];
+                        ++ij;
+                    }
+                }
+
+                arg1 = new String[arg0.length / 2];
+                arg2 = new String[arg0.length / 2];
+
+                for (int i = 0; i < arg0.length; ++i) {
+                    if  (i < arg0.length / 2) arg1[i] = arg0[i];
+                    else arg2[i - arg0.length / 2] = arg0[i];
+                }
 
                 //Se comprueba que el numero de argumentos sea el correcto
                 if (arg1.length != arg2.length) {
