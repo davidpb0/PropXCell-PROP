@@ -120,6 +120,10 @@ public class Tabla extends JPanel implements TableModelListener {
     }
 
     public void enviarContenido (ActionEvent e, String text, int row, int col) {
+        if (row < 0 || col <= 0) {
+            return;
+        }
+
         if (e.getActionCommand().equals("startEditting")) {
             //System.out.println(currentContent);
             return;

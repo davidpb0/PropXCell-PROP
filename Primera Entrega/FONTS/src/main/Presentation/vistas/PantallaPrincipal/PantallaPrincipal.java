@@ -2,6 +2,7 @@ package main.Presentation.vistas.PantallaPrincipal;
 
 import main.Domain.DomainControllers.ControladorDominio;
 import main.Domain.DomainModel.Documento;
+import main.Presentation.vistas.PantallaPrincipal.ContextMenus.HojasCtxMenu;
 import main.Presentation.vistas.PantallaPrincipal.Tabla.Tabla;
 import main.Presentation.vistas.PantallaPrincipal.Tabla.TablaListener;
 
@@ -56,8 +57,8 @@ public class PantallaPrincipal extends JFrame {
     public PantallaPrincipal(ControladorDominio _cd) throws Exception {
         setIconImage(new ImageIcon(getClass().getResource("/main/Presentation/imagenes/icons8-ms-excel-80.png")).getImage());
         this.cd = _cd;
-        //cd.getControladorDocumento().crearDocumento();
-        cd.getControladorDocumento().crearDocumento();
+        // cd.getControladorDocumento().crearDocumento();
+        // cd.getControladorDocumento().crearDocumento(50, 50);
         Documento doc = cd.getControladorDocumento().getDocumento();
         init(doc);
     }
@@ -107,6 +108,15 @@ public class PantallaPrincipal extends JFrame {
                 }
             }
         });
+
+        HojasCtxMenu hojasCtxMenu = new HojasCtxMenu();
+        tabbedPane1.setComponentPopupMenu(hojasCtxMenu);
+    }
+
+    public void nuevaHoja() {
+        cd.getControladorDocumento().anadirHoja();
+        System.out.println(tabbedPane1.getTabCount());
+
     }
 
     public void creaHoja(int filas, int columnas, String nombre, int idx) {

@@ -16,7 +16,6 @@ import java.awt.*;
 public class CeldaEditor extends DefaultCellEditor {
     public static CeldaEditor make(String currentContent) {
         JTextField field = new JTextField();
-        field.setBorder(null);
 
         return new CeldaEditor(field);
     }

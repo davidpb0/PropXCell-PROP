@@ -71,7 +71,7 @@ public class PantallaInicial extends JFrame {
 
                 int f = Integer.parseInt(tfFilas.getText());
                 int c = Integer.parseInt(tfColumnas.getText());
-                cd.crearDocumento();
+                cd.crearDocumento(f, c);
                 //pasar a la siguiente vista
 
                 setVisible(false);
