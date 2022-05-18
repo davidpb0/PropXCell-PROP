@@ -33,11 +33,13 @@ public class ControladorDocumento {
 
     /**
      * Cierra el documento actual y abre uno nuevo.
+     * @param filas numero de filas para la hoja del documento
+     * @param columnas numero de columnas para la hoja del documento
      */
-    public void crearDocumento() {
+    public void crearDocumento(int filas, int columnas) {
         cerrarDocumento();
         documento_ref = Documento.getDocumento();
-        if (documento_ref.getNumHojas() == 0) documento_ref.inicializaDocumento("Documento sin título", 50, 50);
+        if (documento_ref.getNumHojas() == 0) documento_ref.inicializaDocumento("Documento sin título", filas, columnas);
     }
 
     /**
