@@ -7,7 +7,7 @@ package main.Domain.DomainModel;
  * Author David Perez Barroso
  */
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -334,29 +334,24 @@ public class Hoja implements Serializable {
      * misma fila separados por ";" y separacion de filas con un espacio en blanco
      * @return Devuelve un ArrayList de String con todos los valores de las celdas de las Hojas
      */
-    public ArrayList<String> transformaCSV(){
+    public ArrayList<String> transformaCSV() {
         ArrayList<String> csv = new ArrayList<>();
-
         int f = this.filas;
         int c = this.columnas;
-        String aux = "";
+        String linea;
 
-        for(int i = 1; i <= f; ++i){
-            aux= "";
-            for(int j = 1; j <= c; ++j) {
-                if (j == c) aux += this.celdas.get(new Posicion(i, j)).getValor()+ " ";
-                else {
-                    aux += this.celdas.get(new Posicion(i, j)).getValor() + ";";
-                }
+        for (int i = 1; i <= f; ++i) {
+            linea = "";
+            for (int j = 1; j <= c; ++j) {
+                Posicion p = new Posicion(i, j);
+                Celda celda = this.getCelda(p);
+                if (!celda.getValor().equals("")) linea += celda.getValor() + ";";
+                if (j == c && !linea.equals("")) linea = linea.substring(0, linea.length() - 1);
             }
-            csv.add(aux);
+            if (!linea.equals("")) csv.add(linea);
         }
-
         return csv;
     }
-
-
-
 
 
 }
