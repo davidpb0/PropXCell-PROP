@@ -36,7 +36,7 @@ public class ObtenerNombreDia extends Funcion{
         /*Dado que DayOfWeek nos devuelve el dia en ingles, utilizaremos estas dos estructuras de datos para
         traducirlos al castellano*/
 
-        String dyn[] = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
+        String dyn[] = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
         HashMap<Integer, String> dias = new HashMap<>();
 
         for(int i = 0; i < 7; ++i){
@@ -53,7 +53,7 @@ public class ObtenerNombreDia extends Funcion{
         Month m = months[mt-1];
         int dy = Integer.parseInt(dp[0]);
 
-        if(dy >= 0 && y >= 0 && (mt > 0 && mt < 12)) {
+        if(dy >= 0 && y >= 0 && (mt > 0 && mt <= 12)) {
             try {
                 return dias.get(LocalDate.of(y, m, dy).getDayOfWeek().getValue());
             } catch (Exception e) {

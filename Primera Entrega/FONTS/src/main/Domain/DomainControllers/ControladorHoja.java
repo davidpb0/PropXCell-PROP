@@ -262,9 +262,11 @@ public class ControladorHoja {
     /**
      * Escribe el contenido que le pasan en la celda, si es una funcion, llama a la funcion correspondiente y ademas
      * escribe su valor en la celda
-     * @param _content contenido a escribir en la celda
+     * @param _cont contenido a escribir en la celda
      */
-    public void escribirContenido(String _content) throws Exception {
+    public void escribirContenido(String _cont) throws Exception {
+
+        String _content = _cont.replaceAll(" ", "");
         this.celdaRef.setContenido(_content);
 
         String type = Traductor.detecta(_content);
@@ -610,8 +612,19 @@ public class ControladorHoja {
 
                 //Se cogen los argumentos necesarios para realizar la operacion
                 argm = Traductor.getArgumentosFuncionNaria(_content);
-                arg1 = argm.get(0);
-                arg2 = argm.get(1);
+
+                arg1 = new String[argm.size()/2];
+                arg2 = new String[argm.size()/2];
+
+                for(int i = 0; i < argm.size(); ++i){
+                    if (i < argm.size()/2) {
+                        arg1[i] = String.valueOf(argm.get(i)[0]);
+                    }
+                    else arg2[i - argm.size()/2] = String.valueOf(argm.get(i)[0]);
+
+
+
+                }
                 arg3 = argm.get(2);
 
                 //Se comprueba que el numero de argumentos sea el correcto
