@@ -526,13 +526,13 @@ public class ControladorHoja {
                     break;
                 }
 
-                ObtenerDia od = new ObtenerDia(arg[0]);
-                String s11 = od.execute();
+                ObtenerNombreDia ond = new ObtenerNombreDia(arg[0]);
+                String s11 = ond.execute();
 
                 this.celdaRef.setValor(s11);
                 break;
 
-            case "#NDIA": // =nombredia()
+            case "#DIA": // =dia()
 
                 //Se cogen los argumentos necesarios para realizar la operacion
                 arg = Traductor.getArgumentosFuncion1aria(_content);
@@ -546,8 +546,8 @@ public class ControladorHoja {
                     break;
                 }
 
-                ObtenerNombreDia ond = new ObtenerNombreDia(arg[0]);
-                String s12 = ond.execute();
+                ObtenerDia od = new ObtenerDia(arg[0]);
+                String s12 = od.execute();
 
                 this.celdaRef.setValor(s12);
                 break;

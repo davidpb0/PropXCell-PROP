@@ -103,7 +103,7 @@ public class Traductor {
             else if (_formula.indexOf("=mes(") == 0) return "#MES";
             else if (_formula.indexOf("=año(") == 0) return "#AÑO";
             else if (_formula.indexOf("=diasemana(") == 0) return "#DIAS";
-            else if (_formula.indexOf("=nombredia(") == 0) return "#NDIA";
+            else if (_formula.indexOf("=dia(") == 0) return "#DIA";
             else if (_formula.indexOf("=longitud(") == 0) return "#LONG";
             else if (_formula.indexOf("=media(") == 0) return "#MEDIA";
             else if (_formula.indexOf("=mediana(") == 0) return "#MEDIANA";
@@ -172,7 +172,7 @@ public class Traductor {
      */
     public static String[] getArgumentosFuncion1aria(String _funcion) throws Exception {
         Hoja h = ControladorDominio.getControladorDominio().getControladorHoja().getHojaRef();
-        String f = _funcion;
+        String f;
         if (_funcion.startsWith("=") && _funcion.charAt(1) != '$') f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')'));
         else throw new Exception("Argumento erróneo, el string proporcionado tiene que ser de tipo =func(arg). String actual: " + _funcion);
         ArrayList<String> ret = new ArrayList<>();

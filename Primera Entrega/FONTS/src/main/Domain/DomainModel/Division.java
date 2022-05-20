@@ -31,10 +31,10 @@ public class Division extends Funcion{
         //Convertimos el array de Strings a array de Double
         double[] valores = Arrays.stream(this.valores).mapToDouble(Double::parseDouble).toArray();
 
-        double resultado = 0;
-        for (double v : valores) {
-            if (v == 0 && valores[0] != v) return "ERRORDIV: Denominador = 0";
-            resultado /= v;
+        double resultado = valores[0];
+        for (int i = 1; i < valores.length; ++i) {
+            if (valores[i] == 0) return "ERRORDIV: Denominador = 0";
+            resultado /= valores[i];
         }
 
         return String.valueOf(resultado);
