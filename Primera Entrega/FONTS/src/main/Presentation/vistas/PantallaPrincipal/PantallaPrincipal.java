@@ -5,7 +5,6 @@ import main.Domain.DomainModel.Documento;
 import main.Domain.DomainModel.Hoja;
 import main.Presentation.vistas.PantallaPrincipal.ContextMenus.HojasCtxMenu;
 import main.Presentation.vistas.PantallaPrincipal.Tabla.Tabla;
-import main.Presentation.vistas.PantallaPrincipal.Tabla.TablaListener;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -13,10 +12,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Objects;
 
 /*
@@ -231,7 +227,7 @@ public class PantallaPrincipal extends JFrame {
                 this.editar.add(j);
             }
         }
-        String[] insertarOpciones = {"Filas", "Columnas", "Separador", "Función"};
+        String[] insertarOpciones = {"Filas", "Columnas", "Separador"};
         for (String s : insertarOpciones) {
             if (s.equals("Separador")) this.insertar.addSeparator();
             else if (s.equals("Filas") || s.equals("Columnas")) {
