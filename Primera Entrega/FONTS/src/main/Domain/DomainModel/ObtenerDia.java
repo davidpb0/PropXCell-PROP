@@ -30,9 +30,10 @@ public class ObtenerDia extends Funcion{
     public String execute() {
         String dp[] = this.fecha.split("/");
         String d = dp[0];
+        if (d.length() == 2 && d.charAt(0) == '0') d = String.valueOf(d.charAt(1));
 
         int dy = Integer.parseInt(d);
-        if(dy >= 0) return d;
+        if(dy > 0) return d;
         else return "#ERROR";
     }
 }
