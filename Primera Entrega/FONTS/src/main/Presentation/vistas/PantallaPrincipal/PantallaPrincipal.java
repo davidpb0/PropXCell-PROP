@@ -227,7 +227,7 @@ public class PantallaPrincipal extends JFrame {
                 this.editar.add(j);
             }
         }
-        String[] insertarOpciones = {"Filas", "Columnas", "Separador"};
+        String[] insertarOpciones = {"Filas", "Columnas"};
         for (String s : insertarOpciones) {
             if (s.equals("Separador")) this.insertar.addSeparator();
             else if (s.equals("Filas") || s.equals("Columnas")) {
