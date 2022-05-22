@@ -148,8 +148,6 @@ public class Traductor {
      */
     public static Celda traduceCelda(String _pos) throws Exception {
         Celda c;
-        Documento d = Documento.getDocumento();
-        if(d.getNombre().isEmpty()) d.inicializaDocumentoDefault("Doc1");
         Hoja h = ControladorDominio.getControladorDominio().getControladorHoja().getHojaRef();
         String s = _pos;
         if (_pos.startsWith("=$")) s = _pos.substring(2);
