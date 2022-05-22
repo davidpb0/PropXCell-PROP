@@ -21,22 +21,22 @@ import java.io.File;
  */
 public class PantallaInicial extends JFrame {
 
-    public JPanel principal;
-    public JPanel panelizq;
-    public JButton bteliminarDoc;
-    public JButton BotonCrearDoc;
-    public JButton btCargarDoc;
-    public JButton BotonHome;
-    public JLabel titulo;
-    public JButton btclose;
-    public JTextPane descripción;
-    public JButton crearButton;
-    public JTextField tfFilas;
-    public JTextField tfColumnas;
-    public JLabel lbFilas;
-    public JPanel panelCrearDoc;
-    public JLabel lbColumnas;
-    public JLabel lbDoc;
+    private JPanel principal;
+    private JPanel panelizq;
+    private JButton bteliminarDoc;
+    private JButton BotonCrearDoc;
+    private JButton btCargarDoc;
+    private JButton BotonHome;
+    private JLabel titulo;
+    private JButton btclose;
+    private JTextPane descripción;
+    private JButton crearButton;
+    private JTextField tfFilas;
+    private JTextField tfColumnas;
+    private JLabel lbFilas;
+    private JPanel panelCrearDoc;
+    private JLabel lbColumnas;
+    private JLabel lbDoc;
 
     private ControladorDocumento cd;
     private ControladorPresentacion cp;
@@ -121,6 +121,8 @@ public class PantallaInicial extends JFrame {
                     System.out.println(doc.getAbsolutePath());
                     System.out.println(doc.getName());
                     // cd.cargaDocumento(doc.getAbsolutePath());
+
+                    //cambiar vista
 
                 }
             }
