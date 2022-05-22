@@ -127,6 +127,16 @@ public class Documento implements Serializable {
 
 
     /**
+     * Añada una Hoja al documento con los valores por defecto, se le asigna un identificador autmaticamente
+     */
+    public void añadeHojaDf(){
+        Hoja h = new Hoja();
+        h.añadeNombreIdHojaDefault(hojasContenidas.size()+1);
+        this.hojasContenidas.put(hojasContenidas.size()+1, h);
+        recalculaNumHojas();
+    }
+
+    /**
      * Añada una Hoja al documento con los valores dados, se le asigna un identificador autmaticamente
      * @param _f numero de filas que tendra la hoja
      * @param _c numero de columnas que tendra la hoja
