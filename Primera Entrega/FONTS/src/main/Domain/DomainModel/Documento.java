@@ -10,7 +10,7 @@ import java.util.HashMap;
 /*
  * ClassName DomainModel.Documento
  *
- * Version info 1.0.1
+ * Version info 1.0.2
  *
  * Author David Pérez Barroso
  */
@@ -71,18 +71,6 @@ public class Documento implements Serializable {
 
 
 
-    /**
-     * Inicializa el documento con una Hoja con los valores fila y columnas por defecto
-     * @param _nombre sera el nombre del documento
-     */
-    public void inicializaDocumentoDefault(String _nombre){
-        this.nombre = _nombre;
-
-        DateTimeFormatter fm = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        this.fechaCreacion = LocalDateTime.now().format(fm);
-
-        añadeHojaDf();
-    }
 
 
     /**
@@ -136,8 +124,10 @@ public class Documento implements Serializable {
         this.numHojas = this.hojasContenidas.size();
     }
 
+
+
     /**
-     * Añade una Hoja con los valores por defecto al documento
+     * Añada una Hoja al documento con los valores por defecto, se le asigna un identificador autmaticamente
      */
     public void añadeHojaDf(){
         Hoja h = new Hoja();
@@ -185,18 +175,4 @@ public class Documento implements Serializable {
         this.hojasContenidas = null;
     }
 
-
-    /**
-     * Transforma en csv todas las hojas del documento
-     * @return Devuelve un ArrayList con ArrayList de strings que representan los csv de las hojas.
-     */
-    public ArrayList<ArrayList<String>> convierteCSV(){
-
-        ArrayList<ArrayList<String>> doccsv = new ArrayList<>();
-
-        this.hojasContenidas.forEach((K,V)-> doccsv.add(V.transformaCSV()));
-
-        return doccsv;
-
-    }
 }
