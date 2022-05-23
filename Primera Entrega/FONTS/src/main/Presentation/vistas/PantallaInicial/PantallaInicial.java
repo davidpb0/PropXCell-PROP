@@ -28,7 +28,6 @@ public class PantallaInicial extends JFrame {
     private JButton btCargarDoc;
     private JButton BotonHome;
     private JLabel titulo;
-    private JButton btclose;
     private JTextPane descripción;
     private JButton crearButton;
     private JTextField tfFilas;

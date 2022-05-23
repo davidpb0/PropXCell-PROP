@@ -353,5 +353,34 @@ public class Hoja implements Serializable {
         return csv;
     }
 
+    public Hoja csvAHoja(ArrayList<String> csv){
+
+        String[] col = csv.get(0).split(";");
+        int f = csv.size();
+        int c = col.length;
+
+        Hoja h;
+        String[] linea;
+
+        if(f >= 50 || c >= 50) h = new Hoja(f, c);
+
+        else h = new Hoja();
+
+        for (int i = 0; i < f; ++i) {
+            linea = csv.get(i).split(";");
+
+            for (int j = 0; j < c; ++j) {
+
+                Posicion p = new Posicion(i+1, j+1);
+                Celda celda = this.getCelda(p);
+
+                celda.setValor(linea[j]);
+                celda.setContenido(linea[j]);
+            }
+        }
+
+        return h;
+    }
+
 
 }

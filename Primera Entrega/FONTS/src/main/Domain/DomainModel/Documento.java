@@ -175,4 +175,15 @@ public class Documento implements Serializable {
         this.hojasContenidas = null;
     }
 
+
+    public void leeCSV(ArrayList<String> csv){
+
+        Hoja h = null;
+        h = h.csvAHoja(csv);
+        h.añadeNombreIdHojaDefault(hojasContenidas.size()+1);
+        this.hojasContenidas.put(hojasContenidas.size()+1, h);
+        recalculaNumHojas();
+
+    }
+
 }

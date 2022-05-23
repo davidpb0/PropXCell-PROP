@@ -110,7 +110,7 @@ public class DocumentoTest {
         d = Documento.getDocumento();
 
         when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
-        d.inicializaDocumentoDefault("Doc1");
+        //d.inicializaDocumentoDefault("Doc1");
 
         String s = d.getNombre();
 
@@ -163,7 +163,7 @@ public class DocumentoTest {
 
         when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
 
-        d.inicializaDocumentoDefault("Doc1");
+        //d.inicializaDocumentoDefault("Doc1");
 
         int n = d.getNumHojas();
 
@@ -190,7 +190,7 @@ public class DocumentoTest {
         d = Documento.getDocumento();
 
         when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
-        d.inicializaDocumentoDefault("Doc1");
+        //d.inicializaDocumentoDefault("Doc1");
 
         Hoja h =  d.getHoja(1);
 
@@ -214,7 +214,7 @@ public class DocumentoTest {
         d = Documento.getDocumento();
 
         when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
-        d.inicializaDocumentoDefault("Doc1");
+        //d.inicializaDocumentoDefault("Doc1");
 
         Hoja h =  d.getHoja(2);
 
@@ -238,7 +238,7 @@ public class DocumentoTest {
     public void getNombreTest(){
         d = Documento.getDocumento();
         when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
-        d.inicializaDocumentoDefault("Doc1");
+        //d.inicializaDocumentoDefault("Doc1");
 
         assertEquals("Doc1", d.getNombre());
 
@@ -264,7 +264,7 @@ public class DocumentoTest {
 
         d = Documento.getDocumento();
 
-        d.inicializaDocumentoDefault("Doc1");
+        //d.inicializaDocumentoDefault("Doc1");
 
         assertEquals(exp, d.getFecha());
 
@@ -288,7 +288,7 @@ public class DocumentoTest {
         d = Documento.getDocumento();
 
         when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
-        d.inicializaDocumentoDefault("Doc1");
+        //d.inicializaDocumentoDefault("Doc1");
 
         HashMap<Integer, Hoja> hc = d.getHojasContenidas();
         int s = hc.size();
@@ -389,7 +389,7 @@ public class DocumentoTest {
         when(hoja.añadeNombreIdHojaDefault(isA(Integer.class))).thenReturn(true);
 
         d = Documento.getDocumento();
-        d.inicializaDocumentoDefault("Doc1");
+        //d.inicializaDocumentoDefault("Doc1");
 
         d.eliminaHoja(1);
 
