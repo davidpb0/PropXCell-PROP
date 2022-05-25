@@ -61,8 +61,6 @@ public class PantallaPrincipal extends JFrame {
     public PantallaPrincipal(ControladorDominio _cd) throws Exception {
         setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getResource("/main/Presentation/imagenes/icons8-ms-excel-80.png"))).getImage());
         this.cd = _cd;
-        // cd.getControladorDocumento().crearDocumento();
-        cd.getControladorDocumento().crearDocumento(50, 50);
         Documento doc = cd.getControladorDocumento().getDocumento();
         init(doc);
         configuraHerramientas();
