@@ -210,13 +210,11 @@ public class Traductor {
         ArrayList<String[]>ret = new ArrayList<>();
         String f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')'));
         String[] args = f.split(",");
-        //if (args.length < 2) return null;
 
         for (String arg : args) {
+            arg = arg.strip();
             if (arg.contains(":")) { //$A1:$B1
                 String[] s = arg.split(":");
-                Celda principioC = traduceCelda(s[0]);
-                Celda finalC = traduceCelda(s[1]);
                 ArrayList<Celda> celdas = ControladorDominio.getControladorDominio().getControladorHoja().getHojaRef().getColumnaFila(s[0], s[1]);
 
                 String[] argsI = new String[celdas.size()];
