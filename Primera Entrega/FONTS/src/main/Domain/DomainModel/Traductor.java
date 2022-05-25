@@ -170,11 +170,11 @@ public class Traductor {
      */
     public static String[] getArgumentosFuncion1aria(String _funcion) throws Exception {
         Hoja h = ControladorDominio.getControladorDominio().getControladorHoja().getHojaRef();
-        String f;
+        String f = _funcion;
         if (_funcion.startsWith("=") && _funcion.charAt(1) != '$') f = _funcion.substring(_funcion.indexOf('(') + 1, _funcion.lastIndexOf(')'));
         else throw new Exception("Argumento erróneo, el string proporcionado tiene que ser de tipo =func(arg). String actual: " + _funcion);
         ArrayList<String> ret = new ArrayList<>();
-
+        f = f.strip();
 
         if ((f.startsWith("$") || f.startsWith("=$")) && f.length() <= 6) { // Como mucho $AA11
             String pos = f.startsWith("=$") ? f.substring(1, f.length() - 1) : f;
