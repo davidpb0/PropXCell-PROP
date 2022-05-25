@@ -10,6 +10,7 @@ package main.Domain.DomainControllers;
 import main.Domain.DomainModel.Documento;
 import main.Domain.DomainModel.Hoja;
 import main.Persistence.PersistenceControllers.ControladorDocumentoPersistencia;
+import main.Persistence.PersistenceControllers.ControladorPersistencia;
 
 
 public class ControladorDocumento {
@@ -37,7 +38,10 @@ public class ControladorDocumento {
      * @param columnas numero de columnas para la hoja del documento
      */
     public void crearDocumento(int filas, int columnas) {
-        cerrarDocumento();
+        if (documento_ref != null) {
+            documento_ref.eliminaDocumento();
+            cerrarDocumento();
+        }
         documento_ref = Documento.getDocumento();
         if (documento_ref.getNumHojas() == 0) documento_ref.inicializaDocumento("Documento sin título", filas, columnas);
     }
@@ -101,16 +105,24 @@ public class ControladorDocumento {
     }
 
     public void guardarDocumento(String _path) {
-        //ControladorDocumentoPersistencia cdp = ControladorDocumentoPersistencia.getCtrlDocPers();
+        ControladorDocumentoPersistencia cdp = ControladorPersistencia.getControladorPersistencia().getControladorDocumentoPersistenciaRef();
+        try {
+            cdp.almacenaDocumento(documento_ref, _path + "/" + this.documento_ref.getNombre() + ".prop");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        //cdp.almacenaDocumento(this.documento_ref, _path + this.documento_ref.getNombre() + ".prop");
         //this.documento_ref = null; // Esto seria solo si queremos Guardar y Cerrar, no?
     }
 
     public void cargaDocumento(String _path) {
-        //ControladorDocumentoPersistencia cdp = ControladorDocumentoPersistencia.getCtrlDocPers();
+        ControladorDocumentoPersistencia cdp = ControladorPersistencia.getControladorPersistencia().getControladorDocumentoPersistenciaRef();
 
-        //this.documento_ref = cdp.gargaDocumento(_path);
+        try {
+            this.documento_ref = cdp.cargaDocumento(_path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

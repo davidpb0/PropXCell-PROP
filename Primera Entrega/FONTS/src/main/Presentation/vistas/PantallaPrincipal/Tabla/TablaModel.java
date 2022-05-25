@@ -1,7 +1,12 @@
 package main.Presentation.vistas.PantallaPrincipal.Tabla;
 
 
+import main.Domain.DomainControllers.ControladorDominio;
+import main.Persistence.PersistenceControllers.ControladorPersistencia;
+import main.Presentation.ControladorPresentacion;
+
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +21,20 @@ import java.util.List;
 public class TablaModel extends AbstractTableModel {
 
     List<List<String>> valores = new ArrayList<>();
+    private final int rows;
+    private final int cols;
 
-    public TablaModel(int rows, int cols) {
-        for (int i = 0; i < rows; i++) {
+    public TablaModel(int rows, int cols, ControladorDominio cd) {
+        this.rows = rows;
+        this.cols = cols;
+        for (int i = 1; i <= rows; i++) {
             List<String> v = new ArrayList<>();
-            for (int j = 0; j < cols; j++) {
+            for (int j = 1; j <= cols; j++) {
+                if (cd.getControladorHoja().getHojaRef() != null) {
+                    cd.getControladorHoja().asignaCelda(i+"", j+"");
+                    v.add(cd.getControladorHoja().getCeldaRef().getValor());
+                    continue;
+                }
                 v.add("");
             }
             valores.add(v);
@@ -69,4 +83,5 @@ public class TablaModel extends AbstractTableModel {
         valores.get(rowIndex).set(columnIndex-1, aValue.toString());
         fireTableCellUpdated(rowIndex, columnIndex);
     }
+
 }

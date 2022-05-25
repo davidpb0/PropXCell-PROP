@@ -8,6 +8,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import java.awt.*;
@@ -38,6 +39,9 @@ public class Tabla extends JPanel implements TableModelListener {
 
     private String currentContent;
 
+    private int rows;
+    private int cols;
+
     public Tabla(JTextField fxField, ControladorDominio _cd, int _idH) {
         super(new GridLayout(1,0));
         this.fxField = fxField;
@@ -51,11 +55,18 @@ public class Tabla extends JPanel implements TableModelListener {
         this.fxField = fxField;
         this.cd = _cd;
         this.idH = _idH;
+        this.rows = rows;
+        this.cols = cols;
         init(rows, cols);
     }
 
     public void init(int rows, int cols) {
-        table = new JTable(new TablaModel(rows, cols));
+        try {
+            cd.getControladorHoja().asignaHoja(idH);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        table = new JTable(new TablaModel(rows, cols, cd));
 
         table.getTableHeader().setReorderingAllowed(false);
 
@@ -171,32 +182,6 @@ public class Tabla extends JPanel implements TableModelListener {
         table.getModel().setValueAt(cont, selectedRowEnd, selectedColumnEnd);
     }
 
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
-    private static void createAndShowGUI() {
-        //Create and set up the window.
-        JFrame frame = new JFrame("Tabla");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //Create and set up the content pane.
-        Tabla newContentPane = new Tabla(25, 25, new JTextField(), ControladorDominio.getControladorDominio(), 0);
-        newContentPane.setOpaque(true); //content panes must be opaque
-        frame.setContentPane(newContentPane);
-
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(Tabla::createAndShowGUI);
-    }
-
     public TablaListener getTl() {
         return tl;
     }
@@ -219,5 +204,8 @@ public class Tabla extends JPanel implements TableModelListener {
 
     public int getIdH() {
         return idH;
+    }
+
+    public void añadirFila() {
     }
 }

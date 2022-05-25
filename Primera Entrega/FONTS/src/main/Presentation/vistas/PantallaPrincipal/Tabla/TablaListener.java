@@ -14,7 +14,7 @@ import java.beans.PropertyChangeListener;
  */
 
 public class TablaListener implements PropertyChangeListener, Runnable {
-    private JTable table;
+    private final JTable table;
     private Action action;
 
     private int fila;
@@ -84,7 +84,7 @@ public class TablaListener implements PropertyChangeListener, Runnable {
         action.actionPerformed(new ActionEvent(
                 tl,
                 ActionEvent.ACTION_PERFORMED,
-                "startEditting"
+                "startEditing"
         ));
     }
 
