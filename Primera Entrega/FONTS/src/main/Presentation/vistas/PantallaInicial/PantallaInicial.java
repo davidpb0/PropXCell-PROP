@@ -117,11 +117,16 @@ public class PantallaInicial extends JFrame {
                 File doc = jf.getSelectedFile();
 
                 if (doc != null) {
-                    System.out.println(doc.getAbsolutePath());
-                    System.out.println(doc.getName());
-                    // cd.cargaDocumento(doc.getAbsolutePath());
+                    cd.cargaDocumento(doc.getAbsolutePath());
 
-                    //cambiar vista
+                    setVisible(false);
+                    PantallaPrincipal pp = null;
+                    try {
+                        pp = cp.getPantallaPrincipal();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    pp.setVisible(true);
 
                 }
             }
@@ -140,7 +145,11 @@ public class PantallaInicial extends JFrame {
                 if (docbr != null){
                     File fl = new File(docbr.getAbsolutePath());
 
-                    int result = JOptionPane.showConfirmDialog(principal, "¿Está seguro que desea eliminar el archivo seleccionado?");
+                    int result = JOptionPane.showConfirmDialog(principal,
+                            "¿Está seguro que desea eliminar el archivo seleccionado?",
+                            "¿Eliminar documento?",
+                            JOptionPane.WARNING_MESSAGE,
+                            JOptionPane.WARNING_MESSAGE);
                     if (result == 0 && fl.exists() && fl.delete()){
                         JOptionPane.showMessageDialog(principal, "Archivo borrado correctamente");
                     }

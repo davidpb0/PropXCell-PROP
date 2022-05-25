@@ -262,11 +262,10 @@ public class ControladorHoja {
     /**
      * Escribe el contenido que le pasan en la celda, si es una funcion, llama a la funcion correspondiente y ademas
      * escribe su valor en la celda
-     * @param _cont contenido a escribir en la celda
+     * @param _content contenido a escribir en la celda
      */
-    public void escribirContenido(String _cont) throws Exception {
+    public void escribirContenido(String _content) throws Exception {
 
-        String _content = _cont.replaceAll(" ", "");
         this.celdaRef.setContenido(_content);
 
         String type = Traductor.detecta(_content);
