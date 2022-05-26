@@ -355,6 +355,7 @@ public class Hoja implements Serializable {
 
     public Hoja csvAHoja(ArrayList<String> csv){
 
+        if (csv.size() == 0) return new Hoja();
         String[] col = csv.get(0).split(";");
         int f = csv.size();
         int c = col.length;
@@ -372,7 +373,7 @@ public class Hoja implements Serializable {
             for (int j = 0; j < c; ++j) {
 
                 Posicion p = new Posicion(i+1, j+1);
-                Celda celda = this.getCelda(p);
+                Celda celda = h.getCelda(p);
 
                 celda.setValor(linea[j]);
                 celda.setContenido(linea[j]);

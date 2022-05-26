@@ -178,7 +178,7 @@ public class Documento implements Serializable {
 
     public void leeCSV(ArrayList<String> csv){
 
-        Hoja h = null;
+        Hoja h = new Hoja();
         h = h.csvAHoja(csv);
         h.añadeNombreIdHojaDefault(hojasContenidas.size()+1);
         this.hojasContenidas.put(hojasContenidas.size()+1, h);

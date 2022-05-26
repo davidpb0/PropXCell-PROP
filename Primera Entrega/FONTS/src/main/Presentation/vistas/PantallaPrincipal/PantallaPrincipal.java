@@ -3,6 +3,7 @@ package main.Presentation.vistas.PantallaPrincipal;
 import main.Domain.DomainControllers.ControladorDominio;
 import main.Domain.DomainModel.Documento;
 import main.Domain.DomainModel.Hoja;
+import main.Domain.DomainModel.Posicion;
 import main.Presentation.ControladorPresentacion;
 import main.Presentation.vistas.PantallaPrincipal.ContextMenus.HojasCtxMenu;
 import main.Presentation.vistas.PantallaPrincipal.Tabla.Tabla;
@@ -23,7 +24,7 @@ import java.util.Objects;
 /*
  * Vista Principal
  *
- * v0.0.5
+ * v0.0.6
  *
  * Joaquim Torra Garcia
  */
@@ -133,20 +134,9 @@ public class PantallaPrincipal extends JFrame {
 
     public void configuraHerramientas() {
         String[] archivoOpciones = {"Nuevo Documento", "Cargar Documento", "Guardar Documento", "Separador", "Nueva Hoja", "Eliminar Hoja", "Renombrar Hoja", "Separador",
-                "Importar/Exportar", "Separador", "Detalles", "Salir"};
+                "Importar CSV", "Exportar CSV", "Separador", "Detalles", "Salir"};
         for (String s : archivoOpciones) {
             if (s.equals("Separador")) this.archivo.addSeparator();
-            else if (s.equals("Importar/Exportar")) {
-                JMenu submenu = new JMenu(s);
-                submenu.getAccessibleContext().setAccessibleName(s);
-                JMenuItem m = new JMenuItem("Nueva Hoja(CSV)");
-                submenu.add(m);
-                m = new JMenuItem("Importar Hoja(CSV)");
-                submenu.add(m);
-                m = new JMenuItem("Exportar Hoja(CSV)");
-                submenu.add(m);
-                this.archivo.add(submenu);
-            }
             else {
                 JMenuItem j = new JMenuItem(s);
                 j.addActionListener(new ActionListener() {
@@ -187,7 +177,6 @@ public class PantallaPrincipal extends JFrame {
 
                                 break;
                             case "guardar documento":
-                                jf.setFileFilter(filtro);
                                 jf.setCurrentDirectory(new File("."));
                                 jf.setDialogTitle("Guardar Archivo...");
                                 jf.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -273,6 +262,43 @@ public class PantallaPrincipal extends JFrame {
                                     cd.getControladorHoja().asignaHoja(idH);
                                 } catch (Exception ex) {
                                     ex.printStackTrace();
+                                }
+                                break;
+                            case "importar csv":
+                                filtro = new FileNameExtensionFilter("Archivos csv (.csv)", "csv");
+                                jf.setFileFilter(filtro);
+                                jf.setCurrentDirectory(new File("."));
+                                jf.setDialogTitle("Importar CSV...");
+                                jf.setAcceptAllFileFilterUsed(false);
+                                if (jf.showOpenDialog(principal) == JFileChooser.APPROVE_OPTION) {
+                                    File f = jf.getSelectedFile();
+                                    cd.getControladorDocumento().cargaCSV(f.toString());
+                                    try {
+                                        cd.getControladorHoja().asignaHoja(cd.getControladorDocumento().getNumHojas());
+                                        cd.getControladorHoja().renombraHoja(f.getName().replace(".csv", ""));
+                                        creaHoja(
+                                                cd.getControladorHoja().getHojaRef().getFilas(),
+                                                cd.getControladorHoja().getHojaRef().getColumnas(),
+                                                cd.getControladorHoja().getNombreHoja(),
+                                                cd.getControladorHoja().getIdHoja()-1
+                                        );
+                                    } catch (Exception ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }
+                                else {
+                                    System.out.println("No Selection ");
+                                }
+                                break;
+                            case "exportar csv":
+                                jf.setCurrentDirectory(new File("."));
+                                jf.setDialogTitle("Exportar CSV...");
+                                jf.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                                jf.setAcceptAllFileFilterUsed(false);
+                                if (jf.showOpenDialog(principal) == JFileChooser.APPROVE_OPTION) {
+                                    File f = jf.getSelectedFile();
+                                    String nombre = cd.getControladorHoja().getNombreHoja();
+                                    cd.getControladorHoja().exportarHoja(f.toString(), nombre);
                                 }
                                 break;
 

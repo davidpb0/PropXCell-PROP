@@ -9,6 +9,7 @@ package main.Domain.DomainControllers;
 
 import main.Domain.DomainModel.Documento;
 import main.Domain.DomainModel.Hoja;
+import main.Persistence.PersistenceControllers.ControladorCSV;
 import main.Persistence.PersistenceControllers.ControladorDocumentoPersistencia;
 import main.Persistence.PersistenceControllers.ControladorPersistencia;
 
@@ -120,6 +121,16 @@ public class ControladorDocumento {
 
         try {
             this.documento_ref = cdp.cargaDocumento(_path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void cargaCSV (String _path) {
+        try {
+            ControladorCSV ccsv = ControladorPersistencia.getControladorPersistencia().getControladorCSV();
+            ccsv.asignaLector(_path);
+            documento_ref.leeCSV(ccsv.cargaCSV());
         } catch (Exception e) {
             e.printStackTrace();
         }
