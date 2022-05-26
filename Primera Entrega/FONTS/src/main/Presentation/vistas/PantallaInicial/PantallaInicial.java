@@ -70,17 +70,27 @@ public class PantallaInicial extends JFrame {
 
                 int f = Integer.parseInt(tfFilas.getText());
                 int c = Integer.parseInt(tfColumnas.getText());
-                cd.crearDocumento(f, c);
-                //pasar a la siguiente vista
 
-                setVisible(false);
-                PantallaPrincipal pp = null;
-                try {
-                    pp = cp.getPantallaPrincipal();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+                if(f < 1 || c < 1){
+                    JOptionPane.showMessageDialog(principal,
+                            "Aseguresé que ha introducido un valor en filas o columnas mayor que 0",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+
                 }
-                pp.setVisible(true);
+                else {
+                    cd.crearDocumento(f, c);
+                    //pasar a la siguiente vista
+
+                    setVisible(false);
+                    PantallaPrincipal pp = null;
+                    try {
+                        pp = cp.getPantallaPrincipal();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    pp.setVisible(true);
+                }
 
                 //Esto es para probar que se crea correctamente
            /* System.out.println(cd.getDocumento().getNombre());
