@@ -175,7 +175,10 @@ public class Documento implements Serializable {
         this.hojasContenidas = null;
     }
 
-
+    /**
+     * Lee un ArrayList en el que hay un archivo csv en string y añade una hoja al documento con los valores que contiene
+     * @param csv ArrayList de String donde estan los valores del archivo csv
+     */
     public void leeCSV(ArrayList<String> csv){
 
         Hoja h = new Hoja();

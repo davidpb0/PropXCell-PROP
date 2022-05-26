@@ -36,6 +36,7 @@ public class ControladorPresentacion {
     public void iniciaPInicial(){
         this.pIni = new PantallaInicial();
         pIni.inicializaVista();
+        pIni.setLocationRelativeTo(null);
         pIni.setVisible(true);
     }
 }

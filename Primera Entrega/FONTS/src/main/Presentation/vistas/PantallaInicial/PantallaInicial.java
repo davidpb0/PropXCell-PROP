@@ -62,7 +62,7 @@ public class PantallaInicial extends JFrame {
         cp = new ControladorPresentacion();
 
         FileNameExtensionFilter filtro =
-                new FileNameExtensionFilter("Archivos prop, csv (.prop, .csv)", "prop", "csv");
+                new FileNameExtensionFilter("Archivos prop (.prop)", "prop");
 
         ActionListener crear = new ActionListener() {
             @Override

@@ -370,7 +370,7 @@ public class Hoja implements Serializable {
         for (int i = 0; i < f; ++i) {
             linea = csv.get(i).split(";");
 
-            for (int j = 0; j < c; ++j) {
+            for (int j = 0; j < linea.length; ++j) {
 
                 Posicion p = new Posicion(i+1, j+1);
                 Celda celda = h.getCelda(p);
