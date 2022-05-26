@@ -1,6 +1,8 @@
 package main.Domain.DomainControllers;
 
 import main.Domain.DomainModel.*;
+import main.Persistence.PersistenceControllers.ControladorCSV;
+import main.Persistence.PersistenceControllers.ControladorPersistencia;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -16,11 +18,6 @@ public class ControladorHoja {
 
     private Hoja hojaAct;
     private Celda celdaRef;
-
-    public enum Criterio {
-        ASCENDENTE,
-        DESCENDENTE
-    }
 
     public ControladorHoja() {}
 
@@ -1032,6 +1029,26 @@ public class ControladorHoja {
                 || Integer.parseInt(dp[2]) <= 0) return false;
 
         return true;
+    }
+
+    /**
+     * Exporta la hoja actual a CSV
+     * @param _path ruta donde se guardará el archvio CSV
+     * @param _name nombre del archivo CSV
+     */
+    public void exportarHoja(String _path, String _name){
+        ArrayList<String> csv = this.hojaAct.transformaCSV();
+
+        ControladorCSV clcsv = ControladorPersistencia.getControladorPersistencia().getControladorCSV();
+
+        clcsv.asignaEscritor(_path, csv);
+
+        try {
+            clcsv.escribeCSV(_name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
