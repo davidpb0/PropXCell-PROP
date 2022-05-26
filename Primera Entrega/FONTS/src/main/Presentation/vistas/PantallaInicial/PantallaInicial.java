@@ -73,7 +73,7 @@ public class PantallaInicial extends JFrame {
 
                 if(f < 1 || c < 1){
                     JOptionPane.showMessageDialog(principal,
-                            "Aseguresé que ha introducido un valor en filas o columnas mayor que 0",
+                            "Asegúrese que ha introducido un valor en filas o columnas mayor que 0",
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
 
