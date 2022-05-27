@@ -101,7 +101,7 @@ public class ControladorHoja {
         // Añadimos las nuevas filas
         for (int iterFilas = 0; iterFilas < _num; ++iterFilas) {
             for (int iterColums = 1; iterColums <= numColums; ++iterColums) {
-                hojaAct.addCeldaVacia(new Posicion(_pos + iterFilas, iterColums));
+                hojaAct.addCeldaVacia(new Posicion(_pos + iterFilas+1, iterColums));
 
             }
         }
@@ -130,7 +130,7 @@ public class ControladorHoja {
         // Añadimos las nuevas columnas
         for (int iterFilas = 1; iterFilas <= numFilas; ++iterFilas) {
             for (int iterColums = 0; iterColums < _num; ++iterColums) {
-                hojaAct.addCeldaVacia(new Posicion(iterFilas, _pos + iterColums));
+                hojaAct.addCeldaVacia(new Posicion(iterFilas, _pos + iterColums+1));
             }
         }
 

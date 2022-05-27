@@ -26,6 +26,7 @@ public class CeldaEditor extends DefaultCellEditor {
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+        if (column == 0) return null;
         return super.getTableCellEditorComponent(table, ControladorDominio.getControladorDominio().getControladorHoja().getCeldaRef().getContenido(), isSelected, row, column);
     }
 }
