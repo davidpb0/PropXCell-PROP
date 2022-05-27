@@ -33,7 +33,7 @@ public class Division extends Funcion{
 
         double resultado = valores[0];
         for (int i = 1; i < valores.length; ++i) {
-            if (valores[i] == 0) return "ERRORDIV: Denominador = 0";
+            if (valores[i] == 0) return "#ERRORDIV";
             resultado /= valores[i];
         }
 
