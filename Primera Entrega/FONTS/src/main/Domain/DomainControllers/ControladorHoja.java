@@ -609,18 +609,9 @@ public class ControladorHoja {
                 //Se cogen los argumentos necesarios para realizar la operacion
                 argm = Traductor.getArgumentosFuncionNaria(_content);
 
-                arg1 = new String[argm.size()/2];
-                arg2 = new String[argm.size()/2];
+                arg1 = argm.get(0);
+                arg2 = argm.get(1);
 
-                for(int i = 0; i < argm.size(); ++i){
-                    if (i < argm.size()/2) {
-                        arg1[i] = String.valueOf(argm.get(i)[0]);
-                    }
-                    else arg2[i - argm.size()/2] = String.valueOf(argm.get(i)[0]);
-
-
-
-                }
                 arg3 = argm.get(2);
 
                 //Se comprueba que el numero de argumentos sea el correcto

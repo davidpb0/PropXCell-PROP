@@ -271,9 +271,7 @@ public class Hoja implements Serializable {
 
             c.setPosicion(p);
 
-            //Comprobamos que ha cambiado a la posicon deseada
-            if (c.getPosicion() == p) return true;
-            return false;
+            return true;
         }
         //Si no existe, no hace nada y devuelve falso
         return false;
