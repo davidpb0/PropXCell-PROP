@@ -14,6 +14,7 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.Vector;
 
 /*
  * Tabla - Vista
@@ -28,7 +29,7 @@ public class Tabla extends JPanel implements TableModelListener {
     JTable table;
     JTextField fxField;
     ControladorDominio cd;
-    TableModel model;
+    DefaultTableModel model;
 
     private TablaListener tl;
 
@@ -68,21 +69,14 @@ public class Tabla extends JPanel implements TableModelListener {
         }
         table = new JTable(new TablaModel(rows, cols, cd));
 
+        model = (DefaultTableModel) table.getModel();
         table.getTableHeader().setReorderingAllowed(false);
 
         table.setDefaultEditor(Object.class, CeldaEditor.make(currentContent));
         table.setRowHeight(20);
 
-        TableColumn column = table.getColumnModel().getColumn(0);
-        column.setPreferredWidth(25);
-        column.setResizable(false);
-        column.setCellRenderer(new CeldaRenderer(new Color(240, 240, 240), Color.BLACK));
-        for (int i = 1; i < table.getColumnCount(); i++) {
-            column = table.getColumnModel().getColumn(i);
-            column.setPreferredWidth(100); //third column is bigger
-        }
+        resetColumnVista();
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        model = table.getModel();
         table.getModel().addTableModelListener(this);
 
         ListSelectionModel cellSelectionModel = table.getSelectionModel();
@@ -105,6 +99,7 @@ public class Tabla extends JPanel implements TableModelListener {
         tl = new TablaListener(table, new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (e.getActionCommand() == "startEditing") return;
                 Object data = model.getValueAt(selectedRowEnd, selectedColumnEnd);
                 enviarContenido(e, data.toString(), selectedRowEnd+1, selectedColumnEnd);
             }
@@ -206,6 +201,42 @@ public class Tabla extends JPanel implements TableModelListener {
         return idH;
     }
 
-    public void añadirFila() {
+    public void addRows (int num) {
+        for (int i = 0; i < num; i++)
+            model.addRow(new Vector<>());
     }
+
+    public void insertRow(int row) {
+        Vector<Object> rowData = new Vector<>();
+        for (int i = 0; i < cols; i++) {
+            rowData.add("");
+        }
+        model.insertRow(row, rowData);
+    }
+
+    public void addColumns (int num) {
+        for (int i = 0; i < num; i++)
+            model.addColumn("Nueva Columna");
+
+        resetColumnVista();
+    }
+
+    public void insertColumn(int col) {
+        this.addColumns(1);
+        table.moveColumn(table.getColumnCount()-1, 1);
+        resetColumnVista();
+    }
+
+    private void resetColumnVista () {
+        TableColumn column = table.getColumnModel().getColumn(0);
+        column.setPreferredWidth(25);
+        column.setResizable(false);
+        column.setCellRenderer(new CeldaRenderer(new Color(240, 240, 240), Color.BLACK));
+        for (int i = 1; i < table.getColumnCount(); i++) {
+            column = table.getColumnModel().getColumn(i);
+            column.setPreferredWidth(100);
+            column.setHeaderValue(model.getColumnName(i));
+        }
+    }
+
 }

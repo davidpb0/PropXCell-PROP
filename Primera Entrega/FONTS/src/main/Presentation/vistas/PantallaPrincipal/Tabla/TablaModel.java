@@ -9,6 +9,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 /*
  * Tabla - Model
@@ -18,17 +19,23 @@ import java.util.List;
  * Joaquim Torra Garcia
  */
 
-public class TablaModel extends AbstractTableModel {
+public class TablaModel extends DefaultTableModel {
 
-    List<List<String>> valores = new ArrayList<>();
-    private final int rows;
-    private final int cols;
+    private int rows;
+    private int cols;
+    private final ControladorDominio cd;
 
     public TablaModel(int rows, int cols, ControladorDominio cd) {
         this.rows = rows;
         this.cols = cols;
+        this.cd = cd;
+        init();
+    }
+
+    private void init () {
+        dataVector = new Vector<>();
         for (int i = 1; i <= rows; i++) {
-            List<String> v = new ArrayList<>();
+            Vector<String> v = new Vector<>();
             for (int j = 1; j <= cols; j++) {
                 if (cd.getControladorHoja().getHojaRef() != null) {
                     cd.getControladorHoja().asignaCelda(i+"", j+"");
@@ -37,18 +44,19 @@ public class TablaModel extends AbstractTableModel {
                 }
                 v.add("");
             }
-            valores.add(v);
+            dataVector.add(v);
         }
     }
 
     @Override
     public int getRowCount() {
-        return valores.size();
+        if (dataVector == null) return 0;
+        return dataVector.size();
     }
 
     @Override
     public int getColumnCount() {
-        return valores.get(0).size() + 1;
+        return dataVector.get(0).size() + 1;
     }
 
     @Override
@@ -57,7 +65,7 @@ public class TablaModel extends AbstractTableModel {
             return (rowIndex + 1) + "";
         }
         else
-            return valores.get(rowIndex).get(columnIndex-1);
+            return (String) dataVector.get(rowIndex).get(columnIndex-1);
     }
 
     @Override
@@ -80,8 +88,25 @@ public class TablaModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        valores.get(rowIndex).set(columnIndex-1, aValue.toString());
+        dataVector.get(rowIndex).set(columnIndex-1, aValue.toString());
         fireTableCellUpdated(rowIndex, columnIndex);
     }
 
+    @Override
+    public void addRow(Object[] rowData) {
+        this.rows++;
+        super.addRow(rowData);
+    }
+
+    @Override
+    public void insertRow(int row, Vector<?> rowData) {
+        this.rows++;
+        super.insertRow(row, rowData);
+    }
+
+    @Override
+    public void addColumn(Object columnName) {
+        this.cols++;
+        super.addColumn(columnName);
+    }
 }

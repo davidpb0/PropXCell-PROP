@@ -351,16 +351,55 @@ public class PantallaPrincipal extends JFrame {
             else if (s.equals("Filas") || s.equals("Columnas")) {
                 JMenu submenu = new JMenu(s);
                 JMenuItem m = new JMenuItem("Insertar " + s + "...");
+                m.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        int num = Integer.parseInt(JOptionPane.showInputDialog(
+                                Activity,
+                                "¿ Cuantas " + s.toLowerCase() + " quieres añadir?",
+                                "Añadir " + s.toLowerCase(),
+                                JOptionPane.PLAIN_MESSAGE
+                        ));
+                        if ( s.equals("Columnas") ) {
+                            cd.getControladorHoja().addColumnas(cd.getControladorHoja().getHojaRef().getColumnas(), num);
+                            tablas.get(tabbedPane1.getSelectedIndex()).addColumns(num);
+                        }
+
+                        if (s.equals("Filas")) {
+                            cd.getControladorHoja().addFilas(cd.getControladorHoja().getHojaRef().getFilas(), num);
+                            tablas.get(tabbedPane1.getSelectedIndex()).addRows(num);
+                        }
+                    }
+                });
                 submenu.add(m);
                 m = new JMenuItem("Insertar " + s.substring(0, s.length() - 1) + " delante...");
+                m.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if ( s.equals("Columnas") ) {
+                            cd.getControladorHoja().addColumnas(1, 1);
+                            tablas.get(tabbedPane1.getSelectedIndex()).insertColumn(0);
+                        }
+
+                        if (s.equals("Filas")) {
+                            cd.getControladorHoja().addFilas(1, 1);
+                            tablas.get(tabbedPane1.getSelectedIndex()).insertRow(0);
+                        }
+                    }
+                });
                 submenu.add(m);
                 m = new JMenuItem("Insertar " + s.substring(0, s.length() - 1) + " detrás...");
                 m.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if ( s.equals("Filas") ) {
+                        if ( s.equals("Columnas") ) {
+                            cd.getControladorHoja().addColumnas(cd.getControladorHoja().getHojaRef().getColumnas(), 1);
+                            tablas.get(tabbedPane1.getSelectedIndex()).addColumns(1);
+                        }
+
+                        if (s.equals("Filas")) {
                             cd.getControladorHoja().addFilas(cd.getControladorHoja().getHojaRef().getFilas(), 1);
-                            tablas.get(tabbedPane1.getSelectedIndex()).añadirFila();
+                            tablas.get(tabbedPane1.getSelectedIndex()).addRows(1);
                         }
                     }
                 });
