@@ -124,7 +124,7 @@ public class ControladorHoja {
         // Añadimos las nuevas columnas
         for (int i = 1; i <= _num; i++) {
             for (int j = 1; j <= numFilas; j++) {
-                hojaAct.addCeldaVacia(new Posicion(j, _pos + numColums + i));
+                hojaAct.addCeldaVacia(new Posicion(j,  numColums + i));
             }
         }
         // Movemos todas las columnas a la derecha de _pos _num posiciones
