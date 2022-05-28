@@ -91,20 +91,21 @@ public class ControladorHoja {
         int numFilas = hojaAct.getFilas();
         int numColums = hojaAct.getColumnas();
 
-        // Movemos todas las filas por encima de _pos _num posiciones 
-        for (int iterFilas = numFilas; iterFilas >= _pos; --iterFilas) {
-            for (int iterColums = 1; iterColums <= numColums; ++iterColums) {
-                hojaAct.cambiarPosicionCelda(new Posicion(iterFilas, iterColums), new Posicion(iterFilas + _num, iterColums));
-            }
-        }
-
         // Añadimos las nuevas filas
-        for (int iterFilas = 0; iterFilas < _num; ++iterFilas) {
-            for (int iterColums = 1; iterColums <= numColums; ++iterColums) {
-                hojaAct.addCeldaVacia(new Posicion(_pos + iterFilas+1, iterColums));
+        for (int i = 1; i <= _num; i++) {
+            for (int j = 1; j <= numColums; j++) {
+                hojaAct.addCeldaVacia(new Posicion(numFilas + i, j));
 
             }
         }
+
+        // Movemos todas las filas por encima de _pos _num posiciones
+        for (int i = numFilas; i >= 0; i--) {
+            for (int j = 1; j <= numColums; j++) {
+                hojaAct.cambiarPosicionCelda(new Posicion(i, j), new Posicion(i + _num, j));
+            }
+        }
+
 
         hojaAct.setFilas(numFilas + _num);
     }
@@ -120,19 +121,19 @@ public class ControladorHoja {
         int numFilas = hojaAct.getFilas();
         int numColums = hojaAct.getColumnas();
 
-        // Movemos todas las columnas a la derecha de _pos _num posiciones 
-        for (int iterFilas = 1; iterFilas <= numFilas; ++iterFilas) {
-            for (int iterColums = numColums; iterColums >= _pos; --iterColums) {
-                hojaAct.cambiarPosicionCelda(new Posicion(iterFilas, iterColums), new Posicion(iterFilas, iterColums + _num));
+        // Añadimos las nuevas columnas
+        for (int i = 1; i <= _num; i++) {
+            for (int j = 1; j <= numFilas; j++) {
+                hojaAct.addCeldaVacia(new Posicion(j, _pos + numColums + i));
+            }
+        }
+        // Movemos todas las columnas a la derecha de _pos _num posiciones
+        for (int i = numColums; i >= 0; i--) {
+            for (int j = 1; j <= numFilas; j++) {
+                hojaAct.cambiarPosicionCelda(new Posicion(j, i), new Posicion(j, i + _num));
             }
         }
 
-        // Añadimos las nuevas columnas
-        for (int iterFilas = 1; iterFilas <= numFilas; ++iterFilas) {
-            for (int iterColums = 0; iterColums < _num; ++iterColums) {
-                hojaAct.addCeldaVacia(new Posicion(iterFilas, _pos + iterColums+1));
-            }
-        }
 
         hojaAct.setColumnas(numColums + _num);
     }
