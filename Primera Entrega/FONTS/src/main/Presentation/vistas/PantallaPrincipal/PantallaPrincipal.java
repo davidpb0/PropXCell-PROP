@@ -145,7 +145,7 @@ public class PantallaPrincipal extends JFrame {
                         String cmd = e.getActionCommand().toLowerCase();
                         int idx;
                         JFileChooser jf = new JFileChooser();
-                        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos prop, csv (.prop, .csv)", "prop", "csv");
+                        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos prop (.prop)", "prop");
                         switch (cmd) {
                             case "nuevo documento":
                                 String val = (String) JOptionPane.showInputDialog(
@@ -192,7 +192,7 @@ public class PantallaPrincipal extends JFrame {
                             case "cargar documento":
                                 jf.setFileFilter(filtro);
                                 jf.setCurrentDirectory(new File("."));
-                                jf.setDialogTitle("Guardar Archivo...");
+                                jf.setDialogTitle("Cargar Archivo...");
                                 jf.setAcceptAllFileFilterUsed(false);
                                 if (jf.showOpenDialog(principal) == JFileChooser.APPROVE_OPTION) {
                                     File f = jf.getSelectedFile();

@@ -257,6 +257,7 @@ public class ControladorHoja {
     }
 
 
+
     /**
      * Escribe el contenido que le pasan en la celda, si es una funcion, llama a la funcion correspondiente y ademas
      * escribe su valor en la celda
@@ -345,11 +346,14 @@ public class ControladorHoja {
 
                 //Se comprueba que los argumentos sean numeros
                 if (!numCorrecto(arg[0])) break;
+                try{
+                     ConvertirValorDB cdb = new ConvertirValorDB(Integer.parseInt(arg[0]));
+                    String s3 = cdb.execute();
+                    this.celdaRef.setValor(s3);
+                } catch (NumberFormatException e) {
+                    this.celdaRef.setValor("#ERROR_NUM");
+                }
 
-                ConvertirValorDB cdb = new ConvertirValorDB(Integer.parseInt(arg[0]));
-                String s3 = cdb.execute();
-
-                this.celdaRef.setValor(s3);
                 break;
 
             case "#VBD": // =convertirValorBD()
@@ -376,10 +380,15 @@ public class ControladorHoja {
                     break;
                 }
 
-                ConvertirValorBD cbd = new ConvertirValorBD(Integer.parseInt(arg[0]));
-                String s4 = cbd.execute();
+                try {
+                    ConvertirValorBD cbd = new ConvertirValorBD(Integer.parseInt(arg[0]));
+                    String s4 = cbd.execute();
+                    this.celdaRef.setValor(s4);
+                }
+                catch (NumberFormatException e) {
+                    this.celdaRef.setValor("#ERROR_NUM");
+                }
 
-                this.celdaRef.setValor(s4);
                 break;
 
             case "#VHD": // =convertirHD()
