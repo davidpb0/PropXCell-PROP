@@ -50,6 +50,7 @@ public class ControladorBloque {
                     //h.cambiarPosicionCelda(new Posicion(_filaInicio + f - 1, _columnaInicio + c - 1), cell);
                     Posicion p = new Posicion(_filaInicio + f - 1, _columnaInicio + c - 1);
                     h.getCelda(p).setValor(cell.getValor());
+                    h.getCelda(p).setContenido(cell.getContenido());
                 }
             }
             if (bloqueCopiado.getCortar()) {
