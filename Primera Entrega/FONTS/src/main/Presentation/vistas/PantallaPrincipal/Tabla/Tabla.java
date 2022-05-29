@@ -38,6 +38,12 @@ public class Tabla extends JPanel implements TableModelListener {
     private int selectedColumnStart;
     private int selectedColumnEnd;
 
+    private boolean cortar = false;
+    private int copiedRowStart;
+    private int copiedRowEnd;
+    private int copiedColumnStart;
+    private int copiedColumnEnd;
+
     private String currentContent;
 
     private int rows;
@@ -73,6 +79,12 @@ public class Tabla extends JPanel implements TableModelListener {
         table.getTableHeader().setReorderingAllowed(false);
 
         table.setDefaultEditor(Object.class, CeldaEditor.make(currentContent));
+        DefaultCellEditor editor = (DefaultCellEditor) table.getDefaultEditor(String.class);
+        // Disable Ctrl+C, Ctrl+V, Ctrl+X
+        ((JTextField) editor.getComponent()).getInputMap().put(KeyStroke.getKeyStroke('C', ActionEvent.CTRL_MASK), "none");
+        ((JTextField) editor.getComponent()).getInputMap().put(KeyStroke.getKeyStroke('V', ActionEvent.CTRL_MASK), "none");
+        ((JTextField) editor.getComponent()).getInputMap().put(KeyStroke.getKeyStroke('X', ActionEvent.CTRL_MASK), "none");
+        ((JTextField) editor.getComponent()).getInputMap().put(KeyStroke.getKeyStroke('B', ActionEvent.CTRL_MASK), "none");
         table.setRowHeight(20);
 
         resetColumnVista();
@@ -207,6 +219,9 @@ public class Tabla extends JPanel implements TableModelListener {
     }
 
     public void insertRow(int row) {
+        if (row == 0) {
+            row = selectedRowStart != -1 ? selectedRowStart : 1;
+        }
         Vector<Object> rowData = new Vector<>();
         for (int i = 0; i < cols; i++) {
             rowData.add("");
@@ -215,15 +230,21 @@ public class Tabla extends JPanel implements TableModelListener {
     }
 
     public void addColumns (int num) {
-        for (int i = 0; i < num; i++)
+        int pos = selectedColumnStart != -1 ? selectedColumnStart : cols;
+        for (int i = 0; i < num; i++) {
             model.addColumn("Nueva Columna");
+            table.moveColumn(table.getColumnCount()-1, pos+i);
+        }
 
         resetColumnVista();
     }
 
     public void insertColumn(int col) {
+        if (col == 0) {
+            col = selectedColumnStart != -1 ? selectedColumnStart : 1;
+        }
         this.addColumns(1);
-        table.moveColumn(table.getColumnCount()-1, 1);
+        table.moveColumn(table.getColumnCount()-1, col);
         resetColumnVista();
     }
 
@@ -237,6 +258,54 @@ public class Tabla extends JPanel implements TableModelListener {
             column.setPreferredWidth(100);
             column.setHeaderValue(model.getColumnName(i));
         }
+    }
+
+    public void copiar () {
+        if (selectedRowEnd < 0 || selectedColumnEnd <= 0) return;
+        cd.getControladorBloque().setBloqueSeleccionado(selectedRowStart+1, selectedColumnStart, selectedRowEnd+1, selectedColumnEnd);
+        copiedRowStart = selectedRowStart;
+        copiedColumnStart = selectedColumnStart;
+        copiedRowEnd = selectedRowEnd;
+        copiedColumnEnd = selectedColumnEnd;
+        cortar = false;
+        cd.getControladorBloque().copiar();
+    }
+
+    public void pegar () {
+        if (selectedRowEnd < 0 || selectedColumnEnd <= 0 ||cd.getControladorBloque().getBloqueCopiado() == null) return;
+        cd.getControladorBloque().pegar(selectedRowStart+1, selectedColumnStart);
+        // Actualizar tabla
+        int r = cd.getControladorBloque().getBloqueCopiado().getTamanoFilas();
+        int c = cd.getControladorBloque().getBloqueCopiado().getTamanoColumnas();
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                cd.getControladorHoja().asignaCelda((selectedRowStart+1+i)+"", (selectedColumnStart+j)+"");
+                reloadValue(cd.getControladorHoja().getCeldaRef());
+
+                if (cortar) {
+                    cd.getControladorHoja().asignaCelda((copiedRowStart+1)+"", (copiedColumnStart+j)+"");
+                    try {
+                        cd.getControladorHoja().escribirContenido("");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    reloadValue(cd.getControladorHoja().getCeldaRef());
+                }
+            }
+        }
+        cortar = false;
+    }
+
+    public void cortar () {
+        if (selectedRowEnd < 0 || selectedColumnEnd <= 0) return;
+        cd.getControladorBloque().setBloqueSeleccionado(selectedRowStart+1, selectedColumnStart, selectedRowEnd+1, selectedColumnEnd);
+        copiedRowStart = selectedRowStart;
+        copiedColumnStart = selectedColumnStart;
+        copiedRowEnd = selectedRowEnd;
+        copiedColumnEnd = selectedColumnEnd;
+        cortar = true;
+        cd.getControladorBloque().cortar();
     }
 
 }

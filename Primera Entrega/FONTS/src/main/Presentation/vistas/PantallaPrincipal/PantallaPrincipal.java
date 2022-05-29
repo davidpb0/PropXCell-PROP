@@ -3,7 +3,6 @@ package main.Presentation.vistas.PantallaPrincipal;
 import main.Domain.DomainControllers.ControladorDominio;
 import main.Domain.DomainModel.Documento;
 import main.Domain.DomainModel.Hoja;
-import main.Domain.DomainModel.Posicion;
 import main.Presentation.ControladorPresentacion;
 import main.Presentation.vistas.PantallaPrincipal.ContextMenus.HojasCtxMenu;
 import main.Presentation.vistas.PantallaPrincipal.Tabla.Tabla;
@@ -15,9 +14,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
+import java.awt.event.InputEvent;
 import java.io.File;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -89,6 +87,8 @@ public class PantallaPrincipal extends JFrame {
         }
         cd.getControladorHoja().asignaHoja(1);
 
+        setKeyBindings();
+
         nombre_docTextField.setText(doc.getNombre());
         nombre_docTextField.addActionListener(new ActionListener() {
             @Override
@@ -121,6 +121,75 @@ public class PantallaPrincipal extends JFrame {
         tabbedPane1.setComponentPopupMenu(hojasCtxMenu);
     }
 
+    private void setKeyBindings () {
+        InputMap inputMap = principal.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = principal.getActionMap();
+
+        // Nuevo Documento
+        inputMap.put(KeyStroke.getKeyStroke('N', InputEvent.CTRL_DOWN_MASK), "nuevo documento");
+        actionMap.put("nuevo documento", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                nuevoDocumento();
+            }
+        });
+
+        // Guardar Documento
+        inputMap.put(KeyStroke.getKeyStroke('S', InputEvent.CTRL_DOWN_MASK), "guardar documento");
+        actionMap.put("guardar documento", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                guardarDocumento();
+            }
+        });
+
+        // Abrir Documento
+        inputMap.put(KeyStroke.getKeyStroke('O', InputEvent.CTRL_DOWN_MASK), "cargar documento");
+        actionMap.put("cargar documento", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cargarDocumento();
+            }
+        });
+
+        // Añadir Hoja
+        inputMap.put(KeyStroke.getKeyStroke('N', InputEvent.ALT_DOWN_MASK), "anadir hoja");
+        actionMap.put("anadir hoja", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                anadirHoja();
+            }
+        });
+
+        // Copiar
+        inputMap.put(KeyStroke.getKeyStroke('C', InputEvent.CTRL_DOWN_MASK), "copiar");
+        actionMap.put("copiar", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                copiar();
+            }
+        });
+
+        // Pegar
+        inputMap.put(KeyStroke.getKeyStroke('V', InputEvent.CTRL_DOWN_MASK), "pegar");
+        actionMap.put("pegar", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pegar();
+            }
+        });
+
+        // Cortar
+        inputMap.put(KeyStroke.getKeyStroke('X', InputEvent.CTRL_DOWN_MASK), "cortar");
+        actionMap.put("cortar", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cortar();
+            }
+        });
+
+    }
+
     public void nuevaHoja() {
         cd.getControladorDocumento().anadirHoja();
         System.out.println(tabbedPane1.getTabCount());
@@ -129,6 +198,7 @@ public class PantallaPrincipal extends JFrame {
 
     public void creaHoja(int filas, int columnas, String nombre, int idx) {
         tablas.add(new Tabla(filas, columnas, contenidoFormattedTextField, cd, idx+1));
+        tablas.get(idx).getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke('C', InputEvent.CTRL_DOWN_MASK), "none");
         tabbedPane1.addTab(nombre, null, tablas.get(idx), nombre);
     }
 
@@ -139,167 +209,47 @@ public class PantallaPrincipal extends JFrame {
             if (s.equals("Separador")) this.archivo.addSeparator();
             else {
                 JMenuItem j = new JMenuItem(s);
+                switch (s) {
+                    case "Nuevo Documento":
+                        j.setToolTipText("Ctrl+N");
+                        break;
+                    case "Cargar Documento":
+                        j.setToolTipText("Ctrl+O");
+                        break;
+                    case "Guardar Documento":
+                        j.setToolTipText("Ctrl+S");
+                        break;
+                    case "Nueva Hoja":
+                        j.setToolTipText("Alt+N");
+                        break;
+                }
                 j.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         String cmd = e.getActionCommand().toLowerCase();
-                        int idx;
-                        JFileChooser jf = new JFileChooser();
-                        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos prop (.prop)", "prop");
                         switch (cmd) {
                             case "nuevo documento":
-                                String val = (String) JOptionPane.showInputDialog(
-                                        Activity,
-                                        "Crear documento:",
-                                        "Nuevo Documento",
-                                        JOptionPane.PLAIN_MESSAGE,
-                                        null,
-                                        null,
-                                        "50, 50"
-                                );
-                                if (!val.contains(",")) {
-                                    val = "50, 50";
-                                }
-                                String fil_ = val.split(",")[0].strip();
-                                String col_ = val.split(",")[1].strip();
-                                if (fil_ == "") fil_ = "50";
-                                if (col_ == "") col_ = "50";
-                                int __filas = Integer.parseInt(fil_);
-                                int __columnas = Integer.parseInt(col_);
-
-
-                                cd.getControladorDocumento().crearDocumento(__filas,__columnas);
-                                try {
-                                    init(cd.getControladorDocumento().getDocumento());
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                }
-
+                                nuevoDocumento();
                                 break;
                             case "guardar documento":
-                                jf.setCurrentDirectory(new File("."));
-                                jf.setDialogTitle("Guardar Archivo...");
-                                jf.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                                jf.setAcceptAllFileFilterUsed(false);
-                                if (jf.showOpenDialog(principal) == JFileChooser.APPROVE_OPTION) {
-                                    File f = jf.getSelectedFile();
-                                    cd.getControladorDocumento().guardarDocumento(f.toString());
-                                }
-                                else {
-                                    System.out.println("No Selection ");
-                                }
+                                guardarDocumento();
                                 break;
                             case "cargar documento":
-                                jf.setFileFilter(filtro);
-                                jf.setCurrentDirectory(new File("."));
-                                jf.setDialogTitle("Cargar Archivo...");
-                                jf.setAcceptAllFileFilterUsed(false);
-                                if (jf.showOpenDialog(principal) == JFileChooser.APPROVE_OPTION) {
-                                    File f = jf.getSelectedFile();
-                                    cd.getControladorDocumento().cargaDocumento(f.toString());
-
-                                    try {
-                                        init(cd.getControladorDocumento().getDocumento());
-                                    } catch (Exception ex) {
-                                        ex.printStackTrace();
-                                    }
-                                }
-                                else {
-                                    System.out.println("No Selection ");
-                                }
+                                cargarDocumento();
                                 break;
                             case "nueva hoja":
-                                cd.getControladorDocumento().anadirHoja();
-                                idx = cd.getControladorDocumento().getNumHojas();
-                                try {
-                                    cd.getControladorHoja().asignaHoja(idx);
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                }
-                                Hoja h = cd.getControladorHoja().getHojaRef();
-                                creaHoja(h.getFilas(), h.getColumnas(), "Hoja " + idx, idx-1);
-                                tabbedPane1.setSelectedIndex(idx-1);
-                                try {
-                                    cd.getControladorHoja().asignaHoja(idx);
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                }
+                                anadirHoja();
                                 break;
                             case "renombrar hoja":
-                                String antiguoNombre = tabbedPane1.getTitleAt(tabbedPane1.getSelectedIndex());
-                                String nuevoNombre = (String) JOptionPane.showInputDialog(
-                                        Activity,
-                                        "Cambiar Nombre:",
-                                        "Renombrar Hoja",
-                                        JOptionPane.PLAIN_MESSAGE,
-                                        null,
-                                        null,
-                                        antiguoNombre
-                                );
-                                try {
-                                    cd.getControladorDocumento().asignaNombreHoja(nuevoNombre);
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                }
-                                tabbedPane1.setTitleAt(tabbedPane1.getSelectedIndex(), cd.getControladorHoja().getNombreHoja());
                                 break;
                             case "eliminar hoja":
-                                idx = tabbedPane1.getSelectedIndex();
-                                int idH = ((Tabla) tabbedPane1.getComponentAt(tabbedPane1.getSelectedIndex())).getIdH();
-                                if (cd.getControladorDocumento().getNumHojas() <= 1) {
-                                    JOptionPane.showMessageDialog(
-                                            Activity,
-                                            "No puedes eliminar la última hoja",
-                                            "Eliminar Hoja",
-                                            JOptionPane.ERROR_MESSAGE
-                                    );
-                                    return;
-                                }
-                                cd.getControladorDocumento().eliminarHoja(idH+1);
-                                tabbedPane1.remove(idx);
-                                idH = ((Tabla) tabbedPane1.getComponentAt(tabbedPane1.getSelectedIndex())).getIdH();
-                                try {
-                                    cd.getControladorHoja().asignaHoja(idH);
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                }
+                                eliminarHoja();
                                 break;
                             case "importar csv":
-                                filtro = new FileNameExtensionFilter("Archivos csv (.csv)", "csv");
-                                jf.setFileFilter(filtro);
-                                jf.setCurrentDirectory(new File("."));
-                                jf.setDialogTitle("Importar CSV...");
-                                jf.setAcceptAllFileFilterUsed(false);
-                                if (jf.showOpenDialog(principal) == JFileChooser.APPROVE_OPTION) {
-                                    File f = jf.getSelectedFile();
-                                    cd.getControladorDocumento().cargaCSV(f.toString());
-                                    try {
-                                        cd.getControladorHoja().asignaHoja(cd.getControladorDocumento().getNumHojas());
-                                        cd.getControladorHoja().renombraHoja(f.getName().replace(".csv", ""));
-                                        creaHoja(
-                                                cd.getControladorHoja().getHojaRef().getFilas(),
-                                                cd.getControladorHoja().getHojaRef().getColumnas(),
-                                                cd.getControladorHoja().getNombreHoja(),
-                                                cd.getControladorHoja().getIdHoja()-1
-                                        );
-                                    } catch (Exception ex) {
-                                        ex.printStackTrace();
-                                    }
-                                }
-                                else {
-                                    System.out.println("No Selection ");
-                                }
+                                importarCSV();
                                 break;
                             case "exportar csv":
-                                jf.setCurrentDirectory(new File("."));
-                                jf.setDialogTitle("Exportar CSV...");
-                                jf.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                                jf.setAcceptAllFileFilterUsed(false);
-                                if (jf.showOpenDialog(principal) == JFileChooser.APPROVE_OPTION) {
-                                    File f = jf.getSelectedFile();
-                                    String nombre = cd.getControladorHoja().getNombreHoja();
-                                    cd.getControladorHoja().exportarHoja(f.toString(), nombre);
-                                }
+                                exportarCSV();
                                 break;
 
                             case "detalles":
@@ -331,15 +281,43 @@ public class PantallaPrincipal extends JFrame {
                 this.archivo.add(j);
             }
         }
-        String[] editarOpciones = {"Cortar", "Copiar", "Pegar", "Separador", "Ordenar"};
+        String[] editarOpciones = {"Copiar", "Pegar", "Cortar", "Separador", "Ordenar"};
         for (String s : editarOpciones) {
             if (s.equals("Separador")) this.editar.addSeparator();
             else {
                 JMenuItem j = new JMenuItem(s);
+                switch (s) {
+                    case "Cortar":
+                        j.setToolTipText("Ctrl+X");
+                        break;
+                    case "Copiar":
+                        j.setToolTipText("Ctrl+C");
+                        break;
+                    case "Pegar":
+                        j.setToolTipText("Ctrl+V");
+                        break;
+                }
                 j.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         String cmd = e.getActionCommand().toLowerCase();
+                        switch (cmd) {
+                            case "cortar":
+                                cortar();
+                                break;
+                            case "copiar":
+                                copiar();
+                                break;
+                            case "pegar":
+                                pegar();
+                                break;
+                            case "ordenar":
+                                ordenar();
+                                break;
+                            default:
+                                System.out.println(cmd);
+                                break;
+                        }
                     }
                 });
                 this.editar.add(j);
@@ -382,7 +360,7 @@ public class PantallaPrincipal extends JFrame {
                         }
 
                         if (s.equals("Filas")) {
-                            cd.getControladorHoja().addFilas(1, 1);
+                            cd.getControladorHoja().addFilas(0, 1);
                             tablas.get(tabbedPane1.getSelectedIndex()).insertRow(0);
                         }
                     }
@@ -445,6 +423,192 @@ public class PantallaPrincipal extends JFrame {
         barraH.add(this.insertar);
         barraH.add(this.eliminar);
         barraH.add(this.ayuda);
+    }
+
+    private void nuevoDocumento() {
+        String val = (String) JOptionPane.showInputDialog(
+                Activity,
+                "Crear documento:",
+                "Nuevo Documento",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                "50, 50"
+        );
+        if (val == null) return;
+        if (!val.contains(",")) {
+            val = "50, 50";
+        }
+        String fil_ = val.split(",")[0].strip();
+        String col_ = val.split(",")[1].strip();
+        if (fil_ == "") fil_ = "50";
+        if (col_ == "") col_ = "50";
+        int __filas = Integer.parseInt(fil_);
+        int __columnas = Integer.parseInt(col_);
+
+
+        cd.getControladorDocumento().crearDocumento(__filas,__columnas);
+        try {
+            init(cd.getControladorDocumento().getDocumento());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void guardarDocumento() {
+        JFileChooser jf = new JFileChooser();
+        jf.setCurrentDirectory(new File("."));
+        jf.setDialogTitle("Guardar Archivo...");
+        jf.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        jf.setAcceptAllFileFilterUsed(false);
+        if (jf.showOpenDialog(principal) == JFileChooser.APPROVE_OPTION) {
+            File f = jf.getSelectedFile();
+            cd.getControladorDocumento().guardarDocumento(f.toString());
+        }
+        else {
+            System.out.println("No Selection ");
+        }
+    }
+
+    private void cargarDocumento () {
+        JFileChooser jf = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos prop (.prop)", "prop");
+        jf.setFileFilter(filtro);
+        jf.setCurrentDirectory(new File("."));
+        jf.setDialogTitle("Guardar Archivo...");
+        jf.setAcceptAllFileFilterUsed(false);
+        if (jf.showOpenDialog(principal) == JFileChooser.APPROVE_OPTION) {
+            File f = jf.getSelectedFile();
+            cd.getControladorDocumento().cargaDocumento(f.toString());
+
+            try {
+                init(cd.getControladorDocumento().getDocumento());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        else {
+            System.out.println("No Selection ");
+        }
+    }
+
+    private void anadirHoja () {
+        cd.getControladorDocumento().anadirHoja();
+        int idx = cd.getControladorDocumento().getNumHojas();
+        try {
+            cd.getControladorHoja().asignaHoja(idx);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        Hoja h = cd.getControladorHoja().getHojaRef();
+        creaHoja(h.getFilas(), h.getColumnas(), "Hoja " + idx, idx-1);
+        tabbedPane1.setSelectedIndex(idx-1);
+        try {
+            cd.getControladorHoja().asignaHoja(idx);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void renombrarHoja () {
+        String antiguoNombre = tabbedPane1.getTitleAt(tabbedPane1.getSelectedIndex());
+        String nuevoNombre = (String) JOptionPane.showInputDialog(
+                Activity,
+                "Cambiar Nombre:",
+                "Renombrar Hoja",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                antiguoNombre
+        );
+        try {
+            cd.getControladorDocumento().asignaNombreHoja(nuevoNombre);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        tabbedPane1.setTitleAt(tabbedPane1.getSelectedIndex(), cd.getControladorHoja().getNombreHoja());
+    }
+
+    private void eliminarHoja () {
+        int idx = tabbedPane1.getSelectedIndex();
+        int idH = ((Tabla) tabbedPane1.getComponentAt(tabbedPane1.getSelectedIndex())).getIdH();
+        if (cd.getControladorDocumento().getNumHojas() <= 1) {
+            JOptionPane.showMessageDialog(
+                    Activity,
+                    "No puedes eliminar la última hoja",
+                    "Eliminar Hoja",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+        cd.getControladorDocumento().eliminarHoja(idH+1);
+        tabbedPane1.remove(idx);
+        idH = ((Tabla) tabbedPane1.getComponentAt(tabbedPane1.getSelectedIndex())).getIdH();
+        try {
+            cd.getControladorHoja().asignaHoja(idH);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void importarCSV () {
+        JFileChooser jf = new JFileChooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos prop, csv (.prop, .csv)", "prop", "csv");
+        jf.setFileFilter(filtro);
+        jf.setCurrentDirectory(new File("."));
+        jf.setDialogTitle("Importar CSV...");
+        jf.setAcceptAllFileFilterUsed(false);
+        if (jf.showOpenDialog(principal) == JFileChooser.APPROVE_OPTION) {
+            File f = jf.getSelectedFile();
+            cd.getControladorDocumento().cargaCSV(f.toString());
+            try {
+                cd.getControladorHoja().asignaHoja(cd.getControladorDocumento().getNumHojas());
+                cd.getControladorHoja().renombraHoja(f.getName().replace(".csv", ""));
+                creaHoja(
+                        cd.getControladorHoja().getHojaRef().getFilas(),
+                        cd.getControladorHoja().getHojaRef().getColumnas(),
+                        cd.getControladorHoja().getNombreHoja(),
+                        cd.getControladorHoja().getIdHoja()-1
+                );
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        else {
+            System.out.println("No Selection ");
+        }
+    }
+
+    private void exportarCSV () {
+        JFileChooser jf = new JFileChooser();
+        jf.setCurrentDirectory(new File("."));
+        jf.setDialogTitle("Exportar CSV...");
+        jf.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        jf.setAcceptAllFileFilterUsed(false);
+        if (jf.showOpenDialog(principal) == JFileChooser.APPROVE_OPTION) {
+            File f = jf.getSelectedFile();
+            String nombre = cd.getControladorHoja().getNombreHoja();
+            cd.getControladorHoja().exportarHoja(f.toString(), nombre);
+        }
+    }
+
+    private void cortar () {
+        System.out.println("Cortar");
+        tablas.get(tabbedPane1.getSelectedIndex()).cortar();
+    }
+
+    private void copiar () {
+        System.out.println("Copiar");
+        tablas.get(tabbedPane1.getSelectedIndex()).copiar();
+    }
+
+    private void pegar () {
+        System.out.println("Pegar");
+        tablas.get(tabbedPane1.getSelectedIndex()).pegar();
+    }
+
+    private void ordenar () {
+
     }
 
     public static void main(String[] args) throws Exception {
