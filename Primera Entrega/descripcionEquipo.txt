@@ -4,7 +4,6 @@ Profesor: Jordi Turmo
 
 ## Miembros del equipo
 
-- Gallardo Peña, Daniel - daniel.gallardo.pena@estudiantat.upc.edu
 - Perez Barroso, David - david.perez.barroso@estudiantat.upc.edu
 - Risueño Martin - ivan.risueno@estudiantat.upc.edu
 - Torra Garcia, Joaquim - joaquim.torra@estudiantat.upc.edu
