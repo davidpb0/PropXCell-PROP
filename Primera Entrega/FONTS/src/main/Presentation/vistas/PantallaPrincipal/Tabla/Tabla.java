@@ -1,6 +1,7 @@
 package main.Presentation.vistas.PantallaPrincipal.Tabla;
 
 import main.Domain.DomainControllers.ControladorDominio;
+import main.Domain.DomainControllers.ControladorHoja;
 import main.Domain.DomainModel.Celda;
 
 import javax.swing.*;
@@ -38,11 +39,8 @@ public class Tabla extends JPanel implements TableModelListener {
     private int selectedColumnStart;
     private int selectedColumnEnd;
 
-    private boolean cortar = false;
     private int copiedRowStart;
-    private int copiedRowEnd;
     private int copiedColumnStart;
-    private int copiedColumnEnd;
 
     private String currentContent;
 
@@ -265,18 +263,16 @@ public class Tabla extends JPanel implements TableModelListener {
         cd.getControladorBloque().setBloqueSeleccionado(selectedRowStart+1, selectedColumnStart, selectedRowEnd+1, selectedColumnEnd);
         copiedRowStart = selectedRowStart;
         copiedColumnStart = selectedColumnStart;
-        copiedRowEnd = selectedRowEnd;
-        copiedColumnEnd = selectedColumnEnd;
-        cortar = false;
         cd.getControladorBloque().copiar();
     }
 
     public void pegar () {
         if (selectedRowEnd < 0 || selectedColumnEnd <= 0 ||cd.getControladorBloque().getBloqueCopiado() == null) return;
-        cd.getControladorBloque().pegar(selectedRowStart+1, selectedColumnStart);
-        // Actualizar tabla
         int r = cd.getControladorBloque().getBloqueCopiado().getTamanoFilas();
         int c = cd.getControladorBloque().getBloqueCopiado().getTamanoColumnas();
+        boolean cortar = cd.getControladorBloque().getBloqueCopiado().getCortar();
+        cd.getControladorBloque().pegar(selectedRowStart+1, selectedColumnStart);
+        // Actualizar tabla
         for (int i = 0; i < r; i++) {
             for (int j = 0; j < c; j++) {
                 cd.getControladorHoja().asignaCelda((selectedRowStart+1+i)+"", (selectedColumnStart+j)+"");
@@ -294,7 +290,6 @@ public class Tabla extends JPanel implements TableModelListener {
                 }
             }
         }
-        cortar = false;
     }
 
     public void cortar () {
@@ -302,10 +297,20 @@ public class Tabla extends JPanel implements TableModelListener {
         cd.getControladorBloque().setBloqueSeleccionado(selectedRowStart+1, selectedColumnStart, selectedRowEnd+1, selectedColumnEnd);
         copiedRowStart = selectedRowStart;
         copiedColumnStart = selectedColumnStart;
-        copiedRowEnd = selectedRowEnd;
-        copiedColumnEnd = selectedColumnEnd;
-        cortar = true;
         cd.getControladorBloque().cortar();
+    }
+
+    public void ordenar (boolean descendente) {
+       if (selectedRowEnd < 0 || selectedColumnEnd <= 0) return;
+         cd.getControladorBloque().setBloqueSeleccionado(selectedRowStart+1, selectedColumnStart, selectedRowEnd+1, selectedColumnEnd);
+         cd.getControladorHoja().ordenar(descendente);
+         // Actualizar tabla
+         for (int i = 0; i < selectedRowEnd-selectedRowStart+1; i++) {
+            for (int j = 0; j < selectedColumnEnd-selectedColumnStart+1; j++) {
+                cd.getControladorHoja().asignaCelda((selectedRowStart+1+i)+"", (selectedColumnStart+j)+"");
+                reloadValue(cd.getControladorHoja().getCeldaRef());
+            }
+         }
     }
 
 }

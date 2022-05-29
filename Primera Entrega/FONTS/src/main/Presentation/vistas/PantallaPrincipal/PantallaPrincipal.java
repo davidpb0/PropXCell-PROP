@@ -281,7 +281,7 @@ public class PantallaPrincipal extends JFrame {
                 this.archivo.add(j);
             }
         }
-        String[] editarOpciones = {"Copiar", "Pegar", "Cortar", "Separador", "Ordenar"};
+        String[] editarOpciones = {"Copiar", "Pegar", "Cortar", "Separador", "Ordenar A-Z", "Ordenar Z-A"};
         for (String s : editarOpciones) {
             if (s.equals("Separador")) this.editar.addSeparator();
             else {
@@ -311,8 +311,11 @@ public class PantallaPrincipal extends JFrame {
                             case "pegar":
                                 pegar();
                                 break;
-                            case "ordenar":
-                                ordenar();
+                            case "ordenar a-z":
+                                ordenar(false);
+                                break;
+                            case "ordenar z-a":
+                                ordenar(true);
                                 break;
                             default:
                                 System.out.println(cmd);
@@ -607,8 +610,9 @@ public class PantallaPrincipal extends JFrame {
         tablas.get(tabbedPane1.getSelectedIndex()).pegar();
     }
 
-    private void ordenar () {
-
+    private void ordenar (boolean desc) {
+        System.out.println("Ordenar");
+        tablas.get(tabbedPane1.getSelectedIndex()).ordenar(desc);
     }
 
     public static void main(String[] args) throws Exception {

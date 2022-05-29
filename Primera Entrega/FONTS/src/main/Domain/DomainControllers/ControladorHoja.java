@@ -201,7 +201,7 @@ public class ControladorHoja {
      * Ordena un bloque de manera ascendente o descendente
      * @param descendente parametro que indica si es ascendente (false) o descendente (true)
      */
-    public static void ordenar(boolean descendente) {
+    public void ordenar(boolean descendente) {
         ArrayList<Celda> celdas = new ArrayList<>();
 
         int filaIni = BloqueSeleccionado.getBloque().getCeldaInicial().getPosicion().getFila();
@@ -216,9 +216,9 @@ public class ControladorHoja {
           }
 
           if (descendente)
-              celdas.sort(Comparator.comparing(Celda::getValor));
+              celdas.sort(Comparator.comparing(Celda::getValor).reversed());
           else
-            celdas.sort(Comparator.comparing(Celda::getValor));
+              celdas.sort(Comparator.comparing(Celda::getValor));
 
           for (int i = filaIni; i <=filaFin; i++) {
               for (int j = colIni; j <=colFin; j++) {
