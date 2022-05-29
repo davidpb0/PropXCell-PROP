@@ -753,6 +753,12 @@ public class ControladorHoja {
                 argm = Traductor.getArgumentosFuncionNaria(_content);
                 arg0 = new String[argm.size() * argm.get(0).length];
 
+                //Se comprueba que el numero de argumentos sea el correcto
+                if (argm.size() % 2 != 0) {
+                    this.celdaRef.setValor("#ERROR_N_ARG");
+                    break;
+                }
+
                 ij = 0;
                 for (int i = 0; i < argm.size(); ++i) {
                     for (int j = 0; j < argm.get(i).length; ++j) {
@@ -770,11 +776,6 @@ public class ControladorHoja {
                 }
 
 
-                //Se comprueba que el numero de argumentos sea el correcto
-                if (arg1.length != arg2.length) {
-                    this.celdaRef.setValor("#ERROR_N_ARG");
-                    break;
-                }
 
                 //Se comprueba que los argumentos sean numeros
                 b = false;
@@ -837,6 +838,12 @@ public class ControladorHoja {
                 argm = Traductor.getArgumentosFuncionNaria(_content);
                 arg0 = new String[argm.size() * argm.get(0).length];
 
+                //Se comprueba que el numero de argumentos sea el correcto
+                if (argm.size() % 2 != 0) {
+                    this.celdaRef.setValor("#ERROR_N_ARG");
+                    break;
+                }
+
                 ij = 0;
                 for (int i = 0; i < argm.size(); ++i) {
                     for (int j = 0; j < argm.get(i).length; ++j) {
@@ -853,11 +860,7 @@ public class ControladorHoja {
                     else arg2[i - arg0.length / 2] = arg0[i];
                 }
 
-                //Se comprueba que el numero de argumentos sea el correcto
-                if (arg1.length != arg2.length) {
-                    this.celdaRef.setValor("#ERROR_N_ARG");
-                    break;
-                }
+
 
                 b = false;
                 k = 0;
