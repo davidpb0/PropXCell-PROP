@@ -54,8 +54,8 @@ public class BloqueTemporalCopiado {
     
     /**
      * Devuelve la celda de la posición indicada
-     * @param _f indica la fila relativa dentro del bloque temporal copiado (1 <= _f <= numero de filas)
-     * @param _c indica la columna relativa dentro del bloque temporal copiado (1 <= _c <= numero de columnas)
+     * @param _f indica la fila relativa dentro del bloque temporal copiado (1 menor o igual a _f , menor o igual a numero de filas)
+     * @param _c indica la columna relativa dentro del bloque temporal copiado (1 menor o igual a _c, menor o igual a numero de columnas)
      * @return la celda con Posicion(f, c)
      */
     public Celda getCelda(int _f, int _c) {

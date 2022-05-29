@@ -8,7 +8,7 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
-public class ObtenerAño extends Funcion{
+public class ObtenerAno extends Funcion{
 
 
     private String fecha;
@@ -18,7 +18,7 @@ public class ObtenerAño extends Funcion{
      * Constructora de la clase
      * @param _f fecha a almacenar
      */
-    public ObtenerAño(String _f){
+    public ObtenerAno(String _f){
         this.fecha = _f;
 
     }

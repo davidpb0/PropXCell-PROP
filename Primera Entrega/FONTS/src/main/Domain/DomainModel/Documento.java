@@ -57,7 +57,7 @@ public class Documento implements Serializable {
         DateTimeFormatter fm = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         this.fechaCreacion = LocalDateTime.now().format(fm);
 
-        añadeHoja(_fila, _columna);
+        anadeHoja(_fila, _columna);
     }
 
 
@@ -129,9 +129,9 @@ public class Documento implements Serializable {
     /**
      * Añada una Hoja al documento con los valores por defecto, se le asigna un identificador autmaticamente
      */
-    public void añadeHojaDf(){
+    public void anadeHojaDf(){
         Hoja h = new Hoja();
-        h.añadeNombreIdHojaDefault(hojasContenidas.size()+1);
+        h.anadeNombreIdHojaDefault(hojasContenidas.size()+1);
         this.hojasContenidas.put(hojasContenidas.size()+1, h);
         recalculaNumHojas();
     }
@@ -141,9 +141,9 @@ public class Documento implements Serializable {
      * @param _f numero de filas que tendra la hoja
      * @param _c numero de columnas que tendra la hoja
      */
-    public void añadeHoja(int _f, int _c){
+    public void anadeHoja(int _f, int _c){
         Hoja h = new Hoja(_f, _c);
-        h.añadeNombreIdHojaDefault(hojasContenidas.size()+1);
+        h.anadeNombreIdHojaDefault(hojasContenidas.size()+1);
         this.hojasContenidas.put(hojasContenidas.size()+1, h);
         recalculaNumHojas();
     }
@@ -183,7 +183,7 @@ public class Documento implements Serializable {
 
         Hoja h = new Hoja();
         h = h.csvAHoja(csv);
-        h.añadeNombreIdHojaDefault(hojasContenidas.size()+1);
+        h.anadeNombreIdHojaDefault(hojasContenidas.size()+1);
         this.hojasContenidas.put(hojasContenidas.size()+1, h);
         recalculaNumHojas();
 

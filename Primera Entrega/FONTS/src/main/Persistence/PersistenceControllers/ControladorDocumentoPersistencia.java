@@ -16,8 +16,17 @@ import java.io.*;
 
 public class ControladorDocumentoPersistencia {
 
+    /**
+     * Creadora de la clase
+     */
         public ControladorDocumentoPersistencia(){}
 
+    /**
+     * Almacena el documento que le pasan en disco en el path que le pasan como parametro
+     * @param _d Documento a guardar
+     * @param _path Directorio donde se guardara el documento
+     * @throws Exception lanza una excepcion si no encuentra el path o si surge algun error a la hora de escribir.
+     */
         public void almacenaDocumento(Documento _d, String _path) throws Exception {
             try {
                 ObjectOutputStream escribiendoDoc =
@@ -25,12 +34,19 @@ public class ControladorDocumentoPersistencia {
                 escribiendoDoc.writeObject(_d);
                 escribiendoDoc.close();
 
-            } catch (FileNotFoundException e) {
+            } catch (Exception e) {
                 throw new Exception("Error al escribir el Documento.");
             }
         }
 
-        public Documento cargaDocumento(String _path) throws Exception {
+
+    /**
+     * Carga un documento en la aplicación almacenado en disco
+     * @param _path Directorio donde se encuentra el disco a cargar
+     * @return Devuelve el documento seleccionado en disco
+     * @throws Exception lanza una excepcion si surge algun error en la carga
+     */
+    public Documento cargaDocumento(String _path) throws Exception {
             try {
                 ObjectInputStream recuperandoDoc =
                         new ObjectInputStream(new FileInputStream(_path));

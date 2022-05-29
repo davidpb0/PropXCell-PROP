@@ -13,25 +13,33 @@ import java.util.Comparator;
  *
  * David Pérez Barroso
  */
+/**
+ * Clase ControladorHoja, controlador de las funcionalidades que tienen que ver con una hoja
+ * @author David Perez Barroso
+ */
+
 
 public class ControladorHoja {
 
     private Hoja hojaAct;
     private Celda celdaRef;
 
+    /**
+     * Creadora de la clase
+     */
     public ControladorHoja() {}
 
     /**
-    * Se guarda la hoja que le pasa presentación.
-    * @param _idh identificador de la hoja que siempre corresponderá a una hoja existente
+    * Se guarda la hoja que le pasa presentacion.
+    * @param _idh identificador de la hoja que siempre correspondera a una hoja existente
     */
     public void asignaHoja(int _idh) throws Exception {
         hojaAct = ControladorDominio.getControladorDominio().getControladorDocumento().getDocumento().getHoja(_idh);
     }
 
 
-    /** Pre: Tiene que haber un documento inicializado y una hoja referenciada en la clase
-     * Se guarda una celda de la hoja, fila y columna que le pasa presentación
+    /** Pre: Tiene que haber un documento inicializado y una hoja referenciada en la clase.
+     * Se guarda una celda de la hoja, situada en la fila y columna que le pasa presentacion
      * @param _f fila de la celda
      * @param _c columna de la celda
      */
@@ -49,7 +57,7 @@ public class ControladorHoja {
 
     /**
      * Se cambia el nombre de la hoja.
-     * @param _nuevoNombre nombre de la hoja pasado por presentación.
+     * @param _nuevoNombre nombre de la hoja pasado por presentacion.
      */
     public void renombraHoja(String _nuevoNombre) {
         hojaAct.asignaNombre(_nuevoNombre);
@@ -58,13 +66,13 @@ public class ControladorHoja {
 
     /**
      * Devuelve la hoja actual
-     * @return la hoja actual
+     * @return La hoja actual
      */
     public Hoja getHojaRef() { return this.hojaAct; }
 
     /**
      * Devuelve el nombre de la hoja del controlador.
-     * @return el nombre de la hoja actual.
+     * @return El nombre de la hoja actual.
      */
     public String getNombreHoja() { return hojaAct.getNombre(); }
 
@@ -72,7 +80,7 @@ public class ControladorHoja {
 
     /**
      * Devuelve el id de la hoja actual.
-     * @return el id de la hoja actual.
+     * @return El id de la hoja actual.
      */
     public int getIdHoja() {
         return hojaAct.getId();
@@ -80,12 +88,11 @@ public class ControladorHoja {
 
 
     /**
-    * Se añaden un conjunto de filas en blanco a partir un número de fila.
-    * Las filas que habían en la posición _pos y posteriores se moveran _num posiciones hacia delante.
-    * @param _pos numero de fila que tendrá la primera fila del bloque añadido.
-    * Siempre será un número de fila existente o el inmediatamente superior a la última fila
-    * @param _num numero de filas añadidas, siempre es positivo
-    * @
+    * Se anaden un conjunto de filas en blanco a partir un numero de fila.
+    * Las filas que habían en la posicion _pos y posteriores se moveran _num posiciones hacia delante.
+    * @param _pos numero de fila que tendra la primera fila del bloque anadido.
+    * Siempre sera un numero de fila existente o el inmediatamente superior a la ultima fila
+    * @param _num numero de filas anadidas, siempre es positivo
     */
     public void addFilas(int _pos, int _num) {
         int numFilas = hojaAct.getFilas();
@@ -111,11 +118,11 @@ public class ControladorHoja {
     }
 
     /**
-    * Se añaden un conjunto de columnas en blanco a partir un número de columna.
-    * Las columnas que habían en la posición _pos y posteriores se moveran _num posiciones hacia delante.
-    * @param _pos numero de columna que tendrá la primera columna del bloque añadido
-    * Siempre será un número de columna existente o el inmediatamente superior a la última fila
-    * @param _num numero de columnas añadidas, siempre es positivo
+    * Se anaden un conjunto de columnas en blanco a partir un numero de columna.
+    * Las columnas que habian en la posicion _pos y posteriores se moveran _num posiciones hacia delante.
+    * @param _pos numero de columna que tendra la primera columna del bloque anadido.
+    * Siempre sera un numero de columna existente o el inmediatamente superior a la ultima fila
+    * @param _num numero de columnas anadidas, siempre es positivo
     */
     public void addColumnas(int _pos, int _num) {
         int numFilas = hojaAct.getFilas();
@@ -139,12 +146,12 @@ public class ControladorHoja {
     }
 
     /**
-    * Se elimina el conjunto de filas contiguas indicadas a partir de un número de fila.
+    * Se elimina el conjunto de filas contiguas indicadas a partir de un numero de fila.
     * Las filas posteriores al conjunto de filas borrado reocuparan esas posiciones inferiores.
-    * @param _pos numero de columna que tendrá la primera fila del conjunto a borrar.
-    * Siempre será un número de fila existente
-    * @param _num numero de filas a eliminar, siempre es >= 1 
-    * Pre: Se garantiza que numero de filas total - _pos >= _num + 1
+    * @param _pos numero de columna que tendra la primera fila del conjunto a borrar.
+    * Siempre sera un numero de fila existente
+    * @param _num numero de filas a eliminar, siempre es mayor o igual a 1
+    * Pre: Se garantiza que numero de filas total - _pos es mayor o igual a _num + 1
     */
     public void eliminarFilas(int _pos, int _num) {
         int numFilas = hojaAct.getFilas();
@@ -168,12 +175,12 @@ public class ControladorHoja {
     }
 
     /**
-    * Se elimina el conjunto de columnas contiguas indicadas a partir de un número de columna.
+    * Se elimina el conjunto de columnas contiguas indicadas a partir de un numero de columna.
     * Las columnas posteriores al conjunto de columnas borrado reocuparan esas posiciones inferiores.
-    * @param _pos numero de columna que tendrá la primera columna del conjunto a borrar.
-    * Siempre será un número de columna existente
-    * @param _num numero de columnas a eliminar, siempre es >= 1
-    * Pre: Se garantiza que numero de filas total - _pos >= _num + 1
+    * @param _pos numero de columna que tendra la primera columna del conjunto a borrar.
+    * Siempre sera un numero de columna existente
+    * @param _num numero de columnas a eliminar, siempre es mayor o igual a 1
+    * Pre: Se garantiza que numero de filas total - _pos es mayor o igual a _num + 1
     */
     public void eliminarColumnas(int _pos, int _num) {
         int numFilas = hojaAct.getFilas();
@@ -229,7 +236,7 @@ public class ControladorHoja {
       }
 
     /**
-     * Comprueba que los parametros del string introducido son numeros, en caso de no ser asi, devuelve false y añade
+     * Comprueba que los parametros del string introducido son numeros, en caso de no ser asi, devuelve false y anade
      * al valor de la celda referenciada por el controlador un codigo de error
      * @param arg String a comprobar
      * @return Devuelve true si todos los caracteres son numeros, devuelve false de lo contrario
@@ -243,10 +250,10 @@ public class ControladorHoja {
     }
 
     /**
-     * Comprueba que el vector de string pasado tenga tamaño 1, de no ser asi añade al valor de la celda referenciada
+     * Comprueba que el vector de string pasado tenga tamano 1, de no ser asi anade al valor de la celda referenciada
      * por el controlador un codigo de error
      * @param arg vector de string a comprobar
-     * @return True si tiene tamaño 1, false de lo contrario
+     * @return True si tiene tamano 1, false de lo contrario
      */
     private boolean numArgCorrecto(String[] arg){
         if (arg.length != 1) {
@@ -514,7 +521,7 @@ public class ControladorHoja {
                     break;
                 }
 
-                ObtenerAño oa = new ObtenerAño(arg[0]);
+                ObtenerAno oa = new ObtenerAno(arg[0]);
                 String s10 = oa.execute();
 
                 this.celdaRef.setValor(s10);
@@ -1037,7 +1044,7 @@ public class ControladorHoja {
 
     /**
      * Exporta la hoja actual a CSV
-     * @param _path ruta donde se guardará el archvio CSV
+     * @param _path ruta donde se guardara el archivo CSV
      * @param _name nombre del archivo CSV
      */
     public void exportarHoja(String _path, String _name){

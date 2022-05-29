@@ -17,7 +17,7 @@ import java.io.File;
  *
  * Version info 0.1.0
  *
- * Author David Pérez Barroso
+ * Author David Perez Barroso
  */
 public class PantallaInicial extends JFrame {
 
@@ -28,7 +28,7 @@ public class PantallaInicial extends JFrame {
     private JButton btCargarDoc;
     private JButton BotonHome;
     private JLabel titulo;
-    private JTextPane descripción;
+    private JTextPane descripcion;
     private JButton crearButton;
     private JTextField tfFilas;
     private JTextField tfColumnas;
@@ -41,6 +41,9 @@ public class PantallaInicial extends JFrame {
     private ControladorPresentacion cp;
 
 
+    /**
+     * Creadora de la vista
+     */
     public PantallaInicial() {
         setTitle("PropXcel");
 
@@ -55,11 +58,13 @@ public class PantallaInicial extends JFrame {
 
     }
 
-
+    /**
+     * Iniciliza los atributos controladores de la vista asi como todas las funcionalidades de sus botones
+     */
     public void inicializaVista() {
 
-        cd = ControladorDominio.getControladorDominio().getControladorDocumento();
         cp = new ControladorPresentacion();
+        cd = cp.getControladorDominio().getControladorDocumento();
 
         FileNameExtensionFilter filtro =
                 new FileNameExtensionFilter("Archivos prop (.prop)", "prop");
@@ -104,14 +109,14 @@ public class PantallaInicial extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 panelCrearDoc.setVisible(true);
-                descripción.setVisible(false);
+                descripcion.setVisible(false);
             }
         };
 
         ActionListener home = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                descripción.setVisible(true);
+                descripcion.setVisible(true);
                 panelCrearDoc.setVisible(false);
             }
         };

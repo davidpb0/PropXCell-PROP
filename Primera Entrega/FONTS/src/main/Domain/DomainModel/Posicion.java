@@ -18,8 +18,8 @@ public class Posicion implements Serializable {
 
     /**
      * Constructora de posicion
-     * @param _columna un entero que representa la columna, siempre es >=1
-     * @param _fila un entero que representa la fila, siempre es >= 1
+     * @param _columna un entero que representa la columna, siempre es mayor o igual 1
+     * @param _fila un entero que representa la fila, siempre es mayor o igual 1
      */
     public Posicion(int _fila, int _columna) {
         this.fila = _fila;

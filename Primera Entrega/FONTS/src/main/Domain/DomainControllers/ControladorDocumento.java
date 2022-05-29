@@ -59,7 +59,7 @@ public class ControladorDocumento {
      * Añade una hoja vacía le pone el id que toca a continuación.
      */
     public void anadirHoja() {
-        documento_ref.añadeHojaDf();
+        documento_ref.anadeHojaDf();
     }
 
     /**
@@ -68,7 +68,7 @@ public class ControladorDocumento {
      * @param _nColumnas número de columnas de la hoja a añadir.
      */
     public void anadirHoja(int _nFilas, int _nColumnas) {
-        documento_ref.añadeHoja(_nFilas, _nColumnas);
+        documento_ref.anadeHoja(_nFilas, _nColumnas);
     }
 
     /**
