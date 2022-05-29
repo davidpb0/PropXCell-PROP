@@ -7,7 +7,7 @@ import java.util.Objects;
  *
  * v1.0.0
  *
- * Daniel Gallardo Peña
+ * Joaquim Torra Garcia
  */
 
 public class Posicion implements Serializable {
