@@ -16,8 +16,16 @@ public class BloqueSeleccionado {
     private Celda celdaFinal;
     private Hoja hoja;
 
+    /**
+     * Constructora privada del BloqueSeleccionado.
+     */
     private BloqueSeleccionado() {}
 
+
+    /**
+     * Getter del BloqueSeleccionado.
+     * @return la instancia singleton del BloqueSeleccionado.
+     */
     public static BloqueSeleccionado getBloque() {
         if (instanceOfThisClass == null) instanceOfThisClass = new BloqueSeleccionado();
         return instanceOfThisClass;
@@ -26,7 +34,7 @@ public class BloqueSeleccionado {
     /**
      * Asigna las celdas pertinentes a los extremos que definen el bloque.
      * @param _inicial la celda a utilizar como la superior izquierda.
-     *        _final la celda a utilizar como la inferior derecha.
+     * @param _final la celda a utilizar como la inferior derecha.
      */
     public void setCelda(Celda _inicial, Celda _final) {
         this.celdaInicial = _inicial;
