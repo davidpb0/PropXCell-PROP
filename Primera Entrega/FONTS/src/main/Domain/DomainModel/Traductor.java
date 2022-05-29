@@ -202,9 +202,9 @@ public class Traductor {
     }
 
     /**
-     * Pre: _funcion es un String de tipo "=funcNaria(arg1, arg2)", _idH corresponde al id de una hoja que existe
+     * Pre: _funcion es un String de tipo "=funcNaria(arg1, arg2, ..., argn)", _idH corresponde al id de una hoja que existe
      * @param _funcion introducida por el usuario
-     * @return un vector que contiene hasta 4 vectores de Strings, cada uno con los argumentos entre las comas
+     * @return un ArrayList que contiene vectores de Strings, cada uno con los argumentos entre las comas
      */
     public static ArrayList<String[]> getArgumentosFuncionNaria(String _funcion) throws Exception {
         ArrayList<String[]>ret = new ArrayList<>();

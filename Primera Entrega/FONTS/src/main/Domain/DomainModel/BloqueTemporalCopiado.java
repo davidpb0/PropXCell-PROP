@@ -4,14 +4,13 @@ package main.Domain.DomainModel;
  *
  * Version info 1.0.0
  *
- * Author Daniel Gallardo Peña
+ * Iván Risueño Martín
  */
 
 public class BloqueTemporalCopiado {
 
     private Celda[][] bloqueCopiado;
     private Boolean cortar;
-
 
     /**
      * Constructora
