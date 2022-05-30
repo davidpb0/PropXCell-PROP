@@ -14,6 +14,10 @@ import java.awt.*;
  * Joaquim Torra Garcia
  */
 
+/**
+ * Clase CeldaRenderer, encargada de dibujar las celdas de la tabla
+ * @author Joaquim Torra Garcia
+ */
 public class CeldaRenderer extends DefaultTableCellRenderer {
     Color bg, fg;
     boolean isBold, isItalic;

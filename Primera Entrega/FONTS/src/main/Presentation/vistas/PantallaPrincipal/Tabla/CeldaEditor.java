@@ -14,6 +14,10 @@ import java.awt.*;
  * Joaquim Torra Garcia
  */
 
+/**
+ * Clase CeldaEditor, utilizada para editar los cambios en una celda
+ * @author Joaquim Torra Garcia
+ */
 public class CeldaEditor extends DefaultCellEditor {
     public static CeldaEditor make(String currentContent) {
         JTextField field = new JTextField();
