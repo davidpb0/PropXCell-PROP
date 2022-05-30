@@ -1,6 +1,7 @@
 package main.Presentation.vistas.PantallaPrincipal.Tabla;
 
 import main.Domain.DomainControllers.ControladorDominio;
+import main.Domain.DomainControllers.ControladorHoja;
 
 import javax.swing.*;
 import java.awt.*;

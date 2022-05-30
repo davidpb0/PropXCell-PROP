@@ -9,6 +9,7 @@ package main.Domain.DomainModel;
  */
 
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -21,6 +22,11 @@ public class Celda implements Serializable {
     private Posicion posicion;
     private final LinkedList<Celda> referenciantes = new LinkedList<>();
     private Hoja hoja;
+
+    private boolean bold = false;
+    private boolean italic = false;
+    private Color foreground = Color.BLACK;
+    private Color background = Color.WHITE;
 
 
     /**
@@ -188,5 +194,37 @@ public class Celda implements Serializable {
             return false;
         Celda that = (Celda) _o;
         return this.posicion.getFila() == that.getPosicion().getFila() && this.posicion.getColumna() == that.getPosicion().getColumna() && this.hoja == that.getHoja();
+    }
+
+    public boolean isBold() {
+        return bold;
+    }
+
+    public void setBold(boolean bold) {
+        this.bold = bold;
+    }
+
+    public boolean isItalic() {
+        return italic;
+    }
+
+    public void setItalic(boolean italic) {
+        this.italic = italic;
+    }
+
+    public Color getBackground() {
+        return background;
+    }
+
+    public void setBackground(Color background) {
+        this.background = background;
+    }
+
+    public Color getForeground() {
+        return foreground;
+    }
+
+    public void setForeground(Color foreground) {
+        this.foreground = foreground;
     }
 }

@@ -1,7 +1,6 @@
 package main.Presentation.vistas.PantallaPrincipal.Tabla;
 
 import main.Domain.DomainControllers.ControladorDominio;
-import main.Domain.DomainControllers.ControladorHoja;
 import main.Domain.DomainModel.Celda;
 
 import javax.swing.*;
@@ -9,9 +8,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -79,7 +79,26 @@ public class Tabla extends JPanel implements TableModelListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        table = new JTable(new TablaModel(rows, cols, cd));
+        table = new JTable(new TablaModel(rows, cols, cd)) {
+            @Override
+            public TableCellRenderer getCellRenderer(int row, int column) {
+                if (column == 0) {
+                    return new CeldaRenderer(new Color(240, 240, 240), Color.BLACK, true, false);
+                }
+                TableCellRenderer myRenderer = getCustomRenderer(row, column);
+                if (myRenderer != null) {
+                    return myRenderer;
+                }
+                return super.getCellRenderer(row, column);
+            }
+
+            public TableCellRenderer getCustomRenderer(int row, int column) {
+                cd.getControladorHoja().asignaCelda((row+1)+"", (column+1)+"");
+                Celda c = cd.getControladorHoja().getCeldaRef();
+                if (c == null) return null;
+                return new CeldaRenderer(c.getBackground(), c.getForeground(), c.isBold(), c.isItalic());
+            }
+        };
 
         model = (DefaultTableModel) table.getModel();
         table.getTableHeader().setReorderingAllowed(false);
@@ -161,6 +180,7 @@ public class Tabla extends JPanel implements TableModelListener {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
         reloadValue(cd.getControladorHoja().getCeldaRef());
     }
 
@@ -246,7 +266,6 @@ public class Tabla extends JPanel implements TableModelListener {
         TableColumn column = table.getColumnModel().getColumn(0);
         column.setPreferredWidth(25);
         column.setResizable(false);
-        column.setCellRenderer(new CeldaRenderer(new Color(240, 240, 240), Color.BLACK));
         for (int i = 1; i < table.getColumnCount(); i++) {
             column = table.getColumnModel().getColumn(i);
             column.setPreferredWidth(100);
@@ -318,5 +337,45 @@ public class Tabla extends JPanel implements TableModelListener {
         cols--;
         table.removeColumn(table.getColumnModel().getColumn(c));
         resetColumnVista();
+    }
+
+    public void bold () {
+        for (int i = selectedRowStart+1; i <= selectedRowEnd+1; i++) {
+            for (int j = selectedColumnStart; j <= selectedColumnEnd; j++) {
+                cd.getControladorHoja().asignaCelda((i)+"", (j+1)+"");
+                cd.getControladorHoja().getCeldaRef().setBold(!cd.getControladorHoja().getCeldaRef().isBold());
+            }
+        }
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer());
+    }
+
+    public void italic () {
+        for (int i = selectedRowStart+1; i <= selectedRowEnd+1; i++) {
+            for (int j = selectedColumnStart; j <= selectedColumnEnd; j++) {
+                cd.getControladorHoja().asignaCelda((i)+"", (j+1)+"");
+                cd.getControladorHoja().getCeldaRef().setItalic(!cd.getControladorHoja().getCeldaRef().isItalic());
+            }
+        }
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer());
+    }
+
+    public void changeBG (Color _color) {
+        for (int i = selectedRowStart+1; i <= selectedRowEnd+1; i++) {
+            for (int j = selectedColumnStart; j <= selectedColumnEnd; j++) {
+                cd.getControladorHoja().asignaCelda((i)+"", (j+1)+"");
+                cd.getControladorHoja().getCeldaRef().setBackground(_color);
+            }
+        }
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer());
+    }
+
+    public void changeFG (Color _color) {
+        for (int i = selectedRowStart+1; i <= selectedRowEnd+1; i++) {
+            for (int j = selectedColumnStart; j <= selectedColumnEnd; j++) {
+                cd.getControladorHoja().asignaCelda((i)+"", (j+1)+"");
+                cd.getControladorHoja().getCeldaRef().setForeground(_color);
+            }
+        }
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer());
     }
 }

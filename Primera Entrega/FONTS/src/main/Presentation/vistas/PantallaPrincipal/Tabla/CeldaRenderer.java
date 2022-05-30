@@ -14,12 +14,14 @@ import java.awt.*;
 
 public class CeldaRenderer extends DefaultTableCellRenderer {
     Color bg, fg;
-    boolean isBold;
+    boolean isBold, isItalic;
 
-    public CeldaRenderer(Color bg, Color fg) {
+    public CeldaRenderer(Color bg, Color fg, boolean b, boolean i) {
         super();
         this.bg = bg;
         this.fg = fg;
+        this.isBold = b;
+        this.isItalic = i;
     }
 
     public Component getTableCellRendererComponent(JTable table, Object
@@ -29,6 +31,15 @@ public class CeldaRenderer extends DefaultTableCellRenderer {
                 isSelected, hasFocus, row, column);
         cell.setBackground(bg);
         cell.setForeground(fg);
+        Font f = new Font("Arial", Font.PLAIN, 12);
+        if (isBold && isItalic) f = f.deriveFont(Font.BOLD | Font.ITALIC);
+        else if (isBold) f = f.deriveFont(Font.BOLD);
+        else if (isItalic) f = f.deriveFont(Font.ITALIC);
+        cell.setFont(f);
+        if (isSelected) {
+            cell.setBackground(new Color(211, 220, 253));
+            cell.setForeground(Color.BLACK);
+        }
         return cell;
     }
 }

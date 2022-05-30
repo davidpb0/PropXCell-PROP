@@ -22,7 +22,7 @@ import java.util.Objects;
 /*
  * Vista Principal
  *
- * v0.0.6
+ * v0.0.8
  *
  * Joaquim Torra Garcia
  */
@@ -40,16 +40,10 @@ public class PantallaPrincipal extends JFrame {
     private JPanel Act_Header;
     private JPanel Act_Main;
     private JPanel Header_Opts;
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
-    private JButton button4;
-    private JButton button5;
-    private JButton button6;
-    private JButton button7;
-    private JButton button8;
-    private JButton button9;
-    private JButton button10;
+    private JButton boldButton;
+    private JButton italicButton;
+    private JButton backgroundButton;
+    private JButton textColorButton;
     private JFormattedTextField contenidoFormattedTextField;
     private JTabbedPane tabbedPane1;
 
@@ -63,6 +57,38 @@ public class PantallaPrincipal extends JFrame {
         Documento doc = cd.getControladorDocumento().getDocumento();
         init(doc);
         configuraHerramientas();
+
+        boldButton.setToolTipText("Ctrl+B");
+        boldButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tablas.get(tabbedPane1.getSelectedIndex()).bold();
+            }
+        });
+
+        italicButton.setToolTipText("Ctrl+I");
+        italicButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tablas.get(tabbedPane1.getSelectedIndex()).italic();
+            }
+        });
+
+        backgroundButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Color c = JColorChooser.showDialog(null, "Color de fondo", Color.WHITE);
+                tablas.get(tabbedPane1.getSelectedIndex()).changeBG(c);
+            }
+        });
+
+        textColorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Color c = JColorChooser.showDialog(null, "Color de texto", Color.BLACK);
+                tablas.get(tabbedPane1.getSelectedIndex()).changeFG(c);
+            }
+        });
     }
 
     private void init(Documento doc) throws Exception {
@@ -83,7 +109,8 @@ public class PantallaPrincipal extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         for (int i = 0; i < hojas; i++) {
-            creaHoja(filas, columnas, "Hoja " + (i+1), i);
+            String nombre = doc.getHoja(i + 1).getNombre();
+            creaHoja(filas, columnas, nombre, i);
         }
         cd.getControladorHoja().asignaHoja(1);
 
@@ -188,6 +215,23 @@ public class PantallaPrincipal extends JFrame {
             }
         });
 
+        // Bold
+        inputMap.put(KeyStroke.getKeyStroke('B', InputEvent.CTRL_DOWN_MASK), "bold");
+        actionMap.put("bold", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tablas.get(tabbedPane1.getSelectedIndex()).bold();
+            }
+        });
+
+        // Italic
+        inputMap.put(KeyStroke.getKeyStroke('I', InputEvent.CTRL_DOWN_MASK), "italic");
+        actionMap.put("italic", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tablas.get(tabbedPane1.getSelectedIndex()).italic();
+            }
+        });
     }
 
     public void nuevaHoja() {
