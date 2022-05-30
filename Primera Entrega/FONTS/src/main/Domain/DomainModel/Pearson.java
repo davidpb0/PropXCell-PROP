@@ -8,6 +8,10 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+/**
+ * Clase Pearson, clase encargada de gestionar la funcion que calcula el coeficiente de correlacion de Pearson
+ * @author David Perez Barroso
+ */
 public class Pearson extends Funcion{
 
     private String[] valoresX;
@@ -29,7 +33,7 @@ public class Pearson extends Funcion{
     /**
      * Obtiene el coeficiente de correlacion de Pearson resultante de los dos conjuntos de valores almacenados.
      * @return coeficiente de correlacion de Pearson resultante de los dos conjuntos de valores valoresX y valoresY
-     * Pre: Tanto valoresX como valoresY tienen el mismo número de elemento
+     * Pre: Tanto valoresX como valoresY tienen el mismo numero de elemento
      */
     @Override
     public String execute() {

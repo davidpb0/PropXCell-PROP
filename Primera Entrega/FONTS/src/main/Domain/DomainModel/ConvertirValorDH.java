@@ -8,6 +8,11 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+
+/**
+ * Clase ConvertirValorDH, clase encargada de gestionar la funcion que convierte un valor decimal en uno hexadecimal
+ * @author David Perez Barroso
+ */
 public class ConvertirValorDH extends Funcion{
 
     private int decimal;

@@ -8,6 +8,10 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+/**
+ * Clase ObtenerAno, clase encargada de gestionar la funcion que obtiene el ano de una fecha
+ * @author David Perez Barroso
+ */
 public class ObtenerAno extends Funcion{
 
 

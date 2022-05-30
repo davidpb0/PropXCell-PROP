@@ -10,6 +10,11 @@ import java.util.Arrays;
  *
  * Author David Pérez Barroso
  */
+
+/**
+ * Clase Mediana, clase encargada de gestionar la funcion mediana de valores numericos
+ * @author David Perez Barroso
+ */
 public class Mediana extends Funcion{
 
     private String[] valores;

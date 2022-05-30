@@ -12,7 +12,10 @@ import java.io.*;
      * Author David Perez Barroso
      */
 
-//Si se lo paso por parametro, no lo estoy comunicando, no?
+/**
+ * Clase ControladorDocumentoPersistencia, controlador de las funcionalidades que cargan o almacenan un documento en disco
+ * @author David Perez Barroso
+ */
 
 public class ControladorDocumentoPersistencia {
 
@@ -41,7 +44,7 @@ public class ControladorDocumentoPersistencia {
 
 
     /**
-     * Carga un documento en la aplicación almacenado en disco
+     * Carga un documento en la aplicacion almacenado en disco
      * @param _path Directorio donde se encuentra el disco a cargar
      * @return Devuelve el documento seleccionado en disco
      * @throws Exception lanza una excepcion si surge algun error en la carga

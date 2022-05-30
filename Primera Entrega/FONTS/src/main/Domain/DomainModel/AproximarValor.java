@@ -7,7 +7,14 @@ package main.Domain.DomainModel;
  * Version info 1.0.0
  *
  * Author David Pérez Barroso
+ *
  */
+
+/**
+ * Clase AprixmarValor, clase encargada de gestionar la funcion que aproxima un valor numerico
+ * @author David Perez Barroso
+ */
+
 public class AproximarValor extends Funcion{
 
     private double valor;

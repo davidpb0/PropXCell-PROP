@@ -8,6 +8,10 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+/**
+ * Clase Media, clase encargada de gestionar la funcion media de valores numericos
+ * @author David Perez Barroso
+ */
 public class Media extends Funcion{
 
     private String[] valores;
@@ -22,7 +26,7 @@ public class Media extends Funcion{
     }
 
     /**
-     * Obtiene la media aritmética de los valores del conjunto almacenado.
+     * Obtiene la media aritmetica de los valores del conjunto almacenado.
      * @return media aritmética de los elementos de valores
      */
     @Override

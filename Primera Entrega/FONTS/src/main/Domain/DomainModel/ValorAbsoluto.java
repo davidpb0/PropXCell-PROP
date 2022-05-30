@@ -8,6 +8,10 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+/**
+ * Clase ValorAbsoluto, clase encargada de gestionar la funcion que obtiene el valor absoluto de un valor numerico
+ * @author David Perez Barroso
+ */
 public class ValorAbsoluto extends Funcion{
 
 

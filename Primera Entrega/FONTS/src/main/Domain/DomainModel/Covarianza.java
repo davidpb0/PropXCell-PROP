@@ -7,6 +7,11 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+
+/**
+ * Clase Covarianza, clase encargada de gestionar la funcion covarianza de valores numericos
+ * @author David Perez Barroso
+ */
 public class Covarianza extends Funcion{
 
     private String[] valoresX;

@@ -8,6 +8,11 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+
+/**
+ * Clase ConvertirValorBD, clase encargada de gestionar la funcion que convierte un valor binario en uno decimal
+ * @author David Perez Barroso
+ */
 public class ConvertirValorBD extends Funcion{
 
 

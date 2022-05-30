@@ -8,10 +8,14 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+/**
+ * Clase Funcion, clase abstracta padre de todas las funciones del sistema
+ * @author David Perez Barroso
+ */
 public abstract class Funcion {
 
     /**
-     * Función abstracta que se implementa en sus subclases codificandola con la funcion necesaria
+     * Funcion abstracta que se implementa en sus subclases codificandola con la funcion necesaria
      * @return el resultado de una funcion en String
      */
     public abstract String execute();

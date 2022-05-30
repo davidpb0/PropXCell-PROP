@@ -7,6 +7,11 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+
+/**
+ * Clase ConvertirValorDB, clase encargada de gestionar la funcion que convierte un valor decimal en uno binario
+ * @author David Perez Barroso
+ */
 public class ConvertirValorDB extends Funcion{
 
     private int decimal;

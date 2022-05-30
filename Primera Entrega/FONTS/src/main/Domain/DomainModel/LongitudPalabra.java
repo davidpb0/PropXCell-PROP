@@ -8,6 +8,11 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+
+/**
+ * Clase LongitudPalabra, clase encargada de gestionar la funcion que mide la longitud de una palabra o frase
+ * @author David Perez Barroso
+ */
 public class LongitudPalabra extends Funcion{
 
     private String palabra;

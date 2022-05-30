@@ -19,6 +19,11 @@ import java.io.File;
  *
  * Author David Perez Barroso
  */
+
+/**
+ * Clase PantallaInicial, vista de la Pantalla Inicial
+ * @author David Perez Barroso
+ */
 public class PantallaInicial extends JFrame {
 
     private JPanel principal;

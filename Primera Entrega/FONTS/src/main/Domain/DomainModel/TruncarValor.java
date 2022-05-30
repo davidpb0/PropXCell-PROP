@@ -8,6 +8,11 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+
+/**
+ * Clase TruncarValor, clase encargada de gestionar la funcion que trunca un valor numerico
+ * @author David Perez Barroso
+ */
 public class TruncarValor extends Funcion{
 
     private double valor;
