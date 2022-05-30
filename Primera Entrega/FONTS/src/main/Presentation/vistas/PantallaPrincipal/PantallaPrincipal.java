@@ -27,6 +27,10 @@ import java.util.Objects;
  * Joaquim Torra Garcia
  */
 
+/**
+ * Clase PantallaPrincipal, vista de la Pantalla Principal
+ * @author Joaquim Torra Garcia
+ */
 public class PantallaPrincipal extends JFrame {
     private final ControladorDominio cd;
 
@@ -51,6 +55,10 @@ public class PantallaPrincipal extends JFrame {
 
     private final Dimension MIN_SIZE = new Dimension((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.6), (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.6));
 
+    /**
+     * Creadora de la vista
+     * @param _cd Controlador de Dominio
+     */
     public PantallaPrincipal(ControladorDominio _cd) throws Exception {
         setIconImage(new ImageIcon(Objects.requireNonNull(getClass().getResource("/main/Presentation/imagenes/icons8-ms-excel-80.png"))).getImage());
         this.cd = _cd;
@@ -91,6 +99,10 @@ public class PantallaPrincipal extends JFrame {
         });
     }
 
+    /**
+     * Inicializa la vista, crea los componentes, asigna los listeners y los añade a la vista
+     * @param doc Documento
+     */
     private void init(Documento doc) throws Exception {
         tabbedPane1.removeAll();
         tablas = new ArrayList<>();
@@ -148,6 +160,9 @@ public class PantallaPrincipal extends JFrame {
         tabbedPane1.setComponentPopupMenu(hojasCtxMenu);
     }
 
+    /**
+     * Configura los shortcuts de la vista
+     */
     private void setKeyBindings () {
         InputMap inputMap = principal.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap actionMap = principal.getActionMap();
@@ -234,17 +249,22 @@ public class PantallaPrincipal extends JFrame {
         });
     }
 
-    public void nuevaHoja() {
-        cd.getControladorDocumento().anadirHoja();
-
-    }
-
+    /**
+     * Crea una nueva hoja en el panel de hojas
+     * @param filas Número de filas de la hoja
+     * @param columnas Número de columnas de la hoja
+     * @param nombre Nombre de la hoja
+     * @param idx Indice de la hoja
+     */
     public void creaHoja(int filas, int columnas, String nombre, int idx) {
         tablas.add(new Tabla(filas, columnas, contenidoFormattedTextField, cd, idx+1));
         tablas.get(idx).getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke('C', InputEvent.CTRL_DOWN_MASK), "none");
         tabbedPane1.addTab(nombre, null, tablas.get(idx), nombre);
     }
 
+    /**
+     * Configura el menú de herramientas de la vista
+     */
     public void configuraHerramientas() {
         String[] archivoOpciones = {"Nuevo Documento", "Cargar Documento", "Guardar Documento", "Separador", "Nueva Hoja", "Eliminar Hoja", "Renombrar Hoja", "Separador",
                 "Importar CSV", "Exportar CSV", "Separador", "Detalles", "Salir"};
@@ -475,7 +495,7 @@ public class PantallaPrincipal extends JFrame {
                         }
                         if ( s.equals("Columnas") ) {
                             int _c = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedColumnStart();
-                            if (_c < 0) _c = 0;
+                            if (_c <= 0) _c = 1;
                             if (num >= tablas.get(tabbedPane1.getSelectedIndex()).getCols()) {
                                 JOptionPane.showMessageDialog(
                                         Activity,
@@ -517,11 +537,11 @@ public class PantallaPrincipal extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         if ( s.equals("Columnas") ) {
                             int _c = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedColumnEnd()+1;
-                            if (_c < 0) _c = 0;
-                            if (tablas.get(tabbedPane1.getSelectedIndex()).getCols() == 1) {
+                            if (_c <= 0) _c = 1;
+                            if (tablas.get(tabbedPane1.getSelectedIndex()).getCols() == 1 || _c >= tablas.get(tabbedPane1.getSelectedIndex()).getCols()-1) {
                                 JOptionPane.showMessageDialog(
                                         Activity,
-                                        "No se puede eliminar la ultima columna",
+                                        "No se puede eliminar la ultima columna o una columna que no existe",
                                         "Error",
                                         JOptionPane.ERROR_MESSAGE
                                 );
@@ -534,10 +554,10 @@ public class PantallaPrincipal extends JFrame {
                         if (s.equals("Filas")) {
                             int _r = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedRowEnd()+1;
                             if (_r < 0) _r = 0;
-                            if (tablas.get(tabbedPane1.getSelectedIndex()).getRows() == 1) {
+                            if (tablas.get(tabbedPane1.getSelectedIndex()).getRows() == 1 ||_r >= tablas.get(tabbedPane1.getSelectedIndex()).getRows()-1) {
                                 JOptionPane.showMessageDialog(
                                         Activity,
-                                        "No se puede eliminar la ultima fila",
+                                        "No se puede eliminar la ultima fila o una fila que no existe",
                                         "Error",
                                         JOptionPane.ERROR_MESSAGE
                                 );
@@ -555,7 +575,7 @@ public class PantallaPrincipal extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         if ( s.equals("Columnas") ) {
                             int _c = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedColumnStart()-1;
-                            if (_c < 0) _c = 0;
+                            if (_c <= 0) _c = 1;
                             if (tablas.get(tabbedPane1.getSelectedIndex()).getCols() == 1) {
                                 JOptionPane.showMessageDialog(
                                         Activity,
@@ -649,6 +669,9 @@ public class PantallaPrincipal extends JFrame {
         barraH.add(this.ayuda);
     }
 
+    /**
+     * Crea un nuevo documento y lo abre
+     */
     private void nuevoDocumento() {
         String val = (String) JOptionPane.showInputDialog(
                 Activity,
@@ -688,9 +711,11 @@ public class PantallaPrincipal extends JFrame {
         }
     }
 
+    /**
+     * Guarda el documento abierto en la ubicación seleccionada por el usuario
+     */
     private void guardarDocumento() {
         JFileChooser jf = new JFileChooser();
-        jf.setCurrentDirectory(new File("."));
         jf.setDialogTitle("Guardar Archivo...");
         jf.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         jf.setAcceptAllFileFilterUsed(false);
@@ -700,11 +725,13 @@ public class PantallaPrincipal extends JFrame {
         }
     }
 
+    /**
+     * Abre un documento existente de la ubicación seleccionada por el usuario
+     */
     private void cargarDocumento () {
         JFileChooser jf = new JFileChooser();
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos prop (.prop)", "prop");
         jf.setFileFilter(filtro);
-        jf.setCurrentDirectory(new File("."));
         jf.setDialogTitle("Guardar Archivo...");
         jf.setAcceptAllFileFilterUsed(false);
         if (jf.showOpenDialog(principal) == JFileChooser.APPROVE_OPTION) {
@@ -719,6 +746,9 @@ public class PantallaPrincipal extends JFrame {
         }
     }
 
+    /**
+     * Anade una nueva hoja al documento y la abre en el panel de hojas
+     */
     private void anadirHoja () {
         cd.getControladorDocumento().anadirHoja();
         int idx = cd.getControladorDocumento().getNumHojas();
@@ -737,6 +767,9 @@ public class PantallaPrincipal extends JFrame {
         }
     }
 
+    /**
+     * Cambia el nombre de la hoja seleccionada al nombre introducido por el usuario
+     */
     private void renombrarHoja () {
         String antiguoNombre = tabbedPane1.getTitleAt(tabbedPane1.getSelectedIndex());
         String nuevoNombre = (String) JOptionPane.showInputDialog(
@@ -757,6 +790,9 @@ public class PantallaPrincipal extends JFrame {
         tabbedPane1.setTitleAt(tabbedPane1.getSelectedIndex(), cd.getControladorHoja().getNombreHoja());
     }
 
+    /**
+     * Elimina la hoja seleccionada del documento
+     */
     private void eliminarHoja () {
         int idx = tabbedPane1.getSelectedIndex();
         int idH = ((Tabla) tabbedPane1.getComponentAt(tabbedPane1.getSelectedIndex())).getIdH();
@@ -779,11 +815,13 @@ public class PantallaPrincipal extends JFrame {
         }
     }
 
+    /**
+     * Importa una hoja de un documento de tipo CSV de la ubicación seleccionada por el usuario
+     */
     private void importarCSV () {
         JFileChooser jf = new JFileChooser();
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos prop, csv (.prop, .csv)", "prop", "csv");
         jf.setFileFilter(filtro);
-        jf.setCurrentDirectory(new File("."));
         jf.setDialogTitle("Importar CSV...");
         jf.setAcceptAllFileFilterUsed(false);
         if (jf.showOpenDialog(principal) == JFileChooser.APPROVE_OPTION) {
@@ -804,9 +842,11 @@ public class PantallaPrincipal extends JFrame {
         }
     }
 
+    /**
+     * Exporta una hoja de un documento en tipo CSV a la ubicación seleccionada por el usuario
+     */
     private void exportarCSV () {
         JFileChooser jf = new JFileChooser();
-        jf.setCurrentDirectory(new File("."));
         jf.setDialogTitle("Exportar CSV...");
         jf.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         jf.setAcceptAllFileFilterUsed(false);
@@ -817,18 +857,31 @@ public class PantallaPrincipal extends JFrame {
         }
     }
 
+    /**
+     * Selecciona el bloque de celdas y lo copia, marcandolo como cortado
+     */
     private void cortar () {
         tablas.get(tabbedPane1.getSelectedIndex()).cortar();
     }
 
+    /**
+     * Selecciona el bloque de celdas y lo copia
+     */
     private void copiar () {
         tablas.get(tabbedPane1.getSelectedIndex()).copiar();
     }
 
+    /**
+     * Pega el bloque seleccionado y lo coloca en la posicion seleccionada
+     */
     private void pegar () {
         tablas.get(tabbedPane1.getSelectedIndex()).pegar();
     }
 
+    /**
+     * Selecciona el bloque de celdas y lo ordena ascendente o descendentemente
+     * @param desc boolean - determina si se ordena ascendente o descendentemente
+     */
     private void ordenar (boolean desc) {
         tablas.get(tabbedPane1.getSelectedIndex()).ordenar(desc);
     }

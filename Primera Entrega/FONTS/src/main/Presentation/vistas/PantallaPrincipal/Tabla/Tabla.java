@@ -25,6 +25,10 @@ import java.util.Vector;
  * Joaquim Torra Garcia
  */
 
+/**
+ * Clase Tabla, contiene la información de una hoja (tabla, modelo de datos...)
+ * @author Joaquim Torra Garcia
+ */
 public class Tabla extends JPanel implements TableModelListener {
     private final int idH;
     JTable table;
@@ -47,6 +51,12 @@ public class Tabla extends JPanel implements TableModelListener {
     private int rows;
     private int cols;
 
+    /**
+     * Constructor por defecto de la clase Tabla
+     * @param fxField JTextField en el que se ve el contenido de la celda seleccionada
+     * @param _cd ControladorDominio
+     * @param _idH Identificador de la hoja
+     */
     public Tabla(JTextField fxField, ControladorDominio _cd, int _idH) {
         super(new GridLayout(1,0));
         this.fxField = fxField;
@@ -55,6 +65,14 @@ public class Tabla extends JPanel implements TableModelListener {
         init(50, 50);
     }
 
+    /**
+     * Constructor de la clase Tabla, que crea una hoja con una cantidad de filas y columnas dadas
+     * @param rows Cantidad de filas de la hoja
+     * @param cols Cantidad de columnas de la hoja
+     * @param fxField JTextField en el que se ve el contenido de la celda seleccionada
+     * @param _cd ControladorDominio
+     * @param _idH Identificador de la hoja
+     */
     public Tabla(int rows, int cols, JTextField fxField, ControladorDominio _cd, int _idH) {
         super(new GridLayout(1,0));
         this.fxField = fxField;
@@ -65,14 +83,25 @@ public class Tabla extends JPanel implements TableModelListener {
         init(rows, cols);
     }
 
+    /**
+     * @return Devuelve el numero de filas
+     */
     public int getRows () {
         return rows;
     }
 
+    /**
+     * @return Devuelve el numero de columnas
+     */
     public int getCols () {
         return cols;
     }
 
+    /**
+     * Inicializa el modelo de datos, la JTable con el CeldaRenderer correspondiente y sus listeners
+     * @param rows Cantidad de filas de la tabla
+     * @param cols Cantidad de columnas de la tabla
+     */
     public void init(int rows, int cols) {
         try {
             cd.getControladorHoja().asignaHoja(idH);
@@ -93,7 +122,7 @@ public class Tabla extends JPanel implements TableModelListener {
             }
 
             public TableCellRenderer getCustomRenderer(int row, int column) {
-                cd.getControladorHoja().asignaCelda((row+1)+"", (column+1)+"");
+                cd.getControladorHoja().asignaCelda((row+1)+"", (column)+"");
                 Celda c = cd.getControladorHoja().getCeldaRef();
                 if (c == null) return null;
                 return new CeldaRenderer(c.getBackground(), c.getForeground(), c.isBold(), c.isItalic());
@@ -162,6 +191,13 @@ public class Tabla extends JPanel implements TableModelListener {
         add(scrollPane);
     }
 
+    /**
+     * Metodo que se encarga de enviar el contenido introducido por el usuario a la celda correspondiente
+     * @param e Evento que se produce al introducir el contenido
+     * @param text Contenido introducido por el usuario
+     * @param row Fila de la celda
+     * @param col Columna de la celda
+     */
     public void enviarContenido (ActionEvent e, String text, int row, int col) {
         if (row < 0 || col <= 0) {
             return;
@@ -184,6 +220,9 @@ public class Tabla extends JPanel implements TableModelListener {
         reloadValue(cd.getControladorHoja().getCeldaRef());
     }
 
+    /**
+     * Metdodo que se encarga de actualizar los valores de las celdas seleccionadas y el contenido de la celda actual mostrada en el campo de texto
+     */
     private void selection() {
         selectedRowStart = table.getSelectedRow();
         selectedRowEnd = table.getSelectionModel().getMaxSelectionIndex();
@@ -193,6 +232,10 @@ public class Tabla extends JPanel implements TableModelListener {
         fxFieldDisplay();
     }
 
+    /**
+     * Metodo que se encarga de actualizar el contenido de la celda actual mostrada en el campo de texto
+     * @param c Celda actual
+     */
     private void reloadValue(Celda c) {
         String val = cd.getControladorHoja().getCeldaRef().getValor();
         table.getModel().setValueAt(val, c.getPosicion().getFila()-1, c.getPosicion().getColumna());
@@ -202,43 +245,75 @@ public class Tabla extends JPanel implements TableModelListener {
         }
     }
 
+    /**
+     * Metodo que se encarga de actualizar el contenido del campo de texto con el contenido de la celda actual
+     */
     private void fxFieldDisplay() {
         if (selectedRowEnd < 0 || selectedColumnEnd <= 0) return;
         currentContent = cd.getControladorHoja().getCeldaRef().getContenido();
         fxField.setText(currentContent);
     }
 
+    /** Metodo necesario para que la clase derive de JPanel
+     * @param e Evento que se produce al hacer click en el boton de añadir fila
+     */
     public void tableChanged(TableModelEvent e) {
     }
 
+    /**
+     * Metodo que se encarga de cambiar el valor del modelo de datos de la tabla
+     * @param cont Contenido de la tabla
+     */
     public void changeContent(String cont) {
         table.getModel().setValueAt(cont, selectedRowEnd, selectedColumnEnd);
     }
 
+    /**
+     * @return TablaListener
+     */
     public TablaListener getTl() {
         return tl;
     }
 
+    /**
+     * @return Fila seleccionada inicial
+     */
     public int getSelectedRowStart() {
         return selectedRowStart;
     }
 
+    /**
+     * @return Columna seleccionada inicial
+     */
     public int getSelectedColumnStart() {
         return selectedColumnStart;
     }
 
+    /**
+     * @return Fila seleccionada final
+     */
     public int getSelectedRowEnd() {
         return selectedRowEnd;
     }
 
+    /**
+     * @return Columna seleccionada final
+     */
     public int getSelectedColumnEnd() {
         return selectedColumnEnd;
     }
 
+    /**
+     * @return Indice de la hoja que representa la tabla
+     */
     public int getIdH() {
         return idH;
     }
 
+    /**
+     * Metodo que se encarga de añadir una fila a la tabla en la posicion indicada
+     * @param row int posicion de la fila a añadir
+     */
     public void insertRow(int row) {
         rows++;
         Vector<Object> rowData = new Vector<>();
@@ -248,7 +323,10 @@ public class Tabla extends JPanel implements TableModelListener {
         model.insertRow(row, rowData);
     }
 
-
+    /**
+     * Metodo que se encarga de insertar una columna en la posicion indicada
+     * @param col int posicion de la columna a añadir
+     */
     public void insertColumn(int col) {
         model.addColumn(model.getColumnName(cols+1));
         cols++;
@@ -262,6 +340,9 @@ public class Tabla extends JPanel implements TableModelListener {
         resetColumnVista();
     }
 
+    /**
+     * Metodo dedicado a hacer que la primera columna sea siempre la de el numero de fila y sea siempre igual y solo de lectura
+     */
     private void resetColumnVista () {
         TableColumn column = table.getColumnModel().getColumn(0);
         column.setPreferredWidth(25);
@@ -273,6 +354,9 @@ public class Tabla extends JPanel implements TableModelListener {
         }
     }
 
+    /**
+     * Se encarga de seleccionar el bloque de celdas y copiarlo
+     */
     public void copiar () {
         if (selectedRowEnd < 0 || selectedColumnEnd <= 0) return;
         cd.getControladorBloque().setBloqueSeleccionado(selectedRowStart+1, selectedColumnStart, selectedRowEnd+1, selectedColumnEnd);
@@ -281,6 +365,9 @@ public class Tabla extends JPanel implements TableModelListener {
         cd.getControladorBloque().copiar();
     }
 
+    /**
+     * Se encarga de pegar el bloque de celdas copiado en la posicion seleccionada
+     */
     public void pegar () {
         if (selectedRowEnd < 0 || selectedColumnEnd <= 0 ||cd.getControladorBloque().getBloqueCopiado() == null) return;
         int r = cd.getControladorBloque().getBloqueCopiado().getTamanoFilas();
@@ -307,6 +394,9 @@ public class Tabla extends JPanel implements TableModelListener {
         }
     }
 
+    /**
+     * Se encarga de seleccionar el bloque de celdas y cortarlo
+     */
     public void cortar () {
         if (selectedRowEnd < 0 || selectedColumnEnd <= 0) return;
         cd.getControladorBloque().setBloqueSeleccionado(selectedRowStart+1, selectedColumnStart, selectedRowEnd+1, selectedColumnEnd);
@@ -315,6 +405,10 @@ public class Tabla extends JPanel implements TableModelListener {
         cd.getControladorBloque().cortar();
     }
 
+    /**
+     * Se encarga de seleccionar el bloque de celdas y ordenarlo de forma ascendente o descendente segun el parametro
+     * @param descendente boolean indica si se ordena de forma descendente
+     */
     public void ordenar (boolean descendente) {
        if (selectedRowEnd < 0 || selectedColumnEnd <= 0) return;
          cd.getControladorBloque().setBloqueSeleccionado(selectedRowStart+1, selectedColumnStart, selectedRowEnd+1, selectedColumnEnd);
@@ -328,51 +422,81 @@ public class Tabla extends JPanel implements TableModelListener {
          }
     }
 
+    /**
+     * Elimina la fila indicada
+     * @param r fila a eliminar
+     */
     public void removeRow(int r) {
         rows--;
         model.removeRow(r);
     }
 
+    /**
+     * Elimina la columna indicada
+     * @param c columna a eliminar
+     */
     public void removeColumn(int c) {
         cols--;
         table.removeColumn(table.getColumnModel().getColumn(c));
         resetColumnVista();
     }
 
+    /**
+     * Estiliza la celda seleccionada con el estilo de letra en negrita
+     */
     public void bold () {
+        if (selectedRowEnd < 0 || selectedColumnEnd <= 0) return;
         for (int i = selectedRowStart+1; i <= selectedRowEnd+1; i++) {
             for (int j = selectedColumnStart; j <= selectedColumnEnd; j++) {
-                cd.getControladorHoja().asignaCelda((i)+"", (j+1)+"");
+                if (j == 0) continue;
+                cd.getControladorHoja().asignaCelda((i)+"", (j)+"");
                 cd.getControladorHoja().getCeldaRef().setBold(!cd.getControladorHoja().getCeldaRef().isBold());
             }
         }
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer());
     }
 
+    /**
+     * Estiliza la celda seleccionada con el estilo de letra en cursiva
+     */
     public void italic () {
+        if (selectedRowEnd < 0 || selectedColumnEnd <= 0) return;
         for (int i = selectedRowStart+1; i <= selectedRowEnd+1; i++) {
             for (int j = selectedColumnStart; j <= selectedColumnEnd; j++) {
-                cd.getControladorHoja().asignaCelda((i)+"", (j+1)+"");
+                if (j == 0) continue;
+                cd.getControladorHoja().asignaCelda((i)+"", (j)+"");
                 cd.getControladorHoja().getCeldaRef().setItalic(!cd.getControladorHoja().getCeldaRef().isItalic());
             }
         }
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer());
     }
 
+    /**
+     * Estiliza la celda seleccionada con el color de fondo seleccionado por el usuario
+     * @param _color color de fondo
+     */
     public void changeBG (Color _color) {
+        if (selectedRowEnd < 0 || selectedColumnEnd <= 0) return;
         for (int i = selectedRowStart+1; i <= selectedRowEnd+1; i++) {
             for (int j = selectedColumnStart; j <= selectedColumnEnd; j++) {
-                cd.getControladorHoja().asignaCelda((i)+"", (j+1)+"");
+                if (j == 0) continue;
+                cd.getControladorHoja().asignaCelda((i)+"", (j)+"");
                 cd.getControladorHoja().getCeldaRef().setBackground(_color);
             }
         }
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer());
     }
 
+    /**
+     * Estiliza la celda seleccionada con el color de letra seleccionado por el usuario
+     * @param _color color de letra
+     */
     public void changeFG (Color _color) {
+        if (selectedRowEnd < 0 || selectedColumnEnd <= 0) return;
         for (int i = selectedRowStart+1; i <= selectedRowEnd+1; i++) {
             for (int j = selectedColumnStart; j <= selectedColumnEnd; j++) {
-                cd.getControladorHoja().asignaCelda((i)+"", (j+1)+"");
+                if (j == 0) continue;
+                cd.getControladorHoja().asignaCelda((i)+"", (j)+"");
                 cd.getControladorHoja().getCeldaRef().setForeground(_color);
             }
         }
