@@ -12,6 +12,11 @@ import java.util.HashMap;
  *
  * Author David Pérez Barroso
  */
+
+/**
+ * Clase ObtenerNombreDia, clase encargada de gestionar la funcion que obtiene el nombre del dia de una fecha
+ * @author David Perez Barroso
+ */
 public class ObtenerNombreDia extends Funcion{
 
     private String fecha;

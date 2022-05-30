@@ -8,6 +8,10 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+/**
+ * Clase ObtenerDia, clase encargada de gestionar la funcion que obtiene el dia de una fecha
+ * @author David Perez Barroso
+ */
 public class ObtenerDia extends Funcion{
 
     private String fecha;

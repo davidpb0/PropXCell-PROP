@@ -10,6 +10,11 @@ import main.Domain.DomainControllers.ControladorHoja;
  * Author David Pérez Barroso
  */
 
+/**
+ * Clase DesvEstandar, clase encargada de gestionar la funcion desviacion estandar de valores numericos
+ * @author David Perez Barroso
+ */
+
 public class DesvEstandar extends Funcion{
 
     private String[] valores;

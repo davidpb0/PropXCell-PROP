@@ -8,6 +8,11 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+
+/**
+ * Clase ContarLetra, clase encargada de gestionar la funcion que cuenta las veces que aparece una letra en una palabra o frase
+ * @author David Perez Barroso
+ */
 public class ContarLetra extends Funcion{
 
     private String palabra;

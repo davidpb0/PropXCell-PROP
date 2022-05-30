@@ -8,6 +8,10 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+/**
+ * Clase ReemplazarPalabra, clase encargada de gestionar la funcion que reemplaza un trozo de palabra por otra
+ * @author David Perez Barroso
+ */
 public class ReemplazarPalabra extends Funcion{
 
 
@@ -20,8 +24,8 @@ public class ReemplazarPalabra extends Funcion{
    * Constructora de la clase
    * @param _txt texto del cual una parte va a ser sustituida a almacenar
    * @param _pos posicion donde comenzará la sustitución a almacenar
-   * @param _longd numero de caracteres del texto que se sustituirán a almacenar
-   * @param _ntxt texto que se insertará en el texto original a almacenar
+   * @param _longd numero de caracteres del texto que se sustituiran a almacenar
+   * @param _ntxt texto que se insertara en el texto original a almacenar
    */
     public ReemplazarPalabra(String _txt, int _pos, int _longd, String _ntxt){
         this.txt = _txt;

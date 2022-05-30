@@ -8,6 +8,11 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+
+/**
+ * Clase ReemplazarCaracter, clase encargada de gestionar la funcion que remplaza un caracter en una palabra o frase
+ * @author David Perez Barroso
+ */
 public class ReemplazarCaracter extends Funcion{
 
     private String txt;

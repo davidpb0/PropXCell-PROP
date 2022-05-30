@@ -8,6 +8,11 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+
+/**
+ * Clase Varianza, clase encargada de gestionar la funcion que calcula la varianza de unos valores numericos
+ * @author David Perez Barroso
+ */
 public class Varianza extends Funcion{
 
 

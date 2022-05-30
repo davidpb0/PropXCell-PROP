@@ -8,6 +8,10 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+/**
+ * Clase ObtenerMes, clase encargada de gestionar la funcion que obtiene el mes de una fecha
+ * @author David Perez Barroso
+ */
 public class ObtenerMes extends Funcion{
 
     private String fecha;

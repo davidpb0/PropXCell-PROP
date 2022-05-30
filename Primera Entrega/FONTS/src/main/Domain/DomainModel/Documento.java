@@ -16,6 +16,11 @@ import java.util.HashMap;
  */
 
 //Clase serializable y Singleton
+
+/**
+ * Clase Documento, clase encargada de gestionar y alamcenar la informacion de un Documento
+ * @author David Perez Barroso
+ */
 public class Documento implements Serializable {
 
     private static final long serialVersionUID = 41L;
@@ -45,7 +50,7 @@ public class Documento implements Serializable {
     }
 
 
-    /** Pre: La hoja a añadir no existe en el documento
+    /** Pre: La hoja a anadir no existe en el documento.
      * Inicializa el documento con una Hoja con los valores fila y columnas dados por el usuario
      * @param _nombre sera el nombre del documento
      * @param _fila numero de filas que tendra la hoja por defecto del documento
@@ -102,7 +107,7 @@ public class Documento implements Serializable {
     }
 
     /**
-     * Devuelve la fecha de creación del documento
+     * Devuelve la fecha de creacion del documento
      * @return fecha de creacion del documento
      */
     public String getFecha(){
@@ -127,7 +132,7 @@ public class Documento implements Serializable {
 
 
     /**
-     * Añada una Hoja al documento con los valores por defecto, se le asigna un identificador autmaticamente
+     * Anade una Hoja al documento con los valores por defecto, se le asigna un identificador autmaticamente
      */
     public void anadeHojaDf(){
         Hoja h = new Hoja();
@@ -137,7 +142,7 @@ public class Documento implements Serializable {
     }
 
     /**
-     * Añada una Hoja al documento con los valores dados, se le asigna un identificador autmaticamente
+     * Anade una Hoja al documento con los valores dados, se le asigna un identificador autmaticamente
      * @param _f numero de filas que tendra la hoja
      * @param _c numero de columnas que tendra la hoja
      */
@@ -176,7 +181,7 @@ public class Documento implements Serializable {
     }
 
     /**
-     * Lee un ArrayList en el que hay un archivo csv en string y añade una hoja al documento con los valores que contiene
+     * Lee un ArrayList en el que hay un archivo csv en string y anade una hoja al documento con los valores que contiene
      * @param csv ArrayList de String donde estan los valores del archivo csv
      */
     public void leeCSV(ArrayList<String> csv){

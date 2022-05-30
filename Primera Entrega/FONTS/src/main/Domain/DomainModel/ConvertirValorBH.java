@@ -7,6 +7,11 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+
+/**
+ * Clase ConvertirValorBH, clase encargada de gestionar la funcion que convierte un valor binario en uno hexadecimal
+ * @author David Perez Barroso
+ */
 public class ConvertirValorBH extends Funcion{
 
 

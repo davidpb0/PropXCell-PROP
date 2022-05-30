@@ -8,6 +8,11 @@ package main.Domain.DomainModel;
  *
  * Author David Pérez Barroso
  */
+
+/**
+ * Clase ConvertirValorHB, clase encargada de gestionar la funcion que convierte un valor hexadecimal en uno binario
+ * @author David Perez Barroso
+ */
 public class ConvertirValorHB extends Funcion{
 
     private String hexa;
