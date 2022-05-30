@@ -1,6 +1,8 @@
 package main.Presentation.vistas.PantallaPrincipal.Tabla;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 

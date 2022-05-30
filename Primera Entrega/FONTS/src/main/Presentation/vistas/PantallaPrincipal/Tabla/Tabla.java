@@ -445,6 +445,7 @@ public class Tabla extends JPanel implements TableModelListener {
      * Estiliza la celda seleccionada con el estilo de letra en negrita
      */
     public void bold () {
+        if (selectedRowEnd < 0 || selectedColumnEnd <= 0) return;
         for (int i = selectedRowStart+1; i <= selectedRowEnd+1; i++) {
             for (int j = selectedColumnStart; j <= selectedColumnEnd; j++) {
                 if (j == 0) continue;
@@ -459,6 +460,7 @@ public class Tabla extends JPanel implements TableModelListener {
      * Estiliza la celda seleccionada con el estilo de letra en cursiva
      */
     public void italic () {
+        if (selectedRowEnd < 0 || selectedColumnEnd <= 0) return;
         for (int i = selectedRowStart+1; i <= selectedRowEnd+1; i++) {
             for (int j = selectedColumnStart; j <= selectedColumnEnd; j++) {
                 if (j == 0) continue;
@@ -474,6 +476,7 @@ public class Tabla extends JPanel implements TableModelListener {
      * @param _color color de fondo
      */
     public void changeBG (Color _color) {
+        if (selectedRowEnd < 0 || selectedColumnEnd <= 0) return;
         for (int i = selectedRowStart+1; i <= selectedRowEnd+1; i++) {
             for (int j = selectedColumnStart; j <= selectedColumnEnd; j++) {
                 if (j == 0) continue;
@@ -489,6 +492,7 @@ public class Tabla extends JPanel implements TableModelListener {
      * @param _color color de letra
      */
     public void changeFG (Color _color) {
+        if (selectedRowEnd < 0 || selectedColumnEnd <= 0) return;
         for (int i = selectedRowStart+1; i <= selectedRowEnd+1; i++) {
             for (int j = selectedColumnStart; j <= selectedColumnEnd; j++) {
                 if (j == 0) continue;

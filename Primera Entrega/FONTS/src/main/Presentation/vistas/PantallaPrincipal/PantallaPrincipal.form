@@ -135,13 +135,13 @@
                   <component id="805b0" class="javax.swing.JButton" binding="boldButton">
                     <constraints/>
                     <properties>
-                      <text value="Bold"/>
+                      <text value="Negrita"/>
                     </properties>
                   </component>
                   <component id="a34f6" class="javax.swing.JButton" binding="italicButton" default-binding="true">
                     <constraints/>
                     <properties>
-                      <text value="Italic"/>
+                      <text value="Cursiva"/>
                     </properties>
                   </component>
                   <component id="9224f" class="javax.swing.JButton" binding="backgroundButton" default-binding="true">
