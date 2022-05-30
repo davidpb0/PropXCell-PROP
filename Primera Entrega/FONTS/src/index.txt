@@ -1,13 +1,7 @@
 ## Elementos del directorio
 
-### drivers:
-En este directorio se encuentran los drivers compilados por el Makefile de /FONTS/src.
-
 ### main:
 En este directorio se encuentran los ejecutables de las clases compiladas por el Makefile de /FONTS/src.
-
-### test:
-En este directorio se encuentran los ejecutables de los tests unitarios compilados por el Makefile de /FONTS/src.
 
 ### Makefile:
 Makefile para compilar todo el proyecto y ejecutar los distintos modulos. Contiene la regla "build" que ejecuta todo

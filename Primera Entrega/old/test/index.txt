@@ -5,7 +5,7 @@ Este directorio contiene un test unitario que hicimos en un primer momento, y no
 sustituirlo por un driver.
 
 ### suit:
-Este directorio contiene los ejecutables de los tests unitarios que hemos hecho.
+Este directorio contiene los tests unitarios que hemos hecho.
 
 ### TestRunner:
 Esta clase contiene el metodo main para ejecutar todos los tests unitarios.

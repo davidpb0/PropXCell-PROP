@@ -2,3 +2,9 @@
 
 ### Domain
 Este directorio contiene los packages de los controladores y las clases de dominio.
+
+### Persistence
+Este directorio contiene los packages de los controladores y las clases de persistencia.
+
+### Presentation
+Este directorio contiene los packages de los controladores y las vistas de presentacion.

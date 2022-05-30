@@ -2,3 +2,7 @@
 
 ### out:
 En este directorio se encuentran los ejecutables compilados con el Makefile en /FONTS/src/
+
+### Juegos de pruebas.prop
+Este archivo se trata de un Documento guardado, el cual podemos cargar desde la aplicacion para
+observar los juegos de pruebas.
