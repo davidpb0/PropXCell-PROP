@@ -417,6 +417,16 @@ public class PantallaPrincipal extends JFrame {
                         ));
                         if ( s.equals("Columnas") ) {
                             int _c = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedColumnStart();
+                            if (_c < 0) _c = 0;
+                            if (num >= tablas.get(tabbedPane1.getSelectedIndex()).getCols()) {
+                                JOptionPane.showMessageDialog(
+                                        Activity,
+                                        "No se pueden eliminar todas las columnas",
+                                        "Error",
+                                        JOptionPane.ERROR_MESSAGE
+                                );
+                                return;
+                            }
                             cd.getControladorHoja().eliminarColumnas(_c, num);
                             for (int i = 0; i < num; i++) {
                                 tablas.get(tabbedPane1.getSelectedIndex()).removeColumn(_c);
@@ -425,6 +435,16 @@ public class PantallaPrincipal extends JFrame {
 
                         if (s.equals("Filas")) {
                             int _r = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedRowStart();
+                            if (_r < 0) _r = 0;
+                            if (num >= tablas.get(tabbedPane1.getSelectedIndex()).getRows()) {
+                                JOptionPane.showMessageDialog(
+                                        Activity,
+                                        "No se pueden eliminar todas las filas",
+                                        "Error",
+                                        JOptionPane.ERROR_MESSAGE
+                                );
+                                return;
+                            }
                             cd.getControladorHoja().eliminarFilas(_r+1, num);
                             for (int i = 0; i < num; i++) {
                                 tablas.get(tabbedPane1.getSelectedIndex()).removeRow(_r);
@@ -439,12 +459,32 @@ public class PantallaPrincipal extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         if ( s.equals("Columnas") ) {
                             int _c = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedColumnEnd()+1;
+                            if (_c < 0) _c = 0;
+                            if (tablas.get(tabbedPane1.getSelectedIndex()).getCols() == 1) {
+                                JOptionPane.showMessageDialog(
+                                        Activity,
+                                        "No se puede eliminar la ultima columna",
+                                        "Error",
+                                        JOptionPane.ERROR_MESSAGE
+                                );
+                                return;
+                            }
                             cd.getControladorHoja().eliminarColumnas(_c, 1);
                             tablas.get(tabbedPane1.getSelectedIndex()).removeColumn(_c);
                         }
 
                         if (s.equals("Filas")) {
                             int _r = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedRowEnd()+1;
+                            if (_r < 0) _r = 0;
+                            if (tablas.get(tabbedPane1.getSelectedIndex()).getRows() == 1) {
+                                JOptionPane.showMessageDialog(
+                                        Activity,
+                                        "No se puede eliminar la ultima fila",
+                                        "Error",
+                                        JOptionPane.ERROR_MESSAGE
+                                );
+                                return;
+                            }
                             cd.getControladorHoja().eliminarFilas(_r+1, 1);
                             tablas.get(tabbedPane1.getSelectedIndex()).removeRow(_r);
                         }
@@ -457,12 +497,32 @@ public class PantallaPrincipal extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         if ( s.equals("Columnas") ) {
                             int _c = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedColumnStart()-1;
+                            if (_c < 0) _c = 0;
+                            if (tablas.get(tabbedPane1.getSelectedIndex()).getCols() == 1) {
+                                JOptionPane.showMessageDialog(
+                                        Activity,
+                                        "No se puede eliminar la ultima columna",
+                                        "Error",
+                                        JOptionPane.ERROR_MESSAGE
+                                );
+                                return;
+                            }
                             cd.getControladorHoja().eliminarColumnas(_c, 1);
                             tablas.get(tabbedPane1.getSelectedIndex()).removeColumn(_c);
                         }
 
                         if (s.equals("Filas")) {
                             int _r = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedRowStart()-1;
+                            if (_r < 0) _r = 0;
+                            if (tablas.get(tabbedPane1.getSelectedIndex()).getRows() == 1) {
+                                JOptionPane.showMessageDialog(
+                                        Activity,
+                                        "No se puede eliminar la ultima fila",
+                                        "Error",
+                                        JOptionPane.ERROR_MESSAGE
+                                );
+                                return;
+                            }
                             cd.getControladorHoja().eliminarFilas(_r+1, 1);
                             tablas.get(tabbedPane1.getSelectedIndex()).removeRow(_r);
                         }
@@ -475,12 +535,32 @@ public class PantallaPrincipal extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         if ( s.equals("Columnas") ) {
                             int _c = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedColumnStart();
+                            if (_c < 0) _c = 0;
+                            if (tablas.get(tabbedPane1.getSelectedIndex()).getCols() == 1) {
+                                JOptionPane.showMessageDialog(
+                                        Activity,
+                                        "No se puede eliminar la ultima columna",
+                                        "Error",
+                                        JOptionPane.ERROR_MESSAGE
+                                );
+                                return;
+                            }
                             cd.getControladorHoja().eliminarColumnas(_c, 1);
                             tablas.get(tabbedPane1.getSelectedIndex()).removeColumn(_c);
                         }
 
                         if (s.equals("Filas")) {
                             int _r = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedRowStart();
+                            if (_r < 0) _r = 0;
+                            if (tablas.get(tabbedPane1.getSelectedIndex()).getRows() == 1) {
+                                JOptionPane.showMessageDialog(
+                                        Activity,
+                                        "No se puede eliminar la ultima fila",
+                                        "Error",
+                                        JOptionPane.ERROR_MESSAGE
+                                );
+                                return;
+                            }
                             cd.getControladorHoja().eliminarFilas(_r+1, 1);
                             tablas.get(tabbedPane1.getSelectedIndex()).removeRow(_r);
                         }

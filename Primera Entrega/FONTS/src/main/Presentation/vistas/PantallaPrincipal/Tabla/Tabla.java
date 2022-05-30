@@ -65,6 +65,14 @@ public class Tabla extends JPanel implements TableModelListener {
         init(rows, cols);
     }
 
+    public int getRows () {
+        return rows;
+    }
+
+    public int getCols () {
+        return cols;
+    }
+
     public void init(int rows, int cols) {
         try {
             cd.getControladorHoja().asignaHoja(idH);
