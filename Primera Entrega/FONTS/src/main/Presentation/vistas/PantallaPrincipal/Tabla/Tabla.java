@@ -224,6 +224,7 @@ public class Tabla extends JPanel implements TableModelListener {
     public void insertColumn(int col) {
         model.addColumn(model.getColumnName(cols+1));
         cols++;
+        model.fireTableStructureChanged();
         for (int i = col; i <= cols; i++) {
             for (int j = 1; j <= rows; j++) {
                 cd.getControladorHoja().asignaCelda((j)+"", (i)+"");
@@ -300,4 +301,14 @@ public class Tabla extends JPanel implements TableModelListener {
          }
     }
 
+    public void removeRow(int r) {
+        rows--;
+        model.removeRow(r);
+    }
+
+    public void removeColumn(int c) {
+        cols--;
+        table.removeColumn(table.getColumnModel().getColumn(c));
+        resetColumnVista();
+    }
 }

@@ -157,17 +157,17 @@ public class ControladorHoja {
         int numFilas = hojaAct.getFilas();
         int numColums = hojaAct.getColumnas();
 
-        // Borramos las filas indicada
-        for (int iterFilas = 0; iterFilas < _num; ++iterFilas) {
+        // Reasignamos la posicion a las filas posteriores
+        for (int iterFilas = _pos + _num; iterFilas <= numFilas; ++iterFilas) {
             for (int iterColums = 1; iterColums <= numColums; ++iterColums) {
-                hojaAct.quitarCelda(new Posicion(_pos + iterFilas, iterColums));
+                hojaAct.cambiarPosicionCelda(new Posicion(iterFilas, iterColums), new Posicion(iterFilas - _num, iterColums));
             }
         }
 
-        // Reasignamos la posicion a las filas posteriores
-        for (int iterFilas = _pos + 1; iterFilas <= numFilas; ++iterFilas) {
+        // Borramos las filas indicada
+        for (int iterFilas = 0; iterFilas < _num; ++iterFilas) {
             for (int iterColums = 1; iterColums <= numColums; ++iterColums) {
-                hojaAct.cambiarPosicionCelda(new Posicion(iterFilas, iterColums), new Posicion(iterFilas - 1, iterColums));
+                hojaAct.quitarCelda(new Posicion(numFilas-iterFilas, iterColums));
             }
         }
 
@@ -186,17 +186,17 @@ public class ControladorHoja {
         int numFilas = hojaAct.getFilas();
         int numColums = hojaAct.getColumnas();
 
-        // Borramos las columna indicada
+        // Reasignamos la posicion a las columnas posteriores
         for (int iterFilas = 1; iterFilas <= numFilas; ++iterFilas) {
-            for (int iterColums = 0; iterColums < _num; ++iterColums) {
-                hojaAct.quitarCelda(new Posicion(iterFilas, _pos + iterColums));
+            for (int iterColums =  _pos + _num; iterColums <= numColums; ++iterColums) {
+                hojaAct.cambiarPosicionCelda(new Posicion(iterFilas, iterColums), new Posicion(iterFilas, iterColums - _num));
             }
         }
 
-        // Reasignamos la posicion a las columnas posteriores
+        // Borramos las columna indicada
         for (int iterFilas = 1; iterFilas <= numFilas; ++iterFilas) {
-            for (int iterColums =  _pos + 1; iterColums <= numColums; ++iterColums) {
-                hojaAct.cambiarPosicionCelda(new Posicion(iterFilas, iterColums), new Posicion(iterFilas, iterColums - 1));
+            for (int iterColums = 0; iterColums < _num; ++iterColums) {
+                hojaAct.quitarCelda(new Posicion(iterFilas, numColums - iterColums));
             }
         }
 

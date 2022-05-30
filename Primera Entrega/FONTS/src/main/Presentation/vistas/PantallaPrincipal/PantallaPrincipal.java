@@ -272,7 +272,7 @@ public class PantallaPrincipal extends JFrame {
                                 }
                                 break;
                             default:
-                                System.out.println(cmd);
+                                //System.out.println(cmd);
                                 break;
                         }
                     }
@@ -317,7 +317,7 @@ public class PantallaPrincipal extends JFrame {
                                 ordenar(true);
                                 break;
                             default:
-                                System.out.println(cmd);
+                                //System.out.println(cmd);
                                 break;
                         }
                     }
@@ -406,12 +406,86 @@ public class PantallaPrincipal extends JFrame {
             if (s.equals("Filas") || s.equals("Columnas")) {
                 JMenu submenu = new JMenu(s);
                 JMenuItem m = new JMenuItem("Eliminar " + s + "...");
+                m.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        int num = Integer.parseInt(JOptionPane.showInputDialog(
+                                Activity,
+                                "¿ Cuantas " + s.toLowerCase() + " quieres eliminar?",
+                                "Eliminar " + s.toLowerCase(),
+                                JOptionPane.WARNING_MESSAGE
+                        ));
+                        if ( s.equals("Columnas") ) {
+                            int _c = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedColumnStart();
+                            cd.getControladorHoja().eliminarColumnas(_c, num);
+                            for (int i = 0; i < num; i++) {
+                                tablas.get(tabbedPane1.getSelectedIndex()).removeColumn(_c);
+                            }
+                        }
+
+                        if (s.equals("Filas")) {
+                            int _r = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedRowStart();
+                            cd.getControladorHoja().eliminarFilas(_r+1, num);
+                            for (int i = 0; i < num; i++) {
+                                tablas.get(tabbedPane1.getSelectedIndex()).removeRow(_r);
+                            }
+                        }
+                    }
+                });
                 submenu.add(m);
                 m = new JMenuItem("Eliminar " + s.substring(0, s.length() - 1) + " posterior...");
+                m.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if ( s.equals("Columnas") ) {
+                            int _c = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedColumnEnd()+1;
+                            cd.getControladorHoja().eliminarColumnas(_c, 1);
+                            tablas.get(tabbedPane1.getSelectedIndex()).removeColumn(_c);
+                        }
+
+                        if (s.equals("Filas")) {
+                            int _r = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedRowEnd()+1;
+                            cd.getControladorHoja().eliminarFilas(_r+1, 1);
+                            tablas.get(tabbedPane1.getSelectedIndex()).removeRow(_r);
+                        }
+                    }
+                });
                 submenu.add(m);
                 m = new JMenuItem("Eliminar " + s.substring(0, s.length() - 1) + " anterior...");
+                m.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if ( s.equals("Columnas") ) {
+                            int _c = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedColumnStart()-1;
+                            cd.getControladorHoja().eliminarColumnas(_c, 1);
+                            tablas.get(tabbedPane1.getSelectedIndex()).removeColumn(_c);
+                        }
+
+                        if (s.equals("Filas")) {
+                            int _r = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedRowStart()-1;
+                            cd.getControladorHoja().eliminarFilas(_r+1, 1);
+                            tablas.get(tabbedPane1.getSelectedIndex()).removeRow(_r);
+                        }
+                    }
+                });
                 submenu.add(m);
                 m = new JMenuItem("Eliminar " + s.substring(0, s.length() - 1) + " actual...");
+                m.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if ( s.equals("Columnas") ) {
+                            int _c = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedColumnStart();
+                            cd.getControladorHoja().eliminarColumnas(_c, 1);
+                            tablas.get(tabbedPane1.getSelectedIndex()).removeColumn(_c);
+                        }
+
+                        if (s.equals("Filas")) {
+                            int _r = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedRowStart();
+                            cd.getControladorHoja().eliminarFilas(_r+1, 1);
+                            tablas.get(tabbedPane1.getSelectedIndex()).removeRow(_r);
+                        }
+                    }
+                });
                 submenu.add(m);
                 this.eliminar.add(submenu);
             }
