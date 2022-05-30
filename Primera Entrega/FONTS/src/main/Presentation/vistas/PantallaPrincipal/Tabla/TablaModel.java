@@ -19,6 +19,10 @@ import java.util.Vector;
  * Joaquim Torra Garcia
  */
 
+/**
+ * Clase TablaModel, el modelo de datos de la tabla
+ * @author Joaquim Torra Garcia
+ */
 public class TablaModel extends DefaultTableModel {
 
     private int rows;

@@ -26,25 +26,12 @@ public class TablaListener implements PropertyChangeListener, Runnable {
     private Object valorAntiguo;
     private Object valorNuevo;
 
-    /**
-     * Constructor de la clase TablaListener
-     * @param table Tabla sobre la que se va a reaccionar
-     * @param action Accion que se va a realizar
-     */
     public TablaListener(JTable table, Action action) {
         this.table = table;
         this.action = action;
         this.table.addPropertyChangeListener(this);
     }
 
-    /**
-     * Constructora privada de la clase TablaListener
-     * @param tabla Tabla sobre la que se va a reaccionar
-     * @param fila Fila sobre la que se va a reaccionar
-     * @param columna Columna sobre la que se va a reaccionar
-     * @param valorAntiguo Valor antiguo de la celda
-     * @param valorNuevo Valor nuevo de la celda
-     */
     private TablaListener(JTable tabla, int fila, int columna, Object valorAntiguo, Object valorNuevo)
     {
         this.table = tabla;
