@@ -4,6 +4,9 @@
 Diagrama completo de clases que hemos utilizado para la tercera entrega. Cada capa de la arquitectura contiene
 una leyenda donde facilmente se pueden distinguir qué clases ha programado cada miembro del equipo.
 
+### Manual de Usuario.pdf
+Manual de usuario del software.
+
 ### Javadoc
 Directorio que contiene toda la documentacion generada por Javadoc. Para abrirla, hay que dirigirse a dicho
 directorio y abrir "index.html".
