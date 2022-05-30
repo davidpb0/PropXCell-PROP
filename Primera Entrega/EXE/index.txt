@@ -1,15 +1,10 @@
 ## Elementos del directorio
 
 ### out:
-En este directorio se encuentran los ejecutables compilados con el Makefile en /FONTS/src/
+En este directorio se encuentran las clases compiladas con el Makefile en /FONTS/src/
 
-### Juegos de pruebas.prop
-Este archivo se trata de un Documento guardado, el cual podemos cargar desde la aplicacion para
-observar los juegos de pruebas.
+### Juegos de pruebas:
+En este directorio se encuentra todo lo relacionado con los juegos de prueba del programa
 
-### DescripcionJuegosDePruebas.txt
-Este archivo contiene la descripcion para el uso y entendimiento de los juegos de pruebas empleados
-para testear las funcionalidades del programa.
-
-### Importame.csv
-Archivo de prueba en formato csv para que se importe en una hoja con finalidad de testeo.
+### PropXcel.jar:
+Ejecutable del software. Se ejecuta utilizando el Makefile ubicado en /FONTS/src
