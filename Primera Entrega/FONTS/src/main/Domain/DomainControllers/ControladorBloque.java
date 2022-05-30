@@ -85,6 +85,10 @@ public class ControladorBloque {
         BloqueSeleccionado.getBloque().clearCeldas();
     }
 
+    /**
+     * Getter del bloque copiado
+     * @return el bloque copiado actual
+     */
     public BloqueTemporalCopiado getBloqueCopiado() {
         return bloqueCopiado;
     }
