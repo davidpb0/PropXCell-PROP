@@ -107,7 +107,7 @@ public class ControladorHoja {
         }
 
         // Movemos todas las filas por encima de _pos _num posiciones
-        for (int i = numFilas; i >= 0; i--) {
+        for (int i = numFilas; i >= _pos; i--) {
             for (int j = 1; j <= numColums; j++) {
                 hojaAct.cambiarPosicionCelda(new Posicion(i, j), new Posicion(i + _num, j));
             }
@@ -135,7 +135,7 @@ public class ControladorHoja {
             }
         }
         // Movemos todas las columnas a la derecha de _pos _num posiciones
-        for (int i = numColums; i >= 0; i--) {
+        for (int i = numColums; i >= _pos; i--) {
             for (int j = 1; j <= numFilas; j++) {
                 hojaAct.cambiarPosicionCelda(new Posicion(j, i), new Posicion(j, i + _num));
             }

@@ -192,7 +192,6 @@ public class PantallaPrincipal extends JFrame {
 
     public void nuevaHoja() {
         cd.getControladorDocumento().anadirHoja();
-        System.out.println(tabbedPane1.getTabCount());
 
     }
 
@@ -342,13 +341,19 @@ public class PantallaPrincipal extends JFrame {
                                 JOptionPane.PLAIN_MESSAGE
                         ));
                         if ( s.equals("Columnas") ) {
-                            cd.getControladorHoja().addColumnas(cd.getControladorHoja().getHojaRef().getColumnas(), num);
-                            tablas.get(tabbedPane1.getSelectedIndex()).addColumns(num);
+                            int _c = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedColumnEnd() + 1;
+                            cd.getControladorHoja().addColumnas(_c, num);
+                            for (int i = 0; i < num; i++) {
+                                tablas.get(tabbedPane1.getSelectedIndex()).insertColumn(_c+i);
+                            }
                         }
 
                         if (s.equals("Filas")) {
-                            cd.getControladorHoja().addFilas(cd.getControladorHoja().getHojaRef().getFilas(), num);
-                            tablas.get(tabbedPane1.getSelectedIndex()).addRows(num);
+                            int _r = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedRowEnd() + 1;
+                            cd.getControladorHoja().addFilas(_r+1, num);
+                            for (int i = 0; i < num; i++) {
+                                tablas.get(tabbedPane1.getSelectedIndex()).insertRow(_r);
+                            }
                         }
                     }
                 });
@@ -358,13 +363,15 @@ public class PantallaPrincipal extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if ( s.equals("Columnas") ) {
-                            cd.getControladorHoja().addColumnas(1, 1);
-                            tablas.get(tabbedPane1.getSelectedIndex()).insertColumn(0);
+                            int _c = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedColumnStart();
+                            cd.getControladorHoja().addColumnas(_c, 1);
+                            tablas.get(tabbedPane1.getSelectedIndex()).insertColumn(_c);
                         }
 
                         if (s.equals("Filas")) {
-                            cd.getControladorHoja().addFilas(0, 1);
-                            tablas.get(tabbedPane1.getSelectedIndex()).insertRow(0);
+                            int _r = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedRowStart();
+                            cd.getControladorHoja().addFilas(_r+1, 1);
+                            tablas.get(tabbedPane1.getSelectedIndex()).insertRow(_r);
                         }
                     }
                 });
@@ -374,13 +381,15 @@ public class PantallaPrincipal extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if ( s.equals("Columnas") ) {
-                            cd.getControladorHoja().addColumnas(cd.getControladorHoja().getHojaRef().getColumnas(), 1);
-                            tablas.get(tabbedPane1.getSelectedIndex()).addColumns(1);
+                            int _c = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedColumnEnd() + 1;
+                            cd.getControladorHoja().addColumnas(_c, 1);
+                            tablas.get(tabbedPane1.getSelectedIndex()).insertColumn(_c);
                         }
 
                         if (s.equals("Filas")) {
-                            cd.getControladorHoja().addFilas(cd.getControladorHoja().getHojaRef().getFilas(), 1);
-                            tablas.get(tabbedPane1.getSelectedIndex()).addRows(1);
+                            int _r = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedRowEnd() + 1;
+                            cd.getControladorHoja().addFilas(_r+1, 1);
+                            tablas.get(tabbedPane1.getSelectedIndex()).insertRow(_r);
                         }
                     }
                 });
@@ -468,9 +477,6 @@ public class PantallaPrincipal extends JFrame {
             File f = jf.getSelectedFile();
             cd.getControladorDocumento().guardarDocumento(f.toString());
         }
-        else {
-            System.out.println("No Selection ");
-        }
     }
 
     private void cargarDocumento () {
@@ -489,9 +495,6 @@ public class PantallaPrincipal extends JFrame {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-        }
-        else {
-            System.out.println("No Selection ");
         }
     }
 
@@ -577,9 +580,6 @@ public class PantallaPrincipal extends JFrame {
                 ex.printStackTrace();
             }
         }
-        else {
-            System.out.println("No Selection ");
-        }
     }
 
     private void exportarCSV () {
@@ -596,22 +596,18 @@ public class PantallaPrincipal extends JFrame {
     }
 
     private void cortar () {
-        System.out.println("Cortar");
         tablas.get(tabbedPane1.getSelectedIndex()).cortar();
     }
 
     private void copiar () {
-        System.out.println("Copiar");
         tablas.get(tabbedPane1.getSelectedIndex()).copiar();
     }
 
     private void pegar () {
-        System.out.println("Pegar");
         tablas.get(tabbedPane1.getSelectedIndex()).pegar();
     }
 
     private void ordenar (boolean desc) {
-        System.out.println("Ordenar");
         tablas.get(tabbedPane1.getSelectedIndex()).ordenar(desc);
     }
 

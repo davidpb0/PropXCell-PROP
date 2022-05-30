@@ -211,15 +211,8 @@ public class Tabla extends JPanel implements TableModelListener {
         return idH;
     }
 
-    public void addRows (int num) {
-        for (int i = 0; i < num; i++)
-            model.addRow(new Vector<>());
-    }
-
     public void insertRow(int row) {
-        if (row == 0) {
-            row = selectedRowStart != -1 ? selectedRowStart : 1;
-        }
+        rows++;
         Vector<Object> rowData = new Vector<>();
         for (int i = 0; i < cols; i++) {
             rowData.add("");
@@ -227,22 +220,16 @@ public class Tabla extends JPanel implements TableModelListener {
         model.insertRow(row, rowData);
     }
 
-    public void addColumns (int num) {
-        int pos = selectedColumnStart != -1 ? selectedColumnStart : cols;
-        for (int i = 0; i < num; i++) {
-            model.addColumn("Nueva Columna");
-            table.moveColumn(table.getColumnCount()-1, pos+i);
-        }
-
-        resetColumnVista();
-    }
 
     public void insertColumn(int col) {
-        if (col == 0) {
-            col = selectedColumnStart != -1 ? selectedColumnStart : 1;
+        model.addColumn(model.getColumnName(cols+1));
+        cols++;
+        for (int i = col; i <= cols; i++) {
+            for (int j = 1; j <= rows; j++) {
+                cd.getControladorHoja().asignaCelda((j)+"", (i)+"");
+                reloadValue(cd.getControladorHoja().getCeldaRef());
+            }
         }
-        this.addColumns(1);
-        table.moveColumn(table.getColumnCount()-1, col);
         resetColumnVista();
     }
 
@@ -279,7 +266,7 @@ public class Tabla extends JPanel implements TableModelListener {
                 reloadValue(cd.getControladorHoja().getCeldaRef());
 
                 if (cortar) {
-                    cd.getControladorHoja().asignaCelda((copiedRowStart+1)+"", (copiedColumnStart+j)+"");
+                    cd.getControladorHoja().asignaCelda((copiedRowStart+i+1)+"", (copiedColumnStart+j)+"");
                     try {
                         cd.getControladorHoja().escribirContenido("");
                     } catch (Exception e) {
