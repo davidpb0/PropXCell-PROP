@@ -1,0 +1,16 @@
+## Elementos del directorio:
+
+### CeldaEditor:
+Esta clase contiene lo necesario para poder editar el contenido de una celda y que se muestre en la vista.
+
+### CeldaRenderer:
+Esta clase contiene las propiedades visuales de una celda en la vista.
+
+### Tabla:
+Esta clase contiene la implementacion de nuestra tabla.
+
+### TablaListener:
+Esta clase contiene los ActionListeners de la tabla.
+
+### TablaModel:
+Esta clase contiene los metodos para poder seleccionar una celda y trabajar con ella.

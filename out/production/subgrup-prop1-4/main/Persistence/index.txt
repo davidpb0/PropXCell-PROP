@@ -1,0 +1,7 @@
+## Elementos del directorio:
+
+### PersistenceClasses:
+Package que contiene las clases de la capa de Persistencia.
+
+### PersistenceControllers:
+Package que contiene los controladores de la capa de Persistenica.
