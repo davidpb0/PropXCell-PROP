@@ -11,3 +11,9 @@ Clase que contiene el codigo de la Pantalla Principal.
 
 ### PantallaPrincipal.form:
 Archivo que contiene la estructura de la vista correspondiente a la Pantalla Principal.
+
+### atajos.txt:
+Archivo de texto que contiene los atajos usados por el programa.
+
+### funciones.txt:
+Archivo de texto que contiene todas las funciones del programa.
