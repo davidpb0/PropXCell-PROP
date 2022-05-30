@@ -705,6 +705,9 @@ public class PantallaPrincipal extends JFrame {
         barraH.add(this.ayuda);
     }
 
+    /**
+     * Muestra la lista de Atajos de Teclado en una nueva ventana JDialog
+     */
     private void mostrarAtajos() {
         JDialog dialog = new JDialog(this, "Lista de Atajos de Teclado", true);
         JTextArea textArea = new JTextArea();
@@ -724,6 +727,9 @@ public class PantallaPrincipal extends JFrame {
         dialog.setVisible(true);
     }
 
+    /**
+     * Muestra la lista de Funciones en una nueva ventana JDialog
+     */
     private void mostrarListaFunciones() {
         JDialog dialog = new JDialog(this, "Lista de Funciones", true);
         JTextArea textArea = new JTextArea();
@@ -743,11 +749,16 @@ public class PantallaPrincipal extends JFrame {
         dialog.setVisible(true);
     }
 
+    /**
+     * Lee un archivo de txt y lo devuelve como un String
+     * @param file Ruta del archivo
+     * @return String con el contenido del archivo
+     */
     private String readFile(String file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader (file));
-        String         line = null;
+        String line = null;
         StringBuilder  stringBuilder = new StringBuilder();
-        String         ls = System.getProperty("line.separator");
+        String ls = System.getProperty("line.separator");
 
         try {
             while((line = reader.readLine()) != null) {
