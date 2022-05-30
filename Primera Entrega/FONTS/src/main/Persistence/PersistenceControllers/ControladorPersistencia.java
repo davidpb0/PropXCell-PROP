@@ -6,6 +6,11 @@ package main.Persistence.PersistenceControllers;
  * Author Iván Risueño Martín
  */
 
+/**
+ * Controlador de Persistencia, utilizado para dar acceso al resto de controladores de la misma capa.
+ * @author Iván Risueño Martín
+ */
+
 public class ControladorPersistencia {
     private static ControladorPersistencia instanceOfThisClass;
     private final ControladorCSV controladorCSVRef;

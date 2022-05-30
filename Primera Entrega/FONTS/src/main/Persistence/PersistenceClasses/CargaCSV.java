@@ -12,6 +12,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Clase CargaCSV, utilizada para implementar la funcionalidad de importación de CSVs.
+ * @author Iván Risueño Martín
+ */
+
 public class CargaCSV {
     private String ubicacion;
 

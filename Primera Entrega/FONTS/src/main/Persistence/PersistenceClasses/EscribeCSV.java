@@ -10,6 +10,11 @@ package main.Persistence.PersistenceClasses;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Clase EscribeCSV, utilizada como implementación para la funcionalidad de exportación de CSVs.
+ * @author Iván Risueño Martín
+ */
+
 public class EscribeCSV {
     private String ubicacion;
     private ArrayList<String> contenido;

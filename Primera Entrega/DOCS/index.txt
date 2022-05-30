@@ -1,9 +1,9 @@
 ## Elementos del directorio
 
-### Diagrama de clases.png
-Diagrama completo de clases que hemos utilizado para la primera entrega. Nota importante: Las clases CargaCSV,
-GuardsCSV y ControladorCSV no las utilizamos todavía, ya que las implementamos sin tener en cuenta que son
-de la capa de persistencia.
+### Relacion de Clases Implementadas por el Equipo.pdf
+Diagrama completo de clases que hemos utilizado para la tercera entrega. Cada capa de la arquitectura contiene
+una leyenda donde facilmente se pueden distinguir qué clases ha programado cada miembro del equipo.
 
-### PrimeraEntrega.pdf
-Documento con la información acerca de nuestro proyecto para la primera entrega.
+### Javadoc
+Directorio que contiene toda la documentacion generada por Javadoc. Para abrirla, hay que dirigirse a dicho
+directorio y abrir "index.html".

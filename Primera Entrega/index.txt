@@ -6,18 +6,21 @@ Contiene la documentacion del proyecto.
 
 ### EXE:
 
-Ejecutables de cada clase, driver y test unitario, cada uno en un subdirectorio.
+Ejecutable(s) del programa.
 
 ### FONTS:
 
-Clases implementadas por el equipo, tanto clases de dominio como controladores, drivers y tests unitarios. Todas
-las clases son compilables con un Makefile.
+Clases implementadas por el equipo, de las tres capas. Todas las clases son compilables con un Makefile.
 
 ### lib:
 
 Aquí se encuentran las librerias que hemos necesitado para los tests.
 
-## Ejecutar las clases
+### old:
 
-Para ejecutar las diferentes clases implementadas hay que usar el Makefile que se encuentra en /FONTS/src/, primero
+Este directorio contiene los packages de drivers y tests que usamos para la primera entrega.
+
+## Ejecutar el programa
+
+Para ejecutar el programa hay que usar el Makefile que se encuentra en /FONTS/src/, primero
 utilizando la opcion "make build", y posteriormente "make help" para consultar las opciones disponibles.

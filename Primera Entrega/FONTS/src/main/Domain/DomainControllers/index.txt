@@ -3,11 +3,11 @@
 ### ControladorBloque
 Este controlador engloba las funcionalidades que puede ejecutar un bloque seleccionado.
 
-### ControladorCelda
-Este controlador engloba las funcionalidades que puede ejecutar una celda por sí misma.
-
 ### ControladorDocumento
 Este controlador engloba las funcionalidades que puede ejecutar el documento.
+
+### ControladorDominio
+Este controlador es singleton y contiene una instancia de cada controlador de la capa de dominio.
 
 ### ControladorHoja
 Este controlador engloba las funcionalidades que puede ejecutar una hoja.

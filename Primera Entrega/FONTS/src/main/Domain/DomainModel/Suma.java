@@ -8,6 +8,11 @@ package main.Domain.DomainModel;
  */
 import java.util.Arrays;
 
+/**
+ * Clase Suma, utilizada como implementación de la suma de dos o más valores dentro de la hoja.
+ * @author Iván Risueño Martín
+ */
+
 public class Suma extends Funcion{
 
     private String[] valores;

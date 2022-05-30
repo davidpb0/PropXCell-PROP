@@ -1,0 +1,10 @@
+## Elementos del directorio:
+
+### ControladorCSV:
+Controlador que se encarga de la gestion de las funcionalidades que tienen que ver con CSVs.
+
+### ControladorDocumentoPersistencia:
+Controlador que se encarga de la gestion del guardado/cargado de documentos en memoria secundaria.
+
+### ControladorPersistencia:
+Controlador, singleton, que guarda una instancia del resto de controladores de esta capa.

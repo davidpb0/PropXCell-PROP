@@ -11,6 +11,10 @@ import main.Domain.DomainControllers.ControladorDominio;
 import main.Presentation.vistas.PantallaInicial.PantallaInicial;
 import main.Presentation.vistas.PantallaPrincipal.PantallaPrincipal;
 
+/**
+ * Controlador de Presentación, utilizado para inicializar la pantalla inicial del programa.
+ */
+
 public class ControladorPresentacion {
     private final ControladorDominio contDominio;
     private PantallaInicial pIni;

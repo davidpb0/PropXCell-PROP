@@ -1,6 +1,8 @@
 package main.Presentation;
 
-import main.Presentation.vistas.PantallaInicial.PantallaInicial;
+/**
+ * MainProgram, utilizado como punto de acceso a la ejecución del software.
+ */
 
 public class MainProgram {
 
