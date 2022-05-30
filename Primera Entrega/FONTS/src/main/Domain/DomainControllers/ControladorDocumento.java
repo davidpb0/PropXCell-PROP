@@ -13,6 +13,10 @@ import main.Persistence.PersistenceControllers.ControladorCSV;
 import main.Persistence.PersistenceControllers.ControladorDocumentoPersistencia;
 import main.Persistence.PersistenceControllers.ControladorPersistencia;
 
+/**
+ * ControladorDominio, usado para acceder al resto de controladores.
+ * @author Joaquim Torra Garcia
+ */
 
 public class ControladorDocumento {
     private Documento documento_ref;
@@ -101,10 +105,18 @@ public class ControladorDocumento {
         return documento_ref.getNumHojas();
     }
 
+    /**
+     * Renombra el documento.
+     * @param _nuevoNombre nuevo nombre del documento.
+     */
     public void renombrarDocumento(String _nuevoNombre) {
         documento_ref.setNombre(_nuevoNombre);
     }
 
+    /**
+     * Guarda el documento en el path especificado.
+     * @param _path path donde guardar el documento.
+     */
     public void guardarDocumento(String _path) {
         ControladorDocumentoPersistencia cdp = ControladorPersistencia.getControladorPersistencia().getControladorDocumentoPersistenciaRef();
         try {
@@ -116,6 +128,10 @@ public class ControladorDocumento {
         //this.documento_ref = null; // Esto seria solo si queremos Guardar y Cerrar, no?
     }
 
+    /**
+     * Carga el documento del path especificado.
+     * @param _path path de donde cargar el documento.
+     */
     public void cargaDocumento(String _path) {
         ControladorDocumentoPersistencia cdp = ControladorPersistencia.getControladorPersistencia().getControladorDocumentoPersistenciaRef();
 
@@ -126,6 +142,10 @@ public class ControladorDocumento {
         }
     }
 
+    /**
+     * Obtiene el contenido de un CSV cargado y lo añade como hoja.
+     * @param _path path del CSV a cargar.
+     */
     public void cargaCSV (String _path) {
         try {
             ControladorCSV ccsv = ControladorPersistencia.getControladorPersistencia().getControladorCSV();
