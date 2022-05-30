@@ -7,6 +7,11 @@ package main.Domain.DomainModel;
  * Iván Risueño Martín
  */
 
+/**
+ * Clase BloqueTemporalCopiado, utilizada para almacenar las celdas copiadas o cortadas por el usuario.
+ * @author Iván Risueño Martín
+ */
+
 public class BloqueTemporalCopiado {
 
     private Celda[][] bloqueCopiado;

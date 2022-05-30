@@ -9,6 +9,11 @@ package main.Domain.DomainControllers;
 
 import main.Domain.DomainModel.*;
 
+/**
+ * ControladorBloque, usado para gestionar todo lo relacionado con el bloque seleccionado.
+ * @author Iván Risueño Martín
+ */
+
 public class ControladorBloque {
 
     private BloqueTemporalCopiado bloqueCopiado;

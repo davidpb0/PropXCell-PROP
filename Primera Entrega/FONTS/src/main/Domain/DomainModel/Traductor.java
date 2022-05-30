@@ -14,6 +14,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Clase Traductor, utilizada para hacer conversiones, detecciones de argumentos y demás.
+ * @author Iván Risueño Martín
+ */
+
 public class Traductor {
 
     /**

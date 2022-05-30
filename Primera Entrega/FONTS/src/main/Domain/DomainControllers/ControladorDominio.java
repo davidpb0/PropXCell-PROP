@@ -7,6 +7,11 @@ package main.Domain.DomainControllers;
  * Author Iván Risueño Martín
  */
 
+/**
+ * ControladorDominio, usado para acceder al resto de controladores.
+ * @author Iván Risueño Martín
+ */
+
 public class ControladorDominio {
     private static ControladorDominio instanceOfThisClass;
     private final ControladorBloque contBloque;

@@ -9,6 +9,11 @@ package main.Domain.DomainModel;
 
 import main.Domain.DomainControllers.ControladorDominio;
 
+/**
+ * Clase BloqueSeleccionado, utilizada para gestionar la selección de bloque en la hoja.
+ * @author Iván Risueño Martín
+ */
+
 public class BloqueSeleccionado {
     private static BloqueSeleccionado instanceOfThisClass; // Única instancia
 

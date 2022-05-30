@@ -8,6 +8,11 @@ package main.Domain.DomainModel;
  */
 import java.util.Arrays;
 
+/**
+ * Clase Resta, utlilizada como implementacion de la resta dentro de la hoja.
+ * @author Iván Risueño Martín
+ */
+
 public class Resta extends Funcion{
 
     private String[] valores;

@@ -8,6 +8,11 @@ package main.Domain.DomainModel;
  */
 import java.util.Arrays;
 
+/**
+ * Clase Multiplicacion, utilizada como implementación de la multiplicación de dos o varios valores en la hoja.
+ * @author Iván Risueño Martín
+ */
+
 public class Multiplicacion extends Funcion{
 
     private String[] valores;

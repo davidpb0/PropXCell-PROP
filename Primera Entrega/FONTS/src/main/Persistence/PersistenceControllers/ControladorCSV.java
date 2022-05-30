@@ -1,14 +1,20 @@
 package main.Persistence.PersistenceControllers;
 
-import main.Persistence.PersistenceClasses.*;
-import java.util.ArrayList;
-
-/*ClassName ControladorCSV
+/* ClassName ControladorCSV
  *
  * Version info 0.0.5
  *
  * Author Iván Risueño Martín
  */
+
+import main.Persistence.PersistenceClasses.*;
+import java.util.ArrayList;
+
+/**
+ * ControladorCSV, utilizado para englobar los casos de uso relacionados con los CSVs.
+ * @author Iván Risueño Martín
+ */
+
 public class ControladorCSV {
 
     private EscribeCSV escribecsvRef;

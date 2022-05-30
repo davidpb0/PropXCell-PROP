@@ -8,6 +8,11 @@ package main.Domain.DomainModel;
  */
 import java.util.Arrays;
 
+/**
+ * Clase Division, utilizada como implementacion de la funcionalidad de dividir dentro de la hoja.
+ * @author Iván Risueño Martín
+ */
+
 public class Division extends Funcion{
 
     private String[] valores;
