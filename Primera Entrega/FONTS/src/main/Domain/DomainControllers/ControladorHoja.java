@@ -761,7 +761,7 @@ public class ControladorHoja {
                 arg0 = new String[argm.size() * argm.get(0).length];
 
                 //Se comprueba que el numero de argumentos sea el correcto
-                if (argm.size() % 2 != 0) {
+                if (arg0.length % 2 != 0) {
                     this.celdaRef.setValor("#ERROR_N_ARG");
                     break;
                 }
@@ -846,7 +846,7 @@ public class ControladorHoja {
                 arg0 = new String[argm.size() * argm.get(0).length];
 
                 //Se comprueba que el numero de argumentos sea el correcto
-                if (argm.size() % 2 != 0) {
+                if (arg0.length % 2 != 0) {
                     this.celdaRef.setValor("#ERROR_N_ARG");
                     break;
                 }
