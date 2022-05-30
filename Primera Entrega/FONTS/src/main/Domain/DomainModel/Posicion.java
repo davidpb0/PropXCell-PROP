@@ -10,6 +10,11 @@ import java.util.Objects;
  * Joaquim Torra Garcia
  */
 
+/**
+ * Clase Posicion, necesaria para saber dónde se ubica una Celda en la Hoja
+ * @author Joaquim Torra Garcia
+ */
+
 public class Posicion implements Serializable {
 
     private static final long serialVersionUID = 44L;

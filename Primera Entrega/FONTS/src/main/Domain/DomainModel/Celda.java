@@ -13,6 +13,11 @@ import java.awt.*;
 import java.io.Serializable;
 import java.util.LinkedList;
 
+/**
+ * Clase que representa la unidad mínima de información en la hoja.
+ * @author Joaquim Torra Garcia
+ */
+
 public class Celda implements Serializable {
 
     private static final long serialVersionUID = 43L;

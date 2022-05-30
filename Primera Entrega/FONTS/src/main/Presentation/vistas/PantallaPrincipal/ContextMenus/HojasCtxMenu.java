@@ -1,6 +1,5 @@
 package main.Presentation.vistas.PantallaPrincipal.ContextMenus;
 
-import main.Domain.DomainControllers.ControladorDocumento;
 import main.Domain.DomainControllers.ControladorDominio;
 import main.Domain.DomainModel.Hoja;
 import main.Presentation.vistas.PantallaPrincipal.Tabla.Tabla;
@@ -9,6 +8,11 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+/**
+ * Clase que implementa el menú contextual de las hojas.
+ * @author Joaquim Torra Garcia
+ */
 
 public class HojasCtxMenu extends JPopupMenu implements ActionListener {
     JMenuItem nuevaHoja;
