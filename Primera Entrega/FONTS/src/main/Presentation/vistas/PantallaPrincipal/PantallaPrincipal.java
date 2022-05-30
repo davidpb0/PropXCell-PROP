@@ -6,6 +6,7 @@ import main.Domain.DomainModel.Hoja;
 import main.Presentation.ControladorPresentacion;
 import main.Presentation.vistas.PantallaPrincipal.ContextMenus.HojasCtxMenu;
 import main.Presentation.vistas.PantallaPrincipal.Tabla.Tabla;
+import org.w3c.dom.Text;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -15,9 +16,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
-import java.io.File;
+import java.io.*;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /*
  * Vista Principal
@@ -657,6 +663,36 @@ public class PantallaPrincipal extends JFrame {
             if (s.equals("Separador")) this.ayuda.addSeparator();
             else {
                 JMenuItem j = new JMenuItem(s);
+                j.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String cmd = e.getActionCommand().toLowerCase();
+                        switch (cmd) {
+                            case "manual de usuario":
+                                try {
+                                    URL url = getClass().getResource("ManualDeUsuario.pdf");
+                                    Desktop.getDesktop().open(new File(url.getPath()));
+                                } catch (Exception ex) {
+                                    JOptionPane.showMessageDialog(
+                                            Activity,
+                                            "No se pudo abrir el manual de usuario",
+                                            "Error",
+                                            JOptionPane.ERROR_MESSAGE
+                                    );
+                                }
+                                break;
+                            case "lista de funciones":
+                                mostrarListaFunciones();
+                                break;
+                            case "atajos de teclado":
+                                mostrarAtajos();
+                                break;
+                            default:
+                                //System.out.println(cmd);
+                                break;
+                        }
+                    }
+                });
                 this.ayuda.add(j);
             }
         }
@@ -667,6 +703,62 @@ public class PantallaPrincipal extends JFrame {
         barraH.add(this.insertar);
         barraH.add(this.eliminar);
         barraH.add(this.ayuda);
+    }
+
+    private void mostrarAtajos() {
+        JDialog dialog = new JDialog(this, "Lista de Atajos de Teclado", true);
+        JTextArea textArea = new JTextArea();
+        textArea.setEditable(false);
+        URL url = getClass().getResource("atajos.txt");
+        try {
+            String data = readFile(url.getPath());
+            textArea.setText(data);
+            textArea.setFont(new Font("Arial", Font.PLAIN, 14));
+            textArea.setCaretPosition(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        dialog.setSize(800, 500);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        dialog.add(scrollPane);
+        dialog.setVisible(true);
+    }
+
+    private void mostrarListaFunciones() {
+        JDialog dialog = new JDialog(this, "Lista de Funciones", true);
+        JTextArea textArea = new JTextArea();
+        textArea.setEditable(false);
+        URL url = getClass().getResource("funciones.txt");
+        try {
+            String data = readFile(url.getPath());
+            textArea.setText(data);
+            textArea.setFont(new Font("Arial", Font.PLAIN, 14));
+            textArea.setCaretPosition(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        dialog.setSize(800, 500);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        dialog.add(scrollPane);
+        dialog.setVisible(true);
+    }
+
+    private String readFile(String file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader (file));
+        String         line = null;
+        StringBuilder  stringBuilder = new StringBuilder();
+        String         ls = System.getProperty("line.separator");
+
+        try {
+            while((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+                stringBuilder.append(ls);
+            }
+
+            return stringBuilder.toString();
+        } finally {
+            reader.close();
+        }
     }
 
     /**
