@@ -100,7 +100,7 @@ public class PantallaPrincipal extends JFrame {
         int hojas = doc.getNumHojas();
         int filas = doc.getHoja(1).getFilas();
         int columnas = doc.getHoja(1).getColumnas();
-        setTitle(doc.getNombre() + " - PROPxCEL");
+        setTitle(doc.getNombre() + " - PropXcel");
         fechaCreacion.setText("Fecha de creación: " + doc.getFecha());
         add(principal);
         setResizable(true);
@@ -384,6 +384,13 @@ public class PantallaPrincipal extends JFrame {
                                 "Añadir " + s.toLowerCase(),
                                 JOptionPane.PLAIN_MESSAGE
                         ));
+                        if (num <= 0) {
+                            JOptionPane.showMessageDialog(Activity,
+                                    "No se puede añadir 0 o menos " + s.toLowerCase() + ".",
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE
+                            );
+                        }
                         if ( s.equals("Columnas") ) {
                             int _c = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedColumnEnd() + 1;
                             cd.getControladorHoja().addColumnas(_c, num);
@@ -459,6 +466,13 @@ public class PantallaPrincipal extends JFrame {
                                 "Eliminar " + s.toLowerCase(),
                                 JOptionPane.WARNING_MESSAGE
                         ));
+                        if (num <= 0) {
+                            JOptionPane.showMessageDialog(Activity,
+                                    "No se puede eliminar 0 o menos " + s.toLowerCase() + ".",
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE
+                            );
+                        }
                         if ( s.equals("Columnas") ) {
                             int _c = tablas.get(tabbedPane1.getSelectedIndex()).getSelectedColumnStart();
                             if (_c < 0) _c = 0;
@@ -656,6 +670,15 @@ public class PantallaPrincipal extends JFrame {
         int __filas = Integer.parseInt(fil_);
         int __columnas = Integer.parseInt(col_);
 
+        if (__filas <= 0 || __columnas <= 0) {
+            JOptionPane.showMessageDialog(
+                    Activity,
+                    "Las dimensiones del documento deben ser mayores a 0",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
 
         cd.getControladorDocumento().crearDocumento(__filas,__columnas);
         try {
@@ -725,6 +748,7 @@ public class PantallaPrincipal extends JFrame {
                 null,
                 antiguoNombre
         );
+        if (nuevoNombre == "" || nuevoNombre == null) nuevoNombre = antiguoNombre;
         try {
             cd.getControladorDocumento().asignaNombreHoja(nuevoNombre);
         } catch (Exception ex) {
@@ -807,10 +831,5 @@ public class PantallaPrincipal extends JFrame {
 
     private void ordenar (boolean desc) {
         tablas.get(tabbedPane1.getSelectedIndex()).ordenar(desc);
-    }
-
-    public static void main(String[] args) throws Exception {
-        PantallaPrincipal p = new PantallaPrincipal(ControladorDominio.getControladorDominio());
-        p.setVisible(true);
     }
 }
