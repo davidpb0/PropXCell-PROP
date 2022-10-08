@@ -1,8 +1,0 @@
-## Elementos del directorio
-
-### main:
-En este directorio se encuentran los ejecutables de las clases compiladas por el Makefile de /FONTS/src.
-
-### Makefile:
-Makefile para compilar todo el proyecto y ejecutar los distintos modulos. Contiene la regla "build" que ejecuta todo
-y la regla "help" para cualquier duda, ademas del resto de reglas que ejecutan los modulos por separado.

@@ -1,7 +1,0 @@
-## Elementos del directorio:
-
-### drivers:
-Antiguo package donde guardabamos los drivers del programa.
-
-### test:
-Antiguo package donde guardabamos los tests unitarios del programa.

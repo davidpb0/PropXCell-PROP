@@ -1,0 +1,7 @@
+## Elementos del directorio
+
+### PantallaInicial:
+Package que engloba todo lo necesario para la Pantalla Inicial.
+
+### PantallaPrincipal:
+Package que engloba todo lo necesario para la Pantalla Principal.

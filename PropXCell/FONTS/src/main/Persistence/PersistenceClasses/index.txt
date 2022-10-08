@@ -1,0 +1,7 @@
+## Elementos del directorio:
+
+### CargaCSV:
+Clase utilizada para la importacion de CSVs.
+
+### EscribeCSV:
+Clase utilizada para la exportacion de CSVs.

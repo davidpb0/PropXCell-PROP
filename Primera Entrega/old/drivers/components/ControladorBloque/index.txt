@@ -1,4 +1,0 @@
-## Elementos del directorio
-
-### DriverControladorBloque
-Driver del controlador de bloque. Prueba todas las funcionalidades asociadas con el controlador de bloque.

@@ -1,7 +1,0 @@
-## Elementos del directorio:
-
-### PantallaInicial:
-Clase que contiene el codigo de la Pantalla Inicial.
-
-### PantallaInicial.form:
-Archivo que contiene la estructura de la vista correspondiente a la Pantalla Inicial.

@@ -1,0 +1,10 @@
+## Elementos del directorio
+
+### DriverControladorDocumento
+Driver del controlador de documento. Prueba toas las funciones asociadas con el controlador de documento.
+
+### ControladorDocumentoInput.txt
+Juego de pruebas para el Driver.
+
+### ExplicacionInputControladorDocumento.txt
+Explicacion del juego de pruebas para el Driver.

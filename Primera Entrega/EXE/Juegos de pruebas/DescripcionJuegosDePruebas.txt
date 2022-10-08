@@ -1,8 +1,0 @@
-### Descripción:
-El archivo "Juegos de pruebas.prop" contiene todos los casos que hemos utilizado en la documentación,
-separados por tres hojas: Casos comunes, Casos extremos y Casos erróneos.
-
-
-Para poder visualizar correctamente los juegos de pruebas, ejecute la aplicación y a continuación seleccione
-Cargar Documento, y abra dicho archivo .prop. Si lo prefiere, dentro de la aplicación con un Documento ya abierto,
-puede seleccionar Archivo -> Cargar Documento y abrir el archivo .prop.

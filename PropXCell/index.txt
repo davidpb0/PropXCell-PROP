@@ -1,0 +1,26 @@
+## Elementos del directorio
+
+### DOCS:
+
+Contiene la documentacion del proyecto.
+
+### EXE:
+
+Ejecutable(s) del programa.
+
+### FONTS:
+
+Clases implementadas por el equipo, de las tres capas. Todas las clases son compilables con un Makefile.
+
+### lib:
+
+Aquí se encuentran las librerias que hemos necesitado para los tests.
+
+### old:
+
+Este directorio contiene los packages de drivers y tests que usamos para la primera entrega.
+
+## Ejecutar el programa
+
+Para ejecutar el programa hay que usar el Makefile que se encuentra en /FONTS/src/, primero
+utilizando la opcion "make build", y posteriormente "make help" para consultar las opciones disponibles.

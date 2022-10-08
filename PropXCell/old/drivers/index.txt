@@ -1,0 +1,7 @@
+## Elementos del directorio
+
+### components:
+En este directorio se encuentran los ejecutables de los drivers de componentes(clases de dominio y controladores)
+
+### integration:
+En este directorio se encuentra el ejecutable del main driver(el que ejecuta las funcionalidades gobalmente)

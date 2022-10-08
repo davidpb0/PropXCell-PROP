@@ -3,12 +3,12 @@
     <output-path>$PROJECT_DIR$/Primera Entrega/EXE</output-path>
     <root id="archive" name="PropXcel.jar">
       <element id="module-output" name="subgrup-prop1-4" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/Primera Entrega/lib/mockito-core-4.5.0.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/Primera Entrega/lib/byte-buddy-1.12.9.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/Primera Entrega/lib/objenesis-3.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/PropXCell/lib/mockito-core-4.5.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/PropXCell/lib/byte-buddy-1.12.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/PropXCell/lib/objenesis-3.2.jar" path-in-jar="/" />
       <element id="library" level="module" name="testng" module-name="subgrup-prop1-4" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/Primera Entrega/lib/byte-buddy-agent-1.12.9.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/Primera Entrega/lib/junit-4.12.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/PropXCell/lib/byte-buddy-agent-1.12.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/PropXCell/lib/junit-4.12.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

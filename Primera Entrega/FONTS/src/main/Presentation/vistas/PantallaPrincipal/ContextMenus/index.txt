@@ -1,4 +1,0 @@
-## Elementos del directorio:
-
-### HojasCtxMenu:
-Esta clase contiene el menu contextual para seleccionar hojas.

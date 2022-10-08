@@ -1,9 +1,0 @@
-main.Domain.DomainControllers
-main.Domain.DomainModel
-main.Persistence.PersistenceClasses
-main.Persistence.PersistenceControllers
-main.Presentation
-main.Presentation.vistas.PantallaInicial
-main.Presentation.vistas.PantallaPrincipal
-main.Presentation.vistas.PantallaPrincipal.ContextMenus
-main.Presentation.vistas.PantallaPrincipal.Tabla
