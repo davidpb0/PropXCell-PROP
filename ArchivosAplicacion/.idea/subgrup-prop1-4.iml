@@ -2,7 +2,7 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$">
+    <content url="file://$MODULE_DIR$/..">
       <sourceFolder url="file://$MODULE_DIR$/PropXCell/FONTS/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -92,7 +92,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/Primera Entrega/lib/mockito-core-4.5.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/../Primera Entrega/lib/mockito-core-4.5.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -101,7 +101,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/Primera Entrega/lib/byte-buddy-1.12.9.jar!/" />
+          <root url="jar://$MODULE_DIR$/../Primera Entrega/lib/byte-buddy-1.12.9.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -110,7 +110,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/Primera Entrega/lib/byte-buddy-agent-1.12.9.jar!/" />
+          <root url="jar://$MODULE_DIR$/../Primera Entrega/lib/byte-buddy-agent-1.12.9.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -119,7 +119,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/Primera Entrega/lib/objenesis-3.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../Primera Entrega/lib/objenesis-3.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
